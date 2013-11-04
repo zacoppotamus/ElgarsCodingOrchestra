@@ -1,0 +1,4 @@
+ElgarsCodingOrchestra
+=====================
+
+Software Engineering Project
