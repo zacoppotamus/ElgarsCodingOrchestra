@@ -5,11 +5,12 @@ header("content-type: text/plain; charset=utf8");
 
 // Define the commands to be run.
 $commands = array(
-    "/usr/bin/git pull 2&>1",
-    "/usr/bin/git status 2&>1",
-    "/usr/bin/git submodule sync 2&>1",
-    "/usr/bin/git submodule update 2&>1",
-    "/usr/bin/git submodule status 2&>1"
+    "whoami",
+    "/usr/bin/git pull",
+    "/usr/bin/git status",
+    "/usr/bin/git submodule sync",
+    "/usr/bin/git submodule update",
+    "/usr/bin/git submodule status"
 );
 
 // Run them all.
