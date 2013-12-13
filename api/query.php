@@ -9,7 +9,7 @@ include("includes/api/core.php");
  */
 
 $data = array(
-    "dataset" => (isset($_GET['d'])) : trim(strtolower($_GET['d'])) : null,
+    "dataset" => (isset($_GET['d'])) ? trim(strtolower($_GET['d'])) : null,
     "offset" => (isset($_GET['offset']) && intval($_GET['offset']) >= 0) ? intval($_GET['offset']) : 0,
     "rows" => (isset($_GET['rows']) && intval($_GET['rows']) >= 1) ? intval($_GET['rows']) : -1
 );
