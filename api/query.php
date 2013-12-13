@@ -21,6 +21,7 @@ $data = array(
 
 $json = array(
     "rows" => 0,
+    "offset" => $data['offset'],
     "results" => array()
 );
 
@@ -30,6 +31,11 @@ $json = array(
  * when new data is inserted.
  */
 
+if(is_null($data['dataset'])) {
+    echo json_beautify(json_render_error(401, "You didn't specify a dataset to query."));
+    exit;
+}
+
 $collection = mongocli::select_collection($data['dataset']);
 
 /*!
@@ -38,6 +44,14 @@ $collection = mongocli::select_collection($data['dataset']);
  */
 
 $query = $collection->find();
+
+if($data['offset'] > 0) {
+    $query = $query->skip($data['offset']);
+}
+
+if($data['rows'] > -1) {
+    $query = $query->limit($data['rows']);
+}
 
 foreach($query as $row) {
     $json['rows']++;
