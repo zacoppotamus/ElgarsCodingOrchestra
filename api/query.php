@@ -31,7 +31,7 @@ $json = array(
  * when new data is inserted.
  */
 
-if(is_null($data['dataset'])) {
+if(!isset($data['dataset']) || empty($data['dataset'])) {
     echo json_beautify(json_render_error(401, "You didn't specify a dataset to query."));
     exit;
 }
