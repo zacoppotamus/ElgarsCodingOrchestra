@@ -13,16 +13,19 @@ class MongoCLI {
 
     // Private connection variable for Mongo.
     private static $conn = null;
+    private static $database = null;
 
     /*!
-     * Connect.
+     * Create a new instance of the native Mongo driver, which we're
+     * essentially wrapping with this class. We don't need to worry about
+     * usernames or passwords.
      */
 
     public static function connect($host = null, $port = null) {
         if($host) self::$host = $host;
         if($port) self::$port = $port;
 
-        self::$conn = new Mongo("mongodb://" . self::$host . ":" . self::$port . "/");
+        self::$conn = new MongoClient("mongodb://" . self::$host . ":" . self::$port . "/");
 
         if(self::$conn) {
             return true;
@@ -31,7 +34,12 @@ class MongoCLI {
         return false;
     }
 
-    public static function select_database($db) {
-        return false;
+    /*!
+     * Select the database to use within the Mongo instance, so we can
+     * separate out our application's logic.
+     */
+
+    public static function select_database($database) {
+        return (self::$database = self::$conn->selectDB($database));
     }
 }
