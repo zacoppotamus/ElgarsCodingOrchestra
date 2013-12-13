@@ -26,8 +26,11 @@ This method returns a subset of data from the specified collection, with a few o
 Here is an example request:
 
 ```php
-$url = "http://api.spe.sneeza.me/query?d=" . $dataset . "&rows=" . $num_rows . "&fields=" . json_encode(array('first_name', 'last_name'));
+$dataset = "test";
+$num_rows = 50;
+$fields = json_encode(array('first_name', 'last_name'));
 
+$url = "http://api.spe.sneeza.me/query?d=" . urlencode($dataset) . "&rows=" . $num_rows . "&fields=" . urlencode($fields);
 $data = json_decode(file_get_contents($url), true);
 
 var_dump($data);
