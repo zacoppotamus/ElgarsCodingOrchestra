@@ -14,6 +14,7 @@ header("content-type: application/json; charset=utf8");
  */
 
 route::add("/", "index.php");
+route::add("/query", "query.php");
 
 /*!
  * Perform the routing request.
