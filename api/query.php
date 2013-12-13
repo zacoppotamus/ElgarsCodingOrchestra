@@ -19,7 +19,30 @@ $data = array(
  * to send back.
  */
 
-$json = array();
+$json = array(
+    "rows" => 0,
+    "results" => array()
+);
+
+/*!
+ * Select the relevant dataset inside the database. If the collection
+ * doesn't already exist, then Mongo will automatically create it
+ * when new data is inserted.
+ */
+
+$collection = mongocli::select_collection($data['dataset']);
+
+/*!
+ * Perform our 'find' query based on the information fed to the
+ * API.
+ */
+
+$query = $collection->find();
+
+foreach($query as $row) {
+    $json['rows']++;
+    $json['results'][] = $row;
+}
 
 /*!
  * Output our JSON payload for use in whatever needs to be using

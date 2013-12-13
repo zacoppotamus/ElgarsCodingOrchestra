@@ -42,4 +42,13 @@ class MongoCLI {
     public static function select_database($database) {
         return (self::$database = self::$conn->selectDB($database));
     }
+
+    /*!
+     * Select the collection to be used for storing/retreiving the data.
+     * If the collection doesn't exist, Mongo will create one for us.
+     */
+
+    public static function select_collection($collection) {
+        return self::$database->selectCollection($collection);
+    }
 }
