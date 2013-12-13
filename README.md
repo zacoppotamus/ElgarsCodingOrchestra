@@ -21,7 +21,7 @@ This method returns a subset of data from the specified collection, with a few o
 + **d** - This parameter specifies the dataset that we should be running the query against.
 + **rows** _(optional)_ - The maximum number of rows to return. If left blank, it will return all of them.
 + **offset** _(optiona)_ - The offset starting point of the returned data. Mostly used in conjunction with 'rows'.
-+ **fields** _(optional)_- Specify the field names to return for each row. Should be a JSON encoded array of field names, eg. ['field1', 'field2'].
++ **fields** _(optional)_ - Specify the field names to return for each row. Should be a JSON encoded array of field names, eg. ['field1', 'field2'].
 
 Here is an example request:
 
