@@ -44,8 +44,8 @@ $collection = mongocli::select_collection($data['dataset']);
  * API. We have to check if some parameters are set/valid here.
  */
 
-$query = null;
-$fields = null;
+$query = array();
+$fields = array();
 
 // Check if any field names were sent.
 if(isset($data['fields']) && !empty($data['fields'])) {
