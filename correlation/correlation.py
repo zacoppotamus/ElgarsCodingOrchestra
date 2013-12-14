@@ -1,4 +1,5 @@
 import numpy
+from pymongo import MongoClient
 
 def graphEquation(xPoints1, xPoints2, yPoints, degree, x1Weight=1, x2Weight=1):
     if(x1Weight > 1 or x1Weight < 0 or x2Weight > 1 or x2Weight < 0):
@@ -17,6 +18,8 @@ def main():
     time   = [5,4,3,2,1]
     budget = [5,4,3,3,3]
     crime  = [5,4,3,2,1]
+
+    client = MongoClient('spe.sneeza.me', 27017)
 
     print graphEquation(time, budget, crime, 2)
 
