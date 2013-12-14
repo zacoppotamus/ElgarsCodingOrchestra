@@ -14,7 +14,7 @@ def graphEquation(x1Points, x2Points, yPoints, degree, x1Weight=1, x2Weight=1):
     return (x1Poly + x2Poly)/(x1Weight + x2Weight)
 
 
-def query(databaseName, collectionName, x1Name, x2Name, yName):
+def query(databaseName, collectionName, x1Name, x2Name, yName, degree, x1Weight=1, x2Weight=1):
     client     = MongoClient('spe.sneeza.me', 27017)
     db         = client[databaseName]
     collection = db[collectionName]
@@ -29,12 +29,12 @@ def query(databaseName, collectionName, x1Name, x2Name, yName):
     x2Points = [p[x2Name] for p in collection.find()]
     yPoints  = [p[yName ] for p in collection.find()]
 
-    equation = graphEquation(x1Points, x2Points, yPoints, 2).tolist()
+    equation = graphEquation(x1Points, x2Points, yPoints, degree, x1Weight, x2Weight).tolist()
     print json.dumps(equation)
     return json.dumps(equation)
 
 def main():
-    query("eco", "crime", "budget", "year", "crime");
+    query("eco", "crime", "budget", "year", "crime", 2);
 
 
 if __name__ == "__main__":
