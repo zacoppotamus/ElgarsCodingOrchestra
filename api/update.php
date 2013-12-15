@@ -20,7 +20,7 @@ $data = array(
  */
 
 $json = array(
-    "added" => 0
+    "updated" => 0
 );
 
 /*!
@@ -42,8 +42,39 @@ try {
 }
 
 /*!
- *
+ * Run the update command directly in MongoDB - we don't really need
+ * to worry about doing this manually.
  */
+
+$query = $data['query'];
+$changes = $data['changes'];
+
+// Check the query is set.
+if(!isset($data['query']) || empty($data['query'])) {
+    echo json_beautify(json_render_error(403, "You can't use a catch-all query for update statements, dummy."));
+    exit;
+}
+
+// Check the changes aren't empty.
+if(!isset($data['changes']) || empty($data['changes'])) {
+    echo json_beautify(json_render_error(404, "You didn't specify any changes to make."));
+    exit;
+}
+
+// Run the update query.
+try {
+    $status = $collection->update($query, $changes, array("multiple" => true));
+
+    if($status['ok'] == 1) {
+        $json['updated'] = (int)$status['n'];
+    } else {
+        echo json_beautify(json_render_error(406, "An unexpected error occured while trying to update the documents."));
+        exit;
+    }
+} catch(Exception $e) {
+    echo json_beautify(json_render_error(405, "An unexpected error occured while trying to update the documents."));
+    exit;
+}
 
 /*!
  * Output our JSON payload for use in whatever needs to be using

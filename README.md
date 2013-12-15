@@ -102,7 +102,7 @@ This method allows the user to update records in the database. You can specify a
 + **query** - Specify the query to select which records to update.
 + **changes** - Specifies the changes, JSON encoded, to update in the matched records.
 
-Here is an example request to update the record with ID 9.
+Here is an example request to update any record having the last name 'Parker'.
 
 ```php
 $url = "http://api.spe.sneeza.me/update";
@@ -110,12 +110,12 @@ $url = "http://api.spe.sneeza.me/update";
 $args = array(
     "dataset" => "test",
     "query" => json_encode(
-        array("_id" => 9)
+        array("last_name" => "Parker")
     ),
     "changes" => json_encode(
         array(
             "postcode" => "BS2",
-            "last_name" => "Jackson",
+            "last_name" => "Piper",
             "\$unset" => array("middle_name")
         )
     )
