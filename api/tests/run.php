@@ -56,7 +56,11 @@ check_test("Multi Insert", $insert);
  * Test two: Select data.
  */
 
-// Select some random data.
+$search = eco::select($dataset, array(
+    "first_name" => "James"
+));
+
+check_test("Select #1", $search);
 
 /*!
  * Test three: Update data.

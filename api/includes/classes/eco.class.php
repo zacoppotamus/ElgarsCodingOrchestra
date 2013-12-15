@@ -14,7 +14,7 @@
 class eco {
     // Store a reference to the API url and available endpoints.
     private static $host = "http://api.spe.sneeza.me/";
-    private static $endpoints = array("search", "insert", "update", "delete", "ping", "calc/polyfit", "calc/mean", "calc/stddev");
+    private static $endpoints = array("select", "insert", "update", "delete", "ping", "calc/polyfit", "calc/mean", "calc/stddev");
 
     // Store last known errors.
     private static $errno = null;
@@ -40,6 +40,37 @@ class eco {
         }
 
         return true;
+    }
+
+    /*!
+     * Run a /select query, finding results from a dataset that
+     * match certain conditions. Optionally, leave the query blank
+     * to return all rows.
+     */
+
+    public static select($dataset, $query = null, $limit = 0, $offset = 0, $fields = null) {
+        $query_string = array(
+            "dataset" => $dataset,
+            "query" => $query,
+            "limit" => $limit,
+            "offset" => $offset,
+            "fields" => $fields
+        );
+
+        $url = self::generate_endpoint_url("select");
+        $data = self::send_request($url, "GET", $query_string);
+
+        if(!$data) {
+            return false;
+        }
+
+        $json = self::parse_json($data);
+
+        if(!$json) {
+            return false;
+        }
+
+        return $json['data'];
     }
 
     /*!
