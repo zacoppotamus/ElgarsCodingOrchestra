@@ -69,7 +69,12 @@ if(isset($data['fields']) && !empty($data['fields'])) {
 }
 
 // Run the query.
-$query = $collection->find($query, $fields);
+try {
+    $query = $collection->find($query, $fields);
+} catch(Exception $e) {
+    echo json_beautify(json_render_error(404, "An unexpected error occured while performing your query - are you sure you formatted it correctly?"));
+    exit;
+}
 
 // Set the offset if we have one.
 if($data['offset'] > 0) {
