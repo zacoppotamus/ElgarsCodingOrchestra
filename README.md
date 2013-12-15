@@ -64,6 +64,8 @@ This method takes two inputs, specifying the dataset to insert documents into an
 + **document** _(optional)_ - Specifies one document, JSON encoded, to insert into the dataset.
 + **documents** _(optional)_ - Specifies an array of documents, JSON encoded, to insert into the dataset.
 
+Here is an example insertion request for a single document:
+
 ```php
 $url = "http://api.spe.sneeza.me/insert";
 
