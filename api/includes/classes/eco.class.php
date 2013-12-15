@@ -51,10 +51,10 @@ class eco {
     public static function select($dataset, $query = null, $limit = 0, $offset = 0, $fields = null) {
         $query_string = array(
             "dataset" => $dataset,
-            "query" => $query,
+            "query" => json_encode($query),
             "limit" => $limit,
             "offset" => $offset,
-            "fields" => $fields
+            "fields" => json_encode($fields)
         );
 
         $url = self::generate_endpoint_url("select");
