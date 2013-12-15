@@ -1,7 +1,7 @@
-import numpy                             # To calculate correlation
 import json                              # To convert to JSON
 import sys                               # To get arguments
 import warnings                          # To suppress numpy warnings
+import numpy                             # To calculate correlation
 from pymongo import MongoClient          # To communicate with MongoDB
 warnings.simplefilter('ignore', numpy.RankWarning)
 
@@ -45,8 +45,6 @@ def main():
         print "Usage: correlation.py databaseName collectionName x1 x2 x1FieldName x2FieldName yFieldName degree x1Weight x2Weight"
         print "       OR"
         print "       correlation.py databaseName collectionName x1 x2 x1FieldName x2FieldName yFieldName degree"
-
-
 
 if __name__ == "__main__":
     main()
