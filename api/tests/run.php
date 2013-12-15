@@ -16,6 +16,9 @@ function check_test($test_name, $result) {
     }
 }
 
+// Define our dataset name.
+$dataset = "apitests";
+
 /*!
  * Test one: Inserting data.
  */
@@ -27,7 +30,7 @@ $document = array(
     "age" => 18
 );
 
-$insert = eco::insert($document);
+$insert = eco::insert($dataset, $document);
 check_test("Single Insert", $insert);
 
 $documents = array();
@@ -46,7 +49,7 @@ $documents[] = array(
     "age" => 19
 );
 
-$insert = eco::insert_multi($documents);
+$insert = eco::insert_multi($dataset, $documents);
 check_test("Multi Insert", $insert);
 
 /*!

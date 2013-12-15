@@ -48,8 +48,8 @@ class eco {
      * array of documents.
      */
 
-    public static function insert($document) {
-        return self::insert_multi(array($document));
+    public static function insert($dataset, $document) {
+        return self::insert_multi($dataset, array($document));
     }
 
     /*!
