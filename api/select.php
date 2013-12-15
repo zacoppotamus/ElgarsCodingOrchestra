@@ -9,8 +9,8 @@ include("includes/api/core.php");
  */
 
 $data = array(
-    "query" => (isset($_GET['q'])) ? json_decode($_GET['q'], true) : null,
-    "dataset" => (isset($_GET['d'])) ? trim(strtolower($_GET['d'])) : null,
+    "query" => (isset($_GET['query'])) ? json_decode($_GET['query'], true) : null,
+    "dataset" => (isset($_GET['dataset'])) ? trim(strtolower($_GET['dataset'])) : null,
     "offset" => (isset($_GET['offset']) && intval($_GET['offset']) >= 0) ? intval($_GET['offset']) : 0,
     "rows" => (isset($_GET['rows']) && intval($_GET['rows']) >= 1) ? intval($_GET['rows']) : -1,
     "fields" => (isset($_GET['fields'])) ? json_decode($_GET['fields'], true) : null
@@ -38,7 +38,12 @@ if(!isset($data['dataset']) || empty($data['dataset'])) {
     exit;
 }
 
-$collection = mongocli::select_collection($data['dataset']);
+try {
+    $collection = mongocli::select_collection($data['dataset']);
+} catch(Exception $e) {
+    echo json_beautify(json_render_error(402, "An unknown error occured while attempting to select the dataset."));
+    exit;
+}
 
 /*!
  * Perform our 'find' query based on the information fed to the
@@ -58,7 +63,7 @@ if(isset($data['fields']) && !empty($data['fields'])) {
     if(is_array($data['fields'])) {
         $fields = $data['fields'];
     } else {
-        echo json_beautify(json_render_error(402, "You didn't specify the field names correctly, they should be in the form: ['field1', 'field2']."));
+        echo json_beautify(json_render_error(403, "You didn't specify the field names correctly, they should be in the form: ['field1', 'field2']."));
         exit;
     }
 }

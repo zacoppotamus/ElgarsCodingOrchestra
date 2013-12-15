@@ -32,7 +32,7 @@ $num_rows = 50;
 $query = json_encode(array("postcode" => "BS1"));
 $fields = json_encode(array("first_name", "last_name"));
 
-$url = "http://api.spe.sneeza.me/select?q=" . urlencode($query) . "&d=" . urlencode($dataset) . "&rows=" . $num_rows . "&fields=" . urlencode($fields);
+$url = "http://api.spe.sneeza.me/select?query=" . urlencode($query) . "&dataset=" . urlencode($dataset) . "&rows=" . $num_rows . "&fields=" . urlencode($fields);
 $data = json_decode(file_get_contents($url), true);
 
 var_dump($data);
@@ -46,7 +46,7 @@ Todo.
 $dataset = "test";
 $document = json_encode(array("postcode" => "BS1", "first_name" => "Luke", "last_name" => "Janie"));
 
-$url = "http://api.spe.sneeza.me/insert?document=" . urlencode($document) . "&d=" . urlencode($dataset);
+$url = "http://api.spe.sneeza.me/insert?document=" . urlencode($document) . "&dataset=" . urlencode($dataset);
 $data = json_decode(file_get_contents($url), true);
 
 var_dump($data);
