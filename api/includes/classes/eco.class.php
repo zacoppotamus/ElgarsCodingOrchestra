@@ -119,6 +119,36 @@ class eco {
     }
 
     /*!
+     * Update documents using a query, which can be used to match
+     * multiple or single documents. The change is essentially just
+     * a diff for the record, and the magic keyword \$unset can be
+     * sent to remove a field totally.
+     */
+
+    public static function update($dataset, $query, $change) {
+        $post_data = array(
+            "dataset" => $dataset,
+            "query" => json_encode($query),
+            "change" => json_encode($change)
+        );
+
+        $url = self::generate_endpoint_url("update");
+        $data = self::send_request($url, "POST", $post_data);
+
+        if(!$data) {
+            return false;
+        }
+
+        $json = self::parse_json($data);
+
+        if(!$json) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /*!
      * Return the last known error code, which can be populated from
      * the API or a failed cURL request.
      */

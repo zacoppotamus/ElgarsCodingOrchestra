@@ -73,23 +73,35 @@ $search = eco::select($dataset, array(
     "first_name" => "James"
 ));
 
-check_test("Select #1", $search);
+check_test("Select #1 - first_name = James, rows: " . $search['rows'], $search);
 
 $search = eco::select($dataset, array(
     "last_name" => "Cash"
 ));
 
-check_test("Select #2", $search);
+check_test("Select #2 - last_name = Cash, rows: " . $search['rows'], $search);
 
 $search = eco::select($dataset);
 
-check_test("Select #3", $search);
+check_test("Select #3 - All records, rows: " . $search['rows'], $search);
 
 /*!
  * Test three: Update data.
  */
 
-// Update some data.
+$update = eco::update($dataset, array(
+    "first_name" => "James"
+), array(
+    "first_name" => "Jacob"
+));
+
+check_test("Update #1 => James to Jacob, updated: " . $update['updated'], $update);
+
+$search = eco::select($dataset, array(
+    "first_name" => "James"
+));
+
+check_test("Select #4 - first_name = James, rows: " . $search['rows'], $search);
 
 /*!
  * Test four: Delete data.
