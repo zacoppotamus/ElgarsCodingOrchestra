@@ -29,15 +29,17 @@ class eco {
         $url = self::generate_endpoint_url("ping");
         $data = self::send_request($url, "GET", null, 5);
 
-        if($data) {
-            $json = json_decode($data, true);
-
-            if(is_array($json)) {
-                return ($json['meta']['code'] == 200);
-            }
+        if(!$data) {
+            return false;
         }
 
-        return false;
+        $json = self::parse_json($data);
+
+        if(!$json) {
+            return false;
+        }
+
+        return true;
     }
 
     /*!
@@ -56,8 +58,28 @@ class eco {
      * which we can use to verify our request.
      */
 
-    public static function insert_multi($documents) {
+    public static function insert_multi($dataset, $documents) {
+        $post_data = array(
+            "dataset" => $dataset,
+            "documents" => json_encode($documents)
+        );
+
         $url = self::generate_endpoint_url("insert");
+        $data = self::send_request($url, "POST", $post_data);
+
+        if(!$data) {
+            return false;
+        }
+
+        $json = self::parse_json($data);
+
+        if(!$json) {
+            return false;
+        }
+
+        if($json['data']['inserted'] == count($documents)) {
+            return true;
+        }
 
         return false;
     }
@@ -78,6 +100,31 @@ class eco {
 
     public static function error() {
         return self::$error;
+    }
+
+    /*!
+     * Private function to parse JSON into an array, also setting
+     * the error code and message in the class if necessary.
+     */
+
+    private static function parse_json($data) {
+        $json = json_decode($data, true);
+
+        if(!is_array($json)) {
+            self::$errno = 402;
+            self::$error = "Invalid JSON received from API.";
+
+            return false;
+        }
+
+        if($json['meta']['code'] !== 200) {
+            self::$errno = $json['meta']['code'];
+            self::$error = $json['data']['message'];
+
+            return false;
+        }
+
+        return $json;
     }
 
     /*!
