@@ -81,7 +81,7 @@ $search = eco::select($dataset, array(
 
 check_test("Select #2", $search);
 
-$search = eco::select($dataset;
+$search = eco::select($dataset);
 
 check_test("Select #3", $search);
 
