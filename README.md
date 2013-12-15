@@ -14,12 +14,12 @@ http://api.spe.sneeza.me/
 
 It requires no authentication and allows simple method names to be appended to the URL in order to access different functionality.
 
-### Method: /select
+### Method: GET /select
 
 This method returns a subset of data from the specified collection, with a few optional parameters for helping fine-tune things. These are as follows:
 
-+ **q** - Query to perform (takes MongoDB syntax).
-+ **d** - This parameter specifies the dataset that we should be running the query against.
++ **dataset** - This parameter specifies the dataset that we should be running the query against.
++ **query** - Query to perform (takes MongoDB syntax).
 + **rows** _(optional)_ - The maximum number of rows to return. If left blank, it will return all of them.
 + **offset** _(optiona)_ - The offset starting point of the returned data. Mostly used in conjunction with 'rows'.
 + **fields** _(optional)_ - Specify the field names to return for each row. Should be a JSON encoded array of field names, eg. ['field1', 'field2'].
@@ -27,27 +27,58 @@ This method returns a subset of data from the specified collection, with a few o
 Here is an example request:
 
 ```php
-$dataset = "test";
-$num_rows = 50;
-$query = json_encode(array("postcode" => "BS1"));
-$fields = json_encode(array("first_name", "last_name"));
+$url = "http://api.spe.sneeza.me/select";
 
-$url = "http://api.spe.sneeza.me/select?query=" . urlencode($query) . "&dataset=" . urlencode($dataset) . "&rows=" . $num_rows . "&fields=" . urlencode($fields);
-$data = json_decode(file_get_contents($url), true);
+$args = array(
+    "dataset" => "test",
+    "query" => json_encode(
+        array("postcode" => "BS1")
+    ),
+    "num_rows" => 50,
+    "offset" => 0,
+    "fields" => json_encode(
+        array("first_name", "last_name")
+    )
+);
+
+$args = http_build_query($args);
+$data = json_decode(file_get_contents($url . "?" . $args), true);
 
 var_dump($data);
 ```
 
-### Method: /insert
+### Method: POST /insert
 
-Todo.
+This method takes two inputs, specifying the dataset to insert documents into and the document(s) themselves. We use batch processing to speed up the time it takes to insert large amounts of data.
+
++ **dataset** - This parameter specifies the dataset that we should be inserting the documents into.
++ **document** _(optional)_ - Specifies one document, JSON encoded, to insert into the dataset.
++ **documents** _(optional)_ - Specifies an array of documents, JSON encoded, to insert into the dataset.
 
 ```php
-$dataset = "test";
-$document = json_encode(array("postcode" => "BS1", "first_name" => "Luke", "last_name" => "Janie"));
+$url = "http://api.spe.sneeza.me/insert";
 
-$url = "http://api.spe.sneeza.me/insert?document=" . urlencode($document) . "&dataset=" . urlencode($dataset);
-$data = json_decode(file_get_contents($url), true);
+$args = array(
+    "dataset" => "test",
+    "document" => json_encode(
+        array(
+            "postcode" => "BS1",
+            "first_name" => "Peter",
+            "last_name" => "Parker"
+        )
+    )
+);
+
+$options = array(
+    "http" => array(
+        "header" => "content-type: application/x-www-form-urlencoded\r\n",
+        "method" => "POST",
+        "content" => http_build_query($args),
+    )
+);
+
+$context  = stream_context_create($options);
+$data = json_decode(file_get_contents($url, false, $context), true);
 
 var_dump($data);
 ```

@@ -49,10 +49,6 @@ function json_render_error($code = 300, $message) {
  */
 
 function json_beautify($json) {
-    if(phpversion() && phpversion() >= 5.4) {
-        return json_encode(json_decode($json, true), JSON_PRETTY_PRINT);
-    }
-
     $result = "";
     $pos = 0;
     $length = strlen($json);
