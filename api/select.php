@@ -8,8 +8,6 @@ include("includes/api/core.php");
  * in this script.
  */
 
-var_dump($_GET['q']);
-
 $data = array(
     "query" => (isset($_GET['q'])) ? json_decode($_GET['q'], true) : null,
     "dataset" => (isset($_GET['d'])) ? trim(strtolower($_GET['d'])) : null,
