@@ -9,6 +9,7 @@ include("includes/api/core.php");
  */
 
 $data = array(
+    "query" => (isset($_GET['q'])) ? json_decode($_GET['q'], true) ? : null,
     "dataset" => (isset($_GET['d'])) ? trim(strtolower($_GET['d'])) : null,
     "offset" => (isset($_GET['offset']) && intval($_GET['offset']) >= 0) ? intval($_GET['offset']) : 0,
     "rows" => (isset($_GET['rows']) && intval($_GET['rows']) >= 1) ? intval($_GET['rows']) : -1,
@@ -46,6 +47,11 @@ $collection = mongocli::select_collection($data['dataset']);
 
 $query = array();
 $fields = array();
+
+// Check if we have a query or not.
+if(isset($data['query']) && !empty($data['query'])) {
+    $query = $data['query'];
+}
 
 // Check if any field names were sent.
 if(isset($data['fields']) && !empty($data['fields'])) {
