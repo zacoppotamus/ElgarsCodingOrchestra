@@ -9,15 +9,21 @@ include("includes/classes/eco.class.php");
  */
 
 function check_test($test_name, $result) {
+    global $passed, $failed;
+
     if($result) {
+        $passed++;
         echo "[+] {$test_name}: Success.\n";
     } else {
+        $failed++;
         echo "[!] {$test_name}: Failed! - (#" . eco::errno() . ") " . eco::error() . "\n";
     }
 }
 
-// Define our dataset name.
+// Define our dataset name and the failed tests.
 $dataset = "apitests";
+$passed = 0;
+$failed = 0;
 
 /*!
  * Test one: Inserting data.
@@ -78,6 +84,6 @@ check_test("Select #1", $search);
  * Finish up.
  */
 
-echo "[+] All tests complete!\n";
+echo "[+] All tests complete! {$passed} passed, {$failed} failed.\n";
 
 ?>
