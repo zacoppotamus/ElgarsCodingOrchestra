@@ -98,7 +98,7 @@ var_dump($data);
 
 This method allows the user to update records in the database. You can specify a query which will select multiple records to update, much like the /select request. Any number of changes can be specified, with new fields being defined as well as old fields being unset (using the magical $unset keyword).
 
-+ **dataset** - This parameter specifies the dataset that we should be inserting the documents into.
++ **dataset** - This parameter specifies the dataset that we should be updating the documents in.
 + **query** - Specify the query to select which records to update.
 + **changes** - Specifies the changes, JSON encoded, to update in the matched records.
 
@@ -118,6 +118,39 @@ $args = array(
             "last_name" => "Piper",
             "\$unset" => array("middle_name")
         )
+    )
+);
+
+$options = array(
+    "http" => array(
+        "header" => "content-type: application/x-www-form-urlencoded\r\n",
+        "method" => "POST",
+        "content" => http_build_query($args),
+    )
+);
+
+$context  = stream_context_create($options);
+$data = json_decode(file_get_contents($url, false, $context), true);
+
+var_dump($data);
+```
+
+### POST /delete
+
+This method allows the user to delete records from the database. You can specify a query which will select multiple records to delete, much like the /select request. This endpoint doesn't allow you to specify a null query.
+
++ **dataset** - This parameter specifies the dataset that we should be deleting the documents from.
++ **query** - Specify the query to select which records to delete.
+
+Here is an example request to delete all records with the last name 'Piper'.
+
+```php
+$url = "http://api.spe.sneeza.me/delete";
+
+$args = array(
+    "dataset" => "test",
+    "query" => json_encode(
+        array("last_name" => "Piper")
     )
 );
 
