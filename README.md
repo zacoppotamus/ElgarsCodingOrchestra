@@ -29,8 +29,8 @@ Here is an example request:
 ```php
 $dataset = "test";
 $num_rows = 50;
-$query = json_encode(array('postcode', 'BS1'));
-$fields = json_encode(array('first_name', 'last_name'));
+$query = json_encode(array('postcode' => 'BS1'));
+$fields = json_encode(array('first_name' => 'last_name'));
 
 $url = "http://api.spe.sneeza.me/select?q=" . urlencode($query) . "&d=" . urlencode($dataset) . "&rows=" . $num_rows . "&fields=" . urlencode($fields);
 $data = json_decode(file_get_contents($url), true);
