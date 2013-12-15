@@ -19,6 +19,7 @@ route::add("/select", "select.php");
 route::add("/insert", "insert.php");
 route::add("/update", "update.php");
 route::add("/delete", "delete.php");
+route::add("/ping", "ping.php");
 
 // Add endpoints for calculation endpoints.
 route::add("/calc/polyfit", "calc/polyfit.php");
