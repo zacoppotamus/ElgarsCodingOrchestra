@@ -48,7 +48,7 @@ class eco {
      * to return all rows.
      */
 
-    public static select($dataset, $query = null, $limit = 0, $offset = 0, $fields = null) {
+    public static function select($dataset, $query = null, $limit = 0, $offset = 0, $fields = null) {
         $query_string = array(
             "dataset" => $dataset,
             "query" => $query,
