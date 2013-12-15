@@ -12,7 +12,7 @@ function check_test($test_name, $result) {
     if($result) {
         echo "[+] {$test_name}: Success.\n";
     } else {
-        echo "[!] {$test_name}: Failed! - (#" . eco::last_errno() . ") " . eco::last_error() . "\n";
+        echo "[!] {$test_name}: Failed! - (#" . eco::errno() . ") " . eco::error() . "\n";
     }
 }
 
