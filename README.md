@@ -114,8 +114,10 @@ $args = array(
     ),
     "changes" => json_encode(
         array(
-            "postcode" => "BS2",
-            "last_name" => "Piper",
+            "\$set" => array(
+                "postcode" => "BS2",
+                "last_name" => "Piper",
+            ),
             "\$unset" => array("middle_name")
         )
     )

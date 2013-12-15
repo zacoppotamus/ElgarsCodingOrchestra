@@ -92,7 +92,9 @@ check_test("Select #3 - All records, rows: " . $search['rows'], $search);
 $update = eco::update($dataset, array(
     "first_name" => "James"
 ), array(
-    "first_name" => "Jacob"
+    "\$set" => array(
+        "first_name" => "Jacob"
+    )
 ));
 
 check_test("Update #1 => James to Jacob, updated: " . $update['updated'], $update);
