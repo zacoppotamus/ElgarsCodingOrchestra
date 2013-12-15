@@ -16,6 +16,10 @@ class eco {
     private static $host = "http://api.spe.sneeza.me/";
     private static $endpoints = array("search", "insert", "update", "delete", "ping", "calc/polyfit", "calc/mean", "calc/stddev");
 
+    // Store last known errors.
+    private static $errno = null;
+    private static $error = null;
+
     /*!
      * Send a simple /ping request to the server to ensure that
      * the API is online and responding.
@@ -34,6 +38,46 @@ class eco {
         }
 
         return false;
+    }
+
+    /*!
+     * Insert is an alias of insert_multi, and we just manipulate
+     * the parameters passed to wrap one document to look like an
+     * array of documents.
+     */
+
+    public static function insert($document) {
+        return self::insert_multi(array($document));
+    }
+
+    /*!
+     * Insert multiple documents into a dataset. The API will return
+     * a success parameter as well as the number of documents added
+     * which we can use to verify our request.
+     */
+
+    public static function insert_multi($documents) {
+        $url = self::generate_endpoint_url("insert");
+
+        return false;
+    }
+
+    /*!
+     * Return the last known error code, which can be populated from
+     * the API or a failed cURL request.
+     */
+
+    public static function errno() {
+        return self::$errno;
+    }
+
+    /*!
+     * Return the last known error message, which can be populated
+     * from the API or a failed cURL request.
+     */
+
+    public static function error() {
+        return self::$error;
     }
 
     /*!
