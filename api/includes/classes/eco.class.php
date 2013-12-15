@@ -77,8 +77,11 @@ class eco {
             return false;
         }
 
-        if($json['data']['inserted'] == count($documents)) {
+        if($json['data']['added'] == count($documents)) {
             return true;
+        } else {
+            self::$errno = 500;
+            self::$error = "The API insertion count didn't match the number of documents sent.";
         }
 
         return false;
