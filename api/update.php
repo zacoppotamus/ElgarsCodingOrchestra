@@ -30,7 +30,7 @@ $json = array(
  */
 
 if(!isset($data['dataset']) || empty($data['dataset'])) {
-    echo json_beautify(json_render_error(401, "You didn't specify a dataset to query."));
+    echo json_beautify(json_render_error(401, "You didn't specify a dataset to update your documents in."));
     exit;
 }
 
