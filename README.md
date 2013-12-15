@@ -93,3 +93,44 @@ $data = json_decode(file_get_contents($url, false, $context), true);
 
 var_dump($data);
 ```
+
+### POST /update
+
+This method allows the user to update records in the database. You can specify a query which will select multiple records to update, much like the /select request. Any number of changes can be specified, with new fields being defined as well as old fields being unset (using the magical $unset keyword).
+
++ **dataset** - This parameter specifies the dataset that we should be inserting the documents into.
++ **query** - Specify the query to select which records to update.
++ **changes** - Specifies the changes, JSON encoded, to update in the matched records.
+
+Here is an example request to update the record with ID 9.
+
+```php
+$url = "http://api.spe.sneeza.me/update";
+
+$args = array(
+    "dataset" => "test",
+    "query" => json_encode(
+        array("_id" => 9)
+    ),
+    "changes" => json_encode(
+        array(
+            "postcode" => "BS2",
+            "last_name" => "Jackson",
+            "\$unset" => array("middle_name")
+        )
+    )
+);
+
+$options = array(
+    "http" => array(
+        "header" => "content-type: application/x-www-form-urlencoded\r\n",
+        "method" => "POST",
+        "content" => http_build_query($args),
+    )
+);
+
+$context  = stream_context_create($options);
+$data = json_decode(file_get_contents($url, false, $context), true);
+
+var_dump($data);
+```

@@ -16,6 +16,7 @@ header("content-type: application/json; charset=utf8");
 route::add("/", "index.php");
 route::add("/select", "select.php");
 route::add("/insert", "insert.php");
+route::add("/update", "update.php");
 
 /*!
  * Perform the routing request.

@@ -10,8 +10,8 @@ include("includes/api/core.php");
 
 $data = array(
     "dataset" => (isset($_POST['dataset'])) ? trim(strtolower($_POST['dataset'])) : null,
-    "document" => (isset($_POST['document'])) ? json_decode($_POST['document'], true) : null,
-    "documents" => (isset($_POST['documents'])) ? json_decode($_POST['documents'], true) : null
+    "query" => (isset($_POST['query'])) ? json_decode($_POST['query'], true) : null,
+    "changes" => (isset($_POST['changes'])) ? json_decode($_POST['changes'], true) : null
 );
 
 /*!
@@ -42,29 +42,8 @@ try {
 }
 
 /*!
- * Add the specified document(s) to the Mongo collection, ignoring any
- * fields and just straight up dumping the values.
+ *
  */
-
-$documents = array();
-
-if(!empty($data['document'])) {
-    $documents[] = $data['document'];
-} else if(!empty($data['documents'])) {
-    foreach($data['documents'] as $document) {
-        $documents[] = $document;
-    }
-} else {
-    echo json_beautify(json_render_error(403, "You didn't specify any documents to insert."));
-    exit;
-}
-
-try {
-    $collection->batchInsert($documents);
-} catch(Exception $e) {
-    echo json_beautify(json_render_error(404, "An unknown error occured while inserting your data into the database."));
-    exit;
-}
 
 /*!
  * Output our JSON payload for use in whatever needs to be using
