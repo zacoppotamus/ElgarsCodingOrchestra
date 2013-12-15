@@ -71,25 +71,25 @@ if(isset($data['fields']) && !empty($data['fields'])) {
 // Run the query.
 try {
     $query = $collection->find($query, $fields);
+
+    // Set the offset if we have one.
+    if($data['offset'] > 0) {
+        $query = $query->skip($data['offset']);
+    }
+
+    // If we have a row limit, apply it.
+    if($data['rows'] > -1) {
+        $query = $query->limit($data['rows']);
+    }
+
+    // Iterate through the results and populate the output.
+    foreach($query as $row) {
+        $json['rows']++;
+        $json['results'][] = $row;
+    }
 } catch(Exception $e) {
     echo json_beautify(json_render_error(404, "An unexpected error occured while performing your query - are you sure you formatted it correctly?"));
     exit;
-}
-
-// Set the offset if we have one.
-if($data['offset'] > 0) {
-    $query = $query->skip($data['offset']);
-}
-
-// If we have a row limit, apply it.
-if($data['rows'] > -1) {
-    $query = $query->limit($data['rows']);
-}
-
-// Iterate through the results and populate the output.
-foreach($query as $row) {
-    $json['rows']++;
-    $json['results'][] = $row;
 }
 
 /*!
