@@ -125,11 +125,11 @@ class eco {
      * sent to remove a field totally.
      */
 
-    public static function update($dataset, $query, $change) {
+    public static function update($dataset, $query, $changes) {
         $post_data = array(
             "dataset" => $dataset,
             "query" => json_encode($query),
-            "change" => json_encode($change)
+            "changes" => json_encode($changes)
         );
 
         $url = self::generate_endpoint_url("update");
