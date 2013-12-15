@@ -26,6 +26,13 @@ $passed = 0;
 $failed = 0;
 
 /*!
+ * Test zero: Ping  request
+ */
+
+$ping = eco::ping();
+check_test("Ping", $ping);
+
+/*!
  * Test one: Inserting data.
  */
 
@@ -67,6 +74,16 @@ $search = eco::select($dataset, array(
 ));
 
 check_test("Select #1", $search);
+
+$search = eco::select($dataset, array(
+    "last_name" => "Cash"
+));
+
+check_test("Select #2", $search);
+
+$search = eco::select($dataset;
+
+check_test("Select #3", $search);
 
 /*!
  * Test three: Update data.
