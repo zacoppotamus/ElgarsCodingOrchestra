@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Big Data - SPE</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+
+    <!-- Custom CSS here -->
+    <link href="css/style.css" rel="stylesheet">
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
+  </head>
+
+  <body>
+
+    <!-- Full Page Image Header Area -->
+    <div id="top" class="header">
+      <div class="vert-text">
+        <h1>Elgar's Coding Orchestra</h1>
+        <h3><em>Analyzing</em> Data, <em>Spotting</em> Trends</h3>
+      </div>
+    </div>
+    <!-- /Full Page Image Header Area -->
+
+    <!-- Intro -->
+    <div id="about" class="intro">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 col-md-offset-3 text-center">
+            <h2>Big Data is the Future.</h2>
+            <p class="lead">Unfortunately meaning and correlations can be lost under the vast amounts of spreadsheets and files.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /Intro -->
+
+    <!-- Services -->
+    <div id="services" class="services">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4 col-md-offset-4 text-center">
+            <h2>What We Do</h2>
+            <hr>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-2 col-md-offset-2 text-center">
+            <div class="service-item">
+              <i class="service-icon fa fa-cloud"></i>
+              <h4>Retrieve</h4>
+              <p>We mine open data from large and small publicly accessible repositories.</p>
+            </div>
+          </div>
+          <div class="col-md-2 text-center">
+            <div class="service-item">
+              <i class="service-icon fa fa-code"></i>
+              <h4>Parse</h4>
+              <p>We parse data from .xls and .csv files and store it in our database.</p>
+            </div>
+          </div>
+          <div class="col-md-2 text-center">
+            <div class="service-item">
+              <i class="service-icon fa fa-hdd-o"></i>
+              <h4>API</h4>
+              <p>Our database API serves the data in JSON format.</p>
+            </div>
+          </div>
+          <div class="col-md-2 text-center">
+            <div class="service-item">
+              <i class="service-icon fa fa-tasks"></i>
+              <h4>Visualize</h4>
+              <p>Correlations from data served from the database can be understood through our interactive visualizations.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /Services -->
+
+    <!-- example -->
+    <div class="example">
+      <div class="vert-text">
+        <h1>A Link To An Example Will Be Here</h1>
+      </div>
+    </div>
+    <!-- /example -->
+
+    <!-- Portfolio -->
+    <div id="portfolio" class="portfolio">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4 col-md-offset-4 text-center">
+            <h2>Our Team</h2>
+            <hr>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4 text-center">
+            <div class="portfolio-item">
+              <a href="#"><img class="img-portfolio img-responsive" src="img/team-zac.jpg"></a>
+              <h4>Zac Ioannidis</h4>
+            </div>
+          </div>
+          <div class="col-md-4 text-center">
+            <div class="portfolio-item">
+              <a href="#"><img class="img-portfolio img-responsive" src="img/team-ben.jpg"></a>
+              <h4>Ben Elgar</h4>
+            </div>
+          </div>
+          <div class="col-md-4 text-center">
+            <div class="portfolio-item">
+              <a href="#"><img class="img-portfolio img-responsive" src="img/team-oscar.jpg"></a>
+              <h4>Oscar Scull</h4>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4 text-center">
+            <div class="portfolio-item">
+              <a href="#"><img class="img-portfolio img-responsive" src="img/team-sam.jpg"></a>
+              <h4>Sam Toussaint</h4>
+            </div>
+          </div>
+          <div class="col-md-4 text-center">
+            <div class="portfolio-item">
+              <a href="#"><img class="img-portfolio img-responsive" src="img/team-luke.jpeg"></a>
+              <h4>Luke Zbihlyj</h4>
+            </div>
+          </div>
+          <div class="col-md-4 text-center">
+            <div class="portfolio-item">
+              <a href="#"><img class="img-portfolio img-responsive" src="img/team-steve.jpg"></a>
+              <h4>Steve Livermore-Tozser</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /Portfolio -->
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 col-md-offset-3 text-center">
+            <p>Made in Bristol - 2013</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!-- /Footer -->
+
+    <!-- JavaScript -->
+    <script src="js/jquery-1.10.2.js"></script>
+    <script src="js/bootstrap.js"></script>
+
+    <!-- Custom JavaScript for the Side Menu and Smooth Scrolling -->
+    <script>
+        $("#menu-close").click(function(e) {
+            e.preventDefault();
+            $("#sidebar-wrapper").toggleClass("active");
+        });
+    </script>
+    <script>
+        $("#menu-toggle").click(function(e) {
+            e.preventDefault();
+            $("#sidebar-wrapper").toggleClass("active");
+        });
+    </script>
+    <script>
+      $(function() {
+        $('a[href*=#]:not([href=#])').click(function() {
+          if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'')
+            || location.hostname == this.hostname) {
+
+            var target = $(this.hash);
+            target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
+            if (target.length) {
+              $('html,body').animate({
+                scrollTop: target.offset().top
+              }, 1000);
+              return false;
+            }
+          }
+        });
+      });
+    </script>
+
+  </body>
+
+</html>
