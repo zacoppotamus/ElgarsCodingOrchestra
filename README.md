@@ -14,10 +14,11 @@ http://api.spe.sneeza.me/
 
 It requires no authentication and allows simple method names to be appended to the URL in order to access different functionality.
 
-### Method: /query
+### Method: /select
 
 This method returns a subset of data from the specified collection, with a few optional parameters for helping fine-tune things. These are as follows:
 
++ **q** - Query to perform (takes MongoDB syntax).
 + **d** - This parameter specifies the dataset that we should be running the query against.
 + **rows** _(optional)_ - The maximum number of rows to return. If left blank, it will return all of them.
 + **offset** _(optiona)_ - The offset starting point of the returned data. Mostly used in conjunction with 'rows'.
@@ -28,9 +29,10 @@ Here is an example request:
 ```php
 $dataset = "test";
 $num_rows = 50;
+$query = json_encode(array('postcode', 'BS1'));
 $fields = json_encode(array('first_name', 'last_name'));
 
-$url = "http://api.spe.sneeza.me/query?d=" . urlencode($dataset) . "&rows=" . $num_rows . "&fields=" . urlencode($fields);
+$url = "http://api.spe.sneeza.me/select?q=" . urlencode($query) . "&d=" . urlencode($dataset) . "&rows=" . $num_rows . "&fields=" . urlencode($fields);
 $data = json_decode(file_get_contents($url), true);
 
 var_dump($data);
