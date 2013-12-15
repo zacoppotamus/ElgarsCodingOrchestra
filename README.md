@@ -3,6 +3,15 @@ Elgar's Coding Orchestra
 
 Our totally unnamed project is still pretty sparse. We currently have a server set up at spe.sneeza.me, and all members of our group have an account on that server with sudo access. Your default password will be 'password' which you can change by running the passwd command.
 
+Project Page
+---------------------
+
+We currently have a public facing website located at:
+
+```
+http://project.spe.sneeza.me/
+```
+
 Our API
 ---------------------
 
@@ -14,7 +23,7 @@ http://api.spe.sneeza.me/
 
 It requires no authentication and allows simple method names to be appended to the URL in order to access different functionality.
 
-### Method: GET /select
+### GET /select
 
 This method returns a subset of data from the specified collection, with a few optional parameters for helping fine-tune things. These are as follows:
 
@@ -47,7 +56,7 @@ $data = json_decode(file_get_contents($url . "?" . $args), true);
 var_dump($data);
 ```
 
-### Method: POST /insert
+### POST /insert
 
 This method takes two inputs, specifying the dataset to insert documents into and the document(s) themselves. We use batch processing to speed up the time it takes to insert large amounts of data.
 
