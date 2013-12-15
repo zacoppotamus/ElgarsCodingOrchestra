@@ -161,7 +161,7 @@ class eco {
             curl_setopt($ch, CURLOPT_POST, true);
 
             if(!empty($params)) {
-                curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
             }
         }
 
