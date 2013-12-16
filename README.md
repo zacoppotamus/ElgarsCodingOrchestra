@@ -180,3 +180,30 @@ $data = json_decode(file_get_contents($url, false, $context), true);
 
 var_dump($data);
 ```
+
+### GET /calc/polyfit
+
+This method allows the caller to determine the equation of an n-th degree polynomial representing the correlation between two sets of data. The inputs are as follows:
+
++ **dataset** - This parameter specifies the dataset that we should be running the query against.
++ **field_one** - The first field inside the dataset to query.
++ **field_two** - The second field inside the dataset to compare the first to.
++ **degree** _(optional)_ - Specify the degree of the required polynomial. Defaults to **2**.
+
+Here is an example request:
+
+```php
+$url = "http://api.spe.sneeza.me/calc/polyfit";
+
+$args = array(
+    "dataset" => "test",
+    "field_one" => "age",
+    "field_two" => "wealth"
+    "degree" => 2
+);
+
+$args = http_build_query($args);
+$data = json_decode(file_get_contents($url . "?" . $args), true);
+
+var_dump($data);
+```

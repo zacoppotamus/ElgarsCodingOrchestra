@@ -74,14 +74,13 @@ if($data['degree'] > 0 && $data['degree'] < 20) {
 }
 
 // Run the command.
-$json['command'] = "python ../correlation/correlation.py eco " . $dataset . " " . $field_one . " " . $field_two . " " . $degree;
 exec("python '../correlation/correlation.py' eco " . $dataset . " " . $field_one . " " . $field_two . " " . $degree, $output);
 
 // Check for empty output.
-/*if(empty($output)) {
+if(empty($output)) {
     echo json_beautify(json_render_error(405, "Couldn't find a polyfit equation for the given datasets."));
     exit;
-}*/
+}
 
 // Output the coefficients.
 foreach($output as $line) {
