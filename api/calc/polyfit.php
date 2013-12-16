@@ -74,7 +74,7 @@ if($data['degree'] > 0 && $data['degree'] < 20) {
 }
 
 // Run the command.
-exec("python correlation/correlation.py eco " . $data['dataset'] . " " . $fieldone . " " . $fieldtwo . " " . $degree, $output);
+exec("python correlation/correlation.py eco " . $data['dataset'] . " " . $field_one . " " . $field_two . " " . $degree, $output);
 
 // Check for empty output.
 if(empty($output)) {
