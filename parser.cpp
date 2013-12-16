@@ -22,6 +22,8 @@ class record
     void add_item( Value value );
     void add_item( Value value, int pos );
     void change_type( Value_type new_type, int pos );
+    Value_type get_type( int pos );
+    Value get_value( int pos );
   private:
     int field_count;
     int item_count;
@@ -50,8 +52,6 @@ void record::add_item( Value value )
         fields[item_count] = value;
         item_count++;
     }
-  if( item_count == field_count ) return 1;
-  else return 0;
 }
 
 void record::add_item( Value value, int pos )
@@ -61,13 +61,37 @@ void record::add_item( Value value, int pos )
     fields[pos] = value;
     item_count++;
   }
-  if( item_count == field_count ) return 1;
-  else return 0;
 }
 
 void record::change_type( Value_type new_type, int pos )
 {
-  if( fields )
+  if( new_type == fields[pos].type() ) return;
+  if( new_type == str_type )
+  {
+    if( fields[pos].type() == bool_type )
+    {
+      if( fields[pos].get_bool() == 1 )
+        fields[pos] = Value("Yes");
+      else
+        fields[pos] = Value("No");
+    }
+    else
+      if( fields[pos].type() == int_type )
+        fields[pos] = Value( to_string( fields[pos].get_int() ) );
+      else
+        fields[pos] = Value( to_string( fields[pos].get_real() ) );
+  }
+  else
+}
+
+Value_type record::get_type( int pos )
+{
+  return fields[pos].type();
+}
+
+Value record::get_value( int pos )
+{
+  return fields[pos];
 }
 
 ////////////////////////////////
@@ -122,7 +146,7 @@ int record_style::get_size()
 	return record_size;
 }
 
-Value_type record::change_type( Value_type new_type, int pos )
+void record_style::change_type( Value_type new_type, int pos )
 {
   //Brief explanation:
   //If the current type is null, it must be overwritten. 
@@ -133,11 +157,28 @@ Value_type record::change_type( Value_type new_type, int pos )
   //field could only be a string.
   //If none of these conditions are met, then the types must be real and int,
   //in which case real takes precedence.
-  if( field_types[pos] == null_type ) return new_type;
-  if( new_type == field_types[pos] ) return new_type;
-  if( field_types[pos] == str_type || new_type == str_type ) return str_type;
-  if( field_types[pos] == bool_type || new_type == bool_type ) return str_type;
-  return real_type;
+  if( new_type == null_type ) return;
+  if( field_types[pos] == null_type )
+  {
+    field_types[pos] = new_type;
+    return;
+  }
+  if( new_type == field_types[pos] )
+  {
+    field_types[pos] = new_type;
+    return;
+  }
+  if( field_types[pos] == str_type || new_type == str_type )
+  {
+    field_types[pos] = str_type;
+    return;
+  }
+  if( field_types[pos] == bool_type || new_type == bool_type )
+  {
+    field_types[pos] = str_type;
+    return;
+  }
+  field_types[pos] =  real_type;
 }
 
 /////////////////////////
@@ -149,7 +190,8 @@ class table
     ~table();
     void add_field( Value new_field );
     void add_item( int row, int col, Value new_item );
-    void 
+    void type_scan();
+    void print_table( string filename );
   private:
     int field_lock;
     int field_count;
@@ -183,7 +225,36 @@ void table::add_field( Value new_field )
 
 void table::add_item( int row, int col, Value new_item )
 {
-  vector[row].add_item( new_item, col );
+  records[row].add_item( new_item, col );
+}
+
+void table::type_scan()
+{
+  for( int i = 0; i < field_count; i++ )
+  {
+    Value new_value;
+    for( int j = 0; j < record_count; j++ )
+    {
+      new_value = records[j].get_type( i );
+      style.change_type( new_value.type(), i );
+    }
+    for( int j = 0; j < record_count; j++ )
+      records[j].change_type( style.get_type( i ), i );
+  }
+}
+
+void table::print_table( string filename )
+{
+  ofstream output( filename );
+  for( int i = 0; i < record_count; i++ )
+  {
+    Object tuple;
+    for( int j = 0; j < field_count; j++ )
+      tuple.push_back( Pair( header.get_value(j).get_str(),
+                           records[i].get_value(j) ) );
+    write( tuple, output, remove_trailing_zeros );
+  }
+  output.close();
 }
 
 //////////////
@@ -198,9 +269,9 @@ void error( e_type err )
 
 int boolean_value( string value )
 {
-  string bool_string = "Yes";
+  string bool_string = """Yes""";
   if( value.compare( bool_string ) == 0 ) return 1;
-  bool_string = "No";
+  bool_string = """No""";
   if( value.compare( bool_string ) == 0 ) return 0;
   return -1;
 }
@@ -260,7 +331,7 @@ Value parse_value( string value )
   {}
 
   //Confirms the string type
-  new_value = new Value( value );
+  new_value = new Value( substr( (size_t)1, value.length()-2 );
   return new_value;
 }
 
@@ -350,11 +421,26 @@ int main( int argc, char** argv )
           {
             while( count_4 < count_2 + field_count )
             {
-              
+              new_table.add_item( count_4-count_2, count_3-count+1,
+                spreadsheet[count_3][count_4] );
+              count_4++;
             }
             count_3++;
           }
-            
+          new_table.type_scan();
+          new_table.print_table( filename+".txt" );
+
+          count_3 = count;
+          count_4 = count_2;
+          while( count_3 <= count + record_count )
+          {
+            while( count_4 < count_2 + field_count )
+            {
+              spreadsheet[count_3][count_4] = Value();
+              count_4++;
+            }
+            count_3++;
+          }
         }
       }
       count_2++;
@@ -364,6 +450,6 @@ int main( int argc, char** argv )
   
   for( int i = 0; i < total_height; i++ )
     delete spreadsheet[i];
-  delete spreadsheet;
+  delete[] spreadsheet;
   return 0;
 }
