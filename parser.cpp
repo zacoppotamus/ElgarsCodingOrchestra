@@ -22,6 +22,7 @@ class record
     void add_item( Value value );
     void add_item( Value value, int pos );
     void change_type( Value_type new_type, int pos );
+    Value_type get_type( int pos );
   private:
     int field_count;
     int item_count;
@@ -50,8 +51,6 @@ void record::add_item( Value value )
         fields[item_count] = value;
         item_count++;
     }
-  if( item_count == field_count ) return 1;
-  else return 0;
 }
 
 void record::add_item( Value value, int pos )
@@ -61,13 +60,16 @@ void record::add_item( Value value, int pos )
     fields[pos] = value;
     item_count++;
   }
-  if( item_count == field_count ) return 1;
-  else return 0;
 }
 
 void record::change_type( Value_type new_type, int pos )
 {
-  if( fields )
+  
+}
+
+Value_type record::get_type( int pos )
+{
+  return fields[pos].type();
 }
 
 ////////////////////////////////
@@ -122,7 +124,7 @@ int record_style::get_size()
 	return record_size;
 }
 
-Value_type record::change_type( Value_type new_type, int pos )
+void record_style::change_type( Value_type new_type, int pos )
 {
   //Brief explanation:
   //If the current type is null, it must be overwritten. 
@@ -133,11 +135,28 @@ Value_type record::change_type( Value_type new_type, int pos )
   //field could only be a string.
   //If none of these conditions are met, then the types must be real and int,
   //in which case real takes precedence.
-  if( field_types[pos] == null_type ) return new_type;
-  if( new_type == field_types[pos] ) return new_type;
-  if( field_types[pos] == str_type || new_type == str_type ) return str_type;
-  if( field_types[pos] == bool_type || new_type == bool_type ) return str_type;
-  return real_type;
+  if( new_type == null_type ) return;
+  if( field_types[pos] == null_type )
+  {
+    field_types[pos] = new_type;
+    return;
+  }
+  if( new_type == field_types[pos] )
+  {
+    field_types[pos] = new_type;
+    return;
+  }
+  if( field_types[pos] == str_type || new_type == str_type )
+  {
+    field_types[pos] = str_type;
+    return;
+  }
+  if( field_types[pos] == bool_type || new_type == bool_type )
+  {
+    field_types[pos] = str_type;
+    return;
+  }
+  field_types[pos] =  real_type;
 }
 
 /////////////////////////
@@ -149,7 +168,7 @@ class table
     ~table();
     void add_field( Value new_field );
     void add_item( int row, int col, Value new_item );
-    void 
+    void type_scan();
   private:
     int field_lock;
     int field_count;
@@ -183,7 +202,22 @@ void table::add_field( Value new_field )
 
 void table::add_item( int row, int col, Value new_item )
 {
-  vector[row].add_item( new_item, col );
+  records[row].add_item( new_item, col );
+}
+
+void table::type_scan()
+{
+  for( int i = 0; i < field_count; i++ )
+  {
+    Value new_value;
+    for( int j = 0; j < record_count; j++ )
+    {
+      new_value = records[j].get_type( i );
+      style.change_type( new_value.type(), i );
+    }
+    for( int j = 0; j < record_count; j++ )
+      records[j].change_type( style.get_type( i ), i );
+  }
 }
 
 //////////////
