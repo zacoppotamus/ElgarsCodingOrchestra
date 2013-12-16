@@ -62,7 +62,7 @@ if(isset($data['field_one']) && !empty($data['field_one']) && is_string($data['f
 
 // Check the field_two value.
 if(isset($data['field_two']) && !empty($data['field_two']) && is_string($data['field_two'])) {
-    $field_one = $data['field_two'];
+    $field_two = $data['field_two'];
 } else {
     echo json_beautify(json_render_error(404, "You didn't specify the second field to use!"));
     exit;
