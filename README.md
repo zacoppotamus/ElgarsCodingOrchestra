@@ -207,3 +207,5 @@ $data = json_decode(file_get_contents($url . "?" . $args), true);
 
 var_dump($data);
 ```
+
+The fields returned in the 'data' section will be an array of coefficients, ordered by the highest degree to the lowest degree. These can then be used to graph the equation or evaluate the expression at different points.
