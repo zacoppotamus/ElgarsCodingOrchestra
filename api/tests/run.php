@@ -123,8 +123,8 @@ check_test("Delete #2 - age = 18, deleted: " . $delete['deleted'], $delete);
 
 $delete = eco::delete($dataset, array(
     "\$or" => array(
-        "first_name" => "Matthew",
-        "first_name" => "John"
+        array("first_name" => "Matthew"),
+        array("first_name" => "John")
     )
 ));
 
