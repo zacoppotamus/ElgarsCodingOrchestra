@@ -47,14 +47,14 @@ try {
  * of the polynomial using NumPy.
  */
 
-$dataset = $data['dataset'];
+$dataset = escapeshellarg($data['dataset']);
 $field_one = null;
 $field_two = null;
 $degree = 2;
 
 // Check the field_one value.
 if(isset($data['field_one']) && !empty($data['field_one']) && is_string($data['field_one'])) {
-    $field_one = $data['field_one'];
+    $field_one = escapeshellarg($data['field_one']);
 } else {
     echo json_beautify(json_render_error(403, "You didn't specify the first field to use!"));
     exit;
@@ -62,7 +62,7 @@ if(isset($data['field_one']) && !empty($data['field_one']) && is_string($data['f
 
 // Check the field_two value.
 if(isset($data['field_two']) && !empty($data['field_two']) && is_string($data['field_two'])) {
-    $field_two = $data['field_two'];
+    $field_two = escapeshellarg($data['field_two']);
 } else {
     echo json_beautify(json_render_error(404, "You didn't specify the second field to use!"));
     exit;
@@ -74,8 +74,8 @@ if($data['degree'] > 0 && $data['degree'] < 20) {
 }
 
 // Run the command.
-$json['command'] = "python correlation/correlation.py eco " . $dataset . " " . $field_one . " " . $field_two . " " . $degree;
-exec("python correlation/correlation.py eco " . $dataset . " " . $field_one . " " . $field_two . " " . $degree, $output);
+$json['command'] = "python ../correlation/correlation.py eco " . $dataset . " " . $field_one . " " . $field_two . " " . $degree;
+exec("python '../correlation/correlation.py' eco " . $dataset . " " . $field_one . " " . $field_two . " " . $degree, $output);
 
 // Check for empty output.
 /*if(empty($output)) {
