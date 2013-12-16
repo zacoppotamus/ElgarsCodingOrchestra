@@ -13,9 +13,21 @@ header("content-type: application/json; charset=utf8");
  * API paths and stuff.
  */
 
+// Add main endpoints for primary methods.
 route::add("/", "index.php");
 route::add("/select", "select.php");
 route::add("/insert", "insert.php");
+route::add("/update", "update.php");
+route::add("/delete", "delete.php");
+route::add("/ping", "ping.php");
+
+// Add endpoints for calculation endpoints.
+route::add("/calc/polyfit", "calc/polyfit.php");
+route::add("/calc/mean", "calc/mean.php");
+route::add("/calc/stddev", "calc/stddev.php");
+
+// Add endpoints for the tests.
+route::add("/tests/run", "tests/run.php");
 
 /*!
  * Perform the routing request.

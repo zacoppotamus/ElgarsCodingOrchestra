@@ -30,7 +30,7 @@ $json = array(
  */
 
 if(!isset($data['dataset']) || empty($data['dataset'])) {
-    echo json_beautify(json_render_error(401, "You didn't specify a dataset to query."));
+    echo json_beautify(json_render_error(401, "You didn't specify a dataset to insert your documents into."));
     exit;
 }
 
@@ -48,6 +48,7 @@ try {
 
 $documents = array();
 
+// Check for some actual documents.
 if(!empty($data['document'])) {
     $documents[] = $data['document'];
 } else if(!empty($data['documents'])) {
@@ -59,12 +60,21 @@ if(!empty($data['document'])) {
     exit;
 }
 
+// Run the insertion query.
 try {
-    $collection->batchInsert($documents);
+    $status = $collection->batchInsert($documents);
+
+    if($status['ok'] == 1) {
+        $json['added'] += count($documents);
+    } else {
+        echo json_beautify(json_render_error(405, "An unknown error occured while inserting your data into the database."));
+        exit;
+    }
 } catch(Exception $e) {
     echo json_beautify(json_render_error(404, "An unknown error occured while inserting your data into the database."));
     exit;
 }
+
 /*!
  * Output our JSON payload for use in whatever needs to be using
  * it.
