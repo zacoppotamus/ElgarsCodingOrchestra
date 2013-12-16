@@ -128,7 +128,7 @@ $delete = eco::delete($dataset, array(
     )
 ));
 
-check_test("Delete #3 - Matthew + John, deleted: " . $delete['deleted'], $delete);
+check_test("Delete #3 - first_name = Matthew \$or first_name = John, deleted: " . $delete['deleted'], $delete);
 
 $search = eco::select($dataset);
 
