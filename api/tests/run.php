@@ -130,6 +130,10 @@ $delete = eco::delete($dataset, array(
 
 check_test("Delete #3 - Matthew + John, deleted: " . $delete['deleted'], $delete);
 
+$search = eco::select($dataset);
+
+check_test("Select #4 - All records, rows: " . $search['rows'], $search);
+
 /*!
  * Finish up.
  */
