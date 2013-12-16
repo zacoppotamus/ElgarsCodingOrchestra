@@ -7,7 +7,8 @@
 
 define("JSON_ERROR_MAINTENANCE", json_encode(array(
     "meta" => array(
-        "code" => 503
+        "code" => 503,
+        "version" => app::$version
     ),
     "data" => array(
         "message" => "Maintenance is currently being performed."
@@ -16,7 +17,8 @@ define("JSON_ERROR_MAINTENANCE", json_encode(array(
 
 define("JSON_ERROR_NOMETHOD", json_encode(array(
     "meta" => array(
-        "code" => 402
+        "code" => 402,
+        "version" => app::$version
     ),
     "data" => array(
         "message" => "No method was specified."
@@ -31,7 +33,8 @@ define("JSON_ERROR_NOMETHOD", json_encode(array(
 function json_render($code = 200, $data = array()) {
     return json_encode(array(
         "meta" => array(
-            "code" => $code
+            "code" => $code,
+            "version" => app::$version
         ),
         "data" => $data
     ));
