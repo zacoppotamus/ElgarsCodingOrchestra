@@ -72,7 +72,7 @@ try {
         exit;
     }
 } catch(Exception $e) {
-    echo json_beautify(json_render_error(405, "An unexpected error occured while trying to update the documents. " . $e->getMessage()));
+    echo json_beautify(json_render_error(405, "An unexpected error occured while trying to update the documents."));
     exit;
 }
 
