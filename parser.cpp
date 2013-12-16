@@ -77,11 +77,13 @@ void record::change_type( Value_type new_type, int pos )
     }
     else
       if( fields[pos].type() == int_type )
-        fields[pos] = Value( to_string( fields[pos].get_int() ) );
+        fields[pos] = Value( to_string( (long long int)fields[pos].get_int() ) );
       else
-        fields[pos] = Value( to_string( fields[pos].get_real() ) );
+        fields[pos] = Value( to_string( (long double)fields[pos].get_real() ) );
   }
   else
+    if( fields[pos].type() == int_type )
+      fields[pos] = Value( (double)fields[pos].get_int() );  
 }
 
 Value_type record::get_type( int pos )
@@ -331,7 +333,7 @@ Value parse_value( string value )
   {}
 
   //Confirms the string type
-  new_value = new Value( substr( (size_t)1, value.length()-2 );
+  new_value = new Value( value.substr( (size_t)1, value.length()-2 ) );
   return new_value;
 }
 
