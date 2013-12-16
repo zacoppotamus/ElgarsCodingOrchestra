@@ -12,9 +12,9 @@ aside, p
 	fill: #777;
 }
 
-.line
+.dot
 {
-	stroke-width: 2.5px;
+	stroke: #aaa;
 }
 
 .label
