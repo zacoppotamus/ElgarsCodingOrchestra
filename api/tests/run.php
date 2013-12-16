@@ -97,7 +97,7 @@ $update = eco::update($dataset, array(
     )
 ));
 
-check_test("Update #1 - James to Jacob, updated: " . $update['updated'], $update);
+check_test("Update #1 - James => Jacob, updated: " . $update['updated'], $update);
 
 $search = eco::select($dataset, array(
     "first_name" => "James"
@@ -109,7 +109,17 @@ check_test("Select #4 - first_name = James, rows: " . $search['rows'], $search);
  * Test four: Delete data.
  */
 
-// Delete all the data.
+$delete = eco::delete($dataset, array(
+    "first_name" => "Jacob"
+));
+
+check_test("Delete #1 - first_name = Jacob, deleted: " . $delete['deleted'], $delete);
+
+$delete = eco::delete($dataset, array(
+    "age" => 18
+));
+
+check_test("Delete #2 - age = 18, deleted: " . $delete['deleted'], $delete);
 
 /*!
  * Finish up.

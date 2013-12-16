@@ -149,6 +149,33 @@ class eco {
     }
 
     /*!
+     * Delete documents from the database using a query to match
+     * documents in a specified dataset.
+     */
+
+    public static function delete($dataset, $query) {
+        $post_data = array(
+            "dataset" => $dataset,
+            "query" => json_encode($query)
+        );
+
+        $url = self::generate_endpoint_url("delete");
+        $data = self::send_request($url, "POST", $post_data);
+
+        if(!$data) {
+            return false;
+        }
+
+        $json = self::parse_json($data);
+
+        if(!$json) {
+            return false;
+        }
+
+        return $json['data'];
+    }
+
+    /*!
      * Return the last known error code, which can be populated from
      * the API or a failed cURL request.
      */
