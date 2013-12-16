@@ -41,12 +41,17 @@ $url = "http://api.spe.sneeza.me/select";
 $args = array(
     "dataset" => "test",
     "query" => json_encode(
-        array("postcode" => "BS1")
+        array(
+            "postcode" => "BS1"
+        )
     ),
     "num_rows" => 50,
     "offset" => 0,
     "fields" => json_encode(
-        array("first_name", "last_name")
+        array(
+            "first_name",
+            "last_name"
+        )
     )
 );
 
@@ -110,7 +115,9 @@ $url = "http://api.spe.sneeza.me/update";
 $args = array(
     "dataset" => "test",
     "query" => json_encode(
-        array("last_name" => "Parker")
+        array(
+            "last_name" => "Parker"
+        )
     ),
     "changes" => json_encode(
         array(
@@ -118,7 +125,9 @@ $args = array(
                 "postcode" => "BS2",
                 "last_name" => "Piper",
             ),
-            "\$unset" => array("middle_name")
+            "\$unset" => array(
+                "middle_name"
+            )
         )
     )
 );
@@ -152,7 +161,9 @@ $url = "http://api.spe.sneeza.me/delete";
 $args = array(
     "dataset" => "test",
     "query" => json_encode(
-        array("last_name" => "Piper")
+        array(
+            "last_name" => "Piper"
+        )
     )
 );
 
