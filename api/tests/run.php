@@ -97,7 +97,7 @@ $update = eco::update($dataset, array(
     )
 ));
 
-check_test("Update #1 => James to Jacob, updated: " . $update['updated'], $update);
+check_test("Update #1 - James to Jacob, updated: " . $update['updated'], $update);
 
 $search = eco::select($dataset, array(
     "first_name" => "James"
