@@ -28,6 +28,7 @@ route::add("/calc/stddev", "calc/stddev.php");
 
 // Add endpoints for the tests.
 route::add("/tests/run", "tests/run.php");
+route::add("/tests/import", "tests/import.php");
 
 /*!
  * Perform the routing request.
