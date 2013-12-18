@@ -16,12 +16,14 @@ function csv_to_array($filename = "", $delimiter = ",") {
     $header = null;
     $data = array();
 
-    if(($handle = fopen($filename, 'r')) !== false) {
+    if(($handle = fopen($filename, "r")) !== false) {
         while(($row = fgetcsv($handle, 1000, $delimiter)) !== false) {
             if(!$header) {
                 $header = $row;
+                var_dump($row);
             } else {
                 $data[] = array_combine($header, $row);
+                var_dump($row);
             }
         }
 
@@ -44,7 +46,7 @@ if(!empty($data)) {
     if($insert) {
         echo "[+] Added!";
     } else {
-        echo "[!] Failed! " . eco::last_error();
+        echo "[!] Failed! " . eco::error();
     }
 }
 
