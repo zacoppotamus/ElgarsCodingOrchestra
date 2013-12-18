@@ -3,6 +3,7 @@
 include("includes/kernel.php");
 include("includes/api/core.php");
 include("includes/classes/eco.class.php");
+ini_set('auto_detect_line_endings', true);
 
 /*!
  * Define a function to turn a CSV into an array.
@@ -20,10 +21,8 @@ function csv_to_array($filename = "", $delimiter = ",") {
         while(($row = fgetcsv($handle, 1000, $delimiter)) !== false) {
             if(!$header) {
                 $header = $row;
-                var_dump($row);
             } else {
                 $data[] = array_combine($header, $row);
-                var_dump($row);
             }
         }
 
