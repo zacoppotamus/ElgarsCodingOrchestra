@@ -5,6 +5,13 @@
 	shape-rendering: crispEdges;
 }
 
+aside, p
+{
+	font-family:"Helvetica Neue";
+	font-size: 14px;
+	fill: #777;
+}
+
 .line
 {
 	stroke-width: 2.5px;
@@ -17,7 +24,7 @@
 
 .y
 {
-	fill: #aaa;
+	fill: #000;
 }
 
 .year.label
