@@ -7,6 +7,7 @@ ini_set("display_errors", 1);
 // Set the header content type including charset.
 include("includes/classes/route.class.php");
 header("content-type: application/json; charset=utf8");
+header("access-control-allow-origin: *");
 
 /*!
  * Add all of the possible routes to the class, including
