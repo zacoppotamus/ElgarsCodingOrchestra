@@ -13,11 +13,15 @@ html, body, #map {
   width: 60px;
   height: 20px;
   padding-right: 100px;
-  font: 10px sans-serif;
+  font: 10px "Helvetica Neue";
 }
 
 .stations circle {
   fill: brown;
   stroke: black;
   stroke-width: 1.5px;
+}
+
+.tooltip {
+  text-transform: capitalize;
 }
