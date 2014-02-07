@@ -23,7 +23,7 @@ $json = array(
 try {
     $json['datasets'] = mongocli::get_collections();
 } catch(Exception $e) {
-    echo json_beautify(json_render_error(404, "An unexpected error occured while trying to find the datasets."));
+    echo json_beautify(json_render_error(401, "An unexpected error occured while trying to find the datasets."));
     exit;
 }
 
