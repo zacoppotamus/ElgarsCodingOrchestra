@@ -57,20 +57,24 @@ if(!isset($data['field_name']) || empty($data['field_name'])) {
 
 // Create the query that we need to run for the calculations.
 $query = array(
-    '$match' => $data['query'],
-    '$group' => array(
-        "_id" => null,
-        "min" => array(
-            '$min' => '$' . $data['field_name']
-        ),
-        "max" => array(
-            '$max' => '$' . $data['field_name']
-        ),
-        "average" => array(
-            '$avg' => '$' . $data['field_name']
-        ),
-        "sum" => array(
-            '$sum' => '$' . $data['field_name']
+    array(
+        '$match' => $data['query']
+    ),
+    array(
+        '$group' => array(
+            "_id" => null,
+            "min" => array(
+                '$min' => '$' . $data['field_name']
+            ),
+            "max" => array(
+                '$max' => '$' . $data['field_name']
+            ),
+            "average" => array(
+                '$avg' => '$' . $data['field_name']
+            ),
+            "sum" => array(
+                '$sum' => '$' . $data['field_name']
+            )
         )
     )
 );
