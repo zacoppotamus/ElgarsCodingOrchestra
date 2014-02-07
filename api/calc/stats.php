@@ -22,7 +22,8 @@ $json = array(
     "rows" => 0,
     "min" => null,
     "max" => null,
-    "average" => null
+    "average" => null,
+    "sum" => null,
 );
 
 /*!
@@ -66,6 +67,9 @@ $query = array(
         ),
         "average" => array(
             '$avg' => '$' . $data['field_name']
+        ),
+        "sum" => array(
+            '$sum' => '$' . $data['field_name']
         )
     )
 );
@@ -78,6 +82,7 @@ try {
     $json['min'] = $stats['min'];
     $json['max'] = $stats['max'];
     $json['average'] = $stats['average'];
+    $json['sum'] = $stats['sum'];
 } catch(Exception $e) {
     echo json_beautify(json_render_error(404, "An unexpected error occured while performing your query - are you sure you formatted it correctly?"));
     exit;
