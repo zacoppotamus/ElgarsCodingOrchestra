@@ -19,7 +19,6 @@ $data = array(
  */
 
 $json = array(
-    "rows" => 0,
     "min" => null,
     "max" => null,
     "average" => null,
