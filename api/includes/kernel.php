@@ -24,7 +24,7 @@ date_default_timezone_set("UTC");
 app::$development = (file_exists("/vagrant") || stripos($_SERVER['HTTP_HOST'], "dev") !== false);
 app::$debug = (isset($_GET['d3bug']));
 app::$maintenance = false;
-app::$version = "α";
+app::$version = "β";
 app::$init_time = microtime(true);
 
 app::$stack = array(
