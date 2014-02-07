@@ -11,7 +11,7 @@ include("includes/api/core.php");
 $data = array(
     "dataset" => (isset($_GET['dataset'])) ? trim(strtolower($_GET['dataset'])) : null,
     "field_name" => (isset($_GET['field_name'])) ? trim(strtolower($_GET['field_name'])) : null,
-    "query" => (isset($_GET['query'])) ? json_decode($_GET['query'], true) : array()
+    "query" => (isset($_GET['query'])) ? json_decode($_GET['query'], true) : null
 );
 
 /*!
@@ -49,32 +49,36 @@ try {
  * depending on the query provided.
  */
 
-// Check if we have a query or not.
+// Check if we have a field_name or not.
 if(!isset($data['field_name']) || empty($data['field_name'])) {
     echo json_beautify(json_render_error(403, "You didn't specify a field name to use in the calculations."));
     exit;
 }
 
-// Create the query that we need to run for the calculations.
-$query = array(
-    array(
+$query = array();
+
+// Check if we need to run a pre-query to match certain documents.
+if(isset($data['query']) && !empty($data['query'])) {
+    $query[] = array(
         '$match' => $data['query']
-    ),
-    array(
-        '$group' => array(
-            "_id" => null,
-            "min" => array(
-                '$min' => '$' . $data['field_name']
-            ),
-            "max" => array(
-                '$max' => '$' . $data['field_name']
-            ),
-            "average" => array(
-                '$avg' => '$' . $data['field_name']
-            ),
-            "sum" => array(
-                '$sum' => '$' . $data['field_name']
-            )
+    );
+}
+
+// Create the query that we need to run for the calculations.
+$query[] = array(
+    '$group' => array(
+        "_id" => null,
+        "min" => array(
+            '$min' => '$' . $data['field_name']
+        ),
+        "max" => array(
+            '$max' => '$' . $data['field_name']
+        ),
+        "average" => array(
+            '$avg' => '$' . $data['field_name']
+        ),
+        "sum" => array(
+            '$sum' => '$' . $data['field_name']
         )
     )
 );
