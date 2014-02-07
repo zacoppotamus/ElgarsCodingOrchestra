@@ -10,7 +10,8 @@ include("includes/api/core.php");
 
 $data = array(
     "dataset" => (isset($_GET['dataset'])) ? trim(strtolower($_GET['dataset'])) : null,
-    "field_name" => (isset($_GET['field_name'])) ? trim(strtolower($_GET['field_name'])) : null
+    "field_name" => (isset($_GET['field_name'])) ? trim(strtolower($_GET['field_name'])) : null,
+    "query" => (isset($_GET['query'])) ? json_decode($_GET['query'], true) : array()
 );
 
 /*!
@@ -56,8 +57,9 @@ if(!isset($data['field_name']) || empty($data['field_name'])) {
 
 // Create the query that we need to run for the calculations.
 $query = array(
+    '$match' => $data['query'],
     '$group' => array(
-        "_id" => 0,
+        "_id" => null,
         "min" => array(
             '$min' => '$' . $data['field_name']
         ),
