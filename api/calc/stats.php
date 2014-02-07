@@ -9,7 +9,8 @@ include("includes/api/core.php");
  */
 
 $data = array(
-    "dataset" => (isset($_GET['dataset'])) ? trim(strtolower($_GET['dataset'])) : null
+    "dataset" => (isset($_GET['dataset'])) ? trim(strtolower($_GET['dataset'])) : null,
+    "field_name" => (isset($_GET['field_name'])) ? trim(strtolower($_GET['field_name'])) : null
 );
 
 /*!
@@ -48,20 +49,33 @@ try {
  * depending on the query provided.
  */
 
+// Check if we have a query or not.
+if(!isset($data['field_name']) || empty($data['field_name'])) {
+    echo json_beautify(json_render_error(403, "You didn't specify a field name to use in the calculations."));
+    exit;
+}
+
+// Create the query that we need to run for the calculations.
 $query = array(
     '$group' => array(
-        '$min' => "age"
+        "_id" => 0,
+        "min" => array(
+            '$min' => '$' . $data['field_name']
+        ),
+        "max" => array(
+            '$max' => '$' . $data['field_name']
+        )
     )
 );
 
 // Run the query.
 try {
-    $results = $collection->aggregate($query);
+    $result = $collection->aggregate($query);
 
-    var_dump($results);
-    exit;
+    $json['min'] = $result['result'][0]['min'];
+    $json['max'] = $result['result'][1]['max'];
 } catch(Exception $e) {
-    echo json_beautify(json_render_error(403, "An unexpected error occured while performing your query - are you sure you formatted it correctly?"));
+    echo json_beautify(json_render_error(404, "An unexpected error occured while performing your query - are you sure you formatted it correctly?"));
     exit;
 }
 
