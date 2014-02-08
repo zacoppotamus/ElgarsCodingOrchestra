@@ -68,6 +68,9 @@ if(isset($data['fields']) && !empty($data['fields'])) {
     }
 }
 
+// Exclude _id from our results.
+$fields['_id'] = false;
+
 // Run the query.
 try {
     $query = $collection->find($query, $fields);

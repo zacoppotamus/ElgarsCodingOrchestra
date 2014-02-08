@@ -7,6 +7,7 @@ ini_set("display_errors", 1);
 // Set the header content type including charset.
 include("includes/classes/route.class.php");
 header("content-type: application/json; charset=utf8");
+header("access-control-allow-origin: *");
 
 /*!
  * Add all of the possible routes to the class, including
@@ -15,19 +16,20 @@ header("content-type: application/json; charset=utf8");
 
 // Add main endpoints for primary methods.
 route::add("/", "index.php");
-route::add("/select", "select.php");
-route::add("/insert", "insert.php");
-route::add("/update", "update.php");
+route::add("/datasets", "datasets.php");
 route::add("/delete", "delete.php");
+route::add("/insert", "insert.php");
 route::add("/ping", "ping.php");
+route::add("/select", "select.php");
+route::add("/update", "update.php");
 
-// Add endpoints for calculation endpoints.
+// Add endpoints for calculations.
 route::add("/calc/polyfit", "calc/polyfit.php");
-route::add("/calc/mean", "calc/mean.php");
-route::add("/calc/stddev", "calc/stddev.php");
+route::add("/calc/stats", "calc/stats.php");
 
 // Add endpoints for the tests.
 route::add("/tests/run", "tests/run.php");
+route::add("/tests/import", "tests/import.php");
 
 /*!
  * Perform the routing request.

@@ -51,4 +51,13 @@ class MongoCLI {
     public static function select_collection($collection) {
         return self::$database->selectCollection($collection);
     }
+
+    /*!
+     * Get a list of all of the available collections in the database.
+     * This is useful for a variety of reasons.
+     */
+
+    public static function get_collections() {
+        return self::$database->getCollectionNames();
+    }
 }

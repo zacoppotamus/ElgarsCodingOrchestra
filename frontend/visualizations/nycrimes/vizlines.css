@@ -1,0 +1,54 @@
+.axis path, .axis line
+{
+	fill: none;
+	stroke: #000;
+	shape-rendering: crispEdges;
+}
+
+aside, p
+{
+	font-family:"Helvetica Neue";
+	font-size: 14px;
+	fill: #777;
+}
+
+.line
+{
+	stroke-width: 2.5px;
+}
+
+.label
+{
+	fill: #777;
+}
+
+.y
+{
+	fill: #000;
+}
+
+.year.label
+{
+	font: 500 96px "Helvetica Neue";
+	fill: #aaa;
+}
+
+.year.label.active
+{
+	fill: #aaa;
+}
+
+.overlay
+{
+	fill: none;
+	pointer-events: all;
+	cursor: ew-resize;
+}
+
+.l_text
+{
+	font-family:"Helvetica Neue";
+	text-transform: lowercase;
+	font-size: 14px;
+	fill: #777;
+}
