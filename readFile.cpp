@@ -190,7 +190,12 @@ string getCSV( ifstream &input )
 
 void insertValue( string csvalue, vector<sheetNode> &cell )
 {
-  
+  if( csvalue.compare( "" ) == 0 )
+  {
+    sheetNode newsheet;
+    cell.push_back( newsheet );
+    return;
+  }
   string upper = simpleToUpper( csvalue );
   if( upper.compare( "TRUE" ) == 0 )
   {
@@ -256,8 +261,8 @@ vector< vector<sheetNode> > readCSV( ifstream &input )
       csvalue = getCSV( input );
       //cout << "____" << "CSValue obtained." << "\n";
       insertValue( csvalue, spreadsheet[cHeight] );
-      //cout << "____" << "CSValue " << spreadsheet[cHeight][cWidth].getType()
-      //  << " inserted." << "\n";
+      //cout << "____" << "CSValue \"" << csvalue << "\" of type "
+      // << spreadsheet[cHeight][cWidth].getType() << " inserted." << "\n";
       cWidth++;
     }
     cHeight++;
@@ -320,6 +325,10 @@ int main()
       else if( it2->getType() == BOOL )
       {
         cout << it2->getBool() << "  ";
+      }
+      else if( it2->getType() == NULLVALUE )
+      {
+        cout << "NULL" << "  ";
       }
       else
       {
