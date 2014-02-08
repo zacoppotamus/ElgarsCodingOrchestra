@@ -1,4 +1,5 @@
 #include <string>
+#include <vector>
 using namespace std;
 
 enum FileType { CSV, UNDEF };
@@ -34,8 +35,8 @@ unsigned charsUntil( ifstream &input, char target );
 
 string getCSV( ifstream &input );
 
-void insertValue( string csvalue, sheetNode * cell );
+void insertValue( string csvalue, vector<sheetNode> &cell );
 
-sheetNode ** readCSV( ifstream &input );
+vector< vector<sheetNode> > readCSV( ifstream &input );
 
-sheetNode ** getFile( string fileName );
+vector< vector<sheetNode> > getFile( string fileName );
