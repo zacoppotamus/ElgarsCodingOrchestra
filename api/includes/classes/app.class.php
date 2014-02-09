@@ -22,6 +22,33 @@ class App {
     public static $init_time = null;
 
     /*!
+     * Given an array of field names, return which ones we think should
+     * be indexed and which are non-essential.
+     */
+
+    public static function find_index_names($fields) {
+        $keywords = array("id", "name", "key");
+        $names = array();
+
+        foreach($fields as $field_name) {
+            $matched = false;
+
+            foreach($keywords as $keyword) {
+                if(stripos($field_name, $keyword) !== false) {
+                    $matched = true;
+                    break;
+                }
+            }
+
+            if($matched) {
+                $names[] = $field_name;
+            }
+        }
+
+        return $names;
+    }
+
+    /*!
      * Generate the humanly readable runtime, in seconds.
      */
 
