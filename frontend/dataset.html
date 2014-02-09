@@ -3,30 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
+    <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="application.js" type="text/javascript"></script>
     <title>Our Datasets</title>
 </head>
 <body>
     <table class="table table-hover">
     </table>
     <script>
-        $(document).ready(function() {
-            $.getJSON("http://api.spe.sneeza.me/select?dataset=nysubway", function(result){
-                $.each(result.data.results[0], function(k, header){
-                    $('.table').append("<th>" + k + "</th>");
-                });
-                $.each(result.data.results, function(i, row){
-                    var tr;
-                    $.each(row, function(j, col){
-                        tr = tr + "<td>" + col + "</td>";
-                    });
-                    $('.table').append("<tr>" + tr + "</tr>");
-                });
-
-            });
-
-
-        });
+        printDataset();
     </script>
 </body>
 </html>

@@ -151,7 +151,7 @@ i.service-icon {
 /* Callout */
 
 .example {
-  color: #ffffff;
+  color: #fff;
   display: table;
   height: 400px;
   width: 100%;
@@ -160,6 +160,11 @@ i.service-icon {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+}
+
+.vert-text > h1 {
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: black;
 }
 
 /* Portfolio */
@@ -243,4 +248,9 @@ i.scroll:hover {
 	height: 75%;
   }
 
+}
+
+th {
+  font-size: 1.5em;
+  background-color: #fff;
 }
