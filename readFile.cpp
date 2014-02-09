@@ -298,6 +298,7 @@ vector< vector<sheetNode> > getFile( string fileName )
   }
 }
 
+/*
 int main()
 {
   cout << "Initiating testing protocols..." << "\n";
@@ -340,3 +341,4 @@ int main()
   cout << "Testing Complete." << "\n";;
   return 0;
 }
+*/
