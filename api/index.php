@@ -75,7 +75,11 @@ if(!empty($fields)) {
             $status = $collection->ensureIndex(array($field => -1), array("background" => true));
         }
 
-        $json['indexes'] = $collection->getIndexInfo();
+        $indexes = $collection->getIndexInfo();
+
+        foreach($indexes as $index) {
+            $json['indexes'][$index['name']] = $index['key'];
+        }
     } catch(Exception $e) {
         echo json_beautify(json_render_error(404, "An unknown error occured while adding the indexes to the dataset."));
         exit;
