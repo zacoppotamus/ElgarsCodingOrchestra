@@ -1,3 +1,6 @@
+#ifndef FILEREADER
+#define FILEREADER
+
 #include <string>
 #include <vector>
 using namespace std;
@@ -40,3 +43,5 @@ void insertValue( string csvalue, vector<sheetNode> &cell );
 vector< vector<sheetNode> > readCSV( ifstream &input );
 
 vector< vector<sheetNode> > getFile( string fileName );
+
+#endif
