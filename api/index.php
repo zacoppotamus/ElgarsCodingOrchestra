@@ -79,6 +79,8 @@ if(!empty($fields)) {
             exit;
         }
     } catch(Exception $e) {
+        print_r($e);
+
         echo json_beautify(json_render_error(404, "An unknown error occured while adding the indexes to the dataset."));
         exit;
     }
