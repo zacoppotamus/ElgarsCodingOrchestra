@@ -72,7 +72,6 @@ if(!empty($fields)) {
     try {
         foreach($fields as $field) {
             $status = $collection->ensureIndex(array($field => 1), array("background" => true));
-            $status = $collection->ensureIndex(array($field => -1), array("background" => true));
         }
 
         $indexes = $collection->getIndexInfo();
