@@ -84,7 +84,11 @@ if(!empty($fields)) {
         exit;
     }
 } else {
-    $json['indexes'] = $collection->getIndexInfo();
+    $indexes = $collection->getIndexInfo();
+
+    foreach($indexes as $index) {
+        $json['indexes'][$index['name']] = $index['key'];
+    }
 }
 
 /*!
