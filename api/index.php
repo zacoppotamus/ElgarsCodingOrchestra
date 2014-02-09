@@ -9,8 +9,8 @@ include("includes/api/core.php");
  */
 
 $data = array(
-    "dataset" => (isset($_POST['dataset'])) ? trim(strtolower($_POST['dataset'])) : null,
-    "fields" => (isset($_POST['fields'])) ? json_decode($_POST['fields'], true) : null
+    "dataset" => (isset($_GET['dataset'])) ? trim(strtolower($_GET['dataset'])) : null,
+    "fields" => (isset($_GET['fields'])) ? json_decode($_GET['fields'], true) : null
 );
 
 /*!
