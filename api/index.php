@@ -52,7 +52,7 @@ if(isset($data['fields'])) {
     $fields = $data['fields'];
 } else {
     try {
-        $query = $collection->find(null, array("_id" => false));
+        $query = $collection->find(array(), array("_id" => false));
         $query->limit(10);
 
         foreach($query as $row) {
