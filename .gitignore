@@ -1,3 +1,4 @@
 # Ignore files on the server.
 .gitconfig
 .ssh
+.DS_Store
