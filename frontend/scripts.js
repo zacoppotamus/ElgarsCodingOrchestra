@@ -3,12 +3,9 @@ function startRead(evt) {
     if(file){
         getAsText(file);
     }
-    evt.stopPropagation();
-    evt.preventDefault();
 }
 
 function getAsText(readFile) {
-
     var reader = new FileReader();
 
     // Read file into memory as UTF-8
@@ -34,8 +31,9 @@ function updateProgress(evt) {
 
 function loaded(evt) {
     // Obtain the read file data
-    var fileString = evt.target.result;
-    $("body").append(fileString);
+    var fileString = String(evt.target.result);
+    var data = JSON.stringify($.csv.toObjects(fileString));
+    $.post("http://api.spe.sneeza.me/insert", {dataset:"CHANGE_ME", documents:data});
 }
 
 function errorHandler(evt) {
