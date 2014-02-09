@@ -69,6 +69,7 @@ if(isset($data['fields'])) {
 // Run the insertion query.
 try {
     $status = $collection->ensureIndex($fields, array("background" => true));
+    var_dump($status);
 
     if($status['ok'] == 1) {
         $json['indexes'] = $collection->getIndexInfo();
@@ -77,7 +78,8 @@ try {
         exit;
     }
 } catch(Exception $e) {
-    echo json_beautify(json_render_error(404, "An unknown error occured while adding your indexes to the dataset."));
+    var_dump($e);
+    echo json_beautify(json_render_error(404, "An unknown error occured while adding the indexes to the dataset."));
     exit;
 }
 
