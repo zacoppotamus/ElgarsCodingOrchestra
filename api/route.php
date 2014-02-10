@@ -15,9 +15,10 @@ header("access-control-allow-origin: *");
  */
 
 // Add main endpoints for primary methods.
-route::add("/", "index.php");
+route::add("/", "main.php");
 route::add("/datasets", "datasets.php");
 route::add("/delete", "delete.php");
+route::add("/index", "index.php");
 route::add("/insert", "insert.php");
 route::add("/ping", "ping.php");
 route::add("/select", "select.php");
