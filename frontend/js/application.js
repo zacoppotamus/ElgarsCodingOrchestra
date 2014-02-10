@@ -1,8 +1,3 @@
-// Store Object
-var currentDataset = {
-	name: ''
-};
-
 function printDatasets()
 {
 	$(document).ready(function() {
