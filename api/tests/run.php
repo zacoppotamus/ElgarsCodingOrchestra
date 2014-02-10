@@ -15,7 +15,7 @@ $eco = new eco("eSQpirMYxjXUs8xIjjaUo72gutwDJ4CP");
  */
 
 function check_test($test_name, $result) {
-    global $passed, $failed;
+    global $eco, $passed, $failed;
 
     if($result) {
         $passed++;
