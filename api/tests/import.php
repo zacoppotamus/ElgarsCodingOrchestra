@@ -6,6 +6,12 @@ include("includes/classes/eco.class.php");
 ini_set('auto_detect_line_endings', true);
 
 /*!
+ * Create a new instance of ECO with our Mashape key.
+ */
+
+$eco = new eco("eSQpirMYxjXUs8xIjjaUo72gutwDJ4CP");
+
+/*!
  * Define a function to turn a CSV into an array.
  */
 
@@ -40,12 +46,12 @@ $data = csv_to_array("../frontend/visualizations/nysubway/subentrances.csv");
 
 // Import data.
 if(!empty($data)) {
-    $insert = eco::insert_multi($dataset, $data);
+    $insert = $eco->insert_multi($dataset, $data);
 
     if($insert) {
         echo "[+] Added!";
     } else {
-        echo "[!] Failed! " . eco::error();
+        echo "[!] Failed! " . $eco->error();
     }
 }
 
