@@ -22,7 +22,7 @@ function check_test($test_name, $result) {
         echo "[+] {$test_name}: Success.\n";
     } else {
         $failed++;
-        echo "[!] {$test_name}: Failed! - (#" . eco::errno() . ") " . eco::error() . "\n";
+        echo "[!] {$test_name}: Failed! - (#" . $eco->errno() . ") " . $eco->error() . "\n";
     }
 }
 
