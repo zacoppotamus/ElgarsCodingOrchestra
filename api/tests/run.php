@@ -5,18 +5,24 @@ include("includes/api/core.php");
 include("includes/classes/eco.class.php");
 
 /*!
+ * Create a new instance of ECO with our Mashape key.
+ */
+
+$eco = new eco("eSQpirMYxjXUs8xIjjaUo72gutwDJ4CP");
+
+/*!
  * Define a simple test command woohoo!
  */
 
 function check_test($test_name, $result) {
-    global $passed, $failed;
+    global $eco, $passed, $failed;
 
     if($result) {
         $passed++;
         echo "[+] {$test_name}: Success.\n";
     } else {
         $failed++;
-        echo "[!] {$test_name}: Failed! - (#" . eco::errno() . ") " . eco::error() . "\n";
+        echo "[!] {$test_name}: Failed! - (#" . $eco->errno() . ") " . $eco->error() . "\n";
     }
 }
 
@@ -29,7 +35,7 @@ $failed = 0;
  * Test zero: Ping  request
  */
 
-$ping = eco::ping();
+$ping = $eco->ping();
 check_test("Ping", $ping);
 
 /*!
@@ -43,7 +49,7 @@ $document = array(
     "age" => 18
 );
 
-$insert = eco::insert($dataset, $document);
+$insert = $eco->insert($dataset, $document);
 check_test("Single Insert", $insert);
 
 $documents = array();
@@ -62,26 +68,26 @@ $documents[] = array(
     "age" => 19
 );
 
-$insert = eco::insert_multi($dataset, $documents);
+$insert = $eco->insert_multi($dataset, $documents);
 check_test("Multi Insert", $insert);
 
 /*!
  * Test two: Select data.
  */
 
-$search = eco::select($dataset, array(
+$search = $eco->select($dataset, array(
     "first_name" => "James"
 ));
 
 check_test("Select #1 - first_name = James, rows: " . $search['rows'], $search);
 
-$search = eco::select($dataset, array(
+$search = $eco->select($dataset, array(
     "last_name" => "Cash"
 ));
 
 check_test("Select #2 - last_name = Cash, rows: " . $search['rows'], $search);
 
-$search = eco::select($dataset);
+$search = $eco->select($dataset);
 
 check_test("Select #3 - All records, rows: " . $search['rows'], $search);
 
@@ -89,7 +95,7 @@ check_test("Select #3 - All records, rows: " . $search['rows'], $search);
  * Test three: Update data.
  */
 
-$update = eco::update($dataset, array(
+$update = $eco->update($dataset, array(
     "first_name" => "James"
 ), array(
     "\$set" => array(
@@ -99,7 +105,7 @@ $update = eco::update($dataset, array(
 
 check_test("Update #1 - James => Jacob, updated: " . $update['updated'], $update);
 
-$search = eco::select($dataset, array(
+$search = $eco->select($dataset, array(
     "first_name" => "James"
 ));
 
@@ -109,19 +115,19 @@ check_test("Select #4 - first_name = James, rows: " . $search['rows'], $search);
  * Test four: Delete data.
  */
 
-$delete = eco::delete($dataset, array(
+$delete = $eco->delete($dataset, array(
     "first_name" => "Jacob"
 ));
 
 check_test("Delete #1 - first_name = Jacob, deleted: " . $delete['deleted'], $delete);
 
-$delete = eco::delete($dataset, array(
+$delete = $eco->delete($dataset, array(
     "age" => 18
 ));
 
 check_test("Delete #2 - age = 18, deleted: " . $delete['deleted'], $delete);
 
-$delete = eco::delete($dataset, array(
+$delete = $eco->delete($dataset, array(
     "\$or" => array(
         array("first_name" => "Matthew"),
         array("first_name" => "John")
@@ -130,7 +136,7 @@ $delete = eco::delete($dataset, array(
 
 check_test("Delete #3 - first_name = Matthew \$or first_name = John, deleted: " . $delete['deleted'], $delete);
 
-$search = eco::select($dataset);
+$search = $eco->select($dataset);
 
 check_test("Select #4 - All records, rows: " . $search['rows'], $search);
 
