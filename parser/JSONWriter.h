@@ -1,3 +1,6 @@
+#ifndef FILEWRITER
+#define FILEWRITER
+
 #include <vector>
 #include <string>
 
@@ -23,3 +26,5 @@ class JSONObject
 
 string JSONString( JSONObject object );
 int createJDocument( string name, vector<JSONObject> objects );
+
+#endif

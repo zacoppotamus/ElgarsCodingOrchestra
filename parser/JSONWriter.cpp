@@ -157,6 +157,7 @@ int createJDocument( string name, vector<JSONObject> objects )
   return 0;
 }
 
+/*
 int main()
 {
   cout << "Initiating test protocols...\n";
@@ -204,3 +205,4 @@ int main()
   }
   return 0;
 }
+*/
