@@ -40,7 +40,7 @@
 		 */
 		printDatasets();
 		$(document).ready(function() {
-			$(document).on('click','#dataset a', function() {
+			$(document).on('mousedown','#dataset a', function() {
 				var val = console.log($(this).attr('href'));
 				$(this).attr("href", "dataset.html" + '?' + encodeURIComponent( $(this).text()) );
 			});
