@@ -34,6 +34,7 @@ function loaded(evt) {
     var fileString = String(evt.target.result);
     var data = JSON.stringify($.csv.toObjects(fileString));
     $.post("http://api.spe.sneeza.me/insert", {dataset:"CHANGE_ME", documents:data});
+    alert("Done uploading!");
 }
 
 function errorHandler(evt) {
