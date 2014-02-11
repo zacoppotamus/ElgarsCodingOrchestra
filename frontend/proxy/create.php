@@ -10,7 +10,7 @@ $query = isset($_GET['document']) ? json_decode($_GET['document']) : null;
 $query = isset($_GET['documents']) ? json_decode($_GET['documents']) : null;
 
 $records = array();
-$results = $eco->insert($dataset, $document, $documents);
+$results = $eco->insert($dataset, $document);
 
 if(!$results) {
     echo json_encode(array(
