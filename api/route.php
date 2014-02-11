@@ -21,6 +21,7 @@ route::add("/delete", "delete.php");
 route::add("/insert", "insert.php");
 route::add("/ping", "ping.php");
 route::add("/select", "select.php");
+route::add("/selecttable", "selecttable.php");
 route::add("/update", "update.php");
 
 // Add endpoints for calculations.
