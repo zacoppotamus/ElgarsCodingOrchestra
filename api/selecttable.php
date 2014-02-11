@@ -23,7 +23,7 @@ $data = array(
 
 $json = array(
     "Result" => "OK",
-    "Record" => array()
+    "Records" => array()
 );
 
 /*!
@@ -86,7 +86,7 @@ try {
 
     // Iterate through the results and populate the output.
     foreach($query as $row) {
-        $json['Record'][] = $row;
+        $json['Records'][] = $row;
     }
 } catch(Exception $e) {
     echo json_beautify(json_render_error(404, "An unexpected error occured while performing your query - are you sure you formatted it correctly?"));
