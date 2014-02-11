@@ -86,8 +86,7 @@ try {
 
     // Iterate through the results and populate the output.
     foreach($query as $row) {
-        $json['rows']++;
-        $json['results'][] = $row;
+        $json['Record'][] = $row;
     }
 } catch(Exception $e) {
     echo json_beautify(json_render_error(404, "An unexpected error occured while performing your query - are you sure you formatted it correctly?"));
@@ -99,7 +98,7 @@ try {
  * it.
  */
 
-echo json_encode($json);
+echo json_beautify(json_encode($json));
 exit;
 
 ?>
