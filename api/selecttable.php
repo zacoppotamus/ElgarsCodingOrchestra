@@ -100,7 +100,7 @@ try {
  * it.
  */
 
-echo json_beautify($json['results']);
+echo ($json['results']);
 exit;
 
 ?>
