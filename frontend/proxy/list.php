@@ -22,7 +22,7 @@ if(!$results) {
     exit;
 }
 
-foreach($results['rows'] as $row) {
+foreach($results['results'] as $row) {
     $records[] = $row;
 }
 
