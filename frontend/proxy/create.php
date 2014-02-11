@@ -5,9 +5,9 @@ header("content-type: application/json; charset=utf8");
 
 $eco = new eco("eSQpirMYxjXUs8xIjjaUo72gutwDJ4CP");
 
-$dataset = isset($_GET['dataset']) ? $_GET['dataset'] : null;
-$document = isset($_GET['document']) ? json_decode($_GET['document']) : null;
-$documents = isset($_GET['documents']) ? json_decode($_GET['documents']) : null;
+$dataset = isset($_POST['dataset']) ? $_POST['dataset'] : null;
+$document = isset($_POST['document']) ? json_decode($_POST['document']) : null;
+//$documents = isset($_POST['documents']) ? json_decode($_POST['documents']) : null;
 
 $records = array();
 $results = $eco->insert($dataset, $document);
