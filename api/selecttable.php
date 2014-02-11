@@ -100,7 +100,7 @@ try {
  * it.
  */
 
-echo ($json['results']);
+echo json_render($json['results']);
 exit;
 
 ?>
