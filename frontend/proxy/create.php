@@ -5,7 +5,7 @@ header("content-type: application/json; charset=utf8");
 
 $eco = new eco("eSQpirMYxjXUs8xIjjaUo72gutwDJ4CP");
 
-$dataset = isset($_POST['dataset']) ? $_POST['dataset'] : null;
+$dataset = isset($_GET['dataset']) ? $_GET['dataset'] : null;
 $document = isset($_POST['document']) ? json_decode($_POST['document']) : null;
 //$documents = isset($_POST['documents']) ? json_decode($_POST['documents']) : null;
 
