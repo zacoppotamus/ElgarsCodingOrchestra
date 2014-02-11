@@ -26,9 +26,9 @@ foreach($results['results'] as $row) {
     $records[] = $row;
 }
 
-echo json_beautify(json_encode(array(
+echo json_encode(array(
     "Result" => "Ok",
     "Records" => $records
-)));
+));
 
 ?>
