@@ -79,7 +79,7 @@ class eco {
             return false;
         }
 
-        return $json['server_time'];
+        return $json['data']['server_time'];
     }
 
     /**
