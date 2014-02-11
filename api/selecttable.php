@@ -22,9 +22,8 @@ $data = array(
  */
 
 $json = array(
-    "rows" => 0,
-    "offset" => $data['offset'],
-    "results" => array()
+    "Result" => "OK",
+    "Record" => array()
 );
 
 /*!
@@ -100,7 +99,7 @@ try {
  * it.
  */
 
-echo json_encode($json['results']);
+echo json_encode($json);
 exit;
 
 ?>
