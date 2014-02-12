@@ -142,7 +142,7 @@ class eco {
     public function insert_multi($dataset, $documents) {
         $post_data = array(
             "dataset" => $dataset,
-            "documents" => ($documents)
+            "documents" => json_encode($documents)
         );
 
         $url = $this->host . "/insert";
