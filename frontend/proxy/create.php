@@ -16,7 +16,7 @@ $results = $eco->insert($dataset, $document);
 if(!$results) {
     echo json_encode(array(
         "Result" => "ERROR",
-        "Message" => $eco->error()
+        "Message" => "This weird error occurred"
     ));
     exit;
 }
