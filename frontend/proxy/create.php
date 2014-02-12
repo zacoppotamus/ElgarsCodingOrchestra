@@ -11,12 +11,19 @@ $document = isset($_POST['document']) ? json_decode($_POST['document']) : null;
 
 $records = array();
 $dataset = "nysubway";
+$document = array(
+        "name" => "BenTest",
+        "lines" => "BenLine",
+        "type" => "BenType",
+        "latitude" => "BenLat",
+        "longitude" => "BenLon"
+    )
 $results = $eco->insert($dataset, $document);
 
 if(!$results) {
     echo json_encode(array(
         "Result" => "ERROR",
-        "Message" => $document
+        "Message" => $eco->error()
     ));
     exit;
 }
