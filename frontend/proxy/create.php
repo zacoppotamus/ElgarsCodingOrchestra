@@ -10,6 +10,7 @@ $document = isset($_POST['document']) ? json_decode($_POST['document']) : null;
 //$documents = isset($_POST['documents']) ? json_decode($_POST['documents']) : null;
 
 $records = array();
+$dataset = "nysubway";
 $results = $eco->insert($dataset, $document);
 
 if(!$results) {
