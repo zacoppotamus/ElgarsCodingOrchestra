@@ -25,6 +25,10 @@ $dataset = isset($_GET['dataset']) ? htmlspecialchars($_GET['dataset']) : null;
                             createAction: 'http://project.spe.sneeza.me/proxy/create.php?dataset=<?php echo $dataset; ?>'
                         },
                         fields: {
+                            _id: {
+                                key = true,
+                                list = false
+                            },
                             name: {
                                 title: "Name"
                             },
