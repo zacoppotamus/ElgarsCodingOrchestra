@@ -33,7 +33,7 @@ function loaded(evt) {
     // Obtain the read file data
     var fileString = String(evt.target.result);
     var data = JSON.stringify($.csv.toObjects(fileString));
-    $.post("http://api.spe.sneeza.me/insert", {dataset:"CHANGE_ME", documents:data});
+    $.post("http://api.spe.sneeza.me/insert", {dataset:"majorcrimesus", documents:data});
     alert("Done uploading!");
 }
 
