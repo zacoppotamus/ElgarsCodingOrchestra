@@ -20,6 +20,10 @@ $query = array(
     "_id" => $idvalue
 );
 
+$changes = array(
+    '$set' => $changes
+);
+
 $result = $eco->update($dataset, $query, $changes);
 
 if(!$result) {
