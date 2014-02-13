@@ -29,6 +29,8 @@ $dataset = isset($_GET['dataset']) ? htmlspecialchars($_GET['dataset']) : null;
                         fields: {
                             _id: {
                                 key: true,
+                                create: false,
+                                edit: false,
                                 list: false
                             },
                             name: {
