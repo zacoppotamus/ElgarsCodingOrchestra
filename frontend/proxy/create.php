@@ -5,22 +5,19 @@ header("content-type: application/json; charset=utf8");
 
 $eco = new eco("eSQpirMYxjXUs8xIjjaUo72gutwDJ4CP");
 
-$dataset = isset($_GET['dataset']) ? $_GET['dataset'] : null;
-$document = isset($_POST['document']) ? json_decode($_POST['document']) : null;
-//$documents = isset($_POST['documents']) ? json_decode($_POST['documents']) : null;
-
-$records = array();
+//$dataset = isset($_GET['dataset']) ? $_GET['dataset'] : null;
 $dataset = "nysubway";
-$document = array(
-        "name" => "BenTest",
-        "lines" => "BenLine",
-        "type" => "BenType",
-        "latitude" => "BenLat",
-        "longitude" => "BenLon"
-    )
-$results = $eco->insert($dataset, $document);
+$document = array();
 
-if(!$results) {
+foreach($_POST as $name => $value) {
+    if($name == "dataset") continue;
+
+    $document[$name] = $value;
+}
+
+$result = $eco->insert($dataset, $document);
+
+if(!$result) {
     echo json_encode(array(
         "Result" => "ERROR",
         "Message" => $eco->error()
@@ -28,13 +25,9 @@ if(!$results) {
     exit;
 }
 
-foreach($results['results'] as $row) {
-    $records[] = $row;
-}
-
 echo json_encode(array(
     "Result" => "OK",
-    "Records" => $records
+    "Record" => $document
 ));
 
 ?>
