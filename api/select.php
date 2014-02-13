@@ -68,8 +68,13 @@ if(isset($data['fields']) && !empty($data['fields'])) {
     }
 }
 
-// Exclude _id from our results.
-$fields['_id'] = false;
+// Change the MongoID if we have one.
+foreach($query as $key => $value) {
+    if($key == "_id") {
+        $mongoid = new MongoID($value);
+        $query[$key] = $mongoid;
+    }
+}
 
 // Run the query.
 try {
@@ -87,6 +92,8 @@ try {
 
     // Iterate through the results and populate the output.
     foreach($query as $row) {
+        $row['_id'] = (string)$row['_id'];
+
         $json['rows']++;
         $json['results'][] = $row;
     }
