@@ -5,8 +5,8 @@ header("content-type: application/json; charset=utf8");
 
 $eco = new eco("eSQpirMYxjXUs8xIjjaUo72gutwDJ4CP");
 
-//$dataset = isset($_GET['dataset']) ? $_GET['dataset'] : null;
-$dataset = "nysubway";
+$dataset = isset($_GET['dataset']) ? $_GET['dataset'] : null;
+//$dataset = "nysubway";
 $document = array();
 
 foreach($_POST as $name => $value) {
