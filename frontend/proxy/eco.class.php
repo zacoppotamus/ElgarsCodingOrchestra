@@ -83,6 +83,25 @@ class eco {
     }
 
     /**
+     * Fetch a list of available datasets, in no particular order, returned
+     * as an array from the API.
+     *
+     * @return array|bool  Returns the data array on success, false on failure.
+     */
+
+    public function datasets() {
+        $url = $this->host . "/datasets";
+        $data = $this->send_request($url, "GET");
+        $json = $this->parse_json($data);
+
+        if(!$json) {
+            return false;
+        }
+
+        return $json['data']['datasets'];
+    }
+
+    /**
      * Run a /select query, finding results from a dataset that match
      * certain conditions. Optionally, leave the query blank to return
      * all rows.
@@ -153,14 +172,7 @@ class eco {
             return false;
         }
 
-        if($json['data']['added'] == count($documents)) {
-            return $json['data'];
-        } else {
-            $this->errno = 407;
-            $this->error = "The API insertion count didn't match the number of documents sent.";
-        }
-
-        return false;
+        return $json['data'];
     }
 
     /**
@@ -210,6 +222,65 @@ class eco {
 
         $url = $this->host . "/delete";
         $data = $this->send_request($url, "POST", $post_data);
+        $json = $this->parse_json($data);
+
+        if(!$json) {
+            return false;
+        }
+
+        return $json['data'];
+    }
+
+    /**
+     * Calculate the linear regression of two fields of data inside a
+     * dataset, to the n-th degree.
+     *
+     * @param string $dataset  The dataset that we run calculations on.
+     * @param string $field_one  The first field.
+     * @param string $field_two  The second field.
+     * @param int $degree  The degree of the polynomial.
+     * @return array|bool  Returns the coefficients on success, false on failure.
+     */
+
+    public function calc_polyfit($dataset, $field_one, $field_two, $degree = 2) {
+        $query_string = array(
+            "dataset" => $dataset,
+            "field_one" => $field_one,
+            "field_two" => $field_two,
+            "degree" => $degree
+        );
+
+        $url = $this->host . "/calc/polyfit";
+        $data = $this->send_request($url, "GET", $query_string);
+        $json = $this->parse_json($data);
+
+        if(!$json) {
+            return false;
+        }
+
+        return $json['data']['coefficients'];
+    }
+
+    /**
+     * Calculate some statistics about a set of data, which can be
+     * limited to a subset of data in a dataset using a query or the
+     * entire table.
+     *
+     * @param string $dataset  The dataset that we run calculations on.
+     * @param string $field_name  The field to run the calculations on.
+     * @param array $query  The query to run, in MongoDB format.
+     * @return array|bool  Returns the stats on success, false on failure.
+     */
+
+    public function calc_stats($dataset, $field_name, $query = array()) {
+        $query_string = array(
+            "dataset" => $dataset,
+            "field_name" => $field_name,
+            "query" => $query
+        );
+
+        $url = $this->host . "/calc/stats";
+        $data = $this->send_request($url, "GET", $query_string);
         $json = $this->parse_json($data);
 
         if(!$json) {
