@@ -23,7 +23,8 @@ $dataset = isset($_GET['dataset']) ? htmlspecialchars($_GET['dataset']) : null;
                         actions: {
                             listAction: 'http://project.spe.sneeza.me/proxy/list.php?dataset=<?php echo $dataset; ?>',
                             createAction: 'http://project.spe.sneeza.me/proxy/create.php?dataset=<?php echo $dataset; ?>',
-                            updateAction: 'http://project.spe.sneeza.me/proxy/update.php?dataset=<?php echo $dataset; ?>'
+                            updateAction: 'http://project.spe.sneeza.me/proxy/update.php?dataset=<?php echo $dataset; ?>',
+                            deleteAction: 'http://project.spe.sneeza.me/proxy/delete.php?dataset=<?php echo $dataset; ?>'
                         },
                         fields: {
                             _id: {
