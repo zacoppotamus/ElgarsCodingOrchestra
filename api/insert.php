@@ -65,7 +65,10 @@ try {
     $status = $collection->batchInsert($documents);
 
     if($status['ok'] == 1) {
-        $json['documents'] = $documents;
+        foreach($documents as $document) {
+            $document['_id'] = (string)$document['_id'];
+            $json['documents'][] = $document;
+        }
     } else {
         echo json_beautify(json_render_error(405, "An unknown error occured while inserting your data into the database."));
         exit;
