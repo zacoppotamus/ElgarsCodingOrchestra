@@ -54,6 +54,14 @@ if(!isset($data['query']) || empty($data['query'])) {
     exit;
 }
 
+// Change the MongoID if we have one.
+foreach($query as $key => $value) {
+    if($key == "_id") {
+        $mongoid = new MongoID($value);
+        $query[$key] = $mongoid;
+    }
+}
+
 // Run the update query.
 try {
     $status = $collection->remove($query, array("justOne" => false));
