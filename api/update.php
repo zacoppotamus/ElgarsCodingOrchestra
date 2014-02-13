@@ -76,10 +76,14 @@ try {
     if($status['ok'] == 1) {
         $json['updated'] = (int)$status['n'];
     } else {
+        app::log("update", "406 error - " . json_encode($status));
+
         echo json_beautify(json_render_error(406, "An unexpected error occured while trying to update the documents."));
         exit;
     }
 } catch(Exception $e) {
+    app::log("update", "405 error - " . json_encode($e));
+
     echo json_beautify(json_render_error(405, "An unexpected error occured while trying to update the documents."));
     exit;
 }

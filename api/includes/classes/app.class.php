@@ -55,6 +55,14 @@ class App {
     public static function runtime() {
         return round(microtime(true) - self::$init_time, 3);
     }
+
+    /*!
+     * Log something, somewhere.
+     */
+
+    public static function log($section, $message) {
+        return error_log("[$section] $message\n", 0);
+    }
 }
 
 ?>
