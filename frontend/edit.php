@@ -8,7 +8,7 @@ $dataset = isset($_GET['dataset']) ? htmlspecialchars($_GET['dataset']) : null;
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="jtable.2.3.1/themes/metro/orange/jtable.min.css" rel="stylesheet" type="text/css">
+        <link href="jtable.2.3.1/themes/metro/darkorange/jtable.min.css" rel="stylesheet" type="text/css">
         <script src="jquery-ui-1.10.4/jquery-1.10.2.js"></script>
         <script src="jquery-ui-1.10.4/ui/jquery-ui.js"></script>
         <script src="jtable.2.3.1/jquery.jtable.js"></script>
