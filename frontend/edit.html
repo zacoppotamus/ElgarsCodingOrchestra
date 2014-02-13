@@ -1,3 +1,8 @@
+<?php
+
+$dataset = isset($_GET['dataset']) ? htmlspecialchars($_GET['dataset']) : null;
+
+?>
 <!doctype html>
 <html lang="en">
     <head>
@@ -16,8 +21,8 @@
                     $('#dataTable').jtable({
                         title: 'Data Table',
                         actions: {
-                            listAction: 'http://project.spe.sneeza.me/proxy/list.php?dataset=nysubway',
-                            createAction: 'http://project.spe.sneeza.me/proxy/create.php'
+                            listAction: 'http://project.spe.sneeza.me/proxy/list.php?dataset=<?php echo $dataset; ?>',
+                            createAction: 'http://project.spe.sneeza.me/proxy/create.php?dataset=<?php echo $dataset; ?>'
                         },
                         fields: {
                             name: {
