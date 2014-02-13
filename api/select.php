@@ -86,6 +86,9 @@ foreach($query as $key => $value) {
 try {
     $query = $collection->find($query, $fields);
 
+    // Get the number of rows the query matches.
+    $json['rows'] = $query->count();
+
     // Set the offset if we have one.
     if($data['offset'] > 0) {
         $query = $query->skip($data['offset']);
@@ -99,8 +102,6 @@ try {
     // Iterate through the results and populate the output.
     foreach($query as $row) {
         $row['_id'] = (string)$row['_id'];
-
-        $json['rows']++;
         $json['results'][] = $row;
     }
 } catch(Exception $e) {
