@@ -64,7 +64,12 @@ if(!isset($data['changes']) || empty($data['changes'])) {
 // Change the MongoID if we have one.
 foreach($query as $key => $value) {
     if($key == "_id") {
-        $mongoid = new MongoID($value);
+        try {
+            $mongoid = new MongoID($value);
+        } catch(Exception $e) {
+            $mongoid = null;
+        }
+
         $query[$key] = $mongoid;
     }
 }

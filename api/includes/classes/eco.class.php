@@ -114,12 +114,12 @@ class eco {
      * @return array|bool  Returns the data array on success, false on failure.
      */
 
-    public function select($dataset, $query = null, $limit = 0, $offset = 0, $fields = null) {
+    public function select($dataset, $query = null, $offset = 0, $limit = 0, $fields = null) {
         $query_string = array(
             "dataset" => $dataset,
             "query" => json_encode($query),
-            "limit" => $limit,
             "offset" => $offset,
+            "limit" => $limit,
             "fields" => json_encode($fields)
         );
 

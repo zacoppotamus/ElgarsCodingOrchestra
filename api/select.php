@@ -12,7 +12,7 @@ $data = array(
     "dataset" => (isset($_GET['dataset'])) ? trim(strtolower($_GET['dataset'])) : null,
     "query" => (isset($_GET['query'])) ? json_decode($_GET['query'], true) : null,
     "offset" => (isset($_GET['offset']) && intval($_GET['offset']) >= 0) ? intval($_GET['offset']) : 0,
-    "rows" => (isset($_GET['rows']) && intval($_GET['rows']) >= 1) ? intval($_GET['rows']) : -1,
+    "limit" => (isset($_GET['limit']) && intval($_GET['limit']) >= 1) ? intval($_GET['limit']) : -1,
     "fields" => (isset($_GET['fields'])) ? json_decode($_GET['fields'], true) : null
 );
 
@@ -24,6 +24,7 @@ $data = array(
 $json = array(
     "rows" => 0,
     "offset" => $data['offset'],
+    "limit" => $data['limit'],
     "results" => array()
 );
 
@@ -71,7 +72,12 @@ if(isset($data['fields']) && !empty($data['fields'])) {
 // Change the MongoID if we have one.
 foreach($query as $key => $value) {
     if($key == "_id") {
-        $mongoid = new MongoID($value);
+        try {
+            $mongoid = new MongoID($value);
+        } catch(Exception $e) {
+            $mongoid = null;
+        }
+
         $query[$key] = $mongoid;
     }
 }
@@ -86,8 +92,8 @@ try {
     }
 
     // If we have a row limit, apply it.
-    if($data['rows'] > -1) {
-        $query = $query->limit($data['rows']);
+    if($data['limit'] > -1) {
+        $query = $query->limit($data['limit']);
     }
 
     // Iterate through the results and populate the output.

@@ -34,7 +34,8 @@ function json_render($code = 200, $data = array()) {
     return json_encode(array(
         "meta" => array(
             "code" => $code,
-            "version" => app::$version
+            "version" => app::$version,
+            "runtime" => app::runtime()
         ),
         "data" => $data
     ));
