@@ -172,14 +172,7 @@ class eco {
             return false;
         }
 
-        if($json['data']['added'] == count($documents)) {
-            return $json['data'];
-        } else {
-            $this->errno = 407;
-            $this->error = "The API insertion count didn't match the number of documents sent.";
-        }
-
-        return false;
+        return $json['data'];
     }
 
     /**

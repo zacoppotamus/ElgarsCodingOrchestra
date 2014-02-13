@@ -20,7 +20,7 @@ $data = array(
  */
 
 $json = array(
-    "added" => 0
+    "documents" => array()
 );
 
 /*!
@@ -65,7 +65,7 @@ try {
     $status = $collection->batchInsert($documents);
 
     if($status['ok'] == 1) {
-        $json['added'] += count($documents);
+        $json['documents'] = $documents;
     } else {
         echo json_beautify(json_render_error(405, "An unknown error occured while inserting your data into the database."));
         exit;
