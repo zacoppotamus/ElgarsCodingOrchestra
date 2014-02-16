@@ -21,6 +21,8 @@ $dataset = isset($_GET['dataset']) ? htmlspecialchars($_GET['dataset']) : null;
             $(document).ready(function() {
                     $('#dataTable').jtable({
                         title: 'Data Table',
+                        sorting: true,
+                        defaultSorting: 'name ASC',
                         actions: {
                             listAction: 'http://project.spe.sneeza.me/proxy/list.php?dataset=<?php echo $dataset; ?>',
                             createAction: 'http://project.spe.sneeza.me/proxy/create.php?dataset=<?php echo $dataset; ?>',
