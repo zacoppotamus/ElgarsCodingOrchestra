@@ -12,7 +12,7 @@ $dataset = isset($_GET['dataset']) ? htmlspecialchars($_GET['dataset']) : null;
         <link href="jtable.2.3.1/themes/metro/blue/jtable.min.css" rel="stylesheet" type="text/css">
         <script src="js/jquery-1.10.2.js"></script>
         <script src="js/jquery-ui-1.10.4.custom.min.js"></script>
-        <script src="jtable.2.3.1/jquery.jtable.js"></script>
+        <script src="js/jtable.2.3.1/jquery.jtable.js"></script>
         <title>Our Datasets</title>
     </head>
     <body>
