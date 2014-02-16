@@ -7,8 +7,8 @@ $eco = new eco("eSQpirMYxjXUs8xIjjaUo72gutwDJ4CP");
 
 $dataset = isset($_GET['dataset']) ? $_GET['dataset'] : null;
 $query = isset($_GET['query']) ? json_decode($_GET['query']) : null;
-$limit = isset($_GET['limit']) ? (int)$_GET['limit'] : null;
-$offset = isset($_GET['offset']) ? (int)$_GET['offset'] : 0;
+$limit = isset($_GET['jtPageSize']) ? (int)$_GET['jtPageSize'] : null;
+$offset = isset($_GET['jtStartIndex']) ? (int)$_GET['jtStartIndex'] : 0;
 $fields = isset($_GET['fields']) ? json_decode($_GET['fields']) : null;
 
 $records = array();

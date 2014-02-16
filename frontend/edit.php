@@ -21,6 +21,8 @@ $dataset = isset($_GET['dataset']) ? htmlspecialchars($_GET['dataset']) : null;
             $(document).ready(function() {
                     $('#dataTable').jtable({
                         title: 'Data Table',
+                        paging: true,
+                        pageSize: 50,
                         //sorting: true,
                         //defaultSorting: 'name ASC',
                         actions: {
