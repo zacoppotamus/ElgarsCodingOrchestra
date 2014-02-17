@@ -28,7 +28,8 @@ foreach($results['results'] as $row) {
 
 echo json_encode(array(
     "Result" => "OK",
-    "Records" => $records
+    "Records" => $records,
+    "TotalRecordCount" => $results["rows"]
 ));
 
 ?>
