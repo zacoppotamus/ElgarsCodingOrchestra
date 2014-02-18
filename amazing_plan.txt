@@ -1,7 +1,5 @@
 Luke
 
-- Sort data on /select using &sort={"field":1}. [1]
-- Exclude fields from /select using &exclude={}. [2]
 - Add general information about datasets: [3]
     > Rows
     > Description
