@@ -126,7 +126,10 @@ try {
 
     // Iterate through the results and populate the output.
     foreach($query as $row) {
-        $row['_id'] = (string)$row['_id'];
+        if(isset($row['_id'])) {
+            $row['_id'] = (string)$row['_id'];
+        }
+
         $json['results'][] = $row;
     }
 } catch(Exception $e) {
