@@ -66,7 +66,7 @@ class MongoCLI {
      * and optional parameters.
      */
 
-    public static function create_collection($name, $options) {
+    public static function create_collection($name, $options = array()) {
         return self::$database->createCollection($name, $options);
     }
 }
