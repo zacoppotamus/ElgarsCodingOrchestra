@@ -116,14 +116,13 @@ class eco {
 
     public function select($dataset, $query = null, $offset = 0, $limit = 0, $fields = null) {
         $query_string = array(
-            "dataset" => $dataset,
             "query" => json_encode($query),
             "offset" => $offset,
             "limit" => $limit,
             "fields" => json_encode($fields)
         );
 
-        $url = $this->host . "/select";
+        $url = $this->host . "/datasets/" . $dataset . "/select";
         $data = $this->send_request($url, "GET", $query_string);
         $json = $this->parse_json($data);
 
@@ -160,11 +159,10 @@ class eco {
 
     public function insert_multi($dataset, $documents) {
         $post_data = array(
-            "dataset" => $dataset,
             "documents" => json_encode($documents)
         );
 
-        $url = $this->host . "/insert";
+        $url = $this->host . "/datasets/" . $dataset . "/insert";
         $data = $this->send_request($url, "POST", $post_data);
         $json = $this->parse_json($data);
 
@@ -189,12 +187,11 @@ class eco {
 
     public function update($dataset, $query, $changes) {
         $post_data = array(
-            "dataset" => $dataset,
             "query" => json_encode($query),
             "changes" => json_encode($changes)
         );
 
-        $url = $this->host . "/update";
+        $url = $this->host . "/datasets/" . $dataset . "/update";
         $data = $this->send_request($url, "POST", $post_data);
         $json = $this->parse_json($data);
 
@@ -216,11 +213,10 @@ class eco {
 
     public function delete($dataset, $query) {
         $post_data = array(
-            "dataset" => $dataset,
             "query" => json_encode($query)
         );
 
-        $url = $this->host . "/delete";
+        $url = $this->host . "/datasets/" . $dataset . "/delete";
         $data = $this->send_request($url, "POST", $post_data);
         $json = $this->parse_json($data);
 
@@ -244,13 +240,12 @@ class eco {
 
     public function calc_polyfit($dataset, $field_one, $field_two, $degree = 2) {
         $query_string = array(
-            "dataset" => $dataset,
             "field_one" => $field_one,
             "field_two" => $field_two,
             "degree" => $degree
         );
 
-        $url = $this->host . "/calc/polyfit";
+        $url = $this->host . "/datasets/" . $dataset . "/calc/polyfit";
         $data = $this->send_request($url, "GET", $query_string);
         $json = $this->parse_json($data);
 
@@ -274,12 +269,11 @@ class eco {
 
     public function calc_stats($dataset, $field_name, $query = array()) {
         $query_string = array(
-            "dataset" => $dataset,
             "field_name" => $field_name,
             "query" => $query
         );
 
-        $url = $this->host . "/calc/stats";
+        $url = $this->host . "/datasets/" . $dataset . "/calc/stats";
         $data = $this->send_request($url, "GET", $query_string);
         $json = $this->parse_json($data);
 
