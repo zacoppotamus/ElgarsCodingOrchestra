@@ -13,6 +13,7 @@ $data = array(
     "query" => (isset($_GET['query'])) ? json_decode($_GET['query'], true) : null,
     "offset" => (isset($_GET['offset']) && intval($_GET['offset']) >= 0) ? intval($_GET['offset']) : 0,
     "limit" => (isset($_GET['limit']) && intval($_GET['limit']) >= 1) ? intval($_GET['limit']) : -1,
+    "sort" => (isset($_GET['sort'])) ? json_decode($_GET['sort'], true) : null,
     "fields" => (isset($_GET['fields'])) ? json_decode($_GET['fields'], true) : null
 );
 
@@ -24,7 +25,6 @@ $data = array(
 $json = array(
     "rows" => 0,
     "offset" => $data['offset'],
-    "limit" => $data['limit'],
     "results" => array()
 );
 
@@ -89,6 +89,11 @@ try {
     // Get the number of rows the query matches.
     $json['rows'] = $query->count();
 
+    // Sort the query using the provided query.
+    if(isset($data['sort'])) {
+        $query = $query->sort($data['sort']);
+    }
+
     // Set the offset if we have one.
     if($data['offset'] > 0) {
         $query = $query->skip($data['offset']);
@@ -97,6 +102,7 @@ try {
     // If we have a row limit, apply it.
     if($data['limit'] > -1) {
         $query = $query->limit($data['limit']);
+        $json['limit'] = $data['limit'];
     }
 
     // Iterate through the results and populate the output.
@@ -105,7 +111,7 @@ try {
         $json['results'][] = $row;
     }
 } catch(Exception $e) {
-    echo json_beautify(json_render_error(404, "An unexpected error occured while performing your query - are you sure you formatted it correctly?"));
+    echo json_beautify(json_render_error(404, "An unexpected error occured while performing your query - are you sure you formatted all the parameters correctly?"));
     exit;
 }
 
