@@ -43,7 +43,7 @@ if(route::parse()) {
     include(route::$file);
     exit;
 } else {
-    include("index.php");
+    include("main.php");
     exit;
 }
 
