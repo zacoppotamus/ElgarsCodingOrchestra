@@ -14,7 +14,8 @@ $data = array(
     "offset" => (isset($_GET['offset']) && intval($_GET['offset']) >= 0) ? intval($_GET['offset']) : 0,
     "limit" => (isset($_GET['limit']) && intval($_GET['limit']) >= 1) ? intval($_GET['limit']) : -1,
     "sort" => (isset($_GET['sort'])) ? json_decode($_GET['sort'], true) : null,
-    "fields" => (isset($_GET['fields'])) ? json_decode($_GET['fields'], true) : null
+    "fields" => (isset($_GET['fields'])) ? json_decode($_GET['fields'], true) : null,
+    "exclude" => (isset($_GET['exclude'])) ? json_decode($_GET['exclude'], true) : null
 );
 
 /*!
@@ -62,9 +63,27 @@ if(isset($data['query']) && !empty($data['query'])) {
 // Check if any field names were sent.
 if(isset($data['fields']) && !empty($data['fields'])) {
     if(is_array($data['fields'])) {
-        $fields = $data['fields'];
+        foreach($data['fields'] as $field_name) {
+            $fields[$field_name] = true;
+        }
+
+        if(!isset($fields['_id'])) {
+            $fields['_id'] = false;
+        }
     } else {
-        echo json_beautify(json_render_error(403, "You didn't specify the field names correctly, they should be in the form: ['field1', 'field2']."));
+        echo json_beautify(json_render_error(403, "You didn't specify the field names to return correctly, they should be in the form: ['field1', 'field2']."));
+        exit;
+    }
+}
+
+// Check if we need to exclude fields.
+if(isset($data['exclude']) && !empty($data['exclude'])) {
+    if(is_array($data['exclude'])) {
+        foreach($data['exclude'] as $field_name) {
+            $fields[$field_name] = false;
+        }
+    } else {
+        echo json_beautify(json_render_error(404, "You didn't specify the field names to exclude correctly, they should be in the form: ['field1', 'field2']."));
         exit;
     }
 }
@@ -111,7 +130,7 @@ try {
         $json['results'][] = $row;
     }
 } catch(Exception $e) {
-    echo json_beautify(json_render_error(404, "An unexpected error occured while performing your query - are you sure you formatted all the parameters correctly?"));
+    echo json_beautify(json_render_error(405, "An unexpected error occured while performing your query - are you sure you formatted all the parameters correctly?"));
     exit;
 }
 
