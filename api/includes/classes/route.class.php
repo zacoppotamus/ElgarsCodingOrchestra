@@ -58,6 +58,8 @@ class Route {
             if($valid) {
                 self::$file = $file;
                 self::$params = array_merge(self::$params, $params);
+                $_GET = array_merge($_GET, self::$params);
+
                 return true;
             }
         }
