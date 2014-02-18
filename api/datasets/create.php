@@ -43,7 +43,12 @@ if(!isset($data['dataset']) || empty($data['dataset'])) {
 try {
     $collection = mongocli::create_collection($data['dataset']);
 } catch(Exception $e) {
-    echo json_beautify(json_render_error(402, "There was a problem creating the new dataset - maybe it already exists or maybe there's no disk space left?"));
+    echo json_beautify(json_render_error(402, "There was a problem creating the new dataset - maybe there's no disk space left?"));
+    exit;
+}
+
+if($collection->exists()) {
+    echo json_beautify(json_render_error(403, "There was a problem creating the new dataset - it already exists!"));
     exit;
 }
 
@@ -58,7 +63,7 @@ if(isset($data['indexes']) && !empty($data['indexes']) && is_array($data['indexe
             $collection->ensureIndex(array($field => 1), array("background" => true));
         }
     } catch(Exception $e) {
-        echo json_beautify(json_render_error(403, "An unexpected error occured while adding one of your indexes."));
+        echo json_beautify(json_render_error(404, "An unexpected error occured while adding one of your indexes."));
         exit;
     }
 }
