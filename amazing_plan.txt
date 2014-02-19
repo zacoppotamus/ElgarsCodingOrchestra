@@ -23,7 +23,6 @@ Sam
 
 Ben
 
-- jTable paging
 - No idea
 
 Steve
