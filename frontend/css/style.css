@@ -172,10 +172,6 @@ th {
   bottom: 30%;
 }
 
-/*#fileInput {
-  bottom: 40%;
-}
-*/
 .btn-file {
     position: relative;
     overflow: hidden;
@@ -207,6 +203,49 @@ th {
   font-weight: 200;
 
 }
+
+/* Visualize */
+.visualize-container {
+  position: absolute;
+  display: table;
+  width: 100%;
+  height: 100%;
+  float: none;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.viz-row {
+
+  display: table-row;
+  /*height: 100%;*/
+}
+.visualize-1, .visualize-2, .visualize-3 {
+  display: table-cell;
+  float: none;
+}
+
+.visualize-1 {
+  background-color: rgb(69,110,145);
+  color: white;
+}
+
+.visualize-2 {
+  background-color: rgb(227,157,154);
+}
+
+.visualize-3 {
+  background-color: rgb(128,178,222);
+}
+
+.btn-group {
+  position:relative;
+  padding-top: 10px;
+  width: 80%;
+  font-size: 40px;
+}
+
+
 
 
 /* Responsive */
