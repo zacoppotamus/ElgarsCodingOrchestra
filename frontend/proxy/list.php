@@ -12,7 +12,7 @@ $offset = isset($_GET['jtStartIndex']) ? (int)$_GET['jtStartIndex'] : 0;
 $fields = isset($_GET['fields']) ? json_decode($_GET['fields']) : null;
 
 $records = array();
-$results = $eco->select($dataset, $query, $limit, $offset, $fields);
+$results = $eco->select($dataset, $query, $limit, $offset, null, $fields, null);
 
 if(!$results) {
     echo json_encode(array(
