@@ -15,6 +15,7 @@ class App {
     // App specific variables.
     public static $version = null;
     public static $domain = null;
+    public static $mashape_key = null;
 
     // Server configuration variables.
     public static $stack = array();

@@ -40,10 +40,15 @@ if(!isset($data['dataset']) || empty($data['dataset'])) {
     exit;
 }
 
-try {
-    $collection = mongocli::select_collection($data['dataset']);
-} catch(Exception $e) {
-    echo json_beautify(json_render_error(402, "An unknown error occured while attempting to select the dataset."));
+$dataset = new rainhawk\dataset($data['dataset']);
+
+if(!$dataset->exists) {
+    echo json_beautify(json_render_error(402, "The dataset that you specified does not exist."));
+    exit;
+}
+
+if(!$dataset->have_read_access(app::$mashape_key)) {
+    echo json_beautify(json_render_error(403, "You don't have read access for this dataset."));
     exit;
 }
 

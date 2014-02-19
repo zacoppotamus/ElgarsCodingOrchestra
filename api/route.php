@@ -20,7 +20,7 @@ route::add("/ping", "ping.php");
 
 // Add endpoints for /datasets/.
 route::add("/datasets", "datasets/main.php");
-route::add("/datasets/:dataset/create", "datasets/create.php");
+route::add("/datasets/create", "datasets/create.php");
 route::add("/datasets/:dataset/delete", "datasets/delete.php");
 route::add("/datasets/:dataset/index", "datasets/index.php");
 route::add("/datasets/:dataset/insert", "datasets/insert.php");

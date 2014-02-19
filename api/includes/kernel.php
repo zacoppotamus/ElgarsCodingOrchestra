@@ -3,9 +3,11 @@
 // Include the necessary classes.
 include("classes/app.class.php");
 include("classes/curl.class.php");
-include("classes/mongocli.class.php");
 include("classes/redis.class.php");
 include("classes/xcache.class.php");
+
+include("classes/rainhawk/rainhawk.class.php");
+include("classes/rainhawk/dataset.class.php");
 
 /*!
  * Set the timezone properly.
@@ -72,7 +74,15 @@ curl::$user_agent = "ECO " . app::$version . "; spe.sneeza.me;";
  * sets that have been imported.
  */
 
-mongocli::connect(app::$stack['mongodb']['host'], app::$stack['mongodb']['port']);
-mongocli::select_database(app::$stack['mongodb']['database']);
+rainhawk::connect(app::$stack['mongodb']['host'], app::$stack['mongodb']['port']);
+rainhawk::select_database(app::$stack['mongodb']['database']);
+
+/*!
+ * Check if the Mashape key has been set, and if not then use a
+ * default key so we don't break direct integration with our test
+ * services.
+ */
+
+app::$mashape_key = isset($_SERVER['X-Mashape-Proxy-Secret']) ? $_SERVER['X-Mashape-Proxy-Secret'] : "direct";
 
 ?>
