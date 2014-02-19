@@ -47,11 +47,6 @@ try {
     exit;
 }
 
-if($collection->exists()) {
-    echo json_beautify(json_render_error(403, "There was a problem creating the new dataset - it already exists!"));
-    exit;
-}
-
 /*!
  * If we have any indexes, create them using the provided field
  * names.
