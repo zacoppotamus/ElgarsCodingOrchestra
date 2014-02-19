@@ -33,7 +33,7 @@ function printDataset()
 	$(document).ready(function() {
 		// Update to GET value
 		dataset = window.location.search.slice(1);
-        $.getJSON("http://api.spe.sneeza.me/select?dataset="+dataset, function(result){
+        $.getJSON("http://api.spe.sneeza.me/datasets/"+dataset+"select", function(result){
             $.each(result.data.results[0], function(k, header){
                 $('.table').append("<th>" + k + "</th>");
             });
