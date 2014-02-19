@@ -30,10 +30,12 @@ function updateProgress(evt) {
 }
 
 function loaded(evt) {
+    var datasetName = document.getElementById("datasetNameInput").value;
+
     // Obtain the read file data
     var fileString = String(evt.target.result);
     var data = JSON.stringify($.csv.toObjects(fileString));
-    $.post("http://api.spe.sneeza.me/insert", {dataset:"majorcrimesus", documents:data});
+    $.post("http://api.spe.sneeza.me/datasets/" + datasetName + "/insert", {documents:data});
     alert("Done uploading!");
 }
 
