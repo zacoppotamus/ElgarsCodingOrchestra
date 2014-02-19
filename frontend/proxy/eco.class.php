@@ -114,12 +114,14 @@ class eco {
      * @return array|bool  Returns the data array on success, false on failure.
      */
 
-    public function select($dataset, $query = null, $offset = 0, $limit = 0, $fields = null) {
+    public function select($dataset, $query = null, $offset = 0, $limit = 0, $sort = null, $fields = null, $exclude = null) {
         $query_string = array(
-            "query" => json_encode($query),
-            "offset" => $offset,
-            "limit" => $limit,
-            "fields" => json_encode($fields)
+            "query"   = > json_encode($query),
+            "offset"  = > $offset,
+            "limit"   = > $limit,
+            "sort"    = > json_encode($sort),
+            "fields"  = > json_encode($fields),
+            "exclude" = > json_encode($exclude)
         );
 
         $url = $this->host . "/datasets/" . $dataset . "/select";
