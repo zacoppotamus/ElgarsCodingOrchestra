@@ -14,7 +14,7 @@ $exclude = isset($_GET['exclude']) ? json_decode($_GET['exclude'])   : null;
 $sort    = isset($_GET['sort']) ? json_decode($_GET['sort'])         : null;
 
 $records = array();
-$results = $eco->select($dataset, $query, $limit, $offset, $sort, $fields, $exclude);
+$results = $eco->select($dataset, $query, $offset, $limit, $sort, $fields, $exclude);
 
 if(!$results) {
     echo json_encode(array(

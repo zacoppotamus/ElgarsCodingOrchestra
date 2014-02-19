@@ -116,12 +116,12 @@ class eco {
 
     public function select($dataset, $query = null, $offset = 0, $limit = 0, $sort = null, $fields = null, $exclude = null) {
         $query_string = array(
-            "query"   = > json_encode($query),
-            "offset"  = > $offset,
-            "limit"   = > $limit,
-            "sort"    = > json_encode($sort),
-            "fields"  = > json_encode($fields),
-            "exclude" = > json_encode($exclude)
+            "query"   => json_encode($query),
+            "offset"  => $offset,
+            "limit"   => $limit,
+            "sort"    => json_encode($sort),
+            "fields"  => json_encode($fields),
+            "exclude" => json_encode($exclude)
         );
 
         $url = $this->host . "/datasets/" . $dataset . "/select";
