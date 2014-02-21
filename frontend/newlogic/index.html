@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html ng-app="d3DemoApp">
+	<head>
+		<meta charset="utf-8">
+		<title>AngularJS + D3.js</title>
+		<script src="vendor/jquery/dist/jquery.min.js"></script>
+		<script src="vendor/angular/angular.min.js"></script>
+		<script src="vendor/angular-bootstrap/ui-bootstrap.js"></script>
+		<script src="vendor/d3/d3.min.js"></script>
+		<script src="app.js"></script>
+		<link rel="stylesheet" href="vendor/bootstrap/dist/css/bootstrap.min.css">
+	</head>
+	<body ng-controller="AppCtrl">
+		<!-- Here's where our visualization will go -->
+		<div class="dropdown" >
+			<a class="dropdown-toggle">
+				Choose Dataset
+			</a>
+			<ul class="dropdown-menu">
+				<li ng-repeat="dataset in datasets">
+					<a>{{dataset}}</a>
+				</li>
+			</ul>
+		</div>
+
+		<br>
+		<div class="row">
+					<div class="col-sm-3">
+							<pre>{{selectedDataset}}</pre>
+							<label>Datasets:</label> <select class="form-control" ng-model="selectedDataset" ng-options="f for f in datasets"><option></option></select>
+					</div>
+		</div>
+
+		<br>
+
+		<div class="btn-group" >
+			<pre>{{selectedVizType}}</pre>
+			<div class="viz-types">
+				<button type="button" ng-repeat="type in vizTypes" class="btn btn-primary" ng-repeat="type in vizTypes" ng-model="selectedVizType.id" btn-radio="type.id">{{type.name}}</button>
+			</div>
+		</div>
+		<d3-visualization val="data"></d3-visualization>
+	</body>
+</html>
