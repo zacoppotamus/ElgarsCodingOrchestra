@@ -1,3 +1,23 @@
+var datasetName;
+var fileString;
+
+function initialiseDialogue(){
+    $("#uploadConfirm").dialog({
+        resizable: false,
+        modal: true,
+        autoOpen: false,
+        buttons: {
+            "Append": function(){
+                postData();
+                $(this).dialog("close");
+            },
+            "Abort": function(){
+                $(this).dialog("close");
+            }
+        }
+    });
+}
+
 function startRead(evt) {
     var file = document.getElementById('fileInput').files[0];
     if(file){
@@ -31,20 +51,22 @@ function updateProgress(evt) {
 
 function loaded(evt) {
     var datasetName = document.getElementById("datasetNameInput").value;
+    var fileString = String(evt.target.result);
     $.getJSON("http://api.spe.sneeza.me/datasets/" + datasetName + "/select", function(result){
         if(result.data.rows === 0){
-            // Obtain the read file data
-            var fileString = String(evt.target.result);
-            var data = JSON.stringify($.csv.toObjects(fileString));
-            $.post("http://api.spe.sneeza.me/datasets/" + datasetName + "/insert", {documents:data});
-            alert("Done uploading!");
+            postData(datasetName, fileString);
         }
         else{
-            alert("Error: Dataset already exists");
+            $("#uploadConfirm").dialog("open");
         }
     });
+}
 
-
+function postData() {
+    // Obtain the read file data
+    var data = JSON.stringify($.csv.toObjects(fileString));
+    $.post("http://api.spe.sneeza.me/datasets/" + datasetName + "/insert", {documents:data});
+    alert("Done uploading!");
 }
 
 function errorHandler(evt) {
