@@ -9,7 +9,7 @@ Even though its use is not needed as much in other sections of the website it is
 Dependencies
 ----
 
-To get dependencies run ```bower install```.
+~~To get dependencies run ```bower install```.~~ Site is deployed automatically, so no point yet.
 
 
 To-Do
