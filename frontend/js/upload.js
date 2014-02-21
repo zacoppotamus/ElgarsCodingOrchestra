@@ -1,6 +1,3 @@
-var datasetName;
-var fileString;
-
 function initialiseDialogue(){
     $("#uploadConfirm").dialog({
         resizable: false,
@@ -8,12 +5,26 @@ function initialiseDialogue(){
         autoOpen: false,
         buttons: {
             "Append": function(){
-                postData();
+                startRead();
                 $(this).dialog("close");
             },
             "Abort": function(){
                 $(this).dialog("close");
             }
+        }
+    });
+}
+
+function uploadClick(evt) {
+    var datasetName = document.getElementById("datasetNameInput").value;
+
+    $.getJSON("http://api.spe.sneeza.me/datasets/" + datasetName + "/select", function(result){
+        console.log("The result is " + result.data.rows);
+        if(result.data.rows === 0){
+            startRead();
+        }
+        else{
+            $("#uploadConfirm").dialog("open");
         }
     });
 }
@@ -51,22 +62,18 @@ function updateProgress(evt) {
 
 function loaded(evt) {
     var datasetName = document.getElementById("datasetNameInput").value;
+
+    // Obtain the read file data
     var fileString = String(evt.target.result);
-    $.getJSON("http://api.spe.sneeza.me/datasets/" + datasetName + "/select", function(result){
-        if(result.data.rows === 0){
-            postData(datasetName, fileString);
-        }
-        else{
-            $("#uploadConfirm").dialog("open");
-        }
-    });
+    var data = JSON.stringify($.csv.toObjects(fileString));
+    $.post("http://api.spe.sneeza.me/datasets/" + datasetName + "/insert", {documents:data});
+    alert("Done uploading!");
 }
 
 function postData() {
     // Obtain the read file data
-    var data = JSON.stringify($.csv.toObjects(fileString));
-    $.post("http://api.spe.sneeza.me/datasets/" + datasetName + "/insert", {documents:data});
-    alert("Done uploading!");
+    var datasetName = document.getElementById("datasetNameInput").value;
+    var fileString = String(evt.target.result);
 }
 
 function errorHandler(evt) {
