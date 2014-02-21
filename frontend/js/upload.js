@@ -31,12 +31,20 @@ function updateProgress(evt) {
 
 function loaded(evt) {
     var datasetName = document.getElementById("datasetNameInput").value;
+    $.getJSON("http://api.spe.sneeza.me/datasets/" + datasetName + "/select", function(result){
+        if(result.data.rows === 0){
+            // Obtain the read file data
+            var fileString = String(evt.target.result);
+            var data = JSON.stringify($.csv.toObjects(fileString));
+            $.post("http://api.spe.sneeza.me/datasets/" + datasetName + "/insert", {documents:data});
+            alert("Done uploading!");
+        }
+        else{
+            alert("Error: Dataset already exists");
+        }
+    });
 
-    // Obtain the read file data
-    var fileString = String(evt.target.result);
-    var data = JSON.stringify($.csv.toObjects(fileString));
-    $.post("http://api.spe.sneeza.me/datasets/" + datasetName + "/insert", {documents:data});
-    alert("Done uploading!");
+
 }
 
 function errorHandler(evt) {
