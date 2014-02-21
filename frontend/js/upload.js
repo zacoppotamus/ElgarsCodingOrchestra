@@ -22,6 +22,7 @@ function initialiseDialogue(){
 function uploadClick(evt) {
     var datasetName = document.getElementById("datasetNameInput").value;
 
+    // Checks that the dataset doesn't already exist
     $.getJSON("http://api.spe.sneeza.me/datasets/" + datasetName + "/select", function(result){
         if(result.data.rows === 0){
             startRead();
