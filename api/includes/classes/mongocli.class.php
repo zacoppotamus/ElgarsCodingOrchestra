@@ -60,4 +60,13 @@ class MongoCLI {
     public static function get_collections() {
         return self::$database->getCollectionNames();
     }
+
+    /*!
+     * Create a new collection in the database using the specified name
+     * and optional parameters.
+     */
+
+    public static function create_collection($name, $options = array()) {
+        return self::$database->createCollection($name, $options);
+    }
 }

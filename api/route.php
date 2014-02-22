@@ -16,18 +16,18 @@ header("access-control-allow-origin: *");
 
 // Add main endpoints for primary methods.
 route::add("/", "main.php");
-route::add("/datasets", "datasets.php");
-route::add("/delete", "delete.php");
-route::add("/index", "index.php");
-route::add("/insert", "insert.php");
 route::add("/ping", "ping.php");
-route::add("/select", "select.php");
-route::add("/selecttable", "selecttable.php");
-route::add("/update", "update.php");
 
-// Add endpoints for calculations.
-route::add("/calc/polyfit", "calc/polyfit.php");
-route::add("/calc/stats", "calc/stats.php");
+// Add endpoints for /datasets/.
+route::add("/datasets", "datasets/main.php");
+route::add("/datasets/:dataset/create", "datasets/create.php");
+route::add("/datasets/:dataset/delete", "datasets/delete.php");
+route::add("/datasets/:dataset/index", "datasets/index.php");
+route::add("/datasets/:dataset/insert", "datasets/insert.php");
+route::add("/datasets/:dataset/select", "datasets/select.php");
+route::add("/datasets/:dataset/update", "datasets/update.php");
+route::add("/datasets/:dataset/calc/polyfit", "datasets/calc/polyfit.php");
+route::add("/datasets/:dataset/calc/stats", "datasets/calc/stats.php");
 
 // Add endpoints for the tests.
 route::add("/tests/run", "tests/run.php");
@@ -43,7 +43,7 @@ if(route::parse()) {
     include(route::$file);
     exit;
 } else {
-    include("index.php");
+    include("main.php");
     exit;
 }
 

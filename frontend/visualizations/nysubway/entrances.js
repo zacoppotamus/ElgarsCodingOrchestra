@@ -12,7 +12,7 @@ var styles =
 
 map.setOptions({styles: styles});
 
-dataURL = encodeURI("http://api.spe.sneeza.me/select?dataset=nysubway&fields=[%22latitude%22,%22longitude%22]");
+dataURL = encodeURI("http://api.spe.sneeza.me/datasets/nysubway/select?fields=[%22latitude%22,%22longitude%22]");
 
 // Load the JSON data for the entrances
 d3.json(dataURL, function(json)
