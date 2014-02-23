@@ -13,6 +13,21 @@ function printDatasets()
 	});
 }
 
+function vizPrintDatasets()
+{
+	$(document).ready(function() {
+		$.getJSON("//api.spe.sneeza.me/datasets", function(data) {
+			$.each(data.data.datasets, function(key,val) {
+				var rb = $('<div class="row"><div class="btn-group" data-toggle="buttons"><label class="btn btn-default btn-block"><input type="radio" name="options" id="option">'+val+'</label></div></div>');
+				$('#datasets').append(rb);
+			})
+		})
+		$(document).on('mousedown', '.btn', function() {
+			$(this).button();
+		})
+	});
+}
+
 function printDataset()
 {
 	$(document).ready(function() {

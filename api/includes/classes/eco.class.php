@@ -108,18 +108,22 @@ class eco {
      *
      * @param string $dataset  The dataset name to query.
      * @param array $query  The query to run, in MongoDB format.
-     * @param int $limit  Apply a row limit on the query.
      * @param int $offset  Apply an offset on the query, for pagination.
+     * @param int $limit  Apply a row limit on the query.
+     * @param array $sort  The sorting order, in array format.
      * @param array $fields  The fields to return from the query.
+     * @param array $exclude  The fields to exclude from the results.
      * @return array|bool  Returns the data array on success, false on failure.
      */
 
-    public function select($dataset, $query = null, $offset = 0, $limit = 0, $fields = null) {
+    public function select($dataset, $query = null, $offset = 0, $limit = 0, $sort = null, $fields = null, $exclude = null) {
         $query_string = array(
             "query" => json_encode($query),
             "offset" => $offset,
             "limit" => $limit,
-            "fields" => json_encode($fields)
+            "sort" => json_encode($sort),
+            "fields" => json_encode($fields),
+            "exclude" => json_encode($exclude)
         );
 
         $url = $this->host . "/datasets/" . $dataset . "/select";
