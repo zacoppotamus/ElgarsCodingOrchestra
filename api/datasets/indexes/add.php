@@ -4,14 +4,35 @@ include("includes/kernel.php");
 include("includes/api/core.php");
 
 /*!
- * Grab all of the different inputs so that we can use them elsewhere
- * in this script.
+ * Check if the user provided enough information to create the new
+ * dataset, including the name and description.
  */
 
-$data = array(
-    "dataset" => (isset($_GET['dataset'])) ? trim(strtolower($_GET['dataset'])) : null,
-    "fields" => (isset($_GET['fields'])) ? json_decode($_GET['fields'], true) : null
-);
+if(empty($data->prefix) || empty($data->name)) {
+    echo json_beautify(json_render_error(401, "You didn't pass one or more of the required parameters."));
+    exit;
+}
+
+/*!
+ * Check to see if the dataset exists, and that we have access to it.
+ * We need to use the prefix and the name of the dataset to get a
+ * reference to it.
+ */
+
+// Create a new dataset object.
+$dataset = new rainhawk\dataset($data->prefix, $data->name);
+
+// Check that the dataset exists.
+if(!$dataset->exists) {
+    echo json_beautify(json_render_error(402, "The dataset you specified does not exist."));
+    exit;
+}
+
+// Check that we can read from the dataset.
+if(!$dataset->have_read_access(app::$mashape_key)) {
+    echo json_beautify(json_render_error(403, "You don't have access to read from this dataset."));
+    exit;
+}
 
 /*!
  * Define an empty array to store the results of whatever we need
@@ -23,72 +44,46 @@ $json = array(
 );
 
 /*!
- * Select the relevant dataset inside the database. If the collection
- * doesn't already exist, then Mongo will automatically create it
- * when new data is inserted.
+ * Try and add the indexes to the dataset as the user has specified,
+ * which will always work even if the index already exists.
  */
 
-if(!isset($data['dataset']) || empty($data['dataset'])) {
-    echo json_beautify(json_render_error(401, "You didn't specify a dataset to add indexes to."));
-    exit;
-}
-
-try {
-    $collection = mongocli::select_collection($data['dataset']);
-} catch(Exception $e) {
-    echo json_beautify(json_render_error(402, "An unknown error occured while attempting to select the dataset."));
-    exit;
-}
-
-/*!
- * Run the ensureIndex command on the specified dataset so that we
- * can make sure that we have indexes that the user wants.
- */
-
+// Create a local variable for the fields.
 $fields = array();
 
 // Check which fields to index.
-if(isset($data['fields'])) {
-    $fields = $data['fields'];
+if(!empty($data->fields)) {
+    $fields = $data->fields;
 } else {
-    try {
-        $query = $collection->find(array(), array("_id" => false));
-        $query->limit(10);
+    $fields = app::find_index_names($dataset->fields);
+}
 
-        foreach($query as $row) {
-            $fields = array_unique(array_keys($row) + $fields);
-        }
+// Check if we need to add any indexes at all.
+if(empty($fields)) {
+    echo json_beautify(json_render_error(404, "We couldn't find any indexes to add."));
+    exit;
+}
 
-        $fields = app::find_index_names($fields);
-    } catch(Exception $e) {
-        echo json_beautify(json_render_error(403, "An unknown error occured while finding the field names to autoindex."));
+// Add each index.
+foreach($fields as $field) {
+    if(!$dataset->add_index($field)) {
+        echo json_beautify(json_render_error(405, "There was a problem while adding an index on '" . $field . "'."));
         exit;
     }
 }
 
-// Check if we need to add any indexes at all.
-if(!empty($fields)) {
-    // Run the insertion query.
-    try {
-        foreach($fields as $field) {
-            $status = $collection->ensureIndex(array($field => 1), array("background" => true));
-        }
+// Get a list of indexes.
+$indexes = $dataset->fetch_indexes();
 
-        $indexes = $collection->getIndexInfo();
+// Check if the listing failed.
+if(!$indexes) {
+    echo json_beautify(json_render_error(406, "There was a problem while fetching the indexes."));
+    exit;
+}
 
-        foreach($indexes as $index) {
-            $json['indexes'][$index['name']] = $index['key'];
-        }
-    } catch(Exception $e) {
-        echo json_beautify(json_render_error(404, "An unknown error occured while adding the indexes to the dataset."));
-        exit;
-    }
-} else {
-    $indexes = $collection->getIndexInfo();
-
-    foreach($indexes as $index) {
-        $json['indexes'][$index['name']] = $index['key'];
-    }
+// Return them into the JSON array.
+foreach($indexes as $index) {
+    $json['indexes'][$index['name']] = $index['key'];
 }
 
 /*!

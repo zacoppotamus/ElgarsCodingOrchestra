@@ -47,7 +47,7 @@ if(!rainhawk\sets::create($dataset)) {
     exit;
 }
 
-if(!$dataset->add_index(array("_id"))) {
+if(!$dataset->add_index("_id")) {
     echo json_beautify(json_render_error(403, "There was a problem while trying to create your dataset - please try again later."));
     exit;
 }

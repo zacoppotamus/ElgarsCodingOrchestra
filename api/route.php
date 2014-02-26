@@ -114,6 +114,18 @@ route::add(route::GET, "/datasets/(\w+)\.(\w+)/indexes", function($prefix, $name
     include("datasets/indexes.php");
 });
 
+// Create an endpoint to add an index to a dataset.
+route::add(route::POST, "/datasets/(\w+)\.(\w+)/indexes", function($prefix, $name) {
+    $data = new stdClass();
+
+    $data->prefix = $prefix;
+    $data->name = $name;
+
+    $data->fields = isset($_POST['fields']) ? json_decode($_POST['fields'], true) : null;
+
+    include("datasets/indexes/add.php");
+});
+
 /*route::add("/datasets/:dataset/calc/polyfit", "datasets/calc/polyfit.php");
 route::add("/datasets/:dataset/calc/stats", "datasets/calc/stats.php");
 

@@ -211,21 +211,21 @@ class Dataset {
      * Create an index on a specified field, in a specified
      * direction. If it already exists then nothing will happen.
      *
-     * @param array $fields  The indexes to create.
+     * @param array $field  The field to add an index to.
      * @return bool  Whether or not the indexes were created.
      */
 
-    public function add_index($fields) {
+    public function add_index($field) {
         if(!$this->exists) {
             return false;
         }
 
         try {
-            foreach($fields as $field) {
-                $this->collection->ensureIndex(array($field => 1), array("background" => true));
-            }
+            $result = $this->collection->ensureIndex(array($field => 1), array("background" => true));
 
-            return true;
+            if($result['ok'] == 1) {
+                return true;
+            }
         } catch(Exception $e) {}
 
         return false;
