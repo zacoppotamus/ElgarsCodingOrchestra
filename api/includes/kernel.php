@@ -8,6 +8,7 @@ include("classes/xcache.class.php");
 
 include("classes/rainhawk/rainhawk.class.php");
 include("classes/rainhawk/dataset.class.php");
+include("classes/rainhawk/sets.class.php");
 
 /*!
  * Set the timezone properly.
