@@ -91,7 +91,7 @@ class Dataset {
         }
 
         try {
-            return $this->collection->find($query, $options);
+            return $this->collection->find($query, $fields);
         } catch(Exception $e) {}
 
         return false;
