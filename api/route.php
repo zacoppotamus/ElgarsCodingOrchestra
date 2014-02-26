@@ -64,7 +64,7 @@ route::add(route::GET, "/datasets/(\w+)\.(\w+)/data", function($prefix, $name) {
 });
 
 // Create an endpoint to insert new data into the dataset.
-route::add(route::POST, "/datasets/(\w+)\.(\w+)/data", function($prefix, $name)) {
+route::add(route::POST, "/datasets/(\w+)\.(\w+)/data", function($prefix, $name) {
     $data->prefix = $prefix;
     $data->name = $name;
 
@@ -75,7 +75,7 @@ route::add(route::POST, "/datasets/(\w+)\.(\w+)/data", function($prefix, $name))
 });
 
 // Create an endpoint to update data in the dataset.
-route::add(route::PUT, "/datasets/(\w+)\.(\w+)/data", function($prefix, $name)) {
+route::add(route::PUT, "/datasets/(\w+)\.(\w+)/data", function($prefix, $name) {
     $data->prefix = $prefix;
     $data->name = $name;
 
@@ -86,7 +86,7 @@ route::add(route::PUT, "/datasets/(\w+)\.(\w+)/data", function($prefix, $name)) 
 });
 
 // Create an endpoint to delete data from the dataset.
-route::add(route::DELETE, "/datasets/(\w+)\.(\w+)/data", function($prefix, $name)) {
+route::add(route::DELETE, "/datasets/(\w+)\.(\w+)/data", function($prefix, $name) {
     $data->prefix = $prefix;
     $data->name = $name;
 
