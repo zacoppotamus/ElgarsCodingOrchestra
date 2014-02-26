@@ -55,10 +55,10 @@ route::add(route::GET, "/datasets/(\w+)\.(\w+)/data", function($prefix, $name) {
 
     $data->query = isset($_GET['query']) ? json_decode($_GET['query'], true) : null;
     $data->offset = isset($_GET['offset']) && intval($_GET['offset']) >= 0 ? intval($_GET['offset']) : 0;
-    $data->limit => isset($_GET['limit']) && intval($_GET['limit']) >= 1 ? intval($_GET['limit']) : null;
-    $data->sort => isset($_GET['sort']) ? json_decode($_GET['sort'], true) : null;
-    $data->fields => isset($_GET['fields']) ? json_decode($_GET['fields'], true) : null;
-    $data->exclude => isset($_GET['exclude']) ? json_decode($_GET['exclude'], true) : null;
+    $data->limit = isset($_GET['limit']) && intval($_GET['limit']) >= 1 ? intval($_GET['limit']) : null;
+    $data->sort = isset($_GET['sort']) ? json_decode($_GET['sort'], true) : null;
+    $data->fields = isset($_GET['fields']) ? json_decode($_GET['fields'], true) : null;
+    $data->exclude = isset($_GET['exclude']) ? json_decode($_GET['exclude'], true) : null;
 
     include("datasets/data.php");
 });
