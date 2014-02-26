@@ -23,6 +23,35 @@ class Sets {
     private static $datasets;
 
     /**
+     * Create a new dataset in the system.datasets index, with the
+     * relevant data so that we can start using other operations on
+     * it.
+     *
+     * @param Dataset $dataset  The dataset object to base the record on.
+     * @return bool  Whether the dataset was created or not.
+     */
+
+    public static function create($dataset) {
+        $datasets = self::get_system_datasets();
+
+        try {
+            $datasets->insert(array(
+                "prefix" => $dataset->prefix,
+                "name" => $dataset->name,
+                "description" => $dataset->description,
+                "rows" => $dataset->rows,
+                "fields" => $dataset->fields,
+                "read_access" => $dataset->read_access,
+                "write_access" => $dataset->write_access
+            ));
+
+            return true;
+        } catch(Exception $e) {}
+
+        return false;
+    }
+
+    /**
      * Takes an input dataset ID and returns whether or not that
      * dataset was found in the reference table or not.
      *

@@ -35,18 +35,32 @@ if(!$dataset->have_read_access(app::$mashape_key)) {
 }
 
 /*!
- * Define our output by filling up the JSON array with the variables
- * from the dataset object.
+ * Define an empty array to store the results of whatever we need
+ * to send back.
  */
 
 $json = array(
-    "name" => $dataset->prefix . "." . $dataset->name,
-    "description" => $dataset->description,
-    "rows" => $dataset->rows,
-    "fields" => $dataset->fields,
-    "read_access" => $dataset->read_access,
-    "write_access" => $dataset->write_access
+    "indexes" => array()
 );
+
+/*!
+ * Fetch the indexes from the dataset, and list them back to the
+ * user in a friendly format.
+ */
+
+// Get a list of indexes.
+$indexes = $dataset->fetch_indexes();
+
+// Check if the listing failed.
+if(!$indexes) {
+    echo json_beautify(json_render_error(404, "There was a problem while fetching the indexes."));
+    exit;
+}
+
+// Return them into the JSON array.
+foreach($indexes as $index) {
+    $json['indexes'][$index['name']] = $index['key'];
+}
 
 /*!
  * Output our JSON payload for use in whatever needs to be using

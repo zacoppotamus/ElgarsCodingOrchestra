@@ -4,78 +4,75 @@ include("includes/kernel.php");
 include("includes/api/core.php");
 
 /*!
- * Grab all of the different inputs so that we can use them elsewhere
- * in this script.
+ * Check that the parameters have all been set and sent to the script,
+ * including the prefix and the name.
  */
 
-$data = array(
-    "dataset" => (isset($_GET['dataset'])) ? trim(strtolower($_GET['dataset'])) : null,
-    "document" => (isset($_POST['document'])) ? json_decode($_POST['document'], true) : null,
-    "documents" => (isset($_POST['documents'])) ? json_decode($_POST['documents'], true) : null
-);
+if(empty($data->prefix) || empty($data->name)) {
+    echo json_beautify(json_render_error(401, "You didn't pass one or more of the required parameters."));
+    exit;
+}
 
 /*!
- * Define an empty array to store the results of whatever we need
- * to send back.
+ * Check to see if the dataset exists, and that we have access to it.
+ * We need to use the prefix and the name of the dataset to get a
+ * reference to it.
+ */
+
+// Create a new dataset object.
+$dataset = new rainhawk\dataset($data->prefix, $data->name);
+
+// Check that the dataset exists.
+if(!$dataset->exists) {
+    echo json_beautify(json_render_error(402, "The dataset you specified does not exist."));
+    exit;
+}
+
+// Check that we can write to the dataset.
+if(!$dataset->have_write_access(app::$mashape_key)) {
+    echo json_beautify(json_render_error(403, "You don't have access to write to this dataset."));
+    exit;
+}
+
+/*!
+ * Define our output by filling up the JSON array with the variables
+ * from the dataset object.
  */
 
 $json = array(
-    "documents" => array()
+    "rows" => array()
 );
 
 /*!
- * Select the relevant dataset inside the database. If the collection
- * doesn't already exist, then Mongo will automatically create it
- * when new data is inserted.
- */
-
-if(!isset($data['dataset']) || empty($data['dataset'])) {
-    echo json_beautify(json_render_error(401, "You didn't specify a dataset to insert your documents into."));
-    exit;
-}
-
-try {
-    $collection = mongocli::select_collection($data['dataset']);
-} catch(Exception $e) {
-    echo json_beautify(json_render_error(402, "An unknown error occured while attempting to select the dataset."));
-    exit;
-}
-
-/*!
- * Add the specified document(s) to the Mongo collection, ignoring any
+ * Add the specified row(s) to the Mongo collection, ignoring any
  * fields and just straight up dumping the values.
  */
 
-$documents = array();
+$rows = array();
 
 // Check for some actual documents.
-if(!empty($data['document'])) {
-    $documents[] = $data['document'];
-} else if(!empty($data['documents'])) {
-    foreach($data['documents'] as $document) {
-        $documents[] = $document;
-    }
+if(!empty($data->row)) {
+    $rows[] = $data->row;
+} else if(!empty($data->rows)) {
+    foreach($data->rows as $row) $rows[] = $row;
 } else {
-    echo json_beautify(json_render_error(403, "You didn't specify any documents to insert."));
+    echo json_beautify(json_render_error(404, "There were no rows passed to the endpoint to insert."));
     exit;
 }
 
-// Run the insertion query.
-try {
-    $status = $collection->batchInsert($documents);
+// Insert the rows of data into the dataset.
+$rows = $dataset->insert_multi($rows);
 
-    if($status['ok'] == 1) {
-        foreach($documents as $document) {
-            $document['_id'] = (string)$document['_id'];
-            $json['documents'][] = $document;
-        }
-    } else {
-        echo json_beautify(json_render_error(405, "An unknown error occured while inserting your data into the database."));
-        exit;
-    }
-} catch(Exception $e) {
-    echo json_beautify(json_render_error(404, "An unknown error occured while inserting your data into the database."));
+// Check that it was a success.
+if(!$rows) {
+    echo json_beautify(json_render_error(404, "An unknown error occured while inserting your data into the dataset."));
     exit;
+}
+
+// Set the JSON output.
+foreach($rows as $row) {
+    $row['_id'] = (string)$row['_id'];
+    $json['rows'][] = $row;
 }
 
 /*!

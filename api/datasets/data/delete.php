@@ -4,14 +4,35 @@ include("includes/kernel.php");
 include("includes/api/core.php");
 
 /*!
- * Grab all of the different inputs so that we can use them elsewhere
- * in this script.
+ * Check that the parameters have all been set and sent to the script,
+ * including the prefix and the name.
  */
 
-$data = array(
-    "dataset" => (isset($_GET['dataset'])) ? trim(strtolower($_GET['dataset'])) : null,
-    "query" => (isset($_POST['query'])) ? json_decode($_POST['query'], true) : null
-);
+if(empty($data->prefix) || empty($data->name)) {
+    echo json_beautify(json_render_error(401, "You didn't pass one or more of the required parameters."));
+    exit;
+}
+
+/*!
+ * Check to see if the dataset exists, and that we have access to it.
+ * We need to use the prefix and the name of the dataset to get a
+ * reference to it.
+ */
+
+// Create a new dataset object.
+$dataset = new rainhawk\dataset($data->prefix, $data->name);
+
+// Check that the dataset exists.
+if(!$dataset->exists) {
+    echo json_beautify(json_render_error(402, "The dataset you specified does not exist."));
+    exit;
+}
+
+// Check that we can write to the dataset.
+if(!$dataset->have_write_access(app::$mashape_key)) {
+    echo json_beautify(json_render_error(403, "You don't have access to write to this dataset."));
+    exit;
+}
 
 /*!
  * Define an empty array to store the results of whatever we need
@@ -23,20 +44,13 @@ $json = array(
 );
 
 /*!
- * Select the relevant dataset inside the database. If the collection
- * doesn't already exist, then Mongo will automatically create it
- * when new data is inserted.
+ * Check that the required parameters are set, so that we can
+ * ensure that no data gets erroneously removed.
  */
 
-if(!isset($data['dataset']) || empty($data['dataset'])) {
-    echo json_beautify(json_render_error(401, "You didn't specify a dataset to delete documents from."));
-    exit;
-}
-
-try {
-    $collection = mongocli::select_collection($data['dataset']);
-} catch(Exception $e) {
-    echo json_beautify(json_render_error(402, "An unknown error occured while attempting to select the dataset."));
+// Check the query is set.
+if(empty($data->query)) {
+    echo json_beautify(json_render_error(404, "You can't use a catch-all query for delete statements, dummy."));
     exit;
 }
 
@@ -46,13 +60,8 @@ try {
  * documents.
  */
 
-$query = $data['query'];
-
-// Check the query is set.
-if(!isset($data['query']) || empty($data['query'])) {
-    echo json_beautify(json_render_error(403, "Woah, you can't delete everything! You probably don't need to do that."));
-    exit;
-}
+// Set some local variables.
+$query = $data->query;
 
 // Change the MongoID if we have one.
 foreach($query as $key => $value) {
@@ -67,18 +76,12 @@ foreach($query as $key => $value) {
     }
 }
 
-// Run the update query.
-try {
-    $status = $collection->remove($query, array("justOne" => false));
+// Run the delete query.
+$query = $dataset->delete($query);
 
-    if($status['ok'] == 1) {
-        $json['deleted'] = (int)$status['n'];
-    } else {
-        echo json_beautify(json_render_error(406, "An unexpected error occured while trying to delete the documents."));
-        exit;
-    }
-} catch(Exception $e) {
-    echo json_beautify(json_render_error(405, "An unexpected error occured while trying to delete the documents."));
+// Check if the query failed.
+if(!$query) {
+    echo json_beautify(json_render_error(405, "An unexpected error occured while performing your query - are you sure you formatted all the parameters correctly?"));
     exit;
 }
 
