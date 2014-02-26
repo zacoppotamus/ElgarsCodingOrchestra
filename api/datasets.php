@@ -24,8 +24,7 @@ if(!$datasets) {
 // Iterate through the results, if any.
 foreach($datasets as $dataset) {
     $json['datasets'][] = array(
-        "prefix" => $dataset['prefix'],
-        "name" => $dataset['name'],
+        "name" => $dataset['prefix'] . "." . $dataset['name'],
         "description" => $dataset['description'],
         "rows" => $dataset['rows'],
         "fields" => $dataset['fields'],
