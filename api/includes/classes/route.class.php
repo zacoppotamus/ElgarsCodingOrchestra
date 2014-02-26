@@ -32,7 +32,7 @@ class Route {
 
     public static function parse() {
         $url = isset($_GET['uri']) ? trim($_GET['uri']) : null;
-        $method = isset($_SERVER['REQUEST_METHOD']) ? strtoupper(trim($_SERVER['REQUEST_METHOD'])) ? "GET";
+        $method = isset($_SERVER['REQUEST_METHOD']) ? strtoupper(trim($_SERVER['REQUEST_METHOD'])) : "GET";
 
         foreach(self::$routes as $callback => $rdata) {
             if($method == $rdata['method']) {
