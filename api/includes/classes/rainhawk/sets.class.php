@@ -128,7 +128,7 @@ class Sets {
             return self::$datasets;
         }
 
-        self::$datasets = \rainhawk::fetch_collection("system.datasets");
+        self::$datasets = \rainhawk::select_collection("system.datasets");
         return self::$datasets;
     }
 }
