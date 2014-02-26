@@ -106,13 +106,13 @@ class Dataset {
      */
 
     public function insert($row) {
-        $row = $this-insert_multi(array($row));
+        $rows = $this-insert_multi(array($row));
 
-        if(!$row) {
+        if(!$rows) {
             return false;
         }
 
-        return $row[0];
+        return $rows;
     }
 
     /**
