@@ -14,30 +14,32 @@ namespace Rainhawk;
 
 class Dataset {
     private $collection;
-    private $id;
-    private $name;
-    private $description;
-    private $rows = 0;
-    private $fields = array();
-    private $read_access = array();
-    private $write_access = array();
-    private $exists = false;
+    public $prefix;
+    public $name;
+    public $description;
+    public $rows = 0;
+    public $fields = array();
+    public $read_access = array();
+    public $write_access = array();
+    public $exists = false;
 
     /**
      * Create a new instance of Dataset, which initiates itself
      * using the provided ID and fetches relevant information from
      * MongoDB and our internal dataset structure.
      *
-     * @param string $id  The ID of the dataset to fetch.
+     * @param string $prefix  The prefix for the user.
+     * @param string $name  The name of the dataset.
      * @return Dataset  Our new Dataset instance.
      */
 
-    public function __construct($id) {
-        $this->id = $id;
+    public function __construct($prefix, $name) {
+        $this->prefix = $prefix;
+        $this->name = $name;
 
-        if(rainhawk\sets::exists($id)) {
-            $set_data = rainhawk\sets::fetch_metadata($id);
-            $this->collection = rainhawk::fetch_collection($id);
+        if(rainhawk\sets::exists($prefix, $name)) {
+            $set_data = rainhawk\sets::fetch_metadata($prefix, $name);
+            $this->collection = rainhawk::fetch_collection($prefix, $name);
 
             $this->name = $set_data['name'];
             $this->description = $set_data['description'];
@@ -49,13 +51,39 @@ class Dataset {
         }
     }
 
+    /**
+     * Check if the supplied API key has read access to the dataset
+     * which will always return true if the user created it.
+     *
+     * @param string $api_key  The API key to check.
+     * @return bool  Whether or not the user can access it.
+     */
+
     public function have_read_access($api_key) {
         return $this->exists && in_array($api_key, $this->read_access);
     }
 
+    /**
+     * Check if the supplied API key has write access to the dataset
+     * which will always return true if the user created it.
+     *
+     * @param string $api_key  The API key to check.
+     * @return bool  Whether or not the user can access it.
+     */
+
     public function have_write_access($api_key) {
         return $this->exists && in_array($api_key, $this->write_access);
     }
+
+    /**
+     * Perform a find query on the dataset, which returns a Mongo
+     * cursor to the results. We can then use this to iterate through
+     * the results.
+     *
+     * @param array $query  The query to run.
+     * @param array $options  The optional extra parameters.
+     * @return MongoCursor  The Mongo cursor.
+     */
 
     public function find($query, $options = array()) {
         if(!$this->exists) {

@@ -14,14 +14,42 @@ header("access-control-allow-origin: *");
  * API paths and stuff.
  */
 
-// Add main endpoints for primary methods.
-route::add("/", "main.php");
-route::add("/ping", "ping.php");
+// Create an object to store our parameters.
+$data = (object)array();
 
-// Add endpoints for /datasets/.
-route::add("/datasets", "datasets/main.php");
-route::add("/datasets/create", "datasets/create.php");
-route::add("/datasets/:dataset/delete", "datasets/delete.php");
+// Create a main endpoint.
+route::add(route::GET, "/", function() {
+    include("main.php");
+});
+
+// Create an endpoint for the ping command.
+route::add(route::GET, "/ping", function() {
+    include("ping.php");
+});
+
+// Create an endpoint to list all available datasets.
+route::add(route::GET, "/datasets", function() {
+    include("datasets.php");
+});
+
+// Create an endpoint to get the info about a dataset.
+route::add(route::GET, "/datasets/(\w+)\.(\w+)", function($prefix, $name) {
+    $data->prefix = $prefix;
+    $data->name = $name;
+
+    include("datasets/info.php");
+});
+
+// Create an endpoint to perform a query on a dataset.
+route::add(route::GET, "/datasets/(\w+)\.(\w+)/data", function($prefix, $name) {
+    $data->prefix = $prefix;
+    $data->name = $name;
+
+    $data->query = isset($_GET['query']) ? json_decode($_GET['query'], true) : null;
+
+    include("datasets/data/select.php");
+});
+
 route::add("/datasets/:dataset/index", "datasets/index.php");
 route::add("/datasets/:dataset/insert", "datasets/insert.php");
 route::add("/datasets/:dataset/select", "datasets/select.php");
@@ -37,7 +65,7 @@ route::add("/tests/import", "tests/import.php");
  * Perform the routing request.
  */
 
-route::$uri = (isset($_GET['uri']) && !empty($_GET['uri'])) ? trim($_GET['uri']) : null;
+route::$uri = isset($_GET['uri']) && !empty($_GET['uri']) ? trim($_GET['uri']) : null;
 
 if(route::parse()) {
     include(route::$file);
