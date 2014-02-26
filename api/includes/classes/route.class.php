@@ -36,7 +36,7 @@ class Route {
 
         if(isset(self::$routes[$method])) {
             foreach(self::$routes[$method] as $path => $callback) {
-                if(preg_match($rdata['path'], $url, $params)) {
+                if(preg_match($path, $url, $params)) {
                     array_shift($params);
 
                     return call_user_func_array($callback, array_values($params));
