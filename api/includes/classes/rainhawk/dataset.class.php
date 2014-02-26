@@ -215,7 +215,19 @@ class Dataset {
      * @return bool  Whether or not the indexes were created.
      */
 
-    public function add_index($indexes) {
+    public function add_index($fields) {
+        if(!$this->exists) {
+            return false;
+        }
+
+        try {
+            foreach($fields as $field) {
+                $this->collection->ensureIndex(array($field => 1), array("background" => true));
+            }
+
+            return true;
+        } catch(Exception $e) {}
+
         return false;
     }
 }
