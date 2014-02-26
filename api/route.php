@@ -17,8 +17,6 @@ header("access-control-allow-origin: *");
 // Create an object to store our parameters.
 $data = (object)array();
 
-print_r($_SERVER);
-
 // Create a main endpoint.
 route::add(route::GET, "/", function() {
     include("main.php");
@@ -26,8 +24,6 @@ route::add(route::GET, "/", function() {
 
 // Create an endpoint for the ping command.
 route::add(route::GET, "/ping", function() {
-    echo "yes\n";
-
     include("ping.php");
 });
 

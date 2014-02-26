@@ -22,7 +22,7 @@ class Route {
      */
 
     public static function add($method, $path, $callback) {
-        $pattern = "/" . str_replace("/", "\/", $path) . "/";
+        $pattern = "/^" . str_replace("/", "\/", $path) . "$/";
 
         self::$routes[$method][$pattern] = $callback;
     }
