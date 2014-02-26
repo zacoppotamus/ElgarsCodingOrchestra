@@ -22,7 +22,9 @@ class Route {
      */
 
     public static function add($method, $path, $callback) {
-        self::$routes[$method][$path] = $callback;
+        $pattern = "/" . str_replace("/", "\/", $path) . "/";
+
+        self::$routes[$method][$pattern] = $callback;
     }
 
     /*!
@@ -35,8 +37,8 @@ class Route {
         $method = isset($_SERVER['REQUEST_METHOD']) ? strtoupper(trim($_SERVER['REQUEST_METHOD'])) : "GET";
 
         if(isset(self::$routes[$method])) {
-            foreach(self::$routes[$method] as $path => $callback) {
-                if(preg_match($path, $url, $params)) {
+            foreach(self::$routes[$method] as $pattern => $callback) {
+                if(preg_match($pattern, $url, $params)) {
                     array_shift($params);
 
                     return call_user_func_array($callback, array_values($params));
