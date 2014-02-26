@@ -8,7 +8,7 @@ include("includes/api/core.php");
  * dataset, including the name and description.
  */
 
-if(empty($data->prefix) || empty($data->description)) {
+if(empty($data->prefix) || empty($data->name)) {
     echo json_beautify(json_render_error(401, "You didn't pass one or more of the required parameters."));
     exit;
 }
