@@ -38,7 +38,7 @@ class Rainhawk {
      */
 
     public static function connect($host = "127.0.0.1", $port = 27017) {
-        return (self::$connection = new MongoClient("mongodb://" . $host . ":" . $port . "/");
+        return (self::$connection = new MongoClient("mongodb://" . $host . ":" . $port . "/"));
     }
 
     /**
