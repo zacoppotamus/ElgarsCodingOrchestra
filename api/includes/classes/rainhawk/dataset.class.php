@@ -37,9 +37,9 @@ class Dataset {
         $this->prefix = $prefix;
         $this->name = $name;
 
-        if(rainhawk\sets::exists($prefix, $name)) {
-            $set_data = rainhawk\sets::fetch_metadata($prefix, $name);
-            $this->collection = rainhawk::fetch_collection($prefix, $name);
+        if(\rainhawk\sets::exists($prefix, $name)) {
+            $set_data = \rainhawk\sets::fetch_metadata($prefix, $name);
+            $this->collection = \rainhawk::fetch_collection($prefix, $name);
 
             $this->name = $set_data['name'];
             $this->description = $set_data['description'];
