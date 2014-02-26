@@ -47,6 +47,11 @@ if(!rainhawk\sets::create($dataset)) {
     exit;
 }
 
+if(!$dataset->add_index(array("_id" => 1))) {
+    echo json_beautify(json_render_error(403, "There was a problem while trying to create your dataset - please try again later."));
+    exit;
+}
+
 /*!
  * Define our output by filling up the JSON array with the variables
  * from the dataset object.
