@@ -31,6 +31,8 @@ route::add(route::GET, "/datasets", function() {
 
 // Create an endpoint to create a new dataset.
 route::add(route::POST, "/datasets", function() {
+    $data = new stdClass();
+
     $data->name = isset($_POST['name']) ? strtolower(trim($_POST['name'])) : null;
     $data->description = isset($_POST['description']) ? trim($_POST['description']) : null;
 
