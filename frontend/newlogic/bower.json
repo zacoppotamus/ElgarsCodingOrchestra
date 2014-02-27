@@ -1,0 +1,14 @@
+{
+	"name" : "custD3",
+	"version" : "0.0.1",
+	"authors" : [
+		"Zac Ioannidis"
+	],
+	"license" : "MIT",
+	"dependencies" : {
+		"angular" : "latest",
+		"d3" : "latest",
+		"bootstrap" : "latest",
+		"angular-bootstrap" : "latest"
+	}
+}

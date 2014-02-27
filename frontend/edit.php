@@ -23,8 +23,8 @@ $dataset = isset($_GET['dataset']) ? htmlspecialchars($_GET['dataset']) : null;
                         title: 'Data Table',
                         paging: true,
                         pageSize: 50,
-                        //sorting: true,
-                        //defaultSorting: 'name ASC',
+                        sorting: true,
+                        defaultSorting: 'name ASC',
                         actions: {
                             listAction: 'http://project.spe.sneeza.me/proxy/list.php?dataset=<?php echo $dataset; ?>',
                             createAction: 'http://project.spe.sneeza.me/proxy/create.php?dataset=<?php echo $dataset; ?>',
