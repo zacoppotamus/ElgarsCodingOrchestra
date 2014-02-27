@@ -130,12 +130,26 @@ route::add(route::POST, "/datasets/(\w+)\.(\w+)/indexes", function($prefix, $nam
     include("datasets/indexes/add.php");
 });
 
-/*route::add("/datasets/:dataset/calc/polyfit", "datasets/calc/polyfit.php");
+// Create an endpoint for the polyfit calculations.
+route::add(route::GET, "/datasets/(\w+)\.(\w+)/calc/polyfit", function($prefix, $name) {
+    $data = new stdClass();
+
+    $data->prefix = $prefix;
+    $data->name = $name;
+
+    $data->fields = isset($_GET['fields']) ? json_decode($_POST['fields'], true) : null;
+    $data->degree = isset($_GET['degree']) && $_GET['degree'] > 0 && $_GET['degree'] <= 20 ? (int)$_GET['degree'] : 2;
+
+    include("datasets/calc/polyfit.php");
+});
+
+/*
 route::add("/datasets/:dataset/calc/stats", "datasets/calc/stats.php");
 
 // Add endpoints for the tests.
 route::add("/tests/run", "tests/run.php");
-route::add("/tests/import", "tests/import.php");*/
+route::add("/tests/import", "tests/import.php");
+*/
 
 /*!
  * Perform the routing request.

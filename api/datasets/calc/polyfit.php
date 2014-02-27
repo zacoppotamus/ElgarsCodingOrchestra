@@ -4,16 +4,35 @@ include("includes/kernel.php");
 include("includes/api/core.php");
 
 /*!
- * Grab all of the different inputs so that we can use them elsewhere
- * in this script.
+ * Check that the parameters have all been set and sent to the script,
+ * including the prefix and the name.
  */
 
-$data = array(
-    "dataset" => (isset($_GET['dataset'])) ? trim(strtolower($_GET['dataset'])) : null,
-    "field_one" => (isset($_GET['field_one'])) ? trim($_GET['field_one']) : null,
-    "field_two" => (isset($_GET['field_two'])) ? trim($_GET['field_two']) : null,
-    "degree" => (isset($_GET['degree'])) ? (int)$_GET['degree'] : 2,
-);
+if(empty($data->prefix) || empty($data->name)) {
+    echo json_beautify(json_render_error(401, "You didn't pass one or more of the required parameters."));
+    exit;
+}
+
+/*!
+ * Check to see if the dataset exists, and that we have access to it.
+ * We need to use the prefix and the name of the dataset to get a
+ * reference to it.
+ */
+
+// Create a new dataset object.
+$dataset = new rainhawk\dataset($data->prefix, $data->name);
+
+// Check that the dataset exists.
+if(!$dataset->exists) {
+    echo json_beautify(json_render_error(402, "The dataset you specified does not exist."));
+    exit;
+}
+
+// Check that we can read from the dataset.
+if(!$dataset->have_read_access(app::$mashape_key)) {
+    echo json_beautify(json_render_error(403, "You don't have access to read from this dataset."));
+    exit;
+}
 
 /*!
  * Define an empty array to store the results of whatever we need
@@ -25,53 +44,22 @@ $json = array(
 );
 
 /*!
- * Select the relevant dataset inside the database. If the collection
- * doesn't already exist, then Mongo will automatically create it
- * when new data is inserted.
- */
-
-if(!isset($data['dataset']) || empty($data['dataset'])) {
-    echo json_beautify(json_render_error(401, "You didn't specify a dataset to query."));
-    exit;
-}
-
-try {
-    $collection = mongocli::select_collection($data['dataset']);
-} catch(Exception $e) {
-    echo json_beautify(json_render_error(402, "An unknown error occured while attempting to select the dataset."));
-    exit;
-}
-
-/*!
  * Pipe the command to our Python script to calculate the coefficients
  * of the polynomial using NumPy.
  */
 
-$dataset = escapeshellarg($data['dataset']);
-$field_one = null;
-$field_two = null;
-$degree = 2;
+$dataset = escapeshellarg($data->dataset);
+$degree = $data->degree;
 
-// Check the field_one value.
-if(isset($data['field_one']) && !empty($data['field_one']) && is_string($data['field_one'])) {
-    $field_one = escapeshellarg($data['field_one']);
-} else {
-    echo json_beautify(json_render_error(403, "You didn't specify the first field to use!"));
+// Check that the two fields are set.
+if(!isset($data->fields) || !is_array($data->fields) || !(count($data->fields) == 2)) {
+    echo json_beautify(json_render_error(404, "You didn't specify the two fields to use!"));
     exit;
 }
 
-// Check the field_two value.
-if(isset($data['field_two']) && !empty($data['field_two']) && is_string($data['field_two'])) {
-    $field_two = escapeshellarg($data['field_two']);
-} else {
-    echo json_beautify(json_render_error(404, "You didn't specify the second field to use!"));
-    exit;
-}
-
-// Check for a degree.
-if($data['degree'] > 0 && $data['degree'] < 20) {
-    $degree = $data['degree'];
-}
+// Set the fields.
+$field_one = escapeshellarg($data->fields[0]);
+$field_two = escapeshellarg($data->fields[1]);
 
 // Run the command.
 exec("python '../correlation/correlation.py' eco " . $dataset . " " . $field_one . " " . $field_two . " " . $degree, $output);
