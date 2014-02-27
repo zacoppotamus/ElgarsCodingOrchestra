@@ -1,5 +1,5 @@
 <?php
-private $mashape_key = $_POST["apiKey"];
+$mashape_key = $_POST["apiKey"];
 
 //$ch = curl_init();
 
