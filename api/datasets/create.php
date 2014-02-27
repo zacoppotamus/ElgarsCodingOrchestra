@@ -20,7 +20,7 @@ if(empty($data->name) || empty($data->description)) {
  */
 
 do {
-    $prefix = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 6);
+    $prefix = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyz"), 0, 6);
     $exists = rainhawk\sets::exists($prefix, $data->name);
 
     if($exists) {
