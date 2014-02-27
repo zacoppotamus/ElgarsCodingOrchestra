@@ -37,14 +37,20 @@ $dataset->prefix = $data->prefix;
 $dataset->name = $data->name;
 $dataset->description = $data->description;
 
+// Give this user read and write access.
 $dataset->read_access[] = app::$username;
 $dataset->write_access[] = app::$username;
 
+// Perform the creation command.
 if(!rainhawk\sets::create($dataset)) {
     echo json_beautify(json_render_error(403, "There was a problem while trying to create your dataset - please try again later."));
     exit;
 }
 
+// Set the dataset's exists value.
+$dataset->exists = true;
+
+// Create an index on _id to force-create the set.
 if(!$dataset->add_index("_id")) {
     echo json_beautify(json_render_error(404, "There was a problem while trying to create your dataset - please try again later."));
     exit;
