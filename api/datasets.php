@@ -27,7 +27,7 @@ foreach($datasets as $dataset) {
         "name" => $dataset['prefix'] . "." . $dataset['name'],
         "description" => $dataset['description'],
         "rows" => $dataset['rows'],
-        "fields" => $dataset['fields'],
+        "fields" => array_keys($dataset['fields']),
         "read_access" => $dataset['read_access'],
         "write_access" => $dataset['write_access']
     );

@@ -52,6 +52,36 @@ class Sets {
     }
 
     /**
+     * Takes an input dataset and update the record in the system
+     * dataset table.
+     *
+     * @param Dataset $dataset  The dataset object to store.
+     * @return bool  Whether the dataset saved or not.
+     */
+
+    public static function update($dataset) {
+        $datasets = self::get_system_datasets();
+
+        try {
+            $datasets->update(array(
+                "prefix" => $dataset->prefix,
+                "name" => $dataset->name
+            ), array(
+                '$set' => array(
+                    "name" => $dataset->name,
+                    "description" => $dataset->description,
+                    "rows" => $dataset->rows,
+                    "fields" => $dataset->fields,
+                    "read_access" => $dataset->read_access,
+                    "write_access" => $dataset->write_access
+                )
+            ));
+        } catch(Exception $e) {}
+
+        return false;
+    }
+
+    /**
      * Takes an input dataset ID and returns whether or not that
      * dataset was found in the reference table or not.
      *

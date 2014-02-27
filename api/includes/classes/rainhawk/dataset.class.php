@@ -132,6 +132,8 @@ class Dataset {
             $result = $this->collection->batchInsert($rows);
 
             if($result['ok'] == 1) {
+                $this->rows += count($rows);
+
                 foreach($rows as $row) {
                     $fields = array_keys($row);
 
@@ -168,10 +170,28 @@ class Dataset {
         }
 
         try {
-            $result = $this->collection->update($query, $changes, array("multiple" => true));
+            $result = $this->collection->find($query);
 
-            if($result['ok'] == 1) {
-                return (int)$result['n'];
+            if($result) {
+                /*foreach($result as $row) {
+                    $fields = array_keys($row);
+
+                    foreach($fields as $field) {
+                        $this->fields[$field]++;
+
+                        if($this->fields[$field] == 0) {
+                            unset($this->fields[$field]);
+                        }
+                    }
+                }*/
+
+                $result = $this->collection->update($query, $changes, array("multiple" => true));
+
+                if($result['ok'] == 1) {
+                    \rainhawk\sets::update($this);
+
+                    return (int)$result['n'];
+                }
             }
         } catch(Exception $e) {}
 
@@ -192,24 +212,30 @@ class Dataset {
         }
 
         try {
-            $result = $this->collection->remove($query, array("justOne" => false));
+            $result = $this->collection->find($query);
 
-            if($result['ok'] == 1) {
-                foreach($rows as $row) {
+            if($result) {
+                $this->rows -= $result->count();
+
+                foreach($result as $row) {
                     $fields = array_keys($row);
 
                     foreach($fields as $field) {
-                        if(!isset($this->fields[$field])) {
-                            $this->fields[$field] = 1;
-                        } else {
-                            $this->fields[$field]++;
+                        $this->fields[$field]--;
+
+                        if($this->fields[$field] == 0) {
+                            unset($this->fields[$field]);
                         }
                     }
                 }
 
-                \rainhawk\sets::update($this);
+                $result = $this->collection->remove($query, array("justOne" => false));
 
-                return (int)$result['n'];
+                if($result['ok'] == 1) {
+                    \rainhawk\sets::update($this);
+
+                    return (int)$result['n'];
+                }
             }
         } catch(Exception $e) {}
 
