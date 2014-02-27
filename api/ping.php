@@ -9,7 +9,8 @@ include("includes/api/core.php");
  */
 
 $json = array(
-    "server_time" => time()
+    "server_time" => time(),
+    "server" => $_SERVER
 );
 
 /*!
