@@ -137,7 +137,7 @@ route::add(route::GET, "/datasets/(\w+)\.(\w+)/calc/polyfit", function($prefix, 
     $data->prefix = $prefix;
     $data->name = $name;
 
-    $data->fields = isset($_GET['fields']) ? json_decode($_POST['fields'], true) : null;
+    $data->fields = isset($_GET['fields']) ? json_decode($_GET['fields'], true) : null;
     $data->degree = isset($_GET['degree']) && $_GET['degree'] > 0 && $_GET['degree'] <= 20 ? (int)$_GET['degree'] : 2;
 
     include("datasets/calc/polyfit.php");
