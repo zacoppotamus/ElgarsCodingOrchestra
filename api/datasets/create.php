@@ -28,7 +28,7 @@ $data->prefix = app::$username;
 
 $dataset = new rainhawk\dataset($data->prefix, $data->name);
 
-$dataset->prefix = $prefix;
+$dataset->prefix = $data->prefix;
 $dataset->name = $data->name;
 $dataset->description = $data->description;
 
