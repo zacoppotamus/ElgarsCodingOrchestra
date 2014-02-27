@@ -81,7 +81,7 @@ foreach($query as $key => $value) {
 $query = $dataset->update($query, $changes);
 
 // Check if the query failed.
-if(!$query) {
+if(!is_int($query)) {
     echo json_beautify(json_render_error(406, "An unexpected error occured while performing your query - are you sure you formatted all the parameters correctly?"));
     exit;
 }
