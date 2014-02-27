@@ -52,6 +52,36 @@ class Sets {
     }
 
     /**
+     * Takes an input dataset and update the record in the system
+     * dataset table.
+     *
+     * @param Dataset $dataset  The dataset object to store.
+     * @return bool  Whether the dataset saved or not.
+     */
+
+    public static function update($dataset) {
+        $datasets = self::get_system_datasets();
+
+        try {
+            $datasets->update(array(
+                "prefix" => $dataset->prefix,
+                "name" => $dataset->name
+            ), array(
+                '$set' => array(
+                    "name" => $dataset->name,
+                    "description" => $dataset->description,
+                    "rows" => $dataset->rows,
+                    "fields" => $dataset->fields,
+                    "read_access" => $dataset->read_access,
+                    "write_access" => $dataset->write_access
+                )
+            ));
+        } catch(Exception $e) {}
+
+        return false;
+    }
+
+    /**
      * Takes an input dataset ID and returns whether or not that
      * dataset was found in the reference table or not.
      *
@@ -97,18 +127,18 @@ class Sets {
     }
 
     /**
-     * Fetch a list of all of the datasets that the specified API
-     * key has read or write access to.
+     * Fetch a list of all of the datasets that the specified user
+     * has read or write access to.
      *
-     * @param string $api_key  The API key to search for.
+     * @param string $username  The username to search for.
      * @return MongoCursor  A cursor to the list of datasets.
      */
 
-    public static function sets_for_api_key($api_key) {
+    public static function sets_for_user($username) {
         $datasets = self::get_system_datasets();
 
         try {
-            $results = $datasets->find(array('$or' => array(array("read_access" => $api_key), array("write_access" => $api_key))));
+            $results = $datasets->find(array('$or' => array(array("read_access" => $username), array("write_access" => $username))));
 
             return $results;
         } catch(Exception $e) {}

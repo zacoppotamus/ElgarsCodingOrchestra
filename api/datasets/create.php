@@ -16,39 +16,43 @@ if(empty($data->name) || empty($data->description)) {
 /*!
  * Come up with a new prefix to use for the dataset, by generating
  * a 6 character string and checking that it hasn't already been
- * used.
+ * used. Now we can just use their username.
  */
 
-do {
-    $prefix = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 6);
-    $exists = rainhawk\sets::exists($prefix, $data->name);
+$data->prefix = app::$username;
+$dataset = new rainhawk\dataset($data->prefix, $data->name);
 
-    if($exists) {
-        unset($prefix);
-    }
-} while(!isset($prefix));
+// Check if you already have a dataset with this name.
+if($dataset->exists) {
+    echo json_beautify(json_render_error(402, "You already have a dataset with this name!"));
+    exit;
+}
 
 /*!
  * Now that we have our prefix and name, we can create the new
  * dataset and return the details to the user.
  */
 
-$dataset = new rainhawk\dataset($data->prefix, $data->name);
-
-$dataset->prefix = $prefix;
+$dataset->prefix = $data->prefix;
 $dataset->name = $data->name;
 $dataset->description = $data->description;
 
-$dataset->read_access[] = app::$mashape_key;
-$dataset->write_access[] = app::$mashape_key;
+// Give this user read and write access.
+$dataset->read_access[] = app::$username;
+$dataset->write_access[] = app::$username;
 
+// Perform the creation command.
 if(!rainhawk\sets::create($dataset)) {
-    echo json_beautify(json_render_error(402, "There was a problem while trying to create your dataset - please try again later."));
+    echo json_beautify(json_render_error(403, "There was a problem while trying to create your dataset - please try again later."));
     exit;
 }
 
+// Set the dataset's exists value.
+$dataset->exists = true;
+
+// Create an index on _id to force-create the set.
 if(!$dataset->add_index("_id")) {
-    echo json_beautify(json_render_error(403, "There was a problem while trying to create your dataset - please try again later."));
+    echo json_beautify(json_render_error(404, "There was a problem while trying to create your dataset - please try again later."));
     exit;
 }
 
@@ -61,7 +65,7 @@ $json = array(
     "name" => $dataset->prefix . "." . $dataset->name,
     "description" => $dataset->description,
     "rows" => $dataset->rows,
-    "fields" => $dataset->fields,
+    "fields" => array_keys($dataset->fields),
     "read_access" => $dataset->read_access,
     "write_access" => $dataset->write_access
 );

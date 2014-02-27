@@ -29,7 +29,7 @@ if(!$dataset->exists) {
 }
 
 // Check that we can write to the dataset.
-if(!$dataset->have_write_access(app::$mashape_key)) {
+if(!$dataset->have_write_access(app::$username)) {
     echo json_beautify(json_render_error(403, "You don't have access to write to this dataset."));
     exit;
 }
