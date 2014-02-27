@@ -230,6 +230,30 @@ class Dataset {
 
         return false;
     }
+
+    /**
+     * Run an aggregation query on the dataset, which is used to
+     * calculate the max/min of the set.
+     *
+     * @param array $query  The query to run.
+     * @return array  The results of the calculations.
+     */
+
+    public function aggregate($query) {
+        if(!$this->exists) {
+            return false;
+        }
+
+        try {
+            $result = $this->collection->aggregate($query);
+
+            if($result['ok'] == 1) {
+                return $result['result'];
+            }
+        } catch(Exception $e) {}
+
+        return false;
+    }
 }
 
 ?>

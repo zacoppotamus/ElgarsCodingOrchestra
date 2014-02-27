@@ -143,9 +143,20 @@ route::add(route::GET, "/datasets/(\w+)\.(\w+)/calc/polyfit", function($prefix, 
     include("datasets/calc/polyfit.php");
 });
 
-/*
-route::add("/datasets/:dataset/calc/stats", "datasets/calc/stats.php");
+// Create an endpoint for the stats calculations.
+route::add(route::GET, "/datasets/(\w+)\.(\w+)/calc/stats", function($prefix, $name) {
+    $data = new stdClass();
 
+    $data->prefix = $prefix;
+    $data->name = $name;
+
+    $data->field = isset($_GET['field']) ? trim($_GET['field']) : null;
+    $data->query = isset($_GET['query']) ? json_decode($_GET['query'], true) : null;
+
+    include("datasets/calc/stats.php");
+});
+
+/*
 // Add endpoints for the tests.
 route::add("/tests/run", "tests/run.php");
 route::add("/tests/import", "tests/import.php");
