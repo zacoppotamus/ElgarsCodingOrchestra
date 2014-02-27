@@ -63,7 +63,7 @@ if(empty($data->query)) {
 // Set some local variables.
 $query = $data->query;
 
-var_dump($data->query);
+print_r($data->query);
 
 // Change the MongoID if we have one.
 foreach($query as $key => $value) {
