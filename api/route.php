@@ -83,11 +83,13 @@ route::add(route::POST, "/datasets/(\w+)\.(\w+)/data", function($prefix, $name) 
 route::add(route::PUT, "/datasets/(\w+)\.(\w+)/data", function($prefix, $name) {
     $data = new stdClass();
 
+    parse_str(file_get_contents("php://input"), $_PUT);
+
     $data->prefix = $prefix;
     $data->name = $name;
 
-    $data->query = isset($_POST['query']) ? json_decode($_POST['query'], true) : null;
-    $data->changes = isset($_POST['changes']) ? json_decode($_POST['changes'], true) : null;
+    $data->query = isset($_PUT['query']) ? json_decode($_PUT['query'], true) : null;
+    $data->changes = isset($_PUT['changes']) ? json_decode($_PUT['changes'], true) : null;
 
     include("datasets/data/update.php");
 });
@@ -96,10 +98,12 @@ route::add(route::PUT, "/datasets/(\w+)\.(\w+)/data", function($prefix, $name) {
 route::add(route::DELETE, "/datasets/(\w+)\.(\w+)/data", function($prefix, $name) {
     $data = new stdClass();
 
+    parse_str(file_get_contents("php://input"), $_DELETE);
+
     $data->prefix = $prefix;
     $data->name = $name;
 
-    $data->query = isset($_POST['query']) ? json_decode($_POST['query'], true) : null;
+    $data->query = isset($_DELETE['query']) ? json_decode($_DELETE['query'], true) : null;
 
     include("datasets/data/delete.php");
 });
