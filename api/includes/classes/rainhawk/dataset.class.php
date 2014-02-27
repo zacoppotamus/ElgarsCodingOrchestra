@@ -132,6 +132,20 @@ class Dataset {
             $result = $this->collection->batchInsert($rows);
 
             if($result['ok'] == 1) {
+                foreach($rows as $row) {
+                    $fields = array_keys($row);
+
+                    foreach($fields as $field) {
+                        if(!isset($this->fields[$field])) {
+                            $this->fields[$field] = 1;
+                        } else {
+                            $this->fields[$field]++;
+                        }
+                    }
+                }
+
+                \rainhawk\sets::update($this);
+
                 return $rows;
             }
         } catch(Exception $e) {}
@@ -181,6 +195,20 @@ class Dataset {
             $result = $this->collection->remove($query, array("justOne" => false));
 
             if($result['ok'] == 1) {
+                foreach($rows as $row) {
+                    $fields = array_keys($row);
+
+                    foreach($fields as $field) {
+                        if(!isset($this->fields[$field])) {
+                            $this->fields[$field] = 1;
+                        } else {
+                            $this->fields[$field]++;
+                        }
+                    }
+                }
+
+                \rainhawk\sets::update($this);
+
                 return (int)$result['n'];
             }
         } catch(Exception $e) {}
