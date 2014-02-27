@@ -180,8 +180,6 @@ class Dataset {
         try {
             $result = $this->collection->remove($query, array("justOne" => false));
 
-            print_r($result);
-
             if($result['ok'] == 1) {
                 return (int)$result['n'];
             }
