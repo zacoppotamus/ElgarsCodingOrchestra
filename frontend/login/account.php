@@ -9,8 +9,9 @@ curl_setopt($ch, CURLOPT_URL, $url);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLOPT_USERAGENT, "ECO / Login System 0.1");
 curl_setopt($ch, CURLOPT_HTTPHEADER, array("X-Mashape-Authorization: " . $this->mashape_key));
+curl_setopt($ch, CURLOPT_TIMEOUT, 10);
 
-//$result = curl_exec($ch);
+$result = curl_exec($ch);
 curl_close($ch);
 ?>
 
