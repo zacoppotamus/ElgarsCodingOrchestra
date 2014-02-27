@@ -20,13 +20,18 @@ if(empty($data->name) || empty($data->description)) {
  */
 
 $data->prefix = app::$username;
+$dataset = new rainhawk\dataset($data->prefix, $data->name);
+
+// Check if you already have a dataset with this name.
+if($dataset->exists) {
+    echo json_beautify(json_render_error(402, "You already have a dataset with this name!"));
+    exit;
+}
 
 /*!
  * Now that we have our prefix and name, we can create the new
  * dataset and return the details to the user.
  */
-
-$dataset = new rainhawk\dataset($data->prefix, $data->name);
 
 $dataset->prefix = $data->prefix;
 $dataset->name = $data->name;
@@ -36,12 +41,12 @@ $dataset->read_access[] = app::$username;
 $dataset->write_access[] = app::$username;
 
 if(!rainhawk\sets::create($dataset)) {
-    echo json_beautify(json_render_error(402, "There was a problem while trying to create your dataset - please try again later."));
+    echo json_beautify(json_render_error(403, "There was a problem while trying to create your dataset - please try again later."));
     exit;
 }
 
 if(!$dataset->add_index("_id")) {
-    echo json_beautify(json_render_error(403, "There was a problem while trying to create your dataset - please try again later."));
+    echo json_beautify(json_render_error(404, "There was a problem while trying to create your dataset - please try again later."));
     exit;
 }
 
