@@ -40,43 +40,26 @@ if(!$dataset->have_read_access(app::$mashape_key)) {
  */
 
 $json = array(
-    "coefficients" => array()
+    "indexes" => array()
 );
 
 /*!
- * Pipe the command to our Python script to calculate the coefficients
- * of the polynomial using NumPy.
+ * Fetch the indexes from the dataset, and list them back to the
+ * user in a friendly format.
  */
 
-$dataset = escapeshellarg($data->dataset);
-$degree = $data->degree;
+// Get a list of indexes.
+$indexes = $dataset->fetch_indexes();
 
-// Check that the two fields are set.
-if(!isset($data->fields) || !is_array($data->fields) || !(count($data->fields) == 2)) {
-    echo json_beautify(json_render_error(404, "You didn't specify the two fields to use!"));
+// Check if the listing failed.
+if(!$indexes) {
+    echo json_beautify(json_render_error(404, "There was a problem while fetching the indexes."));
     exit;
 }
 
-// Set the fields.
-$field_one = escapeshellarg($data->fields[0]);
-$field_two = escapeshellarg($data->fields[1]);
-
-// Run the command.
-exec("python '../correlation/correlation.py' eco " . $dataset . " " . $field_one . " " . $field_two . " " . $degree, $output);
-
-// Check for empty output.
-if(empty($output)) {
-    echo json_beautify(json_render_error(405, "Couldn't find a polyfit equation for the given datasets."));
-    exit;
-}
-
-// Output the coefficients.
-foreach($output as $line) {
-    $data = json_decode($line, true);
-
-    if(is_array($data)) {
-        $json['coefficients'] = $data;
-    }
+// Return them into the JSON array.
+foreach($indexes as $index) {
+    $json['indexes'][$index['name']] = $index['key'];
 }
 
 /*!

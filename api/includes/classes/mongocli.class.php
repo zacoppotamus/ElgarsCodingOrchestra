@@ -14,6 +14,7 @@ class MongoCLI {
     // Private connection variable for Mongo.
     private static $conn = null;
     private static $database = null;
+    private static $datasets = null;
 
     /*!
      * Create a new instance of the native Mongo driver, which we're
@@ -40,7 +41,13 @@ class MongoCLI {
      */
 
     public static function select_database($database) {
-        return (self::$database = self::$conn->selectDB($database));
+        try {
+            self::$database = self::$conn->selectDB($database);
+        } catch(Exception $e) {
+            return false;
+        }
+
+        return true;
     }
 
     /*!
@@ -49,7 +56,44 @@ class MongoCLI {
      */
 
     public static function select_collection($collection) {
-        return self::$database->selectCollection($collection);
+        try {
+            return self::$database->selectCollection($collection);
+        } catch(Exception $e) {
+            return false;
+        }
+    }
+
+    /*!
+     * Check if a collection exists so that we can prevent people creating
+     * two sets with the same name.
+     */
+
+    public static function collection_exists($name) {
+        $datasets = self::datasets();
+        $matches = $datasets->find(array("name" => $name));
+
+        return ($matches->count() > 0);
+    }
+
+    /*!
+     * Check that a user has access to a specific collection by validating
+     * their ownership with the datasets table.
+     */
+
+    public static function can_access_collection($name) {
+        $datasets = self::datasets();
+        $matches = $datasets->find(array("name" => $name, "accessors" => app::$mashape_key));
+
+        return ($matches->count() > 0);
+    }
+
+    /*!
+     * Get the statistics for a collection given it's label, which is
+     * provided by the user.
+     */
+
+    public static function get_collection_info($label) {
+        //
     }
 
     /*!
@@ -57,8 +101,10 @@ class MongoCLI {
      * This is useful for a variety of reasons.
      */
 
-    public static function get_collections() {
-        return self::$database->getCollectionNames();
+    public static function get_collections_for_key($mashape_key) {
+        $datasets = self::select_collection("system.datasets");
+
+        return $datasets->find(array("owners" => $mashape_key));
     }
 
     /*!
@@ -66,7 +112,44 @@ class MongoCLI {
      * and optional parameters.
      */
 
-    public static function create_collection($name, $options = array()) {
-        return self::$database->createCollection($name, $options);
+    public static function create_collection($name, $mashape_key) {
+        $internal_name = $mashape_key . "." . $name;
+        $collection = self::$database->createCollection($internal_name);
+
+        if($collection) {
+            $datasets = self::select_collection("system.datasets");
+            $datasets->insert(array(
+                "name" => "tes034923",
+                "label" => $name,
+                "created" => time(),
+                "rows" => 0,
+                "fields" => array(),
+                "have_access" => array($mashape_key)
+            ));
+        }
+
+        return false;
+    }
+
+    /*!
+     * Private function for getting a handler to the datasets collection
+     * so that we can check which tables exist.
+     */
+
+    private static function datasets() {
+        if(isset(self::$datasets)) {
+            return self::$datasets;
+        }
+
+        return self::select_collection("system.datasets");
+    }
+
+    /*!
+     * A public function to generate a safe name for a dataset, so that users
+     * can't access system sets or other user's sets.
+     */
+
+    public static function safe_name($name) {
+        return "data." . $name;
     }
 }

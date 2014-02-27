@@ -8,59 +8,41 @@
  */
 
 class Route {
+    const GET = "GET";
+    const POST = "POST";
+    const PUT = "PUT";
+    const DELETE = "DELETE";
+
     // Store an array of our defined routes.
     private static $routes = array();
-    public static $file = null;
-    public static $params = array();
-
-    // Store public variables for parsing.
-    public static $uri = null;
-    public static $query = null;
 
     /*!
-     * Add a new route to the defined routes array.
+     * Add a new route to the defined routes array, provided both
+     * a request method and the regex for the path.
      */
 
-    public static function add($path, $file) {
-        self::$routes[$path] = $file;
+    public static function add($method, $path, $callback) {
+        $pattern = "/^" . str_replace("/", "\/", $path) . "$/";
+
+        self::$routes[$method][$pattern] = $callback;
     }
 
     /*!
-     * Parse a request URI to see if we have any matches.
+     * Parse a request URI to see if we have any matches, and then
+     * execute the related callback function with the provided params.
      */
 
     public static function parse() {
-        self::$params = $_GET;
+        $url = isset($_GET['uri']) ? trim($_GET['uri']) : null;
+        $method = isset($_SERVER['REQUEST_METHOD']) ? strtoupper(trim($_SERVER['REQUEST_METHOD'])) : "GET";
 
-        $uri = preg_split("/(\/|,)/", self::$uri);
+        if(isset(self::$routes[$method])) {
+            foreach(self::$routes[$method] as $pattern => $callback) {
+                if(preg_match($pattern, $url, $params)) {
+                    array_shift($params);
 
-        foreach(self::$routes as $path => $file) {
-            $path = preg_split("/(\/|,)/", $path);
-            $params = array();
-            $valid = true;
-
-            for($i = 0; $i < count($path); $i++) {
-                $path_part = (isset($path[$i])) ? $path[$i] : null;
-                $uri_part = (isset($uri[$i])) ? $uri[$i] : null;
-
-                if(substr($path_part, 0, 1) == ":") {
-                    $params[substr($path_part, 1)] = $uri_part;
-                } else if(!($path_part == $uri_part)) {
-                    $valid = false;
-                    break;
+                    return call_user_func_array($callback, array_values($params));
                 }
-            }
-
-            if(!(count($path) == count($uri))) {
-                $valid = false;
-            }
-
-            if($valid) {
-                self::$file = $file;
-                self::$params = array_merge(self::$params, $params);
-                $_GET = array_merge($_GET, self::$params);
-
-                return true;
             }
         }
 

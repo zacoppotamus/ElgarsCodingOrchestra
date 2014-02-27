@@ -4,15 +4,35 @@ include("includes/kernel.php");
 include("includes/api/core.php");
 
 /*!
- * Grab all of the different inputs so that we can use them elsewhere
- * in this script.
+ * Check that the parameters have all been set and sent to the script,
+ * including the prefix and the name.
  */
 
-$data = array(
-    "dataset" => (isset($_GET['dataset'])) ? trim(strtolower($_GET['dataset'])) : null,
-    "field_name" => (isset($_GET['field_name'])) ? trim(strtolower($_GET['field_name'])) : null,
-    "query" => (isset($_GET['query'])) ? json_decode($_GET['query'], true) : null
-);
+if(empty($data->prefix) || empty($data->name)) {
+    echo json_beautify(json_render_error(401, "You didn't pass one or more of the required parameters."));
+    exit;
+}
+
+/*!
+ * Check to see if the dataset exists, and that we have access to it.
+ * We need to use the prefix and the name of the dataset to get a
+ * reference to it.
+ */
+
+// Create a new dataset object.
+$dataset = new rainhawk\dataset($data->prefix, $data->name);
+
+// Check that the dataset exists.
+if(!$dataset->exists) {
+    echo json_beautify(json_render_error(402, "The dataset you specified does not exist."));
+    exit;
+}
+
+// Check that we can read from the dataset.
+if(!$dataset->have_read_access(app::$mashape_key)) {
+    echo json_beautify(json_render_error(403, "You don't have access to read from this dataset."));
+    exit;
+}
 
 /*!
  * Define an empty array to store the results of whatever we need
@@ -27,40 +47,23 @@ $json = array(
 );
 
 /*!
- * Select the relevant dataset inside the database. If the collection
- * doesn't already exist, then Mongo will automatically create it
- * when new data is inserted.
- */
-
-if(!isset($data['dataset']) || empty($data['dataset'])) {
-    echo json_beautify(json_render_error(401, "You didn't specify a dataset to query."));
-    exit;
-}
-
-try {
-    $collection = mongocli::select_collection($data['dataset']);
-} catch(Exception $e) {
-    echo json_beautify(json_render_error(402, "An unknown error occured while attempting to select the dataset."));
-    exit;
-}
-
-/*!
  * Run some commands to calculate some aggregations for the dataset
  * depending on the query provided.
  */
 
 // Check if we have a field_name or not.
-if(!isset($data['field_name']) || empty($data['field_name'])) {
-    echo json_beautify(json_render_error(403, "You didn't specify a field name to use in the calculations."));
+if(empty($data->field)) {
+    echo json_beautify(json_render_error(404, "You didn't specify a field name to use in the calculations."));
     exit;
 }
 
+// Set some local variables.
 $query = array();
 
 // Check if we need to run a pre-query to match certain documents.
-if(isset($data['query']) && !empty($data['query'])) {
+if(!empty($data->query)) {
     $query[] = array(
-        '$match' => $data['query']
+        '$match' => $data->query
     );
 }
 
@@ -69,33 +72,36 @@ $query[] = array(
     '$group' => array(
         "_id" => null,
         "min" => array(
-            '$min' => '$' . $data['field_name']
+            '$min' => '$' . $data->field
         ),
         "max" => array(
-            '$max' => '$' . $data['field_name']
+            '$max' => '$' . $data->field
         ),
         "average" => array(
-            '$avg' => '$' . $data['field_name']
+            '$avg' => '$' . $data->field
         ),
         "sum" => array(
-            '$sum' => '$' . $data['field_name']
+            '$sum' => '$' . $data->field
         )
     )
 );
 
 // Run the query.
-try {
-    $result = $collection->aggregate($query);
-    $stats = $result['result'][0];
+$result = $dataset->aggregate($query);
 
-    $json['min'] = $stats['min'];
-    $json['max'] = $stats['max'];
-    $json['average'] = $stats['average'];
-    $json['sum'] = $stats['sum'];
-} catch(Exception $e) {
-    echo json_beautify(json_render_error(404, "An unexpected error occured while performing your query - are you sure you formatted it correctly?"));
+// Check if it worked.
+if(!$result) {
+    echo json_beautify(json_render_error(405, "An unexpected error occured while performing your query - are you sure you formatted it correctly?"));
     exit;
 }
+
+// Set the JSON output.
+$stats = $result[0];
+
+$json['min'] = $stats['min'];
+$json['max'] = $stats['max'];
+$json['average'] = $stats['average'];
+$json['sum'] = $stats['sum'];
 
 /*!
  * Output our JSON payload for use in whatever needs to be using
