@@ -77,13 +77,16 @@ foreach($query as $key => $value) {
 }
 
 // Run the delete query.
-$query = $dataset->delete($query);
+$deleted = $dataset->delete($query);
 
 // Check if the query failed.
-if(!is_int($query)) {
+if(!is_int($deleted)) {
     echo json_beautify(json_render_error(405, "An unexpected error occured while performing your query - are you sure you formatted all the parameters correctly?"));
     exit;
 }
+
+// Set the JSON.
+$json['deleted'] = $deleted;
 
 /*!
  * Output our JSON payload for use in whatever needs to be using
