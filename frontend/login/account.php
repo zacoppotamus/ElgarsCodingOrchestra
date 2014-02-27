@@ -21,5 +21,6 @@ curl_close($ch);
     </head>
     <body>
         <p>Your API key is <?php echo $mashape_key; ?></p>
+        <p>Your result is <?php echo $result; ?></p>
     </body>
 </html>
