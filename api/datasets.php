@@ -13,7 +13,7 @@ $json = array(
 );
 
 // Perform a query to find the datasets.
-$datasets = rainhawk\sets::sets_for_api_key(app::$mashape_key);
+$datasets = rainhawk\sets::sets_for_user(app::$username);
 
 // Check if that query worked.
 if(!$datasets) {

@@ -16,17 +16,10 @@ if(empty($data->name) || empty($data->description)) {
 /*!
  * Come up with a new prefix to use for the dataset, by generating
  * a 6 character string and checking that it hasn't already been
- * used.
+ * used. Now we can just use their username.
  */
 
-do {
-    $prefix = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyz"), 0, 6);
-    $exists = rainhawk\sets::exists($prefix, $data->name);
-
-    if($exists) {
-        unset($prefix);
-    }
-} while(!isset($prefix));
+$data->prefix = app::$username;
 
 /*!
  * Now that we have our prefix and name, we can create the new
@@ -39,8 +32,8 @@ $dataset->prefix = $prefix;
 $dataset->name = $data->name;
 $dataset->description = $data->description;
 
-$dataset->read_access[] = app::$mashape_key;
-$dataset->write_access[] = app::$mashape_key;
+$dataset->read_access[] = app::$username;
+$dataset->write_access[] = app::$username;
 
 if(!rainhawk\sets::create($dataset)) {
     echo json_beautify(json_render_error(402, "There was a problem while trying to create your dataset - please try again later."));

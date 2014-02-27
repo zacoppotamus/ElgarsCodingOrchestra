@@ -52,27 +52,27 @@ class Dataset {
     }
 
     /**
-     * Check if the supplied API key has read access to the dataset
+     * Check if the supplied username has read access to the dataset
      * which will always return true if the user created it.
      *
-     * @param string $api_key  The API key to check.
+     * @param string $username  The username to check.
      * @return bool  Whether or not the user can access it.
      */
 
-    public function have_read_access($api_key) {
-        return $this->exists && in_array($api_key, $this->read_access);
+    public function have_read_access($username) {
+        return $this->exists && in_array($username, $this->read_access);
     }
 
     /**
-     * Check if the supplied API key has write access to the dataset
+     * Check if the supplied username has write access to the dataset
      * which will always return true if the user created it.
      *
-     * @param string $api_key  The API key to check.
+     * @param string $username  The username to check.
      * @return bool  Whether or not the user can access it.
      */
 
-    public function have_write_access($api_key) {
-        return $this->exists && in_array($api_key, $this->write_access);
+    public function have_write_access($username) {
+        return $this->exists && in_array($username, $this->write_access);
     }
 
     /**
