@@ -20,10 +20,20 @@
 				<div class="col-md-10 col-md-offset-1 text-center">
 					<h2>Our service makes managing big data easy. Upload your dataset to our servers in .csv format (more formats to come) and view them in our dataset viewer.</h2>
                     <h3>Enter a dataset name and description and then click the button below</h>
-                    <form>
-                        <input type="text" class="txtInput" placeholder="Dataset Name" id="datasetNameInput" required autofocus><br>
-                        <textarea class="txtInput" placeholder="Dataset Description" id="datasetDescriptionInput" required></textarea><br>
-                        <hr>
+                    <hr>
+                    <form role="form" class="form-horizontal">
+                        <div class="form-group">
+                            <label for="inputDataset" class="control-label">Dataset</label>
+                            <div>
+                                <input type="text" class="form-control" placeholder="Dataset Name" id="datasetNameInput" required autofocus>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputDescription" class="control-label">Dataset Description</label>
+                            <div>
+                                <input type="text" class="form-control" placeholder="Dataset Description" id="datasetDescriptionInput" required autofocus>
+                            </div>
+                        </div>
                         <span class="btn btn-primary btn-file">
                             <span>Select & Upload<br>File</span>
                             <br>
