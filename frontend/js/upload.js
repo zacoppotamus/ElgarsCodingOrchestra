@@ -4,7 +4,7 @@
 
 var mashape_user;
 
-function initialiseDialogue(){
+function initDialog(){
     $("#uploadConfirm").dialog({
         resizable: false,
         modal: true,
