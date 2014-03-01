@@ -19,7 +19,7 @@ function initialiseDialogue(){
 }
 
 // Retrieves the username of the mashape user
-var mashape_user;
+var window.mashape_user;
 function username(){
     if(typeof mashape_user === 'undefined') {
         getRequest("https://sneeza-eco.p.mashape.com/ping", function(result){
