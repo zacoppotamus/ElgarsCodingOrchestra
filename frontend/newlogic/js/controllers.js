@@ -1,8 +1,9 @@
-// create module for custom directives
-var d3DemoApp = angular.module('d3DemoApp', ['ui.bootstrap']);
+'use strict';
 
-// controller
-d3DemoApp.controller('AppCtrl', function DropdownCtrl($scope, $http) {
+/* controllers */
+
+angular.module('eco.controllers', [])
+.controller('ecoCtrl', function ($scope, $http) {
 	// different kind of visualizations
 	$scope.vizTypes = [
 		{'id': 1 , 'name':'Pie Chart'},
@@ -15,6 +16,19 @@ d3DemoApp.controller('AppCtrl', function DropdownCtrl($scope, $http) {
 
 	// currently selected dataset
 	$scope.selectedDataset = '';
+	$scope.datasets = [
+		'nysubway',
+		'23nations',
+		'nbapayrolls'
+	];
+
+	// selected year (model)
+	// $scope.selectedYear = '';
+
+	$scope.years = [];
+	for (var i = 1998; i <= 2017; i++) {
+		$scope.years.push(i);
+	}
 
 	$scope.getDatasetNames = function() {
 		$http({
@@ -23,7 +37,11 @@ d3DemoApp.controller('AppCtrl', function DropdownCtrl($scope, $http) {
 		}).
 		success(function(json) {
 			// attach the data to the scope
-			$scope.datasets = json.data.datasets;
+			$scope.datasets = [];
+			$.each(json.data.datasets, function(key,val) {
+				$scope.datasets.push(val.name);
+				console.log("bla")
+			});
 
 			// clean the error messages
 			$scope.error = '';
@@ -38,5 +56,5 @@ d3DemoApp.controller('AppCtrl', function DropdownCtrl($scope, $http) {
 	};
 
 	// get the datasets immediately
-	$scope.getDatasetNames();
+	// $scope.getDatasetNames();
 });

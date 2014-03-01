@@ -1,0 +1,3194 @@
+{
+    "1998": {
+        "ATL": {
+            "opt": 0,
+            "payroll": 30133827,
+            "team": "ATL"
+        },
+        "BOS": {
+            "opt": 0,
+            "payroll": 26800500,
+            "team": "BOS"
+        },
+        "CHA": {
+            "opt": 0,
+            "payroll": 0,
+            "team": "CHA"
+        },
+        "CHI": {
+            "opt": 0,
+            "payroll": 61330670,
+            "team": "CHI"
+        },
+        "CLE": {
+            "opt": 0,
+            "payroll": 26677290,
+            "team": "CLE"
+        },
+        "DAL": {
+            "opt": 0,
+            "payroll": 27026948,
+            "team": "DAL"
+        },
+        "DEN": {
+            "opt": 0,
+            "payroll": 26518960,
+            "team": "DEN"
+        },
+        "DET": {
+            "opt": 0,
+            "payroll": 24876625,
+            "team": "DET"
+        },
+        "GSW": {
+            "opt": 0,
+            "payroll": 32856469,
+            "team": "GSW"
+        },
+        "HOU": {
+            "opt": 0,
+            "payroll": 27844350,
+            "team": "HOU"
+        },
+        "IND": {
+            "opt": 0,
+            "payroll": 39097273,
+            "team": "IND"
+        },
+        "LAC": {
+            "opt": 0,
+            "payroll": 24493625,
+            "team": "LAC"
+        },
+        "LAL": {
+            "opt": 0,
+            "payroll": 36304583,
+            "team": "LAL"
+        },
+        "MEM": {
+            "opt": 0,
+            "payroll": 23123350,
+            "team": "MEM"
+        },
+        "MIA": {
+            "opt": 0,
+            "payroll": 34374186,
+            "team": "MIA"
+        },
+        "MIL": {
+            "opt": 0,
+            "payroll": 25919828,
+            "team": "MIL"
+        },
+        "MIN": {
+            "opt": 0,
+            "payroll": 27787780,
+            "team": "MIN"
+        },
+        "BRK": {
+            "opt": 0,
+            "payroll": 28504567,
+            "team": "BRK"
+        },
+        "NOP": {
+            "opt": 0,
+            "payroll": 27006013,
+            "team": "NOP"
+        },
+        "NYK": {
+            "opt": 0,
+            "payroll": 53974881,
+            "team": "NYK"
+        },
+        "OKC": {
+            "opt": 0,
+            "payroll": 37592175,
+            "team": "OKC"
+        },
+        "ORL": {
+            "opt": 0,
+            "payroll": 43954299,
+            "team": "ORL"
+        },
+        "PHI": {
+            "opt": 0,
+            "payroll": 28620520,
+            "team": "PHI"
+        },
+        "PHO": {
+            "opt": 0,
+            "payroll": 36937876,
+            "team": "PHO"
+        },
+        "POR": {
+            "opt": 0,
+            "payroll": 27786719,
+            "team": "POR"
+        },
+        "SAC": {
+            "opt": 0,
+            "payroll": 29546350,
+            "team": "SAC"
+        },
+        "SAS": {
+            "opt": 0,
+            "payroll": 38846163,
+            "team": "SAS"
+        },
+        "TOR": {
+            "opt": 0,
+            "payroll": 24748905,
+            "team": "TOR"
+        },
+        "UTA": {
+            "opt": 0,
+            "payroll": 28505442,
+            "team": "UTA"
+        },
+        "WAS": {
+            "opt": 0,
+            "payroll": 40718075,
+            "team": "WAS"
+        }
+    },
+    "1999": {
+        "ATL": {
+            "opt": 0,
+            "payroll": 40954940,
+            "team": "ATL"
+        },
+        "BOS": {
+            "opt": 0,
+            "payroll": 32258856,
+            "team": "BOS"
+        },
+        "CHA": {
+            "opt": 0,
+            "payroll": 0,
+            "team": "CHA"
+        },
+        "CHI": {
+            "opt": 0,
+            "payroll": 28640500,
+            "team": "CHI"
+        },
+        "CLE": {
+            "opt": 0,
+            "payroll": 27778000,
+            "team": "CLE"
+        },
+        "DAL": {
+            "opt": 0,
+            "payroll": 35565568,
+            "team": "DAL"
+        },
+        "DEN": {
+            "opt": 0,
+            "payroll": 29392200,
+            "team": "DEN"
+        },
+        "DET": {
+            "opt": 0,
+            "payroll": 34699620,
+            "team": "DET"
+        },
+        "GSW": {
+            "opt": 0,
+            "payroll": 30985000,
+            "team": "GSW"
+        },
+        "HOU": {
+            "opt": 0,
+            "payroll": 30297100,
+            "team": "HOU"
+        },
+        "IND": {
+            "opt": 0,
+            "payroll": 45114000,
+            "team": "IND"
+        },
+        "LAC": {
+            "opt": 0,
+            "payroll": 28417580,
+            "team": "LAC"
+        },
+        "LAL": {
+            "opt": 0,
+            "payroll": 41872000,
+            "team": "LAL"
+        },
+        "MEM": {
+            "opt": 0,
+            "payroll": 30793800,
+            "team": "MEM"
+        },
+        "MIA": {
+            "opt": 0,
+            "payroll": 42844000,
+            "team": "MIA"
+        },
+        "MIL": {
+            "opt": 0,
+            "payroll": 33703240,
+            "team": "MIL"
+        },
+        "MIN": {
+            "opt": 0,
+            "payroll": 32331480,
+            "team": "MIN"
+        },
+        "BRK": {
+            "opt": 0,
+            "payroll": 43735000,
+            "team": "BRK"
+        },
+        "NOP": {
+            "opt": 0,
+            "payroll": 29914500,
+            "team": "NOP"
+        },
+        "NYK": {
+            "opt": 0,
+            "payroll": 59945400,
+            "team": "NYK"
+        },
+        "OKC": {
+            "opt": 0,
+            "payroll": 30413082,
+            "team": "OKC"
+        },
+        "ORL": {
+            "opt": 0,
+            "payroll": 46118000,
+            "team": "ORL"
+        },
+        "PHI": {
+            "opt": 0,
+            "payroll": 41509920,
+            "team": "PHI"
+        },
+        "PHO": {
+            "opt": 0,
+            "payroll": 36101500,
+            "team": "PHO"
+        },
+        "POR": {
+            "opt": 0,
+            "payroll": 54438000,
+            "team": "POR"
+        },
+        "SAC": {
+            "opt": 0,
+            "payroll": 31692000,
+            "team": "SAC"
+        },
+        "SAS": {
+            "opt": 0,
+            "payroll": 43393643,
+            "team": "SAS"
+        },
+        "TOR": {
+            "opt": 0,
+            "payroll": 34081000,
+            "team": "TOR"
+        },
+        "UTA": {
+            "opt": 0,
+            "payroll": 30298560,
+            "team": "UTA"
+        },
+        "WAS": {
+            "opt": 0,
+            "payroll": 34018500,
+            "team": "WAS"
+        }
+    },
+    "2000": {
+        "ATL": {
+            "opt": 0,
+            "payroll": 44169202,
+            "team": "ATL"
+        },
+        "BOS": {
+            "opt": 0,
+            "payroll": 46152875,
+            "team": "BOS"
+        },
+        "CHA": {
+            "opt": 0,
+            "payroll": 0,
+            "team": "CHA"
+        },
+        "CHI": {
+            "opt": 0,
+            "payroll": 27012368,
+            "team": "CHI"
+        },
+        "CLE": {
+            "opt": 0,
+            "payroll": 46547966,
+            "team": "CLE"
+        },
+        "DAL": {
+            "opt": 0,
+            "payroll": 40014500,
+            "team": "DAL"
+        },
+        "DEN": {
+            "opt": 0,
+            "payroll": 43205814,
+            "team": "DEN"
+        },
+        "DET": {
+            "opt": 0,
+            "payroll": 42141801,
+            "team": "DET"
+        },
+        "GSW": {
+            "opt": 0,
+            "payroll": 36133518,
+            "team": "GSW"
+        },
+        "HOU": {
+            "opt": 0,
+            "payroll": 52269367,
+            "team": "HOU"
+        },
+        "IND": {
+            "opt": 0,
+            "payroll": 54301730,
+            "team": "IND"
+        },
+        "LAC": {
+            "opt": 0,
+            "payroll": 22489343,
+            "team": "LAC"
+        },
+        "LAL": {
+            "opt": 0,
+            "payroll": 55018533,
+            "team": "LAL"
+        },
+        "MEM": {
+            "opt": 0,
+            "payroll": 37432688,
+            "team": "MEM"
+        },
+        "MIA": {
+            "opt": 0,
+            "payroll": 52296573,
+            "team": "MIA"
+        },
+        "MIL": {
+            "opt": 0,
+            "payroll": 44680197,
+            "team": "MIL"
+        },
+        "MIN": {
+            "opt": 0,
+            "payroll": 42642272,
+            "team": "MIN"
+        },
+        "BRK": {
+            "opt": 0,
+            "payroll": 53245461,
+            "team": "BRK"
+        },
+        "NOP": {
+            "opt": 0,
+            "payroll": 38581722,
+            "team": "NOP"
+        },
+        "NYK": {
+            "opt": 0,
+            "payroll": 71340801,
+            "team": "NYK"
+        },
+        "OKC": {
+            "opt": 0,
+            "payroll": 38258910,
+            "team": "OKC"
+        },
+        "ORL": {
+            "opt": 0,
+            "payroll": 41576801,
+            "team": "ORL"
+        },
+        "PHI": {
+            "opt": 0,
+            "payroll": 43890593,
+            "team": "PHI"
+        },
+        "PHO": {
+            "opt": 0,
+            "payroll": 46519037,
+            "team": "PHO"
+        },
+        "POR": {
+            "opt": 0,
+            "payroll": 73513705,
+            "team": "POR"
+        },
+        "SAC": {
+            "opt": 0,
+            "payroll": 40113125,
+            "team": "SAC"
+        },
+        "SAS": {
+            "opt": 0,
+            "payroll": 42529801,
+            "team": "SAS"
+        },
+        "TOR": {
+            "opt": 0,
+            "payroll": 34730320,
+            "team": "TOR"
+        },
+        "UTA": {
+            "opt": 0,
+            "payroll": 50316720,
+            "team": "UTA"
+        },
+        "WAS": {
+            "opt": 0,
+            "payroll": 53194441,
+            "team": "WAS"
+        }
+    },
+    "2001": {
+        "ATL": {
+            "opt": 0,
+            "payroll": 39297129,
+            "team": "ATL"
+        },
+        "BOS": {
+            "opt": 0,
+            "payroll": 51478707,
+            "team": "BOS"
+        },
+        "CHA": {
+            "opt": 0,
+            "payroll": 0,
+            "team": "CHA"
+        },
+        "CHI": {
+            "opt": 0,
+            "payroll": 29691907,
+            "team": "CHI"
+        },
+        "CLE": {
+            "opt": 0,
+            "payroll": 49780549,
+            "team": "CLE"
+        },
+        "DAL": {
+            "opt": 0,
+            "payroll": 51445574,
+            "team": "DAL"
+        },
+        "DEN": {
+            "opt": 0,
+            "payroll": 52189220,
+            "team": "DEN"
+        },
+        "DET": {
+            "opt": 0,
+            "payroll": 40475338,
+            "team": "DET"
+        },
+        "GSW": {
+            "opt": 0,
+            "payroll": 42363018,
+            "team": "GSW"
+        },
+        "HOU": {
+            "opt": 0,
+            "payroll": 49283309,
+            "team": "HOU"
+        },
+        "IND": {
+            "opt": 0,
+            "payroll": 55086140,
+            "team": "IND"
+        },
+        "LAC": {
+            "opt": 0,
+            "payroll": 29606189,
+            "team": "LAC"
+        },
+        "LAL": {
+            "opt": 0,
+            "payroll": 58968213,
+            "team": "LAL"
+        },
+        "MEM": {
+            "opt": 0,
+            "payroll": 48899840,
+            "team": "MEM"
+        },
+        "MIA": {
+            "opt": 0,
+            "payroll": 73472329,
+            "team": "MIA"
+        },
+        "MIL": {
+            "opt": 0,
+            "payroll": 57819318,
+            "team": "MIL"
+        },
+        "MIN": {
+            "opt": 0,
+            "payroll": 47488500,
+            "team": "MIN"
+        },
+        "BRK": {
+            "opt": 0,
+            "payroll": 68977578,
+            "team": "BRK"
+        },
+        "NOP": {
+            "opt": 0,
+            "payroll": 46441558,
+            "team": "NOP"
+        },
+        "NYK": {
+            "opt": 0,
+            "payroll": 73267269,
+            "team": "NYK"
+        },
+        "OKC": {
+            "opt": 0,
+            "payroll": 51538658,
+            "team": "OKC"
+        },
+        "ORL": {
+            "opt": 0,
+            "payroll": 37459860,
+            "team": "ORL"
+        },
+        "PHI": {
+            "opt": 0,
+            "payroll": 50718489,
+            "team": "PHI"
+        },
+        "PHO": {
+            "opt": 0,
+            "payroll": 53906347,
+            "team": "PHO"
+        },
+        "POR": {
+            "opt": 0,
+            "payroll": 87395140,
+            "team": "POR"
+        },
+        "SAC": {
+            "opt": 0,
+            "payroll": 46266289,
+            "team": "SAC"
+        },
+        "SAS": {
+            "opt": 0,
+            "payroll": 56898969,
+            "team": "SAS"
+        },
+        "TOR": {
+            "opt": 0,
+            "payroll": 38313749,
+            "team": "TOR"
+        },
+        "UTA": {
+            "opt": 0,
+            "payroll": 53893860,
+            "team": "UTA"
+        },
+        "WAS": {
+            "opt": 0,
+            "payroll": 59085969,
+            "team": "WAS"
+        }
+    },
+    "2002": {
+        "ATL": {
+            "opt": 0,
+            "payroll": 51525207,
+            "team": "ATL"
+        },
+        "BOS": {
+            "opt": 0,
+            "payroll": 47515677,
+            "team": "BOS"
+        },
+        "CHA": {
+            "opt": 0,
+            "payroll": 0,
+            "team": "CHA"
+        },
+        "CHI": {
+            "opt": 0,
+            "payroll": 42592857,
+            "team": "CHI"
+        },
+        "CLE": {
+            "opt": 0,
+            "payroll": 45649974,
+            "team": "CLE"
+        },
+        "DAL": {
+            "opt": 0,
+            "payroll": 57960080,
+            "team": "DAL"
+        },
+        "DEN": {
+            "opt": 0,
+            "payroll": 54460475,
+            "team": "DEN"
+        },
+        "DET": {
+            "opt": 0,
+            "payroll": 42417677,
+            "team": "DET"
+        },
+        "GSW": {
+            "opt": 0,
+            "payroll": 47681152,
+            "team": "GSW"
+        },
+        "HOU": {
+            "opt": 0,
+            "payroll": 49168169,
+            "team": "HOU"
+        },
+        "IND": {
+            "opt": 0,
+            "payroll": 53398621,
+            "team": "IND"
+        },
+        "LAC": {
+            "opt": 0,
+            "payroll": 33849932,
+            "team": "LAC"
+        },
+        "LAL": {
+            "opt": 0,
+            "payroll": 54262017,
+            "team": "LAL"
+        },
+        "MEM": {
+            "opt": 0,
+            "payroll": 50920631,
+            "team": "MEM"
+        },
+        "MIA": {
+            "opt": 0,
+            "payroll": 53351186,
+            "team": "MIA"
+        },
+        "MIL": {
+            "opt": 0,
+            "payroll": 56224266,
+            "team": "MIL"
+        },
+        "MIN": {
+            "opt": 0,
+            "payroll": 55093782,
+            "team": "MIN"
+        },
+        "BRK": {
+            "opt": 0,
+            "payroll": 75193712,
+            "team": "BRK"
+        },
+        "NOP": {
+            "opt": 0,
+            "payroll": 49999445,
+            "team": "NOP"
+        },
+        "NYK": {
+            "opt": 0,
+            "payroll": 85993039,
+            "team": "NYK"
+        },
+        "OKC": {
+            "opt": 0,
+            "payroll": 45556733,
+            "team": "OKC"
+        },
+        "ORL": {
+            "opt": 0,
+            "payroll": 45984001,
+            "team": "ORL"
+        },
+        "PHI": {
+            "opt": 0,
+            "payroll": 58073366,
+            "team": "PHI"
+        },
+        "PHO": {
+            "opt": 0,
+            "payroll": 56596369,
+            "team": "PHO"
+        },
+        "POR": {
+            "opt": 0,
+            "payroll": 84292850,
+            "team": "POR"
+        },
+        "SAC": {
+            "opt": 0,
+            "payroll": 54921012,
+            "team": "SAC"
+        },
+        "SAS": {
+            "opt": 0,
+            "payroll": 45844814,
+            "team": "SAS"
+        },
+        "TOR": {
+            "opt": 0,
+            "payroll": 52657161,
+            "team": "TOR"
+        },
+        "UTA": {
+            "opt": 0,
+            "payroll": 52642362,
+            "team": "UTA"
+        },
+        "WAS": {
+            "opt": 0,
+            "payroll": 54776087,
+            "team": "WAS"
+        }
+    },
+    "2003": {
+        "ATL": {
+            "opt": 0,
+            "payroll": 55711549,
+            "team": "ATL"
+        },
+        "BOS": {
+            "opt": 0,
+            "payroll": 52548195,
+            "team": "BOS"
+        },
+        "CHA": {
+            "opt": 0,
+            "payroll": 0,
+            "team": "CHA"
+        },
+        "CHI": {
+            "opt": 0,
+            "payroll": 44531095,
+            "team": "CHI"
+        },
+        "CLE": {
+            "opt": 0,
+            "payroll": 49610448,
+            "team": "CLE"
+        },
+        "DAL": {
+            "opt": 0,
+            "payroll": 72940316,
+            "team": "DAL"
+        },
+        "DEN": {
+            "opt": 0,
+            "payroll": 49109209,
+            "team": "DEN"
+        },
+        "DET": {
+            "opt": 0,
+            "payroll": 47777888,
+            "team": "DET"
+        },
+        "GSW": {
+            "opt": 0,
+            "payroll": 47737715,
+            "team": "GSW"
+        },
+        "HOU": {
+            "opt": 0,
+            "payroll": 50044865,
+            "team": "HOU"
+        },
+        "IND": {
+            "opt": 0,
+            "payroll": 53472323,
+            "team": "IND"
+        },
+        "LAC": {
+            "opt": 0,
+            "payroll": 42955777,
+            "team": "LAC"
+        },
+        "LAL": {
+            "opt": 0,
+            "payroll": 63151182,
+            "team": "LAL"
+        },
+        "MEM": {
+            "opt": 0,
+            "payroll": 61009172,
+            "team": "MEM"
+        },
+        "MIA": {
+            "opt": 0,
+            "payroll": 57378326,
+            "team": "MIA"
+        },
+        "MIL": {
+            "opt": 0,
+            "payroll": 57995152,
+            "team": "MIL"
+        },
+        "MIN": {
+            "opt": 0,
+            "payroll": 59518801,
+            "team": "MIN"
+        },
+        "BRK": {
+            "opt": 0,
+            "payroll": 60412919,
+            "team": "BRK"
+        },
+        "NOP": {
+            "opt": 0,
+            "payroll": 44458882,
+            "team": "NOP"
+        },
+        "NYK": {
+            "opt": 0,
+            "payroll": 93452379,
+            "team": "NYK"
+        },
+        "OKC": {
+            "opt": 0,
+            "payroll": 53167479,
+            "team": "OKC"
+        },
+        "ORL": {
+            "opt": 0,
+            "payroll": 50435346,
+            "team": "ORL"
+        },
+        "PHI": {
+            "opt": 0,
+            "payroll": 64473029,
+            "team": "PHI"
+        },
+        "PHO": {
+            "opt": 0,
+            "payroll": 55225080,
+            "team": "PHO"
+        },
+        "POR": {
+            "opt": 0,
+            "payroll": 105595657,
+            "team": "POR"
+        },
+        "SAC": {
+            "opt": 0,
+            "payroll": 70416596,
+            "team": "SAC"
+        },
+        "SAS": {
+            "opt": 0,
+            "payroll": 53182559,
+            "team": "SAS"
+        },
+        "TOR": {
+            "opt": 0,
+            "payroll": 55408207,
+            "team": "TOR"
+        },
+        "UTA": {
+            "opt": 0,
+            "payroll": 50934629,
+            "team": "UTA"
+        },
+        "WAS": {
+            "opt": 0,
+            "payroll": 46691190,
+            "team": "WAS"
+        }
+    },
+    "2004": {
+        "ATL": {
+            "opt": 0,
+            "payroll": 64497340,
+            "team": "ATL"
+        },
+        "BOS": {
+            "opt": 0,
+            "payroll": 60185915,
+            "team": "BOS"
+        },
+        "CHA": {
+            "opt": 0,
+            "payroll": 0,
+            "team": "CHA"
+        },
+        "CHI": {
+            "opt": 0,
+            "payroll": 55489797,
+            "team": "CHI"
+        },
+        "CLE": {
+            "opt": 0,
+            "payroll": 46186472,
+            "team": "CLE"
+        },
+        "DAL": {
+            "opt": 0,
+            "payroll": 79169792,
+            "team": "DAL"
+        },
+        "DEN": {
+            "opt": 0,
+            "payroll": 39398646,
+            "team": "DEN"
+        },
+        "DET": {
+            "opt": 0,
+            "payroll": 53442834,
+            "team": "DET"
+        },
+        "GSW": {
+            "opt": 0,
+            "payroll": 53376708,
+            "team": "GSW"
+        },
+        "HOU": {
+            "opt": 0,
+            "payroll": 55401430,
+            "team": "HOU"
+        },
+        "IND": {
+            "opt": 0,
+            "payroll": 58156236,
+            "team": "IND"
+        },
+        "LAC": {
+            "opt": 0,
+            "payroll": 38747432,
+            "team": "LAC"
+        },
+        "LAL": {
+            "opt": 0,
+            "payroll": 64123085,
+            "team": "LAL"
+        },
+        "MEM": {
+            "opt": 0,
+            "payroll": 57378323,
+            "team": "MEM"
+        },
+        "MIA": {
+            "opt": 0,
+            "payroll": 47349374,
+            "team": "MIA"
+        },
+        "MIL": {
+            "opt": 0,
+            "payroll": 53229826,
+            "team": "MIL"
+        },
+        "MIN": {
+            "opt": 0,
+            "payroll": 71272042,
+            "team": "MIN"
+        },
+        "BRK": {
+            "opt": 0,
+            "payroll": 63697123,
+            "team": "BRK"
+        },
+        "NOP": {
+            "opt": 0,
+            "payroll": 49800204,
+            "team": "NOP"
+        },
+        "NYK": {
+            "opt": 0,
+            "payroll": 89444820,
+            "team": "NYK"
+        },
+        "OKC": {
+            "opt": 0,
+            "payroll": 52347476,
+            "team": "OKC"
+        },
+        "ORL": {
+            "opt": 0,
+            "payroll": 50588419,
+            "team": "ORL"
+        },
+        "PHI": {
+            "opt": 0,
+            "payroll": 59847400,
+            "team": "PHI"
+        },
+        "PHO": {
+            "opt": 0,
+            "payroll": 66931770,
+            "team": "PHO"
+        },
+        "POR": {
+            "opt": 0,
+            "payroll": 82956768,
+            "team": "POR"
+        },
+        "SAC": {
+            "opt": 0,
+            "payroll": 68372826,
+            "team": "SAC"
+        },
+        "SAS": {
+            "opt": 0,
+            "payroll": 46464064,
+            "team": "SAS"
+        },
+        "TOR": {
+            "opt": 0,
+            "payroll": 63033243,
+            "team": "TOR"
+        },
+        "UTA": {
+            "opt": 0,
+            "payroll": 34747674,
+            "team": "UTA"
+        },
+        "WAS": {
+            "opt": 0,
+            "payroll": 45682902,
+            "team": "WAS"
+        }
+    },
+    "2005": {
+        "ATL": {
+            "opt": 0,
+            "payroll": 41059616,
+            "team": "ATL"
+        },
+        "BOS": {
+            "opt": 0,
+            "payroll": 64577356,
+            "team": "BOS"
+        },
+        "CHA": {
+            "opt": 0,
+            "payroll": 23922578,
+            "team": "CHA"
+        },
+        "CHI": {
+            "opt": 0,
+            "payroll": 55757043,
+            "team": "CHI"
+        },
+        "CLE": {
+            "opt": 0,
+            "payroll": 49175274,
+            "team": "CLE"
+        },
+        "DAL": {
+            "opt": 0,
+            "payroll": 91908443,
+            "team": "DAL"
+        },
+        "DEN": {
+            "opt": 0,
+            "payroll": 45716482,
+            "team": "DEN"
+        },
+        "DET": {
+            "opt": 0,
+            "payroll": 54762481,
+            "team": "DET"
+        },
+        "GSW": {
+            "opt": 0,
+            "payroll": 54943723,
+            "team": "GSW"
+        },
+        "HOU": {
+            "opt": 0,
+            "payroll": 60284303,
+            "team": "HOU"
+        },
+        "IND": {
+            "opt": 0,
+            "payroll": 66064780,
+            "team": "IND"
+        },
+        "LAC": {
+            "opt": 0,
+            "payroll": 45483265,
+            "team": "LAC"
+        },
+        "LAL": {
+            "opt": 0,
+            "payroll": 65059098,
+            "team": "LAL"
+        },
+        "MEM": {
+            "opt": 0,
+            "payroll": 67010830,
+            "team": "MEM"
+        },
+        "MIA": {
+            "opt": 0,
+            "payroll": 59523529,
+            "team": "MIA"
+        },
+        "MIL": {
+            "opt": 0,
+            "payroll": 57448246,
+            "team": "MIL"
+        },
+        "MIN": {
+            "opt": 0,
+            "payroll": 70123411,
+            "team": "MIN"
+        },
+        "BRK": {
+            "opt": 0,
+            "payroll": 54983980,
+            "team": "BRK"
+        },
+        "NOP": {
+            "opt": 0,
+            "payroll": 56539992,
+            "team": "NOP"
+        },
+        "NYK": {
+            "opt": 0,
+            "payroll": 102567539,
+            "team": "NYK"
+        },
+        "OKC": {
+            "opt": 0,
+            "payroll": 53821301,
+            "team": "OKC"
+        },
+        "ORL": {
+            "opt": 0,
+            "payroll": 66445249,
+            "team": "ORL"
+        },
+        "PHI": {
+            "opt": 0,
+            "payroll": 71951878,
+            "team": "PHI"
+        },
+        "PHO": {
+            "opt": 0,
+            "payroll": 44598682,
+            "team": "PHO"
+        },
+        "POR": {
+            "opt": 0,
+            "payroll": 83671309,
+            "team": "POR"
+        },
+        "SAC": {
+            "opt": 0,
+            "payroll": 61807688,
+            "team": "SAC"
+        },
+        "SAS": {
+            "opt": 0,
+            "payroll": 47118846,
+            "team": "SAS"
+        },
+        "TOR": {
+            "opt": 0,
+            "payroll": 61703775,
+            "team": "TOR"
+        },
+        "UTA": {
+            "opt": 0,
+            "payroll": 43515760,
+            "team": "UTA"
+        },
+        "WAS": {
+            "opt": 0,
+            "payroll": 49797050,
+            "team": "WAS"
+        }
+    },
+    "2006": {
+        "ATL": {
+            "opt": 0,
+            "payroll": 42944553,
+            "team": "ATL"
+        },
+        "BOS": {
+            "opt": 0,
+            "payroll": 56907300,
+            "team": "BOS"
+        },
+        "CHA": {
+            "opt": 0,
+            "payroll": 33458932,
+            "team": "CHA"
+        },
+        "CHI": {
+            "opt": 0,
+            "payroll": 57166530,
+            "team": "CHI"
+        },
+        "CLE": {
+            "opt": 0,
+            "payroll": 51303962,
+            "team": "CLE"
+        },
+        "DAL": {
+            "opt": 0,
+            "payroll": 98454832,
+            "team": "DAL"
+        },
+        "DEN": {
+            "opt": 0,
+            "payroll": 56492172,
+            "team": "DEN"
+        },
+        "DET": {
+            "opt": 0,
+            "payroll": 59619275,
+            "team": "DET"
+        },
+        "GSW": {
+            "opt": 0,
+            "payroll": 57114566,
+            "team": "GSW"
+        },
+        "HOU": {
+            "opt": 0,
+            "payroll": 69257404,
+            "team": "HOU"
+        },
+        "IND": {
+            "opt": 0,
+            "payroll": 78791779,
+            "team": "IND"
+        },
+        "LAC": {
+            "opt": 0,
+            "payroll": 51358645,
+            "team": "LAC"
+        },
+        "LAL": {
+            "opt": 0,
+            "payroll": 72917945,
+            "team": "LAL"
+        },
+        "MEM": {
+            "opt": 0,
+            "payroll": 67525538,
+            "team": "MEM"
+        },
+        "MIA": {
+            "opt": 0,
+            "payroll": 60732452,
+            "team": "MIA"
+        },
+        "MIL": {
+            "opt": 0,
+            "payroll": 63022514,
+            "team": "MIL"
+        },
+        "MIN": {
+            "opt": 0,
+            "payroll": 61830186,
+            "team": "MIN"
+        },
+        "BRK": {
+            "opt": 0,
+            "payroll": 66449350,
+            "team": "BRK"
+        },
+        "NOP": {
+            "opt": 0,
+            "payroll": 41126866,
+            "team": "NOP"
+        },
+        "NYK": {
+            "opt": 0,
+            "payroll": 126631098,
+            "team": "NYK"
+        },
+        "OKC": {
+            "opt": 0,
+            "payroll": 49253379,
+            "team": "OKC"
+        },
+        "ORL": {
+            "opt": 0,
+            "payroll": 75784782,
+            "team": "ORL"
+        },
+        "PHI": {
+            "opt": 0,
+            "payroll": 84807300,
+            "team": "PHI"
+        },
+        "PHO": {
+            "opt": 0,
+            "payroll": 53622061,
+            "team": "PHO"
+        },
+        "POR": {
+            "opt": 0,
+            "payroll": 60017964,
+            "team": "POR"
+        },
+        "SAC": {
+            "opt": 0,
+            "payroll": 62811975,
+            "team": "SAC"
+        },
+        "SAS": {
+            "opt": 0,
+            "payroll": 62888223,
+            "team": "SAS"
+        },
+        "TOR": {
+            "opt": 0,
+            "payroll": 62411884,
+            "team": "TOR"
+        },
+        "UTA": {
+            "opt": 0,
+            "payroll": 57372902,
+            "team": "UTA"
+        },
+        "WAS": {
+            "opt": 0,
+            "payroll": 54555947,
+            "team": "WAS"
+        }
+    },
+    "2007": {
+        "ATL": {
+            "opt": 0,
+            "payroll": 48581972,
+            "team": "ATL"
+        },
+        "BOS": {
+            "opt": 0,
+            "payroll": 62931479,
+            "team": "BOS"
+        },
+        "CHA": {
+            "opt": 0,
+            "payroll": 41964046,
+            "team": "CHA"
+        },
+        "CHI": {
+            "opt": 0,
+            "payroll": 54754904,
+            "team": "CHI"
+        },
+        "CLE": {
+            "opt": 0,
+            "payroll": 62992729,
+            "team": "CLE"
+        },
+        "DAL": {
+            "opt": 0,
+            "payroll": 88421846,
+            "team": "DAL"
+        },
+        "DEN": {
+            "opt": 0,
+            "payroll": 65442776,
+            "team": "DEN"
+        },
+        "DET": {
+            "opt": 0,
+            "payroll": 59010951,
+            "team": "DET"
+        },
+        "GSW": {
+            "opt": 0,
+            "payroll": 65012368,
+            "team": "GSW"
+        },
+        "HOU": {
+            "opt": 0,
+            "payroll": 63837566,
+            "team": "HOU"
+        },
+        "IND": {
+            "opt": 0,
+            "payroll": 63018965,
+            "team": "IND"
+        },
+        "LAC": {
+            "opt": 0,
+            "payroll": 59181038,
+            "team": "LAC"
+        },
+        "LAL": {
+            "opt": 0,
+            "payroll": 77099949,
+            "team": "LAL"
+        },
+        "MEM": {
+            "opt": 0,
+            "payroll": 61960489,
+            "team": "MEM"
+        },
+        "MIA": {
+            "opt": 0,
+            "payroll": 64121312,
+            "team": "MIA"
+        },
+        "MIL": {
+            "opt": 0,
+            "payroll": 63498518,
+            "team": "MIL"
+        },
+        "MIN": {
+            "opt": 0,
+            "payroll": 66820673,
+            "team": "MIN"
+        },
+        "BRK": {
+            "opt": 0,
+            "payroll": 64486110,
+            "team": "BRK"
+        },
+        "NOP": {
+            "opt": 0,
+            "payroll": 53748991,
+            "team": "NOP"
+        },
+        "NYK": {
+            "opt": 0,
+            "payroll": 117250866,
+            "team": "NYK"
+        },
+        "OKC": {
+            "opt": 0,
+            "payroll": 56986831,
+            "team": "OKC"
+        },
+        "ORL": {
+            "opt": 0,
+            "payroll": 61447108,
+            "team": "ORL"
+        },
+        "PHI": {
+            "opt": 0,
+            "payroll": 69140163,
+            "team": "PHI"
+        },
+        "PHO": {
+            "opt": 0,
+            "payroll": 65841120,
+            "team": "PHO"
+        },
+        "POR": {
+            "opt": 0,
+            "payroll": 75026386,
+            "team": "POR"
+        },
+        "SAC": {
+            "opt": 0,
+            "payroll": 64296611,
+            "team": "SAC"
+        },
+        "SAS": {
+            "opt": 0,
+            "payroll": 65654320,
+            "team": "SAS"
+        },
+        "TOR": {
+            "opt": 0,
+            "payroll": 51015491,
+            "team": "TOR"
+        },
+        "UTA": {
+            "opt": 0,
+            "payroll": 61951646,
+            "team": "UTA"
+        },
+        "WAS": {
+            "opt": 0,
+            "payroll": 62733705,
+            "team": "WAS"
+        }
+    },
+    "2008": {
+        "ATL": {
+            "opt": 0,
+            "payroll": 55501133,
+            "team": "ATL"
+        },
+        "BOS": {
+            "opt": 0,
+            "payroll": 74378636,
+            "team": "BOS"
+        },
+        "CHA": {
+            "opt": 0,
+            "payroll": 53745468,
+            "team": "CHA"
+        },
+        "CHI": {
+            "opt": 0,
+            "payroll": 63084166,
+            "team": "CHI"
+        },
+        "CLE": {
+            "opt": 0,
+            "payroll": 82217583,
+            "team": "CLE"
+        },
+        "DAL": {
+            "opt": 0,
+            "payroll": 101694879,
+            "team": "DAL"
+        },
+        "DEN": {
+            "opt": 0,
+            "payroll": 82958227,
+            "team": "DEN"
+        },
+        "DET": {
+            "opt": 0,
+            "payroll": 65898875,
+            "team": "DET"
+        },
+        "GSW": {
+            "opt": 0,
+            "payroll": 62148303,
+            "team": "GSW"
+        },
+        "HOU": {
+            "opt": 0,
+            "payroll": 69466951,
+            "team": "HOU"
+        },
+        "IND": {
+            "opt": 0,
+            "payroll": 66260246,
+            "team": "IND"
+        },
+        "LAC": {
+            "opt": 0,
+            "payroll": 64847945,
+            "team": "LAC"
+        },
+        "LAL": {
+            "opt": 0,
+            "payroll": 72626796,
+            "team": "LAL"
+        },
+        "MEM": {
+            "opt": 0,
+            "payroll": 54118526,
+            "team": "MEM"
+        },
+        "MIA": {
+            "opt": 0,
+            "payroll": 74767603,
+            "team": "MIA"
+        },
+        "MIL": {
+            "opt": 0,
+            "payroll": 62571522,
+            "team": "MIL"
+        },
+        "MIN": {
+            "opt": 0,
+            "payroll": 69043895,
+            "team": "MIN"
+        },
+        "BRK": {
+            "opt": 0,
+            "payroll": 61836211,
+            "team": "BRK"
+        },
+        "NOP": {
+            "opt": 0,
+            "payroll": 62609991,
+            "team": "NOP"
+        },
+        "NYK": {
+            "opt": 0,
+            "payroll": 96190114,
+            "team": "NYK"
+        },
+        "OKC": {
+            "opt": 0,
+            "payroll": 60861388,
+            "team": "OKC"
+        },
+        "ORL": {
+            "opt": 0,
+            "payroll": 58165973,
+            "team": "ORL"
+        },
+        "PHI": {
+            "opt": 0,
+            "payroll": 73611066,
+            "team": "PHI"
+        },
+        "PHO": {
+            "opt": 0,
+            "payroll": 71323049,
+            "team": "PHO"
+        },
+        "POR": {
+            "opt": 0,
+            "payroll": 73241335,
+            "team": "POR"
+        },
+        "SAC": {
+            "opt": 0,
+            "payroll": 63326164,
+            "team": "SAC"
+        },
+        "SAS": {
+            "opt": 0,
+            "payroll": 70048523,
+            "team": "SAS"
+        },
+        "TOR": {
+            "opt": 0,
+            "payroll": 66042375,
+            "team": "TOR"
+        },
+        "UTA": {
+            "opt": 0,
+            "payroll": 64959089,
+            "team": "UTA"
+        },
+        "WAS": {
+            "opt": 0,
+            "payroll": 65278996,
+            "team": "WAS"
+        }
+    },
+    "2009": {
+        "ATL": {
+            "opt": 0,
+            "payroll": 68168841,
+            "team": "ATL"
+        },
+        "BOS": {
+            "opt": 0,
+            "payroll": 79188973,
+            "team": "BOS"
+        },
+        "CHA": {
+            "opt": 0,
+            "payroll": 62866926,
+            "team": "CHA"
+        },
+        "CHI": {
+            "opt": 0,
+            "payroll": 68126774,
+            "team": "CHI"
+        },
+        "CLE": {
+            "opt": 0,
+            "payroll": 91298233,
+            "team": "CLE"
+        },
+        "DAL": {
+            "opt": 0,
+            "payroll": 95045559,
+            "team": "DAL"
+        },
+        "DEN": {
+            "opt": 0,
+            "payroll": 70121003,
+            "team": "DEN"
+        },
+        "DET": {
+            "opt": 0,
+            "payroll": 71434174,
+            "team": "DET"
+        },
+        "GSW": {
+            "opt": 0,
+            "payroll": 67359216,
+            "team": "GSW"
+        },
+        "HOU": {
+            "opt": 0,
+            "payroll": 73302272,
+            "team": "HOU"
+        },
+        "IND": {
+            "opt": 0,
+            "payroll": 69668818,
+            "team": "IND"
+        },
+        "LAC": {
+            "opt": 0,
+            "payroll": 62764206,
+            "team": "LAC"
+        },
+        "LAL": {
+            "opt": 0,
+            "payroll": 78245793,
+            "team": "LAL"
+        },
+        "MEM": {
+            "opt": 0,
+            "payroll": 55958148,
+            "team": "MEM"
+        },
+        "MIA": {
+            "opt": 0,
+            "payroll": 69854945,
+            "team": "MIA"
+        },
+        "MIL": {
+            "opt": 0,
+            "payroll": 71360656,
+            "team": "MIL"
+        },
+        "MIN": {
+            "opt": 0,
+            "payroll": 66445144,
+            "team": "MIN"
+        },
+        "BRK": {
+            "opt": 0,
+            "payroll": 62666523,
+            "team": "BRK"
+        },
+        "NOP": {
+            "opt": 0,
+            "payroll": 67530808,
+            "team": "NOP"
+        },
+        "NYK": {
+            "opt": 0,
+            "payroll": 96643646,
+            "team": "NYK"
+        },
+        "OKC": {
+            "opt": 0,
+            "payroll": 68341605,
+            "team": "OKC"
+        },
+        "ORL": {
+            "opt": 0,
+            "payroll": 69672979,
+            "team": "ORL"
+        },
+        "PHI": {
+            "opt": 0,
+            "payroll": 68301007,
+            "team": "PHI"
+        },
+        "PHO": {
+            "opt": 0,
+            "payroll": 76130408,
+            "team": "PHO"
+        },
+        "POR": {
+            "opt": 0,
+            "payroll": 80260059,
+            "team": "POR"
+        },
+        "SAC": {
+            "opt": 0,
+            "payroll": 69204512,
+            "team": "SAC"
+        },
+        "SAS": {
+            "opt": 0,
+            "payroll": 68020487,
+            "team": "SAS"
+        },
+        "TOR": {
+            "opt": 0,
+            "payroll": 73446970,
+            "team": "TOR"
+        },
+        "UTA": {
+            "opt": 0,
+            "payroll": 65841407,
+            "team": "UTA"
+        },
+        "WAS": {
+            "opt": 0,
+            "payroll": 70743317,
+            "team": "WAS"
+        }
+    },
+    "2010": {
+        "ATL": {
+            "opt": 0,
+            "payroll": 65883642,
+            "team": "ATL"
+        },
+        "BOS": {
+            "opt": 0,
+            "payroll": 83552174,
+            "team": "BOS"
+        },
+        "CHA": {
+            "opt": 0,
+            "payroll": 68681758,
+            "team": "CHA"
+        },
+        "CHI": {
+            "opt": 0,
+            "payroll": 69700359,
+            "team": "CHI"
+        },
+        "CLE": {
+            "opt": 0,
+            "payroll": 83398534,
+            "team": "CLE"
+        },
+        "DAL": {
+            "opt": 0,
+            "payroll": 88916075,
+            "team": "DAL"
+        },
+        "DEN": {
+            "opt": 0,
+            "payroll": 74935538,
+            "team": "DEN"
+        },
+        "DET": {
+            "opt": 0,
+            "payroll": 60185833,
+            "team": "DET"
+        },
+        "GSW": {
+            "opt": 0,
+            "payroll": 65352372,
+            "team": "GSW"
+        },
+        "HOU": {
+            "opt": 0,
+            "payroll": 68914971,
+            "team": "HOU"
+        },
+        "IND": {
+            "opt": 0,
+            "payroll": 66733257,
+            "team": "IND"
+        },
+        "LAC": {
+            "opt": 0,
+            "payroll": 61616409,
+            "team": "LAC"
+        },
+        "LAL": {
+            "opt": 0,
+            "payroll": 91378064,
+            "team": "LAL"
+        },
+        "MEM": {
+            "opt": 0,
+            "payroll": 57287474,
+            "team": "MEM"
+        },
+        "MIA": {
+            "opt": 0,
+            "payroll": 74208013,
+            "team": "MIA"
+        },
+        "MIL": {
+            "opt": 0,
+            "payroll": 66775602,
+            "team": "MIL"
+        },
+        "MIN": {
+            "opt": 0,
+            "payroll": 62253360,
+            "team": "MIN"
+        },
+        "BRK": {
+            "opt": 0,
+            "payroll": 59366715,
+            "team": "BRK"
+        },
+        "NOP": {
+            "opt": 0,
+            "payroll": 70163827,
+            "team": "NOP"
+        },
+        "NYK": {
+            "opt": 0,
+            "payroll": 85710076,
+            "team": "NYK"
+        },
+        "OKC": {
+            "opt": 0,
+            "payroll": 58438646,
+            "team": "OKC"
+        },
+        "ORL": {
+            "opt": 0,
+            "payroll": 82200916,
+            "team": "ORL"
+        },
+        "PHI": {
+            "opt": 0,
+            "payroll": 64883448,
+            "team": "PHI"
+        },
+        "PHO": {
+            "opt": 0,
+            "payroll": 65288544,
+            "team": "PHO"
+        },
+        "POR": {
+            "opt": 0,
+            "payroll": 56946258,
+            "team": "POR"
+        },
+        "SAC": {
+            "opt": 0,
+            "payroll": 67515718,
+            "team": "SAC"
+        },
+        "SAS": {
+            "opt": 0,
+            "payroll": 79338309,
+            "team": "SAS"
+        },
+        "TOR": {
+            "opt": 0,
+            "payroll": 67822433,
+            "team": "TOR"
+        },
+        "UTA": {
+            "opt": 0,
+            "payroll": 71905244,
+            "team": "UTA"
+        },
+        "WAS": {
+            "opt": 0,
+            "payroll": 73440274,
+            "team": "WAS"
+        }
+    },
+    "2011": {
+        "ATL": {
+            "opt": 0,
+            "payroll": 71469843,
+            "team": "ATL"
+        },
+        "BOS": {
+            "opt": 0,
+            "payroll": 82045867,
+            "team": "BOS"
+        },
+        "CHA": {
+            "opt": 0,
+            "payroll": 66542696,
+            "team": "CHA"
+        },
+        "CHI": {
+            "opt": 0,
+            "payroll": 54538076,
+            "team": "CHI"
+        },
+        "CLE": {
+            "opt": 0,
+            "payroll": 53990021,
+            "team": "CLE"
+        },
+        "DAL": {
+            "opt": 0,
+            "payroll": 85409890,
+            "team": "DAL"
+        },
+        "DEN": {
+            "opt": 0,
+            "payroll": 68019290,
+            "team": "DEN"
+        },
+        "DET": {
+            "opt": 0,
+            "payroll": 65044217,
+            "team": "DET"
+        },
+        "GSW": {
+            "opt": 0,
+            "payroll": 68415336,
+            "team": "GSW"
+        },
+        "HOU": {
+            "opt": 0,
+            "payroll": 72315654,
+            "team": "HOU"
+        },
+        "IND": {
+            "opt": 0,
+            "payroll": 65088630,
+            "team": "IND"
+        },
+        "LAC": {
+            "opt": 0,
+            "payroll": 53225329,
+            "team": "LAC"
+        },
+        "LAL": {
+            "opt": 0,
+            "payroll": 91428140,
+            "team": "LAL"
+        },
+        "MEM": {
+            "opt": 0,
+            "payroll": 70241344,
+            "team": "MEM"
+        },
+        "MIA": {
+            "opt": 0,
+            "payroll": 65258647,
+            "team": "MIA"
+        },
+        "MIL": {
+            "opt": 0,
+            "payroll": 69076690,
+            "team": "MIL"
+        },
+        "MIN": {
+            "opt": 0,
+            "payroll": 53461123,
+            "team": "MIN"
+        },
+        "BRK": {
+            "opt": 0,
+            "payroll": 58495989,
+            "team": "BRK"
+        },
+        "NOP": {
+            "opt": 0,
+            "payroll": 68230729,
+            "team": "NOP"
+        },
+        "NYK": {
+            "opt": 0,
+            "payroll": 67016562,
+            "team": "NYK"
+        },
+        "OKC": {
+            "opt": 0,
+            "payroll": 55922488,
+            "team": "OKC"
+        },
+        "ORL": {
+            "opt": 0,
+            "payroll": 90770804,
+            "team": "ORL"
+        },
+        "PHI": {
+            "opt": 0,
+            "payroll": 68915246,
+            "team": "PHI"
+        },
+        "PHO": {
+            "opt": 0,
+            "payroll": 65920550,
+            "team": "PHO"
+        },
+        "POR": {
+            "opt": 0,
+            "payroll": 74584058,
+            "team": "POR"
+        },
+        "SAC": {
+            "opt": 0,
+            "payroll": 45268465,
+            "team": "SAC"
+        },
+        "SAS": {
+            "opt": 0,
+            "payroll": 69522311,
+            "team": "SAS"
+        },
+        "TOR": {
+            "opt": 0,
+            "payroll": 69992648,
+            "team": "TOR"
+        },
+        "UTA": {
+            "opt": 0,
+            "payroll": 75855296,
+            "team": "UTA"
+        },
+        "WAS": {
+            "opt": 0,
+            "payroll": 58324988,
+            "team": "WAS"
+        }
+    },
+    "2012": {
+        "ATL": {
+            "opt": 0,
+            "payroll": 73669912,
+            "team": "ATL"
+        },
+        "BOS": {
+            "opt": 0,
+            "payroll": 79820530,
+            "team": "BOS"
+        },
+        "CHA": {
+            "opt": 0,
+            "payroll": 57902024,
+            "team": "CHA"
+        },
+        "CHI": {
+            "opt": 0,
+            "payroll": 69548447,
+            "team": "CHI"
+        },
+        "CLE": {
+            "opt": 0,
+            "payroll": 64875599,
+            "team": "CLE"
+        },
+        "DAL": {
+            "opt": 0,
+            "payroll": 74463409,
+            "team": "DAL"
+        },
+        "DEN": {
+            "opt": 0,
+            "payroll": 58553173,
+            "team": "DEN"
+        },
+        "DET": {
+            "opt": 0,
+            "payroll": 70923605,
+            "team": "DET"
+        },
+        "GSW": {
+            "opt": 0,
+            "payroll": 61576901,
+            "team": "GSW"
+        },
+        "HOU": {
+            "opt": 0,
+            "payroll": 57021755,
+            "team": "HOU"
+        },
+        "IND": {
+            "opt": 0,
+            "payroll": 51554083,
+            "team": "IND"
+        },
+        "LAC": {
+            "opt": 0,
+            "payroll": 67333389,
+            "team": "LAC"
+        },
+        "LAL": {
+            "opt": 0,
+            "payroll": 88264478,
+            "team": "LAL"
+        },
+        "MEM": {
+            "opt": 0,
+            "payroll": 70628007,
+            "team": "MEM"
+        },
+        "MIA": {
+            "opt": 0,
+            "payroll": 74117458,
+            "team": "MIA"
+        },
+        "MIL": {
+            "opt": 0,
+            "payroll": 60192388,
+            "team": "MIL"
+        },
+        "MIN": {
+            "opt": 0,
+            "payroll": 56844339,
+            "team": "MIN"
+        },
+        "BRK": {
+            "opt": 0,
+            "payroll": 65281235,
+            "team": "BRK"
+        },
+        "NOP": {
+            "opt": 0,
+            "payroll": 65441008,
+            "team": "NOP"
+        },
+        "NYK": {
+            "opt": 0,
+            "payroll": 76208092,
+            "team": "NYK"
+        },
+        "OKC": {
+            "opt": 0,
+            "payroll": 59501709,
+            "team": "OKC"
+        },
+        "ORL": {
+            "opt": 0,
+            "payroll": 86962825,
+            "team": "ORL"
+        },
+        "PHI": {
+            "opt": 0,
+            "payroll": 66672368,
+            "team": "PHI"
+        },
+        "PHO": {
+            "opt": 0,
+            "payroll": 80640576,
+            "team": "PHO"
+        },
+        "POR": {
+            "opt": 0,
+            "payroll": 79568536,
+            "team": "POR"
+        },
+        "SAC": {
+            "opt": 0,
+            "payroll": 48950236,
+            "team": "SAC"
+        },
+        "SAS": {
+            "opt": 0,
+            "payroll": 73732762,
+            "team": "SAS"
+        },
+        "TOR": {
+            "opt": 0,
+            "payroll": 55063049,
+            "team": "TOR"
+        },
+        "UTA": {
+            "opt": 0,
+            "payroll": 56948761,
+            "team": "UTA"
+        },
+        "WAS": {
+            "opt": 0,
+            "payroll": 55386345,
+            "team": "WAS"
+        }
+    },
+    "2013": {
+        "ATL": {
+            "opt": 0,
+            "payroll": 66768365,
+            "team": "ATL"
+        },
+        "BOS": {
+            "opt": 0,
+            "payroll": 72785189,
+            "team": "BOS"
+        },
+        "CHA": {
+            "opt": 0,
+            "payroll": 57491899,
+            "team": "CHA"
+        },
+        "CHI": {
+            "opt": 0,
+            "payroll": 75627699,
+            "team": "CHI"
+        },
+        "CLE": {
+            "opt": 0,
+            "payroll": 68428583,
+            "team": "CLE"
+        },
+        "DAL": {
+            "opt": 0,
+            "payroll": 67399169,
+            "team": "DAL"
+        },
+        "DEN": {
+            "opt": 0,
+            "payroll": 68566062,
+            "team": "DEN"
+        },
+        "DET": {
+            "opt": 0,
+            "payroll": 61557497,
+            "team": "DET"
+        },
+        "GSW": {
+            "opt": 0,
+            "payroll": 69695346,
+            "team": "GSW"
+        },
+        "HOU": {
+            "opt": 0,
+            "payroll": 55678347,
+            "team": "HOU"
+        },
+        "IND": {
+            "opt": 0,
+            "payroll": 66687960,
+            "team": "IND"
+        },
+        "LAC": {
+            "opt": 0,
+            "payroll": 74354449,
+            "team": "LAC"
+        },
+        "LAL": {
+            "opt": 0,
+            "payroll": 100451593,
+            "team": "LAL"
+        },
+        "MEM": {
+            "opt": 0,
+            "payroll": 62954838,
+            "team": "MEM"
+        },
+        "MIA": {
+            "opt": 0,
+            "payroll": 81511751,
+            "team": "MIA"
+        },
+        "MIL": {
+            "opt": 0,
+            "payroll": 62476395,
+            "team": "MIL"
+        },
+        "MIN": {
+            "opt": 0,
+            "payroll": 69001896,
+            "team": "MIN"
+        },
+        "BRK": {
+            "opt": 0,
+            "payroll": 84290205,
+            "team": "BRK"
+        },
+        "NOP": {
+            "opt": 0,
+            "payroll": 63901224,
+            "team": "NOP"
+        },
+        "NYK": {
+            "opt": 0,
+            "payroll": 77970893,
+            "team": "NYK"
+        },
+        "OKC": {
+            "opt": 0,
+            "payroll": 67863244,
+            "team": "OKC"
+        },
+        "ORL": {
+            "opt": 0,
+            "payroll": 87114818,
+            "team": "ORL"
+        },
+        "PHI": {
+            "opt": 0,
+            "payroll": 84032270,
+            "team": "PHI"
+        },
+        "PHO": {
+            "opt": 0,
+            "payroll": 60844774,
+            "team": "PHO"
+        },
+        "POR": {
+            "opt": 0,
+            "payroll": 73656857,
+            "team": "POR"
+        },
+        "SAC": {
+            "opt": 0,
+            "payroll": 54317436,
+            "team": "SAC"
+        },
+        "SAS": {
+            "opt": 0,
+            "payroll": 69787704,
+            "team": "SAS"
+        },
+        "TOR": {
+            "opt": 0,
+            "payroll": 66974563,
+            "team": "TOR"
+        },
+        "UTA": {
+            "opt": 0,
+            "payroll": 64717649,
+            "team": "UTA"
+        },
+        "WAS": {
+            "opt": 0,
+            "payroll": 66343388,
+            "team": "WAS"
+        }
+    },
+    "2014": {
+        "ATL": {
+            "opt": 0,
+            "payroll": 57359097,
+            "team": "ATL"
+        },
+        "BOS": {
+            "opt": 0,
+            "payroll": 70938842,
+            "team": "BOS"
+        },
+        "CHA": {
+            "opt": 0,
+            "payroll": 61527204,
+            "team": "CHA"
+        },
+        "CHI": {
+            "opt": 4,
+            "payroll": 72605777,
+            "team": "CHI"
+        },
+        "CLE": {
+            "opt": 0,
+            "payroll": 62543545,
+            "team": "CLE"
+        },
+        "DAL": {
+            "opt": 3,
+            "payroll": 67731565,
+            "team": "DAL"
+        },
+        "DEN": {
+            "opt": 0,
+            "payroll": 67324401,
+            "team": "DEN"
+        },
+        "DET": {
+            "opt": 0,
+            "payroll": 61407073,
+            "team": "DET"
+        },
+        "GSW": {
+            "opt": 0,
+            "payroll": 68295132,
+            "team": "GSW"
+        },
+        "HOU": {
+            "opt": 0,
+            "payroll": 64644144,
+            "team": "HOU"
+        },
+        "IND": {
+            "opt": 0,
+            "payroll": 71436491,
+            "team": "IND"
+        },
+        "LAC": {
+            "opt": 0,
+            "payroll": 74539094,
+            "team": "LAC"
+        },
+        "LAL": {
+            "opt": 0,
+            "payroll": 79326221,
+            "team": "LAL"
+        },
+        "MEM": {
+            "opt": 0,
+            "payroll": 69331440,
+            "team": "MEM"
+        },
+        "MIA": {
+            "opt": 0,
+            "payroll": 83202790,
+            "team": "MIA"
+        },
+        "MIL": {
+            "opt": 0,
+            "payroll": 49175131,
+            "team": "MIL"
+        },
+        "MIN": {
+            "opt": 0,
+            "payroll": 68062540,
+            "team": "MIN"
+        },
+        "BRK": {
+            "opt": 0,
+            "payroll": 102608995,
+            "team": "BRK"
+        },
+        "NOP": {
+            "opt": 0,
+            "payroll": 62621113,
+            "team": "NOP"
+        },
+        "NYK": {
+            "opt": 0,
+            "payroll": 89216880,
+            "team": "NYK"
+        },
+        "OKC": {
+            "opt": 0,
+            "payroll": 70594905,
+            "team": "OKC"
+        },
+        "ORL": {
+            "opt": 0,
+            "payroll": 53244416,
+            "team": "ORL"
+        },
+        "PHI": {
+            "opt": 0,
+            "payroll": 45590273,
+            "team": "PHI"
+        },
+        "PHO": {
+            "opt": 0,
+            "payroll": 58022733,
+            "team": "PHO"
+        },
+        "POR": {
+            "opt": 0,
+            "payroll": 63114586,
+            "team": "POR"
+        },
+        "SAC": {
+            "opt": 0,
+            "payroll": 61616101,
+            "team": "SAC"
+        },
+        "SAS": {
+            "opt": 0,
+            "payroll": 64363059,
+            "team": "SAS"
+        },
+        "TOR": {
+            "opt": 0,
+            "payroll": 68737154,
+            "team": "TOR"
+        },
+        "UTA": {
+            "opt": 0,
+            "payroll": 56328165,
+            "team": "UTA"
+        },
+        "WAS": {
+            "opt": 0,
+            "payroll": 70944938,
+            "team": "WAS"
+        }
+    },
+    "2015": {
+        "ATL": {
+            "opt": 0,
+            "payroll": 47899576,
+            "team": "ATL"
+        },
+        "BOS": {
+            "opt": 1,
+            "payroll": 54852525,
+            "team": "BOS"
+        },
+        "CHA": {
+            "opt": 1,
+            "payroll": 41759947,
+            "team": "CHA"
+        },
+        "CHI": {
+            "opt": 4,
+            "payroll": 64876878,
+            "team": "CHI"
+        },
+        "CLE": {
+            "opt": 0,
+            "payroll": 49242518,
+            "team": "CLE"
+        },
+        "DAL": {
+            "opt": 3,
+            "payroll": 31250100,
+            "team": "DAL"
+        },
+        "DEN": {
+            "opt": 2,
+            "payroll": 70288178,
+            "team": "DEN"
+        },
+        "DET": {
+            "opt": 4,
+            "payroll": 41361393,
+            "team": "DET"
+        },
+        "GSW": {
+            "opt": 0,
+            "payroll": 63662902,
+            "team": "GSW"
+        },
+        "HOU": {
+            "opt": 1,
+            "payroll": 63483806,
+            "team": "HOU"
+        },
+        "IND": {
+            "opt": 0,
+            "payroll": 65876653,
+            "team": "IND"
+        },
+        "LAC": {
+            "opt": 2,
+            "payroll": 74561143,
+            "team": "LAC"
+        },
+        "LAL": {
+            "opt": 1,
+            "payroll": 36259471,
+            "team": "LAL"
+        },
+        "MEM": {
+            "opt": 1,
+            "payroll": 67580360,
+            "team": "MEM"
+        },
+        "MIA": {
+            "opt": 7,
+            "payroll": 69450696,
+            "team": "MIA"
+        },
+        "MIL": {
+            "opt": 0,
+            "payroll": 47922115,
+            "team": "MIL"
+        },
+        "MIN": {
+            "opt": 0,
+            "payroll": 66454320,
+            "team": "MIN"
+        },
+        "BRK": {
+            "opt": 3,
+            "payroll": 88825589,
+            "team": "BRK"
+        },
+        "NOP": {
+            "opt": 3,
+            "payroll": 54232281,
+            "team": "NOP"
+        },
+        "NYK": {
+            "opt": 7,
+            "payroll": 91707801,
+            "team": "NYK"
+        },
+        "OKC": {
+            "opt": 0,
+            "payroll": 69092441,
+            "team": "OKC"
+        },
+        "ORL": {
+            "opt": 0,
+            "payroll": 45345929,
+            "team": "ORL"
+        },
+        "PHI": {
+            "opt": 1,
+            "payroll": 25935563,
+            "team": "PHI"
+        },
+        "PHO": {
+            "opt": 1,
+            "payroll": 30442318,
+            "team": "PHO"
+        },
+        "POR": {
+            "opt": 1,
+            "payroll": 64832163,
+            "team": "POR"
+        },
+        "SAC": {
+            "opt": 1,
+            "payroll": 68220484,
+            "team": "SAC"
+        },
+        "SAS": {
+            "opt": 1,
+            "payroll": 53342983,
+            "team": "SAS"
+        },
+        "TOR": {
+            "opt": 0,
+            "payroll": 52427889,
+            "team": "TOR"
+        },
+        "UTA": {
+            "opt": 0,
+            "payroll": 29548437,
+            "team": "UTA"
+        },
+        "WAS": {
+            "opt": 1,
+            "payroll": 43981962,
+            "team": "WAS"
+        }
+    },
+    "2016": {
+        "ATL": {
+            "opt": 6,
+            "payroll": 29737904,
+            "team": "ATL"
+        },
+        "BOS": {
+            "opt": 7,
+            "payroll": 32625987,
+            "team": "BOS"
+        },
+        "CHA": {
+            "opt": 8,
+            "payroll": 40891437,
+            "team": "CHA"
+        },
+        "CHI": {
+            "opt": 10,
+            "payroll": 46684604,
+            "team": "CHI"
+        },
+        "CLE": {
+            "opt": 12,
+            "payroll": 21458805,
+            "team": "CLE"
+        },
+        "DAL": {
+            "opt": 4,
+            "payroll": 19692684,
+            "team": "DAL"
+        },
+        "DEN": {
+            "opt": 6,
+            "payroll": 59257088,
+            "team": "DEN"
+        },
+        "DET": {
+            "opt": 6,
+            "payroll": 28955624,
+            "team": "DET"
+        },
+        "GSW": {
+            "opt": 12,
+            "payroll": 61423828,
+            "team": "GSW"
+        },
+        "HOU": {
+            "opt": 6,
+            "payroll": 42893537,
+            "team": "HOU"
+        },
+        "IND": {
+            "opt": 4,
+            "payroll": 55601755,
+            "team": "IND"
+        },
+        "LAC": {
+            "opt": 5,
+            "payroll": 61963361,
+            "team": "LAC"
+        },
+        "LAL": {
+            "opt": 0,
+            "payroll": 25981348,
+            "team": "LAL"
+        },
+        "MEM": {
+            "opt": 0,
+            "payroll": 26233344,
+            "team": "MEM"
+        },
+        "MIA": {
+            "opt": 3,
+            "payroll": 65880000,
+            "team": "MIA"
+        },
+        "MIL": {
+            "opt": 6,
+            "payroll": 40247181,
+            "team": "MIL"
+        },
+        "MIN": {
+            "opt": 9,
+            "payroll": 49365578,
+            "team": "MIN"
+        },
+        "BRK": {
+            "opt": 4,
+            "payroll": 64097402,
+            "team": "BRK"
+        },
+        "NOP": {
+            "opt": 7,
+            "payroll": 56018064,
+            "team": "NOP"
+        },
+        "NYK": {
+            "opt": 5,
+            "payroll": 13389155,
+            "team": "NYK"
+        },
+        "OKC": {
+            "opt": 12,
+            "payroll": 57815242,
+            "team": "OKC"
+        },
+        "ORL": {
+            "opt": 10,
+            "payroll": 18404673,
+            "team": "ORL"
+        },
+        "PHI": {
+            "opt": 14,
+            "payroll": 22258770,
+            "team": "PHI"
+        },
+        "PHO": {
+            "opt": 10,
+            "payroll": 15354352,
+            "team": "PHO"
+        },
+        "POR": {
+            "opt": 12,
+            "payroll": 27680835,
+            "team": "POR"
+        },
+        "SAC": {
+            "opt": 3,
+            "payroll": 31763970,
+            "team": "SAC"
+        },
+        "SAS": {
+            "opt": 0,
+            "payroll": 8500000,
+            "team": "SAS"
+        },
+        "TOR": {
+            "opt": 6,
+            "payroll": 21464399,
+            "team": "TOR"
+        },
+        "UTA": {
+            "opt": 6,
+            "payroll": 16748801,
+            "team": "UTA"
+        },
+        "WAS": {
+            "opt": 6,
+            "payroll": 43699978,
+            "team": "WAS"
+        }
+    },
+    "2017": {
+        "ATL": {
+            "opt": 3,
+            "payroll": 15948019,
+            "team": "ATL"
+        },
+        "BOS": {
+            "opt": 3,
+            "payroll": 3094014,
+            "team": "BOS"
+        },
+        "CHA": {
+            "opt": 3,
+            "payroll": 5318313,
+            "team": "CHA"
+        },
+        "CHI": {
+            "opt": 7,
+            "payroll": 34563260,
+            "team": "CHI"
+        },
+        "CLE": {
+            "opt": 6,
+            "payroll": 16082043,
+            "team": "CLE"
+        },
+        "DAL": {
+            "opt": 3,
+            "payroll": 11300765,
+            "team": "DAL"
+        },
+        "DEN": {
+            "opt": 0,
+            "payroll": 13213482,
+            "team": "DEN"
+        },
+        "DET": {
+            "opt": 3,
+            "payroll": 17178319,
+            "team": "DET"
+        },
+        "GSW": {
+            "opt": 3,
+            "payroll": 37322654,
+            "team": "GSW"
+        },
+        "HOU": {
+            "opt": 1,
+            "payroll": 40066488,
+            "team": "HOU"
+        },
+        "IND": {
+            "opt": 3,
+            "payroll": 26062457,
+            "team": "IND"
+        },
+        "LAC": {
+            "opt": 3,
+            "payroll": 52415810,
+            "team": "LAC"
+        },
+        "LAL": {
+            "opt": 0,
+            "payroll": 0,
+            "team": "LAL"
+        },
+        "MEM": {
+            "opt": 0,
+            "payroll": 9123596,
+            "team": "MEM"
+        },
+        "MIA": {
+            "opt": 0,
+            "payroll": 0,
+            "team": "MIA"
+        },
+        "MIL": {
+            "opt": 3,
+            "payroll": 22395421,
+            "team": "MIL"
+        },
+        "MIN": {
+            "opt": 7,
+            "payroll": 24872582,
+            "team": "MIN"
+        },
+        "BRK": {
+            "opt": 5,
+            "payroll": 24659665,
+            "team": "BRK"
+        },
+        "NOP": {
+            "opt": 0,
+            "payroll": 22977018,
+            "team": "NOP"
+        },
+        "NYK": {
+            "opt": 3,
+            "payroll": 2281605,
+            "team": "NYK"
+        },
+        "OKC": {
+            "opt": 6,
+            "payroll": 35442963,
+            "team": "OKC"
+        },
+        "ORL": {
+            "opt": 3,
+            "payroll": 6552960,
+            "team": "ORL"
+        },
+        "PHI": {
+            "opt": 12,
+            "payroll": 10022588,
+            "team": "PHI"
+        },
+        "PHO": {
+            "opt": 6,
+            "payroll": 7695487,
+            "team": "PHO"
+        },
+        "POR": {
+            "opt": 3,
+            "payroll": 3219579,
+            "team": "POR"
+        },
+        "SAC": {
+            "opt": 3,
+            "payroll": 33090320,
+            "team": "SAC"
+        },
+        "SAS": {
+            "opt": 0,
+            "payroll": 8250000,
+            "team": "SAS"
+        },
+        "TOR": {
+            "opt": 0,
+            "payroll": 9500000,
+            "team": "TOR"
+        },
+        "UTA": {
+            "opt": 6,
+            "payroll": 16491219,
+            "team": "UTA"
+        },
+        "WAS": {
+            "opt": 3,
+            "payroll": 27495669,
+            "team": "WAS"
+        }
+    },
+    "2018": {
+        "ATL": {
+            "opt": 0,
+            "payroll": 0,
+            "team": "ATL"
+        },
+        "BOS": {
+            "opt": 0,
+            "payroll": 0,
+            "team": "BOS"
+        },
+        "CHA": {
+            "opt": 0,
+            "payroll": 0,
+            "team": "CHA"
+        },
+        "CHI": {
+            "opt": 0,
+            "payroll": 0,
+            "team": "CHI"
+        },
+        "CLE": {
+            "opt": 0,
+            "payroll": 0,
+            "team": "CLE"
+        },
+        "DAL": {
+            "opt": 0,
+            "payroll": 0,
+            "team": "DAL"
+        },
+        "DEN": {
+            "opt": 0,
+            "payroll": 0,
+            "team": "DEN"
+        },
+        "DET": {
+            "opt": 0,
+            "payroll": 0,
+            "team": "DET"
+        },
+        "GSW": {
+            "opt": 0,
+            "payroll": 0,
+            "team": "GSW"
+        },
+        "HOU": {
+            "opt": 0,
+            "payroll": 17811625,
+            "team": "HOU"
+        },
+        "IND": {
+            "opt": 0,
+            "payroll": 16784031,
+            "team": "IND"
+        },
+        "LAC": {
+            "opt": 1,
+            "payroll": 45642910,
+            "team": "LAC"
+        },
+        "LAL": {
+            "opt": 0,
+            "payroll": 0,
+            "team": "LAL"
+        },
+        "MEM": {
+            "opt": 0,
+            "payroll": 3853931,
+            "team": "MEM"
+        },
+        "MIA": {
+            "opt": 0,
+            "payroll": 0,
+            "team": "MIA"
+        },
+        "MIL": {
+            "opt": 0,
+            "payroll": 11000000,
+            "team": "MIL"
+        },
+        "MIN": {
+            "opt": 0,
+            "payroll": 11600000,
+            "team": "MIN"
+        },
+        "BRK": {
+            "opt": 0,
+            "payroll": 0,
+            "team": "BRK"
+        },
+        "NOP": {
+            "opt": 0,
+            "payroll": 0,
+            "team": "NOP"
+        },
+        "NYK": {
+            "opt": 0,
+            "payroll": 0,
+            "team": "NYK"
+        },
+        "OKC": {
+            "opt": 0,
+            "payroll": 0,
+            "team": "OKC"
+        },
+        "ORL": {
+            "opt": 0,
+            "payroll": 0,
+            "team": "ORL"
+        },
+        "PHI": {
+            "opt": 0,
+            "payroll": 0,
+            "team": "PHI"
+        },
+        "PHO": {
+            "opt": 0,
+            "payroll": 0,
+            "team": "PHO"
+        },
+        "POR": {
+            "opt": 0,
+            "payroll": 0,
+            "team": "POR"
+        },
+        "SAC": {
+            "opt": 0,
+            "payroll": 16784031,
+            "team": "SAC"
+        },
+        "SAS": {
+            "opt": 0,
+            "payroll": 0,
+            "team": "SAS"
+        },
+        "TOR": {
+            "opt": 0,
+            "payroll": 0,
+            "team": "TOR"
+        },
+        "UTA": {
+            "opt": 0,
+            "payroll": 11933333,
+            "team": "UTA"
+        },
+        "WAS": {
+            "opt": 0,
+            "payroll": 16784031,
+            "team": "WAS"
+        }
+    }
+}

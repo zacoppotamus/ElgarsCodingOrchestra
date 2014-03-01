@@ -1,16 +1,10 @@
 <!DOCTYPE html>
-<html ng-app="d3DemoApp">
+<html ng-app="eco">
 	<head>
 		<meta charset="utf-8">
 		<title>AngularJS + D3.js</title>
-		<script src="vendor/jquery/dist/jquery.min.js"></script>
-		<script src="vendor/angular/angular.min.js"></script>
-		<script src="vendor/angular-bootstrap/ui-bootstrap.js"></script>
-		<script src="vendor/d3/d3.min.js"></script>
-		<script src="app.js"></script>
-		<link rel="stylesheet" href="vendor/bootstrap/dist/css/bootstrap.min.css">
 	</head>
-	<body ng-controller="AppCtrl">
+	<body ng-controller="ecoCtrl">
 		<!-- Here's where our visualization will go -->
 		<div class="dropdown" >
 			<a class="dropdown-toggle">
@@ -39,6 +33,25 @@
 				<button type="button" ng-repeat="type in vizTypes" class="btn btn-primary" ng-repeat="type in vizTypes" ng-model="selectedVizType.id" btn-radio="type.id">{{type.name}}</button>
 			</div>
 		</div>
-		<d3-visualization val="data"></d3-visualization>
+
+		<br>
+		<div class="row">
+					<div class="col-sm-3">
+							<pre>{{year}}</pre>
+							<label>Year:</label> <select class="form-control" ng-model="year" ng-options="y for y in years"><option></option></select>
+					</div>
+		</div>
+
+		<br>
+
+		<d3-visualization year="year"></d3-visualization>
+		<script src="vendor/jquery/dist/jquery.min.js"></script>
+		<script src="vendor/angular/angular.min.js"></script>
+		<script src="vendor/angular-bootstrap/ui-bootstrap.js"></script>
+		<script src="vendor/d3/d3.min.js"></script>
+		<script src="js/app.js"></script>
+		<script src="js/controllers.js"></script>
+		<script src="js/directives.js"></script>
+		<link rel="stylesheet" href="vendor/bootstrap/dist/css/bootstrap.min.css">
 	</body>
 </html>
