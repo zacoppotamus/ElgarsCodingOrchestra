@@ -34,7 +34,7 @@ function uploadClick(evt) {
     var datasetName = document.getElementById("datasetNameInput").value;
 
     // Checks that the dataset doesn't already exist
-    getRequest("https://sneeza-eco.p.mashape.com/datasets/"+username + "." + datasetName, function (result){
+    getRequest("https://sneeza-eco.p.mashape.com/datasets/"+username() + "." + datasetName, function (result){
         alert(JSON.stringify(result));
         if(result.data.message === "No method was specified."){
             requestData = {
@@ -109,7 +109,7 @@ function loaded(evt) {
     var data = JSON.stringify($.csv.toObjects(fileString));
 
     // Post the data to the database
-    $.post("http://api.spe.sneeza.me/datasets/" + username + "." + datasetName + "/insert", {documents:data});
+    $.post("http://api.spe.sneeza.me/datasets/" + username() + "." + datasetName + "/insert", {documents:data});
 }
 
 function errorHandler(evt) {
