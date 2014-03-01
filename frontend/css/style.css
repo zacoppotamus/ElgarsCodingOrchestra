@@ -247,6 +247,11 @@ th {
 }
 
 
+/* Text inputs for upload */
+.txtInput{
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
 
 
 /* Responsive */

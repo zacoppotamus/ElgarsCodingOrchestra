@@ -84,6 +84,6 @@ rainhawk::select_database(app::$stack['mongodb']['database']);
  * services.
  */
 
-app::$mashape_key = isset($_SERVER['X-Mashape-Proxy-Secret']) ? $_SERVER['X-Mashape-Proxy-Secret'] : "direct";
+app::$username = isset($_SERVER['HTTP_X_MASHAPE_USER']) ? trim(strtolower($_SERVER['HTTP_X_MASHAPE_USER'])) : "anonymous";
 
 ?>

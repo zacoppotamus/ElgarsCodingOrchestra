@@ -23,13 +23,44 @@ function uploadClick(evt) {
     var datasetName = document.getElementById("datasetNameInput").value;
 
     // Checks that the dataset doesn't already exist
-    $.getJSON("http://api.spe.sneeza.me/datasets/" + datasetName + "/select", function(result){
-        if(result.data.rows === 0){
+    getRequest("https://sneeza-eco.p.mashape.com/datasets/"+datasetName, function fncSuccess(result){
+        alert(JSON.stringify(result));
+        if(result.data.message === "No method was specified."){
+            requestData = {
+                "name": "mytestdataset",
+                "description": "placeholder description"
+            };
+            postRequest("https://sneeza-eco.p.mashape.com/datasets", requestData, function pointless(){})
             startRead();
         }
         else{
             $("#uploadConfirm").dialog("open");
         }
+    })
+}
+
+function getRequest(requestURL, fncSuccess) {
+    $.ajax({
+        url: requestURL,
+        type: "GET",
+        beforeSend: function (request){
+            request.setRequestHeader("X-Mashape-Authorization", "eSQpirMYxjXUs8xIjjaUo72gutwDJ4CP")
+        },
+        dataType: 'json',
+        success: fncSuccess
+    });
+}
+
+function postRequest(requestURL, requestData, fncSuccess) {
+    $.ajax({
+        url: requestURL,
+        type: "POST",
+        beforeSend: function (request){
+            request.setRequestHeader("X-Mashape-Authorization", "eSQpirMYxjXUs8xIjjaUo72gutwDJ4CP")
+        },
+        data: requestData,
+        dataType: 'json',
+        success: fncSuccess
     });
 }
 

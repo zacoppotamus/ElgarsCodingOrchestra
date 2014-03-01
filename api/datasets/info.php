@@ -29,7 +29,7 @@ if(!$dataset->exists) {
 }
 
 // Check that we can read from the dataset.
-if(!$dataset->have_read_access(app::$mashape_key)) {
+if(!$dataset->have_read_access(app::$username)) {
     echo json_beautify(json_render_error(403, "You don't have access to read from this dataset."));
     exit;
 }
@@ -43,7 +43,7 @@ $json = array(
     "name" => $dataset->prefix . "." . $dataset->name,
     "description" => $dataset->description,
     "rows" => $dataset->rows,
-    "fields" => $dataset->fields,
+    "fields" => array_keys($dataset->fields),
     "read_access" => $dataset->read_access,
     "write_access" => $dataset->write_access
 );
