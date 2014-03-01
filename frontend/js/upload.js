@@ -33,6 +33,7 @@ function username(){
 // Is called when the upload button is clicked
 function uploadClick(evt) {
     var datasetName = document.getElementById("datasetNameInput").value;
+    var datasetDesc = document.getElementById("datasetDescriptionInput").value;
 
     // Checks that the dataset doesn't already exist
     getRequest("https://sneeza-eco.p.mashape.com/datasets/"+username() + "." + datasetName, function (result){
@@ -40,7 +41,7 @@ function uploadClick(evt) {
         if(result.data.message === "The dataset you specified does not exist."){
             requestData = {
                 "name": datasetName,
-                "description": "placeholder description"
+                "description": datasetDesc
             };
             postRequest("https://sneeza-eco.p.mashape.com/datasets", requestData, function (result){
                 alert("Post result: " + JSON.stringify(result));
@@ -110,7 +111,7 @@ function loaded(evt) {
     var data = JSON.stringify($.csv.toObjects(fileString));
 
     // Post the data to the database
-    $.post("http://api.spe.sneeza.me/datasets/" + username() + "." + datasetName, {documents:data});
+    $.post("http://api.spe.sneeza.me/datasets/" + username() + "." + datasetName + "/data", {documents:data});
 }
 
 function errorHandler(evt) {
