@@ -18,12 +18,23 @@ function initialiseDialogue(){
     });
 }
 
+// Retrieves the username of the mashape user
+var mashape_user;
+function username(){
+    if(typeof mashape_user === 'undefined') {
+        getRequest("https://sneeza-eco.p.mashape.com/ping", function(result){
+            mashape_user = result.data.mashape_user;
+        });
+    }
+    return mashape_user;
+}
+
 // Is called when the upload button is clicked
 function uploadClick(evt) {
     var datasetName = document.getElementById("datasetNameInput").value;
 
     // Checks that the dataset doesn't already exist
-    getRequest("https://sneeza-eco.p.mashape.com/datasets/"+datasetName, function (result){
+    getRequest("https://sneeza-eco.p.mashape.com/datasets/"+username + "." + datasetName, function (result){
         alert(JSON.stringify(result));
         if(result.data.message === "No method was specified."){
             requestData = {
@@ -46,7 +57,7 @@ function getRequest(requestURL, fncSuccess) {
         url: requestURL,
         type: "GET",
         beforeSend: function (request){
-            request.setRequestHeader("X-Mashape-Authorization", "eSQpirMYxjXUs8xIjjaUo72gutwDJ4CP")
+            request.setRequestHeader("X-Mashape-Authorization", "EU6h9H8BUXELDmfO1Mbh0jLasSQxrAZd")
         },
         dataType: 'json',
         success: fncSuccess
@@ -58,7 +69,7 @@ function postRequest(requestURL, requestData, fncSuccess) {
         url: requestURL,
         type: "POST",
         beforeSend: function (request){
-            request.setRequestHeader("X-Mashape-Authorization", "eSQpirMYxjXUs8xIjjaUo72gutwDJ4CP")
+            request.setRequestHeader("X-Mashape-Authorization", "EU6h9H8BUXELDmfO1Mbh0jLasSQxrAZd")
         },
         data: requestData,
         dataType: 'json',
@@ -98,7 +109,7 @@ function loaded(evt) {
     var data = JSON.stringify($.csv.toObjects(fileString));
 
     // Post the data to the database
-    $.post("http://api.spe.sneeza.me/datasets/" + datasetName + "/insert", {documents:data});
+    $.post("http://api.spe.sneeza.me/datasets/" + username + "." + datasetName + "/insert", {documents:data});
 }
 
 function errorHandler(evt) {
