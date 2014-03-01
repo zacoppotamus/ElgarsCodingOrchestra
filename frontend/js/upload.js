@@ -1,6 +1,9 @@
 // Initialises the dialogue that appears
 // in the event of a dataset name being
 // entered that is already in use
+
+var mashape_user;
+
 function initialiseDialogue(){
     $("#uploadConfirm").dialog({
         resizable: false,
@@ -18,8 +21,8 @@ function initialiseDialogue(){
     });
 }
 
+
 // Retrieves the username of the mashape user
-var window.mashape_user;
 function username(){
     if(typeof mashape_user === 'undefined') {
         getRequest("https://sneeza-eco.p.mashape.com/ping", function(result){
