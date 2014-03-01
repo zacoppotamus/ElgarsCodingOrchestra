@@ -3,17 +3,28 @@
 /**
  * Project Rainhawk
  *
- * Simple PHP wrapper for the ECO API, which provides simple JSON
+ * Simple PHP wrapper for the Rainhawk API, which provides simple JSON
  * encoded data for a variety of data sources with pre-defined
  * operations.
  *
- * @package eco
+ * @package Rainhawk
  * @license none
  */
 
-class eco {
+class Rainhawk {
     /**
-     * Store the address of the base address for the API.
+     * Store some constants for the different request methods.
+     *
+     * @var string
+     */
+
+    const GET = "GET";
+    const POST = "POST";
+    const PUT = "PUT";
+    const DELETE = "DELETE";
+
+    /**
+     * Store the base address for the API.
      *
      * @var string
      */
@@ -21,13 +32,13 @@ class eco {
     private $host = "https://sneeza-eco.p.mashape.com/";
 
     /**
-     * Store the Mashape API key to use for authenticatino to the
+     * Store the Mashape API key to use for authentication to the
      * API. Without this, no requests will succeed.
      *
      * @var string
      */
 
-    private $mashape_key = null;
+    private $mashapeKey = null;
 
     /**
      * Store the last known error number, which is fetched from the
@@ -51,12 +62,12 @@ class eco {
      * When the class is initialised, we have to store the Mashape key
      * in the class for all requests.
      *
-     * @param string $mashape_key  The mashape key to use for all requests.
+     * @param string $mashapeKey  The mashape key to use for all requests.
      * @return eco  Our new class instance.
      */
 
-    public function __construct($mashape_key) {
-        $this->mashape_key = $mashape_key;
+    public function __construct($mashapeKey) {
+        $this->mashapeKey = $mashapeKey;
 
         if(substr($this->host, -1) == "/") {
             $this->host = substr($this->host, 0, -1);
@@ -67,32 +78,33 @@ class eco {
      * Send a simple ping request to the API, which will respond with
      * the timestamp of the server's current time.
      *
-     * @return int  The server timestamp.
+     * @return array|bool  Returns the data array on success, false on failure.
      */
 
     public function ping() {
         $url = $this->host . "/ping";
-        $data = $this->send_request($url, "GET");
-        $json = $this->parse_json($data);
+        $data = $this->sendRequest($url, self::GET);
+        $json = $this->parseJson($data);
 
         if(!$json) {
             return false;
         }
 
-        return $json['data']['server_time'];
+        return $json['data'];
     }
 
     /**
      * Fetch a list of available datasets, in no particular order, returned
-     * as an array from the API.
+     * as an array from the API. We only get back the datasets that we have
+     * read or write access to.
      *
-     * @return array|bool  Returns the data array on success, false on failure.
+     * @return array|bool  Returns the datasets on success, false on failure.
      */
 
     public function datasets() {
         $url = $this->host . "/datasets";
-        $data = $this->send_request($url, "GET");
-        $json = $this->parse_json($data);
+        $data = $this->sendRequest($url, self::GET);
+        $json = $this->parseJson($data);
 
         if(!$json) {
             return false;
@@ -102,11 +114,58 @@ class eco {
     }
 
     /**
-     * Run a /select query, finding results from a dataset that match
+     * Get the dataset information, including the total rows and field
+     * names. We can also use this to check whether or not the dataset
+     * exists.
+     *
+     * @param string $name  The dataset name.
+     * @return array|bool  Returns the data array on success, false on failure.
+     */
+
+    public function fetchDataset($name) {
+        $url = $this->host . "/datasets/" . $name;
+        $data = $this->sendRequest($url, self::GET);
+        $json = $this->parseJson($data);
+
+        if(!$json) {
+            return false;
+        }
+
+        return $json['data'];
+    }
+
+    /**
+     * Create a new dataset, with a specified name and description. These
+     * are both mandatory.
+     *
+     * @param string $name  The dataset's name.
+     * @param string $description  The dataset's description.
+     * @return array|bool  Returns the data array on success, false on failure.
+     */
+
+    public function createDataset($name, $description) {
+        $post_data = array(
+            "name" => $name,
+            "description" => $description
+        );
+
+        $url = $this->host . "/datasets";
+        $data = $this->sendRequest($url, self::POST, $post_data);
+        $json = $this->parseJson($data);
+
+        if(!$json) {
+            return false;
+        }
+
+        return $json['data'];
+    }
+
+    /**
+     * Run a select query, finding results from a dataset that match
      * certain conditions. Optionally, leave the query blank to return
      * all rows.
      *
-     * @param string $dataset  The dataset name to query.
+     * @param string $name  The dataset name to query.
      * @param array $query  The query to run, in MongoDB format.
      * @param int $offset  Apply an offset on the query, for pagination.
      * @param int $limit  Apply a row limit on the query.
@@ -116,7 +175,7 @@ class eco {
      * @return array|bool  Returns the data array on success, false on failure.
      */
 
-    public function select($dataset, $query = null, $offset = 0, $limit = 0, $sort = null, $fields = null, $exclude = null) {
+    public function selectData($name, $query = null, $offset = 0, $limit = 0, $sort = null, $fields = null, $exclude = null) {
         $query_string = array(
             "query" => json_encode($query),
             "offset" => $offset,
@@ -126,9 +185,9 @@ class eco {
             "exclude" => json_encode($exclude)
         );
 
-        $url = $this->host . "/datasets/" . $dataset . "/select";
-        $data = $this->send_request($url, "GET", $query_string);
-        $json = $this->parse_json($data);
+        $url = $this->host . "/datasets/" . $name . "/data";
+        $data = $this->sendRequest($url, self::GET, $query_string);
+        $json = $this->parseJson($data);
 
         if(!$json) {
             return false;
@@ -142,13 +201,13 @@ class eco {
      * parameters passed to wrap one document to look like an array of
      * documents.
      *
-     * @param string $dataset  The dataset to insert documents into.
+     * @param string $name  The dataset to insert documents into.
      * @param array $document  The document to insert.
      * @return array|bool  Returns the data array on success, false on failure.
      */
 
-    public function insert($dataset, $document) {
-        return $this->insert_multi($dataset, array($document));
+    public function insertData($name, $document) {
+        return $this->insertMultiData($name, array($document));
     }
 
     /**
@@ -156,19 +215,19 @@ class eco {
      * a success parameter as well as the number of documents added
      * which we can use to verify our request.
      *
-     * @param string $dataset  The dataset to insert documents into.
+     * @param string $name  The dataset to insert documents into.
      * @param array $document  The documents to insert.
      * @return array|bool  Returns the data array on success, false on failure.
      */
 
-    public function insert_multi($dataset, $documents) {
+    public function insertMultiData($name, $documents) {
         $post_data = array(
             "documents" => json_encode($documents)
         );
 
-        $url = $this->host . "/datasets/" . $dataset . "/insert";
-        $data = $this->send_request($url, "POST", $post_data);
-        $json = $this->parse_json($data);
+        $url = $this->host . "/datasets/" . $name . "/data";
+        $data = $this->sendRequest($url, self::POST, $post_data);
+        $json = $this->parseJson($data);
 
         if(!$json) {
             return false;
@@ -183,21 +242,21 @@ class eco {
      * a diff for the record, and the magic keyword \$unset can be
      * sent to remove a field totally.
      *
-     * @param string $dataset  The dataset to update documents in.
+     * @param string $name  The dataset to update documents in.
      * @param array $query  The query to use to find documents to update.
      * @param array $changes  The changes to make.
      * @return array|bool  Returns the data array on success, false on failure.
      */
 
-    public function update($dataset, $query, $changes) {
+    public function updateData($name, $query, $changes) {
         $post_data = array(
             "query" => json_encode($query),
             "changes" => json_encode($changes)
         );
 
-        $url = $this->host . "/datasets/" . $dataset . "/update";
-        $data = $this->send_request($url, "POST", $post_data);
-        $json = $this->parse_json($data);
+        $url = $this->host . "/datasets/" . $name . "/data";
+        $data = $this->sendRequest($url, self::PUT, $post_data);
+        $json = $this->parseJson($data);
 
         if(!$json) {
             return false;
@@ -210,19 +269,64 @@ class eco {
      * Delete documents from the database using a query to match
      * documents in a specified dataset.
      *
-     * @param string $dataset  The dataset that we should delete rows from.
+     * @param string $name  The dataset that we should delete rows from.
      * @param array $query  The query to match rows to delete.
      * @return array|bool  Returns the data array on success, false on failure.
      */
 
-    public function delete($dataset, $query) {
+    public function deleteData($name, $query) {
         $post_data = array(
             "query" => json_encode($query)
         );
 
-        $url = $this->host . "/datasets/" . $dataset . "/delete";
-        $data = $this->send_request($url, "POST", $post_data);
-        $json = $this->parse_json($data);
+        $url = $this->host . "/datasets/" . $name . "/data";
+        $data = $this->sendRequest($url, self::DELETE, $post_data);
+        $json = $this->parseJson($data);
+
+        if(!$json) {
+            return false;
+        }
+
+        return $json['data'];
+    }
+
+    /**
+     * List the indexes that have been created on a dataset. We
+     * should have at least one on _id by default.
+     *
+     * @param string $name  The dataset that we should list indexes on.
+     * @return array|bool  Returns the indexes on success, false on failure.
+     */
+
+    public function indexes($name) {
+        $url = $this->host . "/datasets/" . $name . "/indexes";
+        $data = $this->sendRequest($url, self::GET);
+        $json = $this->parseJson($data);
+
+        if(!$json) {
+            return false;
+        }
+
+        return $json['data']['indexes'];
+    }
+
+    /**
+     * Create an index on the specified dataset, which currently
+     * only works on a single field.
+     *
+     * @param string $name  The dataset to create an index on.
+     * @param array $fields  The fields to index. An blank field will cause auto-indexing.
+     * @return array|bool  Returns the data array on success, false on failure.
+     */
+
+    public function addIndex($name, $fields = array()) {
+        $post_data = array(
+            "fields" => json_encode($fields)
+        );
+
+        $url = $this->host . "/datasets/" . $name . "/indexes";
+        $data = $this->sendRequest($url, self::POST, $post_data);
+        $json = $this->parseJson($data);
 
         if(!$json) {
             return false;
@@ -235,23 +339,21 @@ class eco {
      * Calculate the linear regression of two fields of data inside a
      * dataset, to the n-th degree.
      *
-     * @param string $dataset  The dataset that we run calculations on.
-     * @param string $field_one  The first field.
-     * @param string $field_two  The second field.
+     * @param string $name  The dataset that we run calculations on.
+     * @param array $fields  The two fields to use.
      * @param int $degree  The degree of the polynomial.
      * @return array|bool  Returns the coefficients on success, false on failure.
      */
 
-    public function calc_polyfit($dataset, $field_one, $field_two, $degree = 2) {
+    public function calcPolyfit($name, $fields, $degree = 2) {
         $query_string = array(
-            "field_one" => $field_one,
-            "field_two" => $field_two,
+            "fields" => json_encode($fields),
             "degree" => $degree
         );
 
-        $url = $this->host . "/datasets/" . $dataset . "/calc/polyfit";
-        $data = $this->send_request($url, "GET", $query_string);
-        $json = $this->parse_json($data);
+        $url = $this->host . "/datasets/" . $name . "/calc/polyfit";
+        $data = $this->sendRequest($url, self::GET, $query_string);
+        $json = $this->parseJson($data);
 
         if(!$json) {
             return false;
@@ -265,21 +367,21 @@ class eco {
      * limited to a subset of data in a dataset using a query or the
      * entire table.
      *
-     * @param string $dataset  The dataset that we run calculations on.
-     * @param string $field_name  The field to run the calculations on.
+     * @param string $name  The dataset that we run calculations on.
+     * @param string $field  The field to run the calculations on.
      * @param array $query  The query to run, in MongoDB format.
      * @return array|bool  Returns the stats on success, false on failure.
      */
 
-    public function calc_stats($dataset, $field_name, $query = array()) {
+    public function calcStats($name, $field, $query = array()) {
         $query_string = array(
-            "field_name" => $field_name,
+            "field" => $field,
             "query" => $query
         );
 
-        $url = $this->host . "/datasets/" . $dataset . "/calc/stats";
-        $data = $this->send_request($url, "GET", $query_string);
-        $json = $this->parse_json($data);
+        $url = $this->host . "/datasets/" . $name . "/calc/stats";
+        $data = $this->sendRequest($url, self::GET, $query_string);
+        $json = $this->parseJson($data);
 
         if(!$json) {
             return false;
@@ -318,7 +420,7 @@ class eco {
      * @return array|bool  The decoded JSON data on success, or false on failure.
      */
 
-    private function parse_json($data) {
+    private function parseJson($data) {
         $json = json_decode($data, true);
 
         if(!is_array($json)) {
@@ -343,27 +445,33 @@ class eco {
      * different methods to send the data - POST and GET.
      *
      * @param string $url  The web address to fetch.
-     * @param string $method  GET or POST
+     * @param string $method  GET, POST, PUT or DELETE.
      * @param string $params  The query parameters or POST parameters.
      * @param integer $timeout  The timeout to use for the request.
      * @return string  The response data from the request.
      */
 
-    private function send_request($url, $method = "GET", $params = null, $timeout = 10) {
+    private function sendRequest($url, $method, $params = null, $timeout = 10) {
         $ch = curl_init();
 
-        if($method == "GET" && !empty($params)) {
+        if($method == self::GET && !empty($params)) {
             $url .= "?" . http_build_query($params);
         }
 
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_USERAGENT, "ECO / PHP Wrapper 1.0");
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array("X-Mashape-Authorization: " . $this->mashape_key));
+        curl_setopt($ch, CURLOPT_USERAGENT, "Rainhawk / PHP Wrapper 1.0");
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array("X-Mashape-Authorization: " . $this->mashapeKey));
         curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);
 
-        if($method == "POST") {
+        if($method == self::POST) {
             curl_setopt($ch, CURLOPT_POST, true);
+
+            if(!empty($params)) {
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
+            }
+        } else if($method == self::PUT || $method == self::DELETE) {
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
 
             if(!empty($params)) {
                 curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
@@ -382,3 +490,5 @@ class eco {
         return $result;
     }
 }
+
+?>
