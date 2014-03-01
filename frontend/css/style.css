@@ -259,15 +259,15 @@ th {
 @media (max-width: 768px) {
 
   .header {
-	background: url(../img/bg.jpg) no-repeat center center scroll;
+    background: url(../img/bg.jpg) no-repeat center center scroll;
   }
 
 /*  .example {
-	background: url(../img/callout.jpg) no-repeat center center scroll;
+    background: url(../img/callout.jpg) no-repeat center center scroll;
   }*/
 
   .map {
-	height: 75%;
+    height: 75%;
   }
 
 }
