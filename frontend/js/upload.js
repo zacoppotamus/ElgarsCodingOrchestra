@@ -23,14 +23,16 @@ function uploadClick(evt) {
     var datasetName = document.getElementById("datasetNameInput").value;
 
     // Checks that the dataset doesn't already exist
-    getRequest("https://sneeza-eco.p.mashape.com/datasets/"+datasetName, function fncSuccess(result){
+    getRequest("https://sneeza-eco.p.mashape.com/datasets/"+datasetName, function (result){
         alert(JSON.stringify(result));
         if(result.data.message === "No method was specified."){
             requestData = {
                 "name": "mytestdataset",
                 "description": "placeholder description"
             };
-            postRequest("https://sneeza-eco.p.mashape.com/datasets", requestData, function pointless(){})
+            postRequest("https://sneeza-eco.p.mashape.com/datasets", requestData, function (result){
+                alert("Post result: " + JSON.stringify(result));
+            });
             startRead();
         }
         else{
