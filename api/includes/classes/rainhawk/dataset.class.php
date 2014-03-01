@@ -275,10 +275,7 @@ class Dataset {
         }
 
         try {
-            if(method_exists($this->collection, 'ensureIndex'))
-            {
-                $result = $this->collection->ensureIndex(array($field => 1), array("background" => true));
-            }
+            $result = $this->collection->ensureIndex(array($field => 1), array("background" => true));
 
             if($result['ok'] == 1) {
                 return true;

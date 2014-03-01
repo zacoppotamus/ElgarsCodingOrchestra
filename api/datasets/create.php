@@ -47,8 +47,8 @@ if(!rainhawk\sets::create($dataset)) {
     exit;
 }
 
-// Set the dataset's exists value.
-$dataset->exists = true;
+// Get a new reference to the dataset.
+$dataset = new rainhawk\dataset($data->prefix, $data->name);
 
 // Create an index on _id to force-create the set.
 if(!$dataset->add_index("_id")) {
