@@ -38,7 +38,7 @@ $fields = $datasetInfo["data"]["fields"];
         <script>
             $(document).ready(function() {
                     $('#dataTable').jtable({
-                        title: '<?php echo $datasetInfo["data"]["name"];>',
+                        title: '<?php echo $datasetInfo["data"]["name"];?>',
                         paging: true,
                         pageSize: 50,
                         sorting: true,
