@@ -3,17 +3,17 @@
 $dataset = isset($_GET['dataset']) ? htmlspecialchars($_GET['dataset']) : null;
 $mashape_key = "eSQpirMYxjXUs8xIjjaUo72gutwDJ4CP";
 
-$ch = curl_init();
-$url = "https://sneeza-eco.p.mashape.com/datasets" . $dataset;
-curl_setopt($ch, CURLOPT_URL, $url);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($ch, CURLOPT_USERAGENT, "ECO / Edit System 0.5");
-curl_setopt($ch, CURLOPT_HTTPHEADER, array("X-Mashape-Authorization: " . $mashape_key));
-curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-$result=json_decode(curl_exec($ch));
-curl_close($ch);
+//$ch = curl_init();
+//$url = "https://sneeza-eco.p.mashape.com/datasets" . $dataset;
+//curl_setopt($ch, CURLOPT_URL, $url);
+//curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+//curl_setopt($ch, CURLOPT_USERAGENT, "ECO / Edit System 0.5");
+//curl_setopt($ch, CURLOPT_HTTPHEADER, array("X-Mashape-Authorization: " . $mashape_key));
+//curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+//$result=json_decode(curl_exec($ch));
+//curl_close($ch);
 
-$fields = $result["fields"];
+//$fields = $result["fields"];
 
 ?>
 <!doctype html>
