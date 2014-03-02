@@ -126,18 +126,18 @@ function loaded(evt) {
     var data = JSON.stringify($.csv.toObjects(fileString));
 
     // Post the data to the database
-    var result = postRequest("https://sneeza-eco.p.mashape.com/datasets/" + username() + "." + datasetName + "/data", {rows:data}, function(){});
-    var resultData = (result);
-    alert("result = " + result);
+    var result = postRequest("https://sneeza-eco.p.mashape.com/datasets/" + username() + "." + datasetName + "/data", {rows:data}, function(resultData){
+        var resultData = JSON.parse(resultData);
 
-    if(resultData.meta.code !== 200)
-    {
-        alert("Error uploading");
-    }
-    else
-    {
-        alert("Successful upload!");
-    }
+        if(resultData.meta.code !== 200)
+        {
+            alert("Error uploading");
+        }
+        else
+        {
+            alert("Successful upload!");
+        }
+    });
 }
 
 function errorHandler(evt) {
