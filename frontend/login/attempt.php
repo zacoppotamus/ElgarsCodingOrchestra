@@ -14,9 +14,9 @@ function getRequest($requestURL, $auth_key)
     return $result;
 }
 
-$url = "https://sneeza-eco.p.mashape.com/";
+$url          = "https://sneeza-eco.p.mashape.com/";
 $datasetsInfo = getRequest($url."datasets", $mashape_key);
-$user        = getRequest($url."ping",     $mashape_key);
+$user         = getRequest($url."ping",     $mashape_key)["data"]["mashape_user"];
 
 if (stristr($result["message"], "Invalid Mashape key"))
 {
@@ -41,7 +41,7 @@ if (stristr($result["message"], "Invalid Mashape key"))
     <body>
         <div class="container">
             <div class="row">
-            <h1>Welcome <?php echo $user["data"]["mashape_user"]; ?></h1>
+            <h1>Welcome <?php echo $user; ?></h1>
                 <h2>Please pick a dataset to view/edit</h>
             </div>
             <div class="row">
@@ -64,8 +64,8 @@ if (stristr($result["message"], "Invalid Mashape key"))
                             "<td>$dataset[description]</td>\n".
                             "<td>$dataset[rows]</td>\n".
                             "<td>".count($dataset[fields])."</td>\n".
-                            "<td>".(in_array($user, $dataset["read_access" ]) ? "True" : "False")."<td>\n".
-                            "<td>".(in_array($user, $dataset["write_access"]) ? "True" : "False")."<td>\n".
+                            "<td>".(in_array($user, $dataset["read_access" ]) ? "True" : "False")."</td>\n".
+                            "<td>".(in_array($user, $dataset["write_access"]) ? "True" : "False")."</td>\n".
                             "</tr>\n");
                     }
 
