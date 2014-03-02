@@ -64,8 +64,8 @@ if (stristr($result["message"], "Invalid Mashape key"))
                             "<td>$dataset[description]</td>\n".
                             "<td>$dataset[rows]</td>\n".
                             "<td>".count($dataset[fields])."</td>\n".
-                            "<td>".(in_array($dataset["read_access" ], $user) ? "True" : "False")."<td>\n".
-                            "<td>".(in_array($dataset["write_access"], $user) ? "True" : "False")."<td>\n".
+                            "<td>".(in_array($user, $dataset["read_access" ]) ? "True" : "False")."<td>\n".
+                            "<td>".(in_array($user, $dataset["write_access"]) ? "True" : "False")."<td>\n".
                             "</tr>\n");
                     }
 
