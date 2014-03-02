@@ -48,11 +48,11 @@ $fields = $result["fields"];
                             <?php
                                 for($i=0; $i<count($fields); $i++)
                                 {
-                                    if($fields[$i] !== "_id")
-                                    {
+                                    //if($fields[$i] !== "_id")
+                                    //{
                                         //echo $fields[$i]." {\n    title: \"" . $fields[$i] . "\"\n},";
-                                        echo "test";
-                                    }
+                                        //echo "test";
+                                    //}
                                 }
 
                             ?>
