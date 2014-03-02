@@ -22,6 +22,10 @@ if (stristr($result["message"], "Invalid Mashape key"))
 {
     header('Location: login.html');
 }
+else
+{
+    setcookie(apiKey, $mashape_key, 0, "/", "project.spe.sneeza.me", isset($_SERVER["HTTPS"]), true);
+}
 ?>
 
 <!DOCTYPE html>
