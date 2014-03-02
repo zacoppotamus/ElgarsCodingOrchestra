@@ -59,13 +59,13 @@ if (stristr($result["message"], "Invalid Mashape key"))
                     for($i=0; $i<count($datasetsInfo["data"]["datasets"]); $i++)
                     {
                         $dataset = $datasetsInfo["data"]["datasets"][$i];
-                        echo("<tr>".
-                            "<td>$dataset[name]</td>".
-                            "<td>$dataset[description]</td>".
-                            "<td>$dataset[rows]</td>".
-                            "<td>count($dataset[fields])</td>".
-                            "<td>".in_array($dataset["read_access" ], $user)."<td>".
-                            "<td>".in_array($dataset["write_access"], $user)."<td>".
+                        echo("<tr>\n".
+                            "<td>$dataset[name]</td>\n".
+                            "<td>$dataset[description]</td>\n".
+                            "<td>$dataset[rows]</td>\n".
+                            "<td>".count($dataset[fields])."</td>\n".
+                            "<td>".in_array($dataset["read_access" ], $user)."<td>\n".
+                            "<td>".in_array($dataset["write_access"], $user)."<td>\n".
                             "</tr>\n");
                     }
 
