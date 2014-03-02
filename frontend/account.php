@@ -23,7 +23,7 @@ $user         = getRequest($url."ping",     $mashape_key)["data"]["mashape_user"
 
 if (stristr($result["message"], "Invalid Mashape key"))
 {
-    header('Location: login.html');
+    header('Location: http://project.spe.sneeza.me/login.html');
 }
 //else
 //{
