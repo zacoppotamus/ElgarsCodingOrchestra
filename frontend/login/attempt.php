@@ -15,7 +15,7 @@ function getRequest($requestURL, $auth_key)
 }
 
 $url = "https://sneeza-eco.p.mashape.com/";
-$datasetInfo = getRequest($url."datasets", $mashape_key);
+$datasetsInfo = getRequest($url."datasets", $mashape_key);
 $user        = getRequest($url."ping",     $mashape_key);
 
 if (stristr($result["message"], "Invalid Mashape key"))
@@ -52,6 +52,15 @@ if (stristr($result["message"], "Invalid Mashape key"))
                     <th>Fields</th>
                     <th>Read Access</th>
                     <th>Write Access</th>
+
+                    <?php
+                    for($i=0; $i<count($datasetsInfo["data"]["datasets"]); $i++)
+                    {
+                        $dataset = $datasetsInfo["data"]["datasets"][$i];
+                        echo("<tr><td>$dataset[name]</td><td>$dataset[description]</td><td>$dataset[rows]</td><td>$dataset[fields]</td></tr>\n");
+                    }
+
+                    ?>
                 </table>
             </div>
     </body>
