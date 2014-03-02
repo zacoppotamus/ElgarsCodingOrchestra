@@ -73,8 +73,8 @@ function postRequest(requestURL, requestData, fncSuccess) {
     $.ajax({
         url: requestURL,
         type: "POST",
-        headers: {
-            "X-Mashape-Authorization": "EU6h9H8BUXELDmfO1Mbh0jLasSQxrAZd"
+        beforeSend: function (request){
+            request.setRequestHeader("X-Mashape-Authorization", "EU6h9H8BUXELDmfO1Mbh0jLasSQxrAZd")
         },
         data: requestData,
         dataType: 'json',
