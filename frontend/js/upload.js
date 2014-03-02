@@ -127,7 +127,8 @@ function loaded(evt) {
 
     // Post the data to the database
     var result = postRequest("https://sneeza-eco.p.mashape.com/datasets/" + username() + "." + datasetName + "/data", {rows:data}, function(){});
-    var resultData = JSON.parse(result);
+    var resultData = (result);
+    alert("result = " + result);
 
     if(resultData.meta.code !== 200)
     {
