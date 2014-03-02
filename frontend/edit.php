@@ -29,6 +29,7 @@ $fields = $result["fields"];
         <title>Our Datasets</title>
     </head>
     <body>
+        <h1>This is a test</h>
         <div id="dataTable"></div>
         <script>
             $(document).ready(function() {
@@ -45,7 +46,7 @@ $fields = $result["fields"];
                             deleteAction: 'http://project.spe.sneeza.me/proxy/delete.php?dataset=<?php echo $dataset; ?>'
                         },
                         fields: {
-                            <?php echo "hello";?>
+                            <?php echo "name: {title: 'name'},";?>
                             _id: {
                                 key: true,
                                 create: false,
