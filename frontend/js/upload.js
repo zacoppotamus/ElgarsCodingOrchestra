@@ -4,7 +4,7 @@
 
 var mashape_user;
 
-function initDialog(){
+function init(){
     $("#uploadConfirm").dialog({
         resizable: false,
         modal: true,
@@ -19,6 +19,7 @@ function initDialog(){
             }
         }
     });
+    username();
 }
 
 
