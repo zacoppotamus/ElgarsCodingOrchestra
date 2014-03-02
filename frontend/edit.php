@@ -13,7 +13,8 @@ curl_setopt($ch, CURLOPT_TIMEOUT, 10);
 $result=json_decode(curl_exec($ch));
 curl_close($ch);
 
-$fields = $result["data"]["fields"];
+$data = $result['data'];
+$fields = $data['fields'];
 
 ?>
 <!doctype html>
