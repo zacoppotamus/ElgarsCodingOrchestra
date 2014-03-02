@@ -29,7 +29,9 @@ $fields = $result["data"]["fields"];
         <title>Our Datasets</title>
     </head>
     <body>
-        <?php var_dump($fields) ?>
+        <?php var_dump($fields); echo($fields[0]); ?>
+
+
         <div id="dataTable"></div>
         <script>
             $(document).ready(function() {
