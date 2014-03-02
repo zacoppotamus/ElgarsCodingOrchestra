@@ -78,13 +78,16 @@ foreach($query as $key => $value) {
 }
 
 // Run the update query.
-$query = $dataset->update($query, $changes);
+$updated = $dataset->update($query, $changes);
 
 // Check if the query failed.
-if(!is_int($query)) {
+if(!is_int($updated)) {
     echo json_beautify(json_render_error(406, "An unexpected error occured while performing your query - are you sure you formatted all the parameters correctly?"));
     exit;
 }
+
+// Set the output.
+$data->json['updated'] = $updated;
 
 /*!
  * Output our JSON payload for use in whatever needs to be using
