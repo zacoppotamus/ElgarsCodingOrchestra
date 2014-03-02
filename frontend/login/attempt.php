@@ -57,7 +57,12 @@ if (stristr($result["message"], "Invalid Mashape key"))
                     for($i=0; $i<count($datasetsInfo["data"]["datasets"]); $i++)
                     {
                         $dataset = $datasetsInfo["data"]["datasets"][$i];
-                        echo("<tr><td>$dataset[name]</td><td>$dataset[description]</td><td>$dataset[rows]</td><td>$dataset[fields]</td></tr>\n");
+                        echo("<tr>".
+                            "<td>$dataset[name]</td>".
+                            "<td>$dataset[description]</td>".
+                            "<td>$dataset[rows]</td>".
+                            "<td>$dataset[fields]</td>".
+                            "</tr>\n");
                     }
 
                     ?>
