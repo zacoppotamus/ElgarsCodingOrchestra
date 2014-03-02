@@ -1,7 +1,7 @@
 <?php
 
 $dataset = isset($_GET['dataset']) ? htmlspecialchars($_GET['dataset']) : null;
-$mashape_key = "eSQpirMYxjXUs8xIjjaUo72gutwDJ4CP";
+$mashape_key = $_COOKIE["apiKey"];
 
 function getRequest($requestURL, $auth_key)
 {
