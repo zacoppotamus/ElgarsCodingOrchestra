@@ -46,13 +46,7 @@ $fields = $result["fields"];
                             deleteAction: 'http://project.spe.sneeza.me/proxy/delete.php?dataset=<?php echo $dataset; ?>'
                         },
                         fields: {
-                            <?php echo "name: {title: 'name'},";?>
-                            _id: {
-                                key: true,
-                                create: false,
-                                edit: false,
-                                list: false
-                            }
+                            <?php echo " _id: { key: true, create: false, edit: false, list: false }"; ?>
                         }
                     });
                     $('#dataTable').jtable('load');
