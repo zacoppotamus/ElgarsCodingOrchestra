@@ -87,7 +87,7 @@ if(!is_int($updated)) {
 }
 
 // Set the output.
-$data->json['updated'] = $updated;
+$json['updated'] = $updated;
 
 /*!
  * Output our JSON payload for use in whatever needs to be using
