@@ -138,11 +138,7 @@ class Dataset {
                     $fields = array_keys($row);
 
                     foreach($fields as $field) {
-                        if(!isset($this->fields[$field])) {
-                            $this->fields[$field] = 1;
-                        } else {
-                            $this->fields[$field]++;
-                        }
+                        $this->fields[$field] = isset($this->fields[$field]) ? $this->fields[$field] + 1 : 1;
                     }
                 }
 
@@ -173,24 +169,46 @@ class Dataset {
             $result = $this->collection->find($query);
 
             if($result) {
-                /*foreach($result as $row) {
-                    $fields = array_keys($row);
+                $ids = array();
+                $fields = array();
 
-                    foreach($fields as $field) {
-                        $this->fields[$field]++;
-
-                        if($this->fields[$field] == 0) {
-                            unset($this->fields[$field]);
-                        }
-                    }
-                }*/
+                foreach($result as $row) {
+                    $id = $row['_id'];
+                    $ids[] = $id;
+                    $fields[(string)$id] = array_keys($row);
+                }
 
                 $result = $this->collection->update($query, $changes, array("multiple" => true));
 
                 if($result['ok'] == 1) {
-                    \rainhawk\sets::update($this);
+                    $updated = (int)$result['n'];
+                    $result = $this->collection->find(array("_id" => array('$in' => $ids)));
 
-                    return (int)$result['n'];
+                    if($result) {
+                        foreach($result as $row) {
+                            $new_fields = array_keys($row);
+
+                            foreach($fields as $field) {
+                                if(!in_array($field, $new_fields)) {
+                                    $this->fields[$field]--;
+
+                                    if($this->fields[$field] <= 0) {
+                                        unset($this->fields[$field]);
+                                    }
+                                }
+                            }
+
+                            foreach($new_fields as $field) {
+                                if(!in_array($field, $fields)) {
+                                    $this->fields[$field] = isset($this->fields[$field]) ? $this->fields[$field] + 1 : 1;
+                                }
+                            }
+                        }
+
+                        \rainhawk\sets::update($this);
+
+                        return $updated;
+                    }
                 }
             }
         } catch(Exception $e) {}
@@ -223,7 +241,7 @@ class Dataset {
                     foreach($fields as $field) {
                         $this->fields[$field]--;
 
-                        if($this->fields[$field] == 0) {
+                        if($this->fields[$field] <= 0) {
                             unset($this->fields[$field]);
                         }
                     }
