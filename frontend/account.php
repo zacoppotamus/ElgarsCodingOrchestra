@@ -25,7 +25,9 @@ if (stristr($datasetsInfo["message"], "Invalid Mashape key"))
 }
 else
 {
-    setcookie(apiKey, $mashape_key, 0, "/", "project.spe.sneeza.me", isset($_SERVER["HTTPS"]), true);
+    // Could not set httponly to true as the cookie is used in the upload
+    // feature
+    setcookie(apiKey, $mashape_key, 0, "/", "project.spe.sneeza.me", isset($_SERVER["HTTPS"]), false);
 }
 ?>
 
