@@ -46,12 +46,14 @@ if (stristr($result["message"], "Invalid Mashape key"))
             </div>
             <div class="row">
                 <table class="table">
-                    <th>Name</th>
-                    <th>Description</th>
-                    <th>Records</th>
-                    <th>Fields</th>
-                    <th>Read Access</th>
-                    <th>Write Access</th>
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Records</th>
+                        <th>Fields</th>
+                        <th>Read Access</th>
+                        <th>Write Access</th>
+                    </tr>
 
                     <?php
                     for($i=0; $i<count($datasetsInfo["data"]["datasets"]); $i++)
@@ -61,7 +63,9 @@ if (stristr($result["message"], "Invalid Mashape key"))
                             "<td>$dataset[name]</td>".
                             "<td>$dataset[description]</td>".
                             "<td>$dataset[rows]</td>".
-                            "<td>$dataset[fields]</td>".
+                            "<td>count($dataset[fields])</td>".
+                            "<td>".in_array($dataset["read_access" ], $user)."<td>".
+                            "<td>".in_array($dataset["write_access"], $user)."<td>".
                             "</tr>\n");
                     }
 
