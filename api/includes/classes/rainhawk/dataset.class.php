@@ -189,6 +189,8 @@ class Dataset {
                             $new_fields = array_keys($row);
 
                             foreach($fields as $field) {
+                                $field = (string)$field;
+
                                 if(!in_array($field, $new_fields)) {
                                     $this->fields[$field]--;
 
@@ -199,6 +201,8 @@ class Dataset {
                             }
 
                             foreach($new_fields as $field) {
+                                $field = (string)$field;
+
                                 if(!in_array($field, $fields)) {
                                     $this->fields[$field] = isset($this->fields[$field]) ? $this->fields[$field] + 1 : 1;
                                 }
