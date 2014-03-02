@@ -13,6 +13,8 @@ curl_setopt($ch, CURLOPT_TIMEOUT, 10);
 $result=json_decode(curl_exec($ch), true);
 curl_close($ch);
 
+$fields = $result["data"]["fields"];
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -27,8 +29,6 @@ curl_close($ch);
         <title>Our Datasets</title>
     </head>
     <body>
-        <?php var_dump($result['data']['fields']); ?>
-        <h1><?php echo $url; ?></h>
         <div id="dataTable"></div>
         <script>
             $(document).ready(function() {
@@ -45,6 +45,16 @@ curl_close($ch);
                             deleteAction: 'http://project.spe.sneeza.me/proxy/delete.php?dataset=<?php echo $dataset; ?>'
                         },
                         fields: {
+                            <?php
+                                for($i=0; $i<count($fields); $i++)
+                                {
+                                    if($fields[$i] != "_id")
+                                    {
+                                        echo $fields[$i]." {\n    title: \"" . $fields[$i] . "\"\n},";
+                                    }
+                                }
+
+                            ?>
                             _id: {
                                 key: true,
                                 create: false,
