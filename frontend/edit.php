@@ -48,6 +48,10 @@ $fields = $result["data"]["fields"];
                             <?php
                                 for($i=0; $i<count($fields); $i++)
                                 {
+                                    if($fields[$i] !== "_id")
+                                    {
+                                        echo $fields[$i]."{title: '" . $fields[$i] . "'},";
+                                    }
                                 }
 
                             ?>
