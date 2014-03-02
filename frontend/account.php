@@ -21,9 +21,9 @@ $url          = "https://sneeza-eco.p.mashape.com/";
 $datasetsInfo = getRequest($url."datasets", $mashape_key);
 $user         = getRequest($url."ping",     $mashape_key)["data"]["mashape_user"];
 
-if (stristr($result["message"], "Invalid Mashape key"))
+if (stristr($datasetInfo["message"], "Invalid Mashape key"))
 {
-    header('Location: http://project.spe.sneeza.me/login.html');
+    header('Location: login.html');
 }
 //else
 //{
