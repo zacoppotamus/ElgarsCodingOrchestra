@@ -114,7 +114,7 @@ function loaded(evt) {
     var data = JSON.stringify($.csv.toObjects(fileString));
 
     // Post the data to the database
-    $.post("http://api.spe.sneeza.me/datasets/" + username() + "." + datasetName + "/data", {documents:data});
+    $.post("https://sneeza-eco.p.mashape.com/datasets/" + username() + "." + datasetName + "/data", {documents:data});
 }
 
 function errorHandler(evt) {
