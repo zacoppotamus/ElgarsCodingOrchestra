@@ -13,8 +13,6 @@ curl_setopt($ch, CURLOPT_TIMEOUT, 10);
 $result=json_decode(curl_exec($ch));
 curl_close($ch);
 
-$data = $result['data'];
-
 ?>
 <!doctype html>
 <html lang="en">
@@ -29,6 +27,7 @@ $data = $result['data'];
         <title>Our Datasets</title>
     </head>
     <body>
+        <?php var_dump($result); >
         <h1>This is a test</h>
         <div id="dataTable"></div>
         <script>
