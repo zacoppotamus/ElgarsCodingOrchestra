@@ -65,7 +65,7 @@ else
                     {
                         $dataset = $datasetsInfo["data"]["datasets"][$i];
                         echo("<tr>\n".
-                            "<td>$dataset[name]</td>\n".
+                            "<td><a href='edit.php?$dataset[name]'>$dataset[name]</a></td>\n".
                             "<td>$dataset[description]</td>\n".
                             "<td>$dataset[rows]</td>\n".
                             "<td>".count($dataset[fields])."</td>\n".
