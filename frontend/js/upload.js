@@ -74,7 +74,7 @@ function getRequest(requestURL, fncSuccess) {
         url: requestURL,
         type: "GET",
         beforeSend: function (request){
-            request.setRequestHeader("X-Mashape-Authorization", getCookie("apiKey"))
+            request.setRequestHeader("X-Mashape-Authorization", "EU6h9H8BUXELDmfO1Mbh0jLasSQxrAZd")
         },
         dataType: 'json',
         success: fncSuccess
@@ -86,7 +86,7 @@ function postRequest(requestURL, requestData, fncSuccess) {
         url: requestURL,
         type: "POST",
         beforeSend: function (request){
-            request.setRequestHeader("X-Mashape-Authorization", getCookie("apiKey"))
+            request.setRequestHeader("X-Mashape-Authorization", "EU6h9H8BUXELDmfO1Mbh0jLasSQxrAZd")
         },
         data: requestData,
         dataType: 'json',
