@@ -3,7 +3,7 @@
 $dataset = isset($_GET['dataset']) ? htmlspecialchars($_GET['dataset']) : null;
 $mashape_key = "eSQpirMYxjXUs8xIjjaUo72gutwDJ4CP";
 
-$ch = curl_init("https://sneeza-eco.p.mashape.com/datasets/" + $dataset);
+$ch = curl_init("https://sneeza-eco.p.mashape.com/datasets/" . $dataset);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLOPT_USERAGENT, "ECO / Edit System 0.5");
 curl_setopt($ch, CURLOPT_HTTPHEADER, array("X-Mashape-Authorization: " . $mashape_key));
