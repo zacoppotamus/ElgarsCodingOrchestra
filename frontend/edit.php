@@ -28,7 +28,7 @@ curl_close($ch);
     </head>
     <body>
         <?php var_dump($result['data']); ?>
-        <h1>This is a test</h>
+        <h1><?php echo $url; ?></h>
         <div id="dataTable"></div>
         <script>
             $(document).ready(function() {
