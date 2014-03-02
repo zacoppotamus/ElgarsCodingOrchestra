@@ -43,7 +43,7 @@ $fields = $result["fields"];
                         },
                         fields: {
                             <?php
-                                foreach($i=0; $i<count($fields); $i++)
+                                for($i=0; $i<count($fields); $i++)
                                 {
                                     if($fields[$i] != "_id")
                                     {
