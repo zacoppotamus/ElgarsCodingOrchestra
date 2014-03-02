@@ -3,17 +3,22 @@
 $dataset = isset($_GET['dataset']) ? htmlspecialchars($_GET['dataset']) : null;
 $mashape_key = "eSQpirMYxjXUs8xIjjaUo72gutwDJ4CP";
 
-$ch = curl_init();
-$url = "https://sneeza-eco.p.mashape.com/datasets/" . $dataset;
-curl_setopt($ch, CURLOPT_URL, $url);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($ch, CURLOPT_USERAGENT, "ECO / Edit System 0.5");
-curl_setopt($ch, CURLOPT_HTTPHEADER, array("X-Mashape-Authorization: " . $mashape_key));
-curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-$result=json_decode(curl_exec($ch), true);
-curl_close($ch);
+function getRequest($requestURL, $auth_key)
+{
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $requestURL);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_USERAGENT, "ECO / Edit System 0.5");
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array("X-Mashape-Authorization: " . $auth_key));
+    curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+    $result=json_decode(curl_exec($ch), true);
+    curl_close($ch);
+    return $result;
+}
 
-$fields = $result["data"]["fields"];
+$datasetInfo = getRequest("https://sneeza-eco.p.mashape.com/datasets/".$dataset, $mashape_key);
+$user = getRequest("https://sneeza-eco.p.mashape.com/ping", $mashape_key)["data"]["mashape_user"];
+$fields = $datasetInfo["data"]["fields"];
 
 ?>
 <!doctype html>
@@ -43,9 +48,14 @@ $fields = $result["data"]["fields"];
                         defaultSorting: 'name ASC',
                         actions: {
                             listAction: 'http://project.spe.sneeza.me/proxy/list.php?dataset=<?php echo $dataset; ?>',
-                            createAction: 'http://project.spe.sneeza.me/proxy/create.php?dataset=<?php echo $dataset; ?>',
-                            updateAction: 'http://project.spe.sneeza.me/proxy/update.php?dataset=<?php echo $dataset; ?>',
-                            deleteAction: 'http://project.spe.sneeza.me/proxy/delete.php?dataset=<?php echo $dataset; ?>'
+                            <?php
+                            if(in_array($user, $datasetInfo["data"]["write_access"]))
+                            {
+                                createAction: 'http://project.spe.sneeza.me/proxy/create.php?dataset=<?php echo $dataset; ?>',
+                                updateAction: 'http://project.spe.sneeza.me/proxy/update.php?dataset=<?php echo $dataset; ?>',
+                                deleteAction: 'http://project.spe.sneeza.me/proxy/delete.php?dataset=<?php echo $dataset; ?>'
+                            }
+                            ?>
                         },
                         fields: {
                             <?php
@@ -54,7 +64,6 @@ $fields = $result["data"]["fields"];
                                     if($fields[$i] !== "_id")
                                     {
                                         echo ("$fields[$i]: {title:'$fields[$i]'},");
-                                        //echo $fields[$i]."{title: '" . $fields[$i] . "'},";
                                     }
                                 }
 
