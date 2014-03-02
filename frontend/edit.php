@@ -27,7 +27,7 @@ curl_close($ch);
         <title>Our Datasets</title>
     </head>
     <body>
-        <?php var_dump($result["data"]); ?>
+        <?php var_dump($result); ?>
         <h1>This is a test</h>
         <div id="dataTable"></div>
         <script>
