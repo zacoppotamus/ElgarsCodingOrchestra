@@ -1,7 +1,8 @@
 <?php
 
 //$mashape_key = isset($_POST["apiKey"]) ? $_POST["apiKey"] : $_COOKIE["apiKey"];
-$mashape_key = isset($_POST["apiKey"]) ? $_POST["apiKey"] : null;
+//$mashape_key = isset($_POST["apiKey"]) ? $_POST["apiKey"] : null;
+$mashape_key = $_POST["apiKey"];
 
 function getRequest($requestURL, $auth_key)
 {
