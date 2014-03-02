@@ -74,7 +74,7 @@ function getRequest(requestURL, fncSuccess) {
         url: requestURL,
         type: "GET",
         beforeSend: function (request){
-            request.setRequestHeader("X-Mashape-Authorization", getCookie("apiKey")))
+            request.setRequestHeader("X-Mashape-Authorization", getCookie("apiKey"))
         },
         dataType: 'json',
         success: fncSuccess
