@@ -114,7 +114,7 @@ function loaded(evt) {
     var data = JSON.stringify($.csv.toObjects(fileString));
 
     // Post the data to the database
-    postRequest("https://sneeza-eco.p.mashape.com/datasets/" + username() + "." + datasetName + "/data", {documents:data}, function(){alert("Successful upload!");});
+    postRequest("https://sneeza-eco.p.mashape.com/datasets/" + username() + "." + datasetName + "/data", {rows:data}, function(){alert("Successful upload!");});
 }
 
 function errorHandler(evt) {
