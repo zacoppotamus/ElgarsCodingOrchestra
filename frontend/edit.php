@@ -14,7 +14,6 @@ $result=json_decode(curl_exec($ch));
 curl_close($ch);
 
 $data = $result['data'];
-$fields = $data['fields'];
 
 ?>
 <!doctype html>
