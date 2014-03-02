@@ -1,17 +1,22 @@
 <?php
 $mashape_key = $_POST["apiKey"];
 
-$ch = curl_init();
+function getRequest($requestURL, $auth_key)
+{
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $requestURL);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_USERAGENT, "ECO / Login System 0.1");
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array("X-Mashape-Authorization: " . $auth_key));
+    curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+    $result=json_decode(curl_exec($ch), true);
+    curl_close($ch);
+    return $result;
+}
 
-$url = "https://sneeza-eco.p.mashape.com/datasets";
-
-curl_setopt($ch, CURLOPT_URL, $url);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($ch, CURLOPT_USERAGENT, "ECO / Login System 0.1");
-curl_setopt($ch, CURLOPT_HTTPHEADER, array("X-Mashape-Authorization: " . $mashape_key));
-curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-$result = json_decode(curl_exec($ch), true);
-curl_close($ch);
+$url = "https://sneeza-eco.p.mashape.com/";
+$datasetInfo = getRequest($url."datasets", $mashape_key);
+$user        = getRequest($url."ping",     $mashape_key);
 
 if (stristr($result["message"], "Invalid Mashape key"))
 {
@@ -36,7 +41,7 @@ if (stristr($result["message"], "Invalid Mashape key"))
     <body>
         <div class="container">
             <div class="row">
-                <h1>Welcome %accountname%</h1>
+            <h1>Welcome <?php echo $user["data"]["mashape_user"]; ?></h1>
                 <h2>Please pick a dataset to view/edit</h>
             </div>
             <div class="row">
