@@ -1,6 +1,16 @@
 <?php
 
 $dataset = isset($_GET['dataset']) ? htmlspecialchars($_GET['dataset']) : null;
+$mashape_key = "eSQpirMYxjXUs8xIjjaUo72gutwDJ4CP";
+
+$ch = curl_init("https://sneeza-eco.p.mashape.com/datasets/" + $dataset);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_USERAGENT, "ECO / Edit System 0.5");
+curl_setopt($ch, CURLOPT_HTTPHEADER, array("X-Mashape-Authorization: " . $mashape_key));
+$result=json_decode(curl_exec($ch));
+curl_close($ch);
+
+$fields = $result["fields"];
 
 ?>
 <!doctype html>
@@ -32,26 +42,21 @@ $dataset = isset($_GET['dataset']) ? htmlspecialchars($_GET['dataset']) : null;
                             deleteAction: 'http://project.spe.sneeza.me/proxy/delete.php?dataset=<?php echo $dataset; ?>'
                         },
                         fields: {
+                            <?php
+                                foreach($i=0; $i<count($fields); $i++)
+                                {
+                                    if($fields[$i] != "_id")
+                                    {
+                                        echo $fields[$i]." {\n    title: \"" . $fields[$i] . "\"\n},"
+                                    }
+                                }
+
+                            ?>
                             _id: {
                                 key: true,
                                 create: false,
                                 edit: false,
                                 list: false
-                            },
-                            name: {
-                                title: "Name"
-                            },
-                            lines: {
-                                title: "Lines"
-                            },
-                            type: {
-                                title: "Type"
-                            },
-                            latitude: {
-                                title: "Lat"
-                            },
-                            longitude: {
-                                title: "Lon"
                             }
                         }
                     });
