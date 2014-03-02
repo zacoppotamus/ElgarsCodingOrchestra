@@ -48,9 +48,9 @@ $fields = $datasetInfo["data"]["fields"];
                             <?php
                             if(in_array($user, $datasetInfo["data"]["write_access"]))
                             {
-                                createAction: 'http://project.spe.sneeza.me/proxy/create.php?dataset=<?php echo $dataset; ?>',
-                                updateAction: 'http://project.spe.sneeza.me/proxy/update.php?dataset=<?php echo $dataset; ?>',
-                                deleteAction: 'http://project.spe.sneeza.me/proxy/delete.php?dataset=<?php echo $dataset; ?>'
+                                echo "createAction: 'http://project.spe.sneeza.me/proxy/create.php?dataset=$dataset',
+                                updateAction: 'http://project.spe.sneeza.me/proxy/update.php?dataset=$dataset',
+                                deleteAction: 'http://project.spe.sneeza.me/proxy/delete.php?dataset=$dataset'"
                             }
                             ?>
                         },
