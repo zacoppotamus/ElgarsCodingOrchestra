@@ -181,6 +181,8 @@ class Dataset {
                 $result = $this->collection->update($query, $changes, array("multiple" => true));
 
                 if($result['ok'] == 1) {
+                    print_r($result);
+
                     $updated = (int)$result['n'];
                     $result = $this->collection->find(array("_id" => array('$in' => $ids)));
 
