@@ -3,7 +3,8 @@
 include("../../wrappers/php/rainhawk.class.php");
 header("content-type: application/json; charset=utf8");
 
-$rainhawk = new Rainhawk("eSQpirMYxjXUs8xIjjaUo72gutwDJ4CP");
+$mashape_key = $_COOKIE["apiKey"];
+$rainhawk = new Rainhawk($mashape_key);
 
 $dataset = isset($_GET['dataset']) ? $_GET['dataset'] : null;
 $document = array();
