@@ -10,10 +10,10 @@ curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLOPT_USERAGENT, "ECO / Login System 0.1");
 curl_setopt($ch, CURLOPT_HTTPHEADER, array("X-Mashape-Authorization: " . $mashape_key));
 curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-$result = curl_exec($ch);
+$result = json_decode(curl_exec($ch), true);
 curl_close($ch);
 
-if ($result == "{\"message\":\"Invalid Mashape key. If you are a Mashape user, get your key from your dashboard at https://www.mashape.com/login - To create a free Mashape account instead, go to https://www.mashape.com/signup\"}")
+if (stristr($result["message"], "Invalid Mashape key"))
 {
     header('Location: index.html');
 }
