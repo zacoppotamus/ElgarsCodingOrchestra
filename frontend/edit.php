@@ -4,7 +4,7 @@ $dataset = isset($_GET['dataset']) ? htmlspecialchars($_GET['dataset']) : null;
 $mashape_key = "eSQpirMYxjXUs8xIjjaUo72gutwDJ4CP";
 
 $ch = curl_init();
-$url = "https://sneeza-eco.p.mashape.com/datasets" . $dataset;
+$url = "https://sneeza-eco.p.mashape.com/datasets/" . $dataset;
 curl_setopt($ch, CURLOPT_URL, $url);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLOPT_USERAGENT, "ECO / Edit System 0.5");
