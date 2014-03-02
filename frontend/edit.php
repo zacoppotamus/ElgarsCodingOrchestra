@@ -45,6 +45,16 @@ $fields = $result["fields"];
                             deleteAction: 'http://project.spe.sneeza.me/proxy/delete.php?dataset=<?php echo $dataset; ?>'
                         },
                         fields: {
+                            <?php
+                                for($i=0; $i<count($fields); $i++)
+                                {
+                                    if($fields[$i] != "_id")
+                                    {
+                                        echo $fields[$i]." {\n    title: \"" . $fields[$i] . "\"\n},"
+                                    }
+                                }
+
+                            ?>
                             _id: {
                                 key: true,
                                 create: false,
