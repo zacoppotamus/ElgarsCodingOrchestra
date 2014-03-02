@@ -53,7 +53,7 @@ $fields = $result["data"]["fields"];
                                 {
                                     if($fields[$i] !== "_id")
                                     {
-                                        echo ("$fields[$i],{title:''},");
+                                        echo ("$fields[$i]: {title:'$fields[$i]'},");
                                         //echo $fields[$i]."{title: '" . $fields[$i] . "'},";
                                     }
                                 }
