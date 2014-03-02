@@ -50,7 +50,8 @@ $fields = $result["fields"];
                                 {
                                     if($fields[$i] != "_id")
                                     {
-                                        echo $fields[$i]." {\n    title: \"" . $fields[$i] . "\"\n},";
+                                        //echo $fields[$i]." {\n    title: \"" . $fields[$i] . "\"\n},";
+                                        echo "test";
                                     }
                                 }
 
