@@ -26,8 +26,7 @@ function initDialog(){
 function username(){
     if(typeof mashape_user === 'undefined') {
         getRequest("https://sneeza-eco.p.mashape.com/ping", function(result){
-            window.mashape_user = result.data.mashape_user;
-            return window.mashape_user;
+            return window.mashape_user = result.data.mashape_user;
         });
     }
     else
