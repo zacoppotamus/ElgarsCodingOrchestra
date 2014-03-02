@@ -74,7 +74,7 @@ function postRequest(requestURL, requestData, fncSuccess) {
         url: requestURL,
         type: "POST",
         headers: {
-            X-Mashape-Authorization: "EU6h9H8BUXELDmfO1Mbh0jLasSQxrAZd"
+            "X-Mashape-Authorization": "EU6h9H8BUXELDmfO1Mbh0jLasSQxrAZd"
         },
         data: requestData,
         dataType: 'json',
