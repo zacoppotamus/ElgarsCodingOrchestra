@@ -15,21 +15,26 @@ if(isset($_COOKIE["apiKey"]))
         <link rel="stylesheet" href="../css/bootstrap.css">
     </head>
     <body>
-        <p>Please insert your API key</p>
-        <form action="account.php" method="post">
-            <input type="text" placeholder="API Key" name="apiKey" autofocus>
-            <input type="submit" value="Submit" name="btnSubmit">
-        </form>
-        <?php
-        if(isset($_GET["fail"]))
-        {
-           echo "<p>Incorrect API Key.</p>";
-        }
-        elseif(isset($_GET["logout"]))
-        {
-            setcookie(apiKey, "", time()-3600, "/", "project.spe.sneeza.me", isset($_SERVER["HTTPS"]), false);
-            echo "<p>Successfully logged out.</p>";
-        }
-        ?>
+        <div class="container">
+            <p>Please insert your API key</p>
+            <form action="account.php" role = form method="post">
+                <div class="form-group">
+                    <label for="apiKey">API Key</label>
+                    <input type="text" placeholder="API Key" name="apiKey" autofocus>
+                </div>
+                <button type="submit" class="btn btn-default">Submit</button>
+            </form>
+            <?php
+            if(isset($_GET["fail"]))
+            {
+               echo "<p>Incorrect API Key.</p>";
+            }
+            elseif(isset($_GET["logout"]))
+            {
+                setcookie(apiKey, "", time()-3600, "/", "project.spe.sneeza.me", isset($_SERVER["HTTPS"]), false);
+                echo "<p>Successfully logged out.</p>";
+            }
+            ?>
+        </div>
     </body>
 </html>
