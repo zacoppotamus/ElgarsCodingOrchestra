@@ -35,7 +35,7 @@ angular.module('eco.directives', [])
 					return;
 				}
 
-				d3.json('/samples/nba_payrolls.json', function(error, json){
+				d3.json('./samples/nba_payrolls.json', function(error, json){
 					// number of teams
 					var teamNo = 30;
 					var currentYear = newVal;
