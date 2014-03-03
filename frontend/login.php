@@ -1,5 +1,5 @@
 <?php
-if(isset($_COOKIE["apiKey"]) && !isset$_GET["logout"])
+if(isset($_COOKIE["apiKey"]) && !isset($_GET["logout"]))
 {
     header("Location: account.php");
 }
