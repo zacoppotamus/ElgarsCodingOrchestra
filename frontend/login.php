@@ -22,7 +22,7 @@ if(isset($_COOKIE["apiKey"]))
             <div class="row">
                 <p>Please insert your API key</p>
                 <form action="account.php" role = form method="post">
-                    <div class="form-group">
+                    <div class="form-group<?php if(isset($_GET["fail"]))(echo " has-warning";)?>">
                         <label for="apiKey">API Key</label>
                         <input type="text" placeholder="API Key" name="apiKey" autofocus>
                     </div>
