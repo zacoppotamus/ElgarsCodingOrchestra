@@ -31,12 +31,12 @@ if(isset($_COOKIE["apiKey"]))
                 <?php
                 if(isset($_GET["fail"]))
                 {
-                   echo "<p>Incorrect API Key.</p>";
+                   echo "<p class='text-danger'>Incorrect API Key.</p>";
                 }
                 elseif(isset($_GET["logout"]))
                 {
                     setcookie(apiKey, "", time()-3600, "/", "project.spe.sneeza.me", isset($_SERVER["HTTPS"]), false);
-                    echo "<p>Successfully logged out.</p>";
+                    echo "<p class='text-success'>Successfully logged out.</p>";
                 }
                 ?>
             </div>
