@@ -6,43 +6,23 @@
 	</head>
 	<body ng-controller="ecoCtrl">
 		<!-- Here's where our visualization will go -->
-		<div class="dropdown" >
-			<a class="dropdown-toggle">
-				Choose Dataset
-			</a>
-			<ul class="dropdown-menu">
-				<li ng-repeat="dataset in datasets">
-					<a>{{dataset}}</a>
-				</li>
-			</ul>
-		</div>
-
-		<br>
 		<div class="row">
-					<div class="col-sm-3">
-							<pre>{{selectedDataset}}</pre>
-							<label>Datasets:</label> <select class="form-control" ng-model="selectedDataset" ng-options="f for f in datasets"><option></option></select>
-					</div>
-		</div>
-
-		<br>
-
-		<div class="btn-group" >
-			<pre>{{selectedVizType}}</pre>
-			<div class="viz-types">
-				<button type="button" ng-repeat="type in vizTypes" class="btn btn-primary" ng-repeat="type in vizTypes" ng-model="selectedVizType.id" btn-radio="type.id">{{type.name}}</button>
+			<div class="col-sm-4">
+					<label>Datasets:</label> <select class="form-control" ng-model="selectedDataset" ng-options="f for f in datasets"><option></option></select>
+			</div>
+			<div class="col-sm-4">
+					<label>Year:</label> <select class="form-control" ng-model="year" ng-options="y for y in years"><option></option></select>
 			</div>
 		</div>
 
 		<br>
-		<div class="row">
-					<div class="col-sm-3">
-							<pre>{{year}}</pre>
-							<label>Year:</label> <select class="form-control" ng-model="year" ng-options="y for y in years"><option></option></select>
-					</div>
+		<div class="row"></div>
+			<div class="btn-group" >
+				<div class="viz-types">
+					<button type="button" ng-repeat="type in vizTypes" class="btn btn-primary" ng-repeat="type in vizTypes" ng-model="selectedVizType.id" btn-radio="type.id">{{type.name}}</button>
+				</div>
+			</div>
 		</div>
-
-		<br>
 
 		<d3-visualization year="year"></d3-visualization>
 		<script src="vendor/jquery/dist/jquery.min.js"></script>
@@ -53,5 +33,6 @@
 		<script src="js/controllers.js"></script>
 		<script src="js/directives.js"></script>
 		<link rel="stylesheet" href="vendor/bootstrap/dist/css/bootstrap.min.css">
+		<link rel="stylesheet" href="style/charts.css">
 	</body>
 </html>
