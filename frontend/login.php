@@ -1,3 +1,9 @@
+<?php
+if(isset($_COOKIE["apiKey"]))
+{
+    header("Location: account.php");
+}
+?>
 <html>
     <head>
         <title>Login</title>
