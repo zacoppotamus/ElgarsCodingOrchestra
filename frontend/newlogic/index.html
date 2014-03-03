@@ -16,10 +16,12 @@
 		</div>
 
 		<br>
-		<div class="row"></div>
-			<div class="btn-group" >
-				<div class="viz-types">
-					<button type="button" ng-repeat="type in vizTypes" class="btn btn-primary" ng-repeat="type in vizTypes" ng-model="selectedVizType.id" btn-radio="type.id">{{type.name}}</button>
+		<div class="row">
+			<div class="col-sm-4">
+				<div class="btn-group" >
+					<div class="viz-types">
+						<button type="button" ng-repeat="type in vizTypes" class="btn btn-primary" ng-repeat="type in vizTypes" ng-model="selectedVizType.id" btn-radio="type.id">{{type.name}}</button>
+					</div>
 				</div>
 			</div>
 		</div>

@@ -12,7 +12,7 @@ angular.module('eco.controllers', [])
 	];
 
 	// selected radio button
-	$scope.selectedVizType = {id:1};
+	$scope.selectedVizType = {id:2};
 
 	// currently selected dataset
 	$scope.selectedDataset = '';
