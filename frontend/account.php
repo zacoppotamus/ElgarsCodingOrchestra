@@ -77,7 +77,7 @@ else
                     }
 
                     ?>
-                    <tr colspan='0'><a href='upload.html'>Upload your own data</a></tr>
+                    <tr><td colspan='0'><a href='upload.html'>Upload your own data</a></td></tr>
                 </table>
             </div>
     </body>
