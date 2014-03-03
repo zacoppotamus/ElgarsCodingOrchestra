@@ -15,7 +15,7 @@
         }
         elseif(isset($_GET["logout"]))
         {
-            setcookie("apiKey", "", time()-3600, "/");
+            setcookie(apiKey, "", time()-3600, "/", "project.spe.sneeza.me", isset($_SERVER["HTTPS"]), false);
             echo "<p>Successfully logged out.</p>";
         }
         ?>
