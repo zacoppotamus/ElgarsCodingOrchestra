@@ -13,6 +13,11 @@
         {
            echo "<p>Incorrect API Key.</p>";
         }
+        elseif(isset($_GET["logout"]))
+        {
+            setcookie("apiKey", "", time()-3600);
+           echo "<p>Successfully logged out.</p>";
+        }
         ?>
     </body>
 </html>
