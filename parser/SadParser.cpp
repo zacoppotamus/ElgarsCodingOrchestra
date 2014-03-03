@@ -24,15 +24,38 @@ int main( int argc, char * argv[] )
   filename = argv[1];
   string title( filename );
   title.erase( title.find_last_of('.') );
-  vector< vector<sheetNode> > fileContents( getFile( filename ) );
-  vector< vector<JSONObject> > processedData( processData( fileContents ) );
-  for( int count = 0; count < processedData.size(); count++ )
+  vector< vector< vector<sheetNode> > > fileContents( getFile( filename ) );
+  vector< vector< vector<JSONObject> > > processedDataSheets;
+  for(
+    vector< vector< vector<sheetNode> > >::iterator it = fileContents.begin();
+    it != fileContents.end();
+    it++
+  )
   {
-    char * newFilename = new char[title.size()+8];
-    sprintf( newFilename, "%s%02d.jso", title.c_str(), count+1 );
-    string filetitle( newFilename );
-    cout << filetitle << " created." << "\n";
-    createJDocument( filetitle, processedData[count] );
+    vector< vector<JSONObject> > processedData( processData( *it ) );
+    processedDataSheets.push_back( processedData );
+  }
+  unsigned count = 0;
+  for(
+    vector< vector< vector<JSONObject> > >::iterator outIt =
+      processedDataSheets.begin();
+    outIt != processedDataSheets.end();
+    outIt++
+  )
+  {
+    for(
+      vector< vector<JSONObject> >::iterator inIt = outIt->begin();
+      inIt != outIt->end();
+      inIt++
+    )
+    {
+      char * newFilename = new char[title.size()+8];
+      sprintf( newFilename, "%s%02d.jso", title.c_str(), count+1 );
+      string filetitle( newFilename );
+      cout << filetitle << " created." << "\n";
+      createJDocument( filetitle, *inIt );
+      count++;
+    }
   }
   cout << "All done." << "\n";
   return 0;
