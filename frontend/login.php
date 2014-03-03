@@ -24,7 +24,7 @@ if(isset($_COOKIE["apiKey"]))
                 <form action="account.php" role = form method="post">
                     <div class="form-group<?php if(isset($_GET["fail"])){echo " has-warning";}?>">
                         <label for="apiKey">API Key</label>
-                        <input type="text" placeholder="API Key" name="apiKey" autofocus>
+                        <input type="text" placeholder="API Key" name="apiKey" class="form-control" autofocus>
                     </div>
                     <button type="submit" class="btn btn-default">Submit</button>
                 </form>
