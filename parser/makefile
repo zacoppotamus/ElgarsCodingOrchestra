@@ -1,22 +1,16 @@
 CC = g++
-CFLAGS = -std=c++11 -g -Wall
+CPPFLAGS = -std=c++11 -g -Wall
+PARSE_SRCS = SadParser.cpp processTables.cpp readFile.cpp JSONWriter.cpp
+PARSE_OBJS = $(PARSE_SRCS:%.cpp=%.o)
+LINK_DLLS = miniunz.dll
 
-default: Sadparser
+default: sadparser
 
-Sadparser: readFile.o processTables.o JSONWriter.o SadParser.o
-	$(CC) $(CFLAGS) -o sadparser SadParser.o processTables.o readFile.o JSONWriter.o
+sadparser: $(PARSE_OBJS)
+	$(CC) $(CPPFLAGS) -o $@ $(PARSE_OBJS) $(LINK_DLLS)
 
-readFile.o: readFile.cpp readFile.h
-	$(CC) $(CFLAGS) -c readFile.cpp
-
-processTables.o: processTables.cpp readFile.h processTables.h JSONWriter.h
-	$(CC) $(CFLAGS) -c processTables.cpp
-
-JSONWriter.o: JSONWriter.cpp JSONWriter.h
-	$(CC) $(CFLAGS) -c JSONWriter.cpp
-
-SadParser.o: SadParser.cpp readFile.h processTables.h JSONWriter.h
-	$(CC) $(CFLAGS) -c SadParser.cpp
+$(PARSE_OBJS): %.o: %.cpp
+	$(CC) $(CPPFLAGS) -c $<
 
 clean:
 	$(RM) sadparser *.o *~
