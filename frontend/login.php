@@ -17,6 +17,9 @@ if(isset($_COOKIE["apiKey"]))
     <body>
         <div class="container">
             <div class="row">
+                <h1>Login to Project Rainhawk</h>
+            </div>
+            <div class="row">
                 <p>Please insert your API key</p>
                 <form action="account.php" role = form method="post">
                     <div class="form-group">
