@@ -18,6 +18,7 @@ if(isset($_COOKIE["apiKey"]) && !isset($_GET["logout"]))
         <div class="container">
             <div class="row">
                 <h1>Login to Project Rainhawk</h>
+                <a href="/" class="btn btn-warning pull-right">Return Home</a>
             </div>
             <div class="row">
                 <p>Please insert your API key</p>
