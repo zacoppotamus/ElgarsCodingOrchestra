@@ -5,7 +5,7 @@
 #include <vector>
 using namespace std;
 
-enum FileType { CSV, UNDEF };
+enum FileType { CSV, XLSX, UNDEF };
 enum JType { STRING, NUMBER, OBJECT, ARRAY, BOOL, NULLVALUE };
 
 //TODO: Fix value storage; only data of one type (string, number, and
@@ -29,19 +29,6 @@ class sheetNode
     bool boolval;
 };
 
-FileType getType( string fileName );
-
-string simpleToUpper( string input );
-
-unsigned charsUntil( ifstream &input, char target, char delim );
-unsigned charsUntil( ifstream &input, char target );
-
-string getCSV( ifstream &input );
-
-void insertValue( string csvalue, vector<sheetNode> &cell );
-
-vector< vector<sheetNode> > readCSV( ifstream &input );
-
-vector< vector<sheetNode> > getFile( string fileName );
+vector< vector< vector<sheetNode> > > getFile( string fileName );
 
 #endif
