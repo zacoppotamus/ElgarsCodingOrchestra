@@ -1,0 +1,10 @@
+@media (max-width: 767px) {
+	.btn-vert-block + .btn-vert-block {
+		margin-top: 10px;
+	}
+}
+
+.visualize-btn {
+	margin-top: 100px;
+	font-size: 120px;
+}

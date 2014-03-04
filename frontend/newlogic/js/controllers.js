@@ -15,16 +15,14 @@ angular.module('eco.controllers', [])
 	$scope.selectedVizType = {id:2};
 
 	// currently selected dataset
-	$scope.selectedDataset = '';
+	$scope.selectedDataset = '23nations';
 	$scope.datasets = [
 		'nysubway',
 		'23nations',
 		'nbapayrolls'
 	];
 
-	// selected year (model)
-	// $scope.selectedYear = '';
-
+	// years for sample vis (nbapayrolls)
 	$scope.years = [];
 	for (var i = 1998; i <= 2017; i++) {
 		$scope.years.push(i);

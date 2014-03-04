@@ -5,6 +5,10 @@ body, html {
 .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
 
 
+.chart {
+
+}
+
 /* Bar Chart */
 
 .bar {

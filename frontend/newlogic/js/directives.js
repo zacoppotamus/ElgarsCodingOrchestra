@@ -7,7 +7,7 @@ angular.module('eco.directives', [])
 .directive('d3Visualization', function() {
 
 	// constants
-	var margin = {top:20, right:20, bottom:30, left:40},
+	var margin = {top:40, right:20, bottom:30, left:80},
 		width  = 1100 - margin.left - margin.right,
 		height = 500 - margin.top - margin.bottom;
 
@@ -22,6 +22,7 @@ angular.module('eco.directives', [])
 				.append("svg")
 					.attr("width", width + margin.left + margin.right)
 					.attr("height", height + margin.top + margin.bottom)
+					.attr("class", "chart")
 				.append("g")
 					.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -74,7 +75,7 @@ angular.module('eco.directives', [])
 							.call(yAxis)
 						.append("text")
 							.attr("transform", "rotate(-90)")
-							.attr("y", 6)
+							.attr("y", 10)
 							.attr("dy", ".21em")
 							.style("text-anchor", "end")
 							.style("font", "10px Helvetica")
