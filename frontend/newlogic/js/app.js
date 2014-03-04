@@ -17,6 +17,7 @@ angular.module('eco', [
 			controller: 'ecoCtrl'
 		})
 
+		// is '/' when starting server within newlogic/
 		.when('/', {
 			templateUrl: 'customize.html',
 			controller: 'ecoCtrl'
