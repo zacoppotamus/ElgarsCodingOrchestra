@@ -161,6 +161,26 @@ class Rainhawk {
     }
 
     /**
+     * Delete the specified dataset, provided you have write access to the
+     * set. This operation cannot be reversed.
+     *
+     * @param string $name  The dataset's name.
+     * @return bool  Returns the boolean on success, false on failure.
+     */
+
+    public function deleteDataset($name) {
+        $url = $this->host . "/datasets/" . $name;
+        $data = $this->sendRequest($url, self::DELETE);
+        $json = $this->parseJson($data);
+
+        if(!$json) {
+            return false;
+        }
+
+        return ($json['data']['deleted']);
+    }
+
+    /**
      * Run a select query, finding results from a dataset that match
      * certain conditions. Optionally, leave the query blank to return
      * all rows.
@@ -368,11 +388,39 @@ class Rainhawk {
 
     public function giveAccess($name, $type, $username) {
         $postData = array(
-            "fields" => json_encode($fields)
+            "type" => $type,
+            "username" => $username
         );
 
         $url = $this->host . "/datasets/" . $name . "/access";
         $data = $this->sendRequest($url, self::POST, $postData);
+        $json = $this->parseJson($data);
+
+        if(!$json) {
+            return false;
+        }
+
+        return $json['data'];
+    }
+
+    /**
+     * Remove a user's access from the specified dataset, which requires
+     * you to have write access to the set.
+     *
+     * @param string $name  The dataset to create an index on.
+     * @param string $type  The type of access to give, "read" and "write".
+     * @param string $username  The username to give access to.
+     * @return array|bool  Returns the data array on success, false on failure.
+     */
+
+    public function removeAccess($name, $type, $username) {
+        $postData = array(
+            "type" => $type,
+            "username" => $username
+        );
+
+        $url = $this->host . "/datasets/" . $name . "/access";
+        $data = $this->sendRequest($url, self::DELETE, $postData);
         $json = $this->parseJson($data);
 
         if(!$json) {

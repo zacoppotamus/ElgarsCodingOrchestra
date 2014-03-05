@@ -49,6 +49,16 @@ route::add(route::GET, "/datasets/(\w+)\.(\w+)", function($prefix, $name) {
     include("datasets/info.php");
 });
 
+// Create an endpoint to get the info about a dataset.
+route::add(route::DELETE, "/datasets/(\w+)\.(\w+)", function($prefix, $name) {
+    $data = new stdClass();
+
+    $data->prefix = $prefix;
+    $data->name = $name;
+
+    include("datasets/remove.php");
+});
+
 // Create an endpoint to perform a query on a dataset.
 route::add(route::GET, "/datasets/(\w+)\.(\w+)/data", function($prefix, $name) {
     $data = new stdClass();
@@ -151,6 +161,19 @@ route::add(route::POST, "/datasets/(\w+)\.(\w+)/access", function($prefix, $name
     $data->username = isset($_POST['username']) ? trim(strtolower($_POST['username'])) : null;
 
     include("datasets/access/add.php");
+});
+
+// Create an endpoint to add an index to a dataset.
+route::add(route::DELETE, "/datasets/(\w+)\.(\w+)/access", function($prefix, $name) {
+    $data = new stdClass();
+
+    $data->prefix = $prefix;
+    $data->name = $name;
+
+    $data->type = isset($_POST['type']) && in_array($_POST['type'], array("read", "write")) ? trim(strtolower($_POST['type'])) : null;
+    $data->username = isset($_POST['username']) ? trim(strtolower($_POST['username'])) : null;
+
+    include("datasets/access/remove.php");
 });
 
 // Create an endpoint for the polyfit calculations.
