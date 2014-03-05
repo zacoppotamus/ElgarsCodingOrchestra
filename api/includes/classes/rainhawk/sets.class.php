@@ -82,6 +82,27 @@ class Sets {
     }
 
     /**
+     * Remove the specified dataset from the system.datasets
+     * table.
+     *
+     * @param Dataset $dataset  The dataset object to remove.
+     * @return  bool  Whether the dataset was removed or not.
+     */
+
+    public static function remove($dataset) {
+        $datasets = self::get_system_datasets();
+
+        try {
+            $datasets->remove(array(
+                "prefix" => $dataset->prefix,
+                "name" => $dataset->name
+            ));
+        } catch(Exception $e) {}
+
+        return false;
+    }
+
+    /**
      * Takes an input dataset ID and returns whether or not that
      * dataset was found in the reference table or not.
      *
