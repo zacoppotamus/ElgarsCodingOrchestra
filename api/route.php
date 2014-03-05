@@ -130,6 +130,29 @@ route::add(route::POST, "/datasets/(\w+)\.(\w+)/indexes", function($prefix, $nam
     include("datasets/indexes/add.php");
 });
 
+// Create an endpoint to list the indexes on a dataset.
+route::add(route::GET, "/datasets/(\w+)\.(\w+)/access", function($prefix, $name) {
+    $data = new stdClass();
+
+    $data->prefix = $prefix;
+    $data->name = $name;
+
+    include("datasets/access.php");
+});
+
+// Create an endpoint to add an index to a dataset.
+route::add(route::POST, "/datasets/(\w+)\.(\w+)/access", function($prefix, $name) {
+    $data = new stdClass();
+
+    $data->prefix = $prefix;
+    $data->name = $name;
+
+    $data->type = isset($_POST['type']) && in_array($_POST['type'], array("read", "write")) ? trim(strtolower($_POST['type'])) : null;
+    $data->username = isset($_POST['username']) ? trim(strtolower($_POST['username'])) : null;
+
+    include("datasets/access/add.php");
+});
+
 // Create an endpoint for the polyfit calculations.
 route::add(route::GET, "/datasets/(\w+)\.(\w+)/calc/polyfit", function($prefix, $name) {
     $data = new stdClass();
