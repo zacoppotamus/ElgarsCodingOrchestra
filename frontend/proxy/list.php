@@ -1,9 +1,10 @@
 <?php
 
-include("eco.class.php");
+include("../../wrappers/php/rainhawk.class.php");
 header("content-type: application/json; charset=utf8");
+$mashape_key = $_COOKIE["apiKey"];
 
-$eco = new eco("eSQpirMYxjXUs8xIjjaUo72gutwDJ4CP");
+$rainhawk = new Rainhawk($mashape_key);
 
 $dataset = isset($_GET['dataset']) ? $_GET['dataset']                : null;
 $query   = isset($_GET['query']) ? json_decode($_GET['query'])       : null;
@@ -19,12 +20,12 @@ if(isset($sort)) {
 }
 
 $records = array();
-$results = $eco->select($dataset, $query, $offset, $limit, $sort, $fields, $exclude);
+$results = $rainhawk->selectData($dataset, $query, $offset, $limit, $sort, $fields, $exclude);
 
 if(!$results) {
     echo json_encode(array(
         "Result" => "Fail",
-        "Message" => $eco->error()
+        "Message" => $rainhawk->error()
     ));
     exit;
 }

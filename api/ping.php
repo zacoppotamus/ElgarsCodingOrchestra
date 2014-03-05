@@ -4,19 +4,13 @@ include("includes/kernel.php");
 include("includes/api/core.php");
 
 /*!
- * Grab all of the different inputs so that we can use them elsewhere
- * in this script.
- */
-
-$data = array();
-
-/*!
- * Define an empty array to store the results of whatever we need
- * to send back.
+ * Define our server_time timestamp and set it as the JSON output
+ * to be sent back to the client.
  */
 
 $json = array(
-    "server_time" => time()
+    "server_time" => time(),
+    "mashape_user" => app::$username
 );
 
 /*!

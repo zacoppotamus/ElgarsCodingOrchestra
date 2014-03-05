@@ -1,6 +1,24 @@
 <?php
 
 $dataset = isset($_GET['dataset']) ? htmlspecialchars($_GET['dataset']) : null;
+$mashape_key = $_COOKIE["apiKey"];
+
+function getRequest($requestURL, $auth_key)
+{
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $requestURL);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_USERAGENT, "ECO / Edit System 0.5");
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array("X-Mashape-Authorization: " . $auth_key));
+    curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+    $result=json_decode(curl_exec($ch), true);
+    curl_close($ch);
+    return $result;
+}
+
+$datasetInfo = getRequest("https://sneeza-eco.p.mashape.com/datasets/".$dataset, $mashape_key);
+$user = getRequest("https://sneeza-eco.p.mashape.com/ping", $mashape_key)["data"]["mashape_user"];
+$fields = $datasetInfo["data"]["fields"];
 
 ?>
 <!doctype html>
@@ -8,6 +26,7 @@ $dataset = isset($_GET['dataset']) ? htmlspecialchars($_GET['dataset']) : null;
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../css/bootstrap.css">
         <link href="css/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" type="text/css">
         <link href="js/jtable.2.3.1/themes/metro/blue/jtable.min.css" rel="stylesheet" type="text/css">
         <script src="js/jquery-1.10.2.js"></script>
@@ -16,48 +35,56 @@ $dataset = isset($_GET['dataset']) ? htmlspecialchars($_GET['dataset']) : null;
         <title>Our Datasets</title>
     </head>
     <body>
-        <div id="dataTable"></div>
-        <script>
-            $(document).ready(function() {
-                    $('#dataTable').jtable({
-                        title: 'Data Table',
-                        paging: true,
-                        pageSize: 50,
-                        sorting: true,
-                        defaultSorting: 'name ASC',
-                        actions: {
-                            listAction: 'http://project.spe.sneeza.me/proxy/list.php?dataset=<?php echo $dataset; ?>',
-                            createAction: 'http://project.spe.sneeza.me/proxy/create.php?dataset=<?php echo $dataset; ?>',
-                            updateAction: 'http://project.spe.sneeza.me/proxy/update.php?dataset=<?php echo $dataset; ?>',
-                            deleteAction: 'http://project.spe.sneeza.me/proxy/delete.php?dataset=<?php echo $dataset; ?>'
-                        },
-                        fields: {
-                            _id: {
-                                key: true,
-                                create: false,
-                                edit: false,
-                                list: false
+        <div class="container">
+            <div class="row">
+                <h1><?php echo $datasetInfo["data"]["name"];?></h>
+                <h3><?php echo $datasetInfo["data"]["description"];?></h>
+                <a href="account.php" type="button" class="btn btn-warning pull-right">Back</a>
+            </div>
+            <div class="row">
+                <div id="dataTable"></div>
+            </div>
+            <script>
+                $(document).ready(function() {
+                        $('#dataTable').jtable({
+                            title: 'Data',
+                            paging: true,
+                            pageSize: 50,
+                            sorting: true,
+                            defaultSorting: 'name ASC',
+                            actions: {
+                                listAction: 'http://project.spe.sneeza.me/proxy/list.php?dataset=<?php echo $dataset; ?>',
+                                <?php
+                                if(in_array($user, $datasetInfo["data"]["write_access"]))
+                                {
+                                    echo("createAction: 'http://project.spe.sneeza.me/proxy/create.php?dataset=$dataset',"
+                                       . "updateAction: 'http://project.spe.sneeza.me/proxy/update.php?dataset=$dataset',"
+                                       . "deleteAction: 'http://project.spe.sneeza.me/proxy/delete.php?dataset=$dataset'");
+                                }
+                                ?>
                             },
-                            name: {
-                                title: "Name"
-                            },
-                            lines: {
-                                title: "Lines"
-                            },
-                            type: {
-                                title: "Type"
-                            },
-                            latitude: {
-                                title: "Lat"
-                            },
-                            longitude: {
-                                title: "Lon"
+                            fields: {
+                                <?php
+                                    for($i=0; $i<count($fields); $i++)
+                                    {
+                                        if($fields[$i] !== "_id")
+                                        {
+                                            echo ("$fields[$i]: {title:'$fields[$i]'},");
+                                        }
+                                    }
+
+                                ?>
+                                _id: {
+                                    key: true,
+                                    create: false,
+                                    edit: false,
+                                    list: false
+                                }
                             }
-                        }
-                    });
-                    $('#dataTable').jtable('load');
-            });
-        </script>
+                        });
+                        $('#dataTable').jtable('load');
+                });
+            </script>
     </body>
 </html>
 

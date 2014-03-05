@@ -14,37 +14,184 @@ header("access-control-allow-origin: *");
  * API paths and stuff.
  */
 
-// Add main endpoints for primary methods.
-route::add("/", "main.php");
-route::add("/ping", "ping.php");
+// Create a main endpoint.
+route::add(route::GET, "/", function() {
+    include("main.php");
+});
 
-// Add endpoints for /datasets/.
-route::add("/datasets", "datasets/main.php");
-route::add("/datasets/:dataset/create", "datasets/create.php");
-route::add("/datasets/:dataset/delete", "datasets/delete.php");
-route::add("/datasets/:dataset/index", "datasets/index.php");
-route::add("/datasets/:dataset/insert", "datasets/insert.php");
-route::add("/datasets/:dataset/select", "datasets/select.php");
-route::add("/datasets/:dataset/update", "datasets/update.php");
-route::add("/datasets/:dataset/calc/polyfit", "datasets/calc/polyfit.php");
-route::add("/datasets/:dataset/calc/stats", "datasets/calc/stats.php");
+// Create an endpoint for the ping command.
+route::add(route::GET, "/ping", function() {
+    include("ping.php");
+});
 
+// Create an endpoint to list all available datasets.
+route::add(route::GET, "/datasets", function() {
+    include("datasets.php");
+});
+
+// Create an endpoint to create a new dataset.
+route::add(route::POST, "/datasets", function() {
+    $data = new stdClass();
+
+    $data->name = isset($_POST['name']) ? strtolower(trim($_POST['name'])) : null;
+    $data->description = isset($_POST['description']) ? trim($_POST['description']) : null;
+
+    include("datasets/create.php");
+});
+
+// Create an endpoint to get the info about a dataset.
+route::add(route::GET, "/datasets/(\w+)\.(\w+)", function($prefix, $name) {
+    $data = new stdClass();
+
+    $data->prefix = $prefix;
+    $data->name = $name;
+
+    include("datasets/info.php");
+});
+
+// Create an endpoint to perform a query on a dataset.
+route::add(route::GET, "/datasets/(\w+)\.(\w+)/data", function($prefix, $name) {
+    $data = new stdClass();
+
+    $data->prefix = $prefix;
+    $data->name = $name;
+
+    $data->query = isset($_GET['query']) ? json_decode($_GET['query'], true) : null;
+    $data->offset = isset($_GET['offset']) && intval($_GET['offset']) >= 0 ? intval($_GET['offset']) : 0;
+    $data->limit = isset($_GET['limit']) && intval($_GET['limit']) >= 1 ? intval($_GET['limit']) : null;
+    $data->sort = isset($_GET['sort']) ? json_decode($_GET['sort'], true) : null;
+    $data->fields = isset($_GET['fields']) ? json_decode($_GET['fields'], true) : null;
+    $data->exclude = isset($_GET['exclude']) ? json_decode($_GET['exclude'], true) : null;
+
+    include("datasets/data.php");
+});
+
+// Create an endpoint to insert new data into the dataset.
+route::add(route::POST, "/datasets/(\w+)\.(\w+)/data", function($prefix, $name) {
+    $data = new stdClass();
+
+    $data->prefix = $prefix;
+    $data->name = $name;
+
+    $data->row = isset($_POST['row']) ? json_decode($_POST['row'], true) : null;
+    $data->rows = isset($_POST['rows']) ? json_decode($_POST['rows'], true) : null;
+
+    include("datasets/data/insert.php");
+});
+
+// Create an endpoint to update data in the dataset.
+route::add(route::PUT, "/datasets/(\w+)\.(\w+)/data", function($prefix, $name) {
+    $data = new stdClass();
+
+    parse_str(file_get_contents("php://input"), $_PUT);
+
+    $data->prefix = $prefix;
+    $data->name = $name;
+
+    $data->query = isset($_PUT['query']) ? json_decode($_PUT['query'], true) : null;
+    $data->changes = isset($_PUT['changes']) ? json_decode($_PUT['changes'], true) : null;
+
+    include("datasets/data/update.php");
+});
+
+// Create an endpoint to delete data from the dataset.
+route::add(route::DELETE, "/datasets/(\w+)\.(\w+)/data", function($prefix, $name) {
+    $data = new stdClass();
+
+    parse_str(file_get_contents("php://input"), $_DELETE);
+
+    $data->prefix = $prefix;
+    $data->name = $name;
+
+    $data->query = isset($_DELETE['query']) ? json_decode($_DELETE['query'], true) : null;
+
+    include("datasets/data/delete.php");
+});
+
+// Create an endpoint to list the indexes on a dataset.
+route::add(route::GET, "/datasets/(\w+)\.(\w+)/indexes", function($prefix, $name) {
+    $data = new stdClass();
+
+    $data->prefix = $prefix;
+    $data->name = $name;
+
+    include("datasets/indexes.php");
+});
+
+// Create an endpoint to add an index to a dataset.
+route::add(route::POST, "/datasets/(\w+)\.(\w+)/indexes", function($prefix, $name) {
+    $data = new stdClass();
+
+    $data->prefix = $prefix;
+    $data->name = $name;
+
+    $data->fields = isset($_POST['fields']) ? json_decode($_POST['fields'], true) : null;
+
+    include("datasets/indexes/add.php");
+});
+
+// Create an endpoint to list the indexes on a dataset.
+route::add(route::GET, "/datasets/(\w+)\.(\w+)/access", function($prefix, $name) {
+    $data = new stdClass();
+
+    $data->prefix = $prefix;
+    $data->name = $name;
+
+    include("datasets/access.php");
+});
+
+// Create an endpoint to add an index to a dataset.
+route::add(route::POST, "/datasets/(\w+)\.(\w+)/access", function($prefix, $name) {
+    $data = new stdClass();
+
+    $data->prefix = $prefix;
+    $data->name = $name;
+
+    $data->type = isset($_POST['type']) && in_array($_POST['type'], array("read", "write")) ? trim(strtolower($_POST['type'])) : null;
+    $data->username = isset($_POST['username']) ? trim(strtolower($_POST['username'])) : null;
+
+    include("datasets/access/add.php");
+});
+
+// Create an endpoint for the polyfit calculations.
+route::add(route::GET, "/datasets/(\w+)\.(\w+)/calc/polyfit", function($prefix, $name) {
+    $data = new stdClass();
+
+    $data->prefix = $prefix;
+    $data->name = $name;
+
+    $data->fields = isset($_GET['fields']) ? json_decode($_GET['fields'], true) : null;
+    $data->degree = isset($_GET['degree']) && $_GET['degree'] > 0 && $_GET['degree'] <= 20 ? (int)$_GET['degree'] : 2;
+
+    include("datasets/calc/polyfit.php");
+});
+
+// Create an endpoint for the stats calculations.
+route::add(route::GET, "/datasets/(\w+)\.(\w+)/calc/stats", function($prefix, $name) {
+    $data = new stdClass();
+
+    $data->prefix = $prefix;
+    $data->name = $name;
+
+    $data->field = isset($_GET['field']) ? trim($_GET['field']) : null;
+    $data->query = isset($_GET['query']) ? json_decode($_GET['query'], true) : null;
+
+    include("datasets/calc/stats.php");
+});
+
+/*
 // Add endpoints for the tests.
 route::add("/tests/run", "tests/run.php");
 route::add("/tests/import", "tests/import.php");
+*/
 
 /*!
  * Perform the routing request.
  */
 
-route::$uri = (isset($_GET['uri']) && !empty($_GET['uri'])) ? trim($_GET['uri']) : null;
+route::parse();
 
-if(route::parse()) {
-    include(route::$file);
-    exit;
-} else {
-    include("main.php");
-    exit;
-}
+include("main.php");
+exit;
 
 ?>

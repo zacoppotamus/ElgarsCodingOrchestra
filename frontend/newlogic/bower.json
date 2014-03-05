@@ -9,6 +9,7 @@
 		"angular" : "latest",
 		"d3" : "latest",
 		"bootstrap" : "latest",
-		"angular-bootstrap" : "latest"
+		"angular-bootstrap" : "latest",
+		"angular-route"	: "latest"
 	}
 }

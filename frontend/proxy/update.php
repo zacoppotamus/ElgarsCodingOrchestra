@@ -1,9 +1,10 @@
 <?php
 
-include("eco.class.php");
+include("../../wrappers/php/rainhawk.class.php");
 header("content-type: application/json; charset=utf8");
 
-$eco = new eco("eSQpirMYxjXUs8xIjjaUo72gutwDJ4CP");
+$mashape_key = $_COOKIE["apiKey"];
+$rainhawk = new Rainhawk($mashape_key);
 
 $dataset = isset($_GET['dataset']) ? $_GET['dataset'] : null;
 $idvalue = isset($_POST['_id']) ? $_POST['_id'] : null;
@@ -24,12 +25,12 @@ $changes = array(
     '$set' => $changes
 );
 
-$result = $eco->update($dataset, $query, $changes);
+$result = $rainhawk->updateData($dataset, $query, $changes);
 
 if(!$result) {
     echo json_encode(array(
         "Result" => "ERROR",
-        "Message" => $eco->error()
+        "Message" => $rainhawk->error()
     ));
     exit;
 }

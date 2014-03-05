@@ -1,0 +1,23 @@
+<!-- In time menus will be removed and only a back button will remain -->
+
+<div class="row">
+	<div class="col-sm-4">
+			<label>Datasets:</label> <select class="form-control" ng-model="selectedDataset" ng-options="f for f in datasets"><option></option></select>
+	</div>
+	<div class="col-sm-4">
+			<label>Year:</label> <select class="form-control" ng-model="year" ng-options="y for y in years"><option></option></select>
+	</div>
+</div>
+
+<br>
+<div class="row">
+	<div class="col-sm-4">
+		<div class="btn-group" >
+			<div class="viz-types">
+				<button type="button" ng-repeat="type in vizTypes" class="btn btn-primary" ng-repeat="type in vizTypes" ng-model="selectedVizType.id" btn-radio="type.id">{{type.name}}</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<d3-visualization year="year"></d3-visualization>

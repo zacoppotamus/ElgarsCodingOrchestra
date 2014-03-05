@@ -1,7 +1,10 @@
 // Initialises the dialogue that appears
 // in the event of a dataset name being
 // entered that is already in use
-function initialiseDialogue(){
+
+var mashape_user;
+
+function init(){
     $("#uploadConfirm").dialog({
         resizable: false,
         modal: true,
@@ -16,20 +19,78 @@ function initialiseDialogue(){
             }
         }
     });
+    username();
+}
+
+
+// Retrieves the username of the mashape user
+function username(){
+    if(typeof mashape_user === 'undefined') {
+        getRequest("https://sneeza-eco.p.mashape.com/ping", function(result){
+            return window.mashape_user = result.data.mashape_user;
+        });
+    }
+    else
+    {
+        return window.mashape_user;
+    }
+}
+
+function getCookie(cname)
+{
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0; i<ca.length; i++) {
+        var c = ca[i].trim();
+        if (c.indexOf(name)==0) return c.substring(name.length,c.length);
+    }
+    return "";
 }
 
 // Is called when the upload button is clicked
 function uploadClick(evt) {
     var datasetName = document.getElementById("datasetNameInput").value;
+    var datasetDesc = document.getElementById("datasetDescriptionInput").value;
 
     // Checks that the dataset doesn't already exist
-    $.getJSON("http://api.spe.sneeza.me/datasets/" + datasetName + "/select", function(result){
-        if(result.data.rows === 0){
+    getRequest("https://sneeza-eco.p.mashape.com/datasets/"+username() + "." + datasetName, function (result){
+        if(result.data.message === "The dataset you specified does not exist."){
+            requestData = {
+                "name": datasetName,
+                "description": datasetDesc
+            };
+            postRequest("https://sneeza-eco.p.mashape.com/datasets", requestData, function (result){
+            });
             startRead();
         }
         else{
             $("#uploadConfirm").dialog("open");
         }
+    })
+}
+
+function getRequest(requestURL, fncSuccess) {
+    $.ajax({
+        url: requestURL,
+        type: "GET",
+        beforeSend: function (request){
+            request.setRequestHeader("X-Mashape-Authorization", getCookie("apiKey"))
+        },
+        dataType: 'json',
+        success: fncSuccess
+    });
+}
+
+function postRequest(requestURL, requestData, fncSuccess) {
+    $.ajax({
+        url: requestURL,
+        type: "POST",
+        beforeSend: function (request){
+            request.setRequestHeader("X-Mashape-Authorization", getCookie("apiKey"))
+        },
+        data: requestData,
+        dataType: 'json',
+        success: fncSuccess
     });
 }
 
@@ -65,7 +126,16 @@ function loaded(evt) {
     var data = JSON.stringify($.csv.toObjects(fileString));
 
     // Post the data to the database
-    $.post("http://api.spe.sneeza.me/datasets/" + datasetName + "/insert", {documents:data});
+    var result = postRequest("https://sneeza-eco.p.mashape.com/datasets/" + username() + "." + datasetName + "/data", {rows:data}, function(resultData){
+        if(resultData.meta.code !== 200)
+        {
+            alert("Error uploading");
+        }
+        else
+        {
+            alert("Successful upload!");
+        }
+    });
 }
 
 function errorHandler(evt) {

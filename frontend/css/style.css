@@ -158,9 +158,9 @@ th {
   position: absolute;
   background: rgba(0,0,0,0.55);
   width: 100%;
-  height: 45%;
+  height: 80%;
   left: 0;
-  bottom: 15%;
+  bottom: 10%;
 }
 .upload {
   background: url(../img/bg-upload.jpg);
@@ -200,7 +200,7 @@ th {
   position: relative;
   color: #fff;
   display: table;
-  top: 45%;
+  top: 10%;
   font-weight: 200;
 
 }
@@ -247,6 +247,11 @@ th {
 }
 
 
+/* Text inputs for upload */
+.txtInput{
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
 
 
 /* Responsive */
@@ -254,15 +259,15 @@ th {
 @media (max-width: 768px) {
 
   .header {
-	background: url(../img/bg.jpg) no-repeat center center scroll;
+    background: url(../img/bg.jpg) no-repeat center center scroll;
   }
 
 /*  .example {
-	background: url(../img/callout.jpg) no-repeat center center scroll;
+    background: url(../img/callout.jpg) no-repeat center center scroll;
   }*/
 
   .map {
-	height: 75%;
+    height: 75%;
   }
 
 }

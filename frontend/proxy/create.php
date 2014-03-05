@@ -1,9 +1,10 @@
 <?php
 
-include("eco.class.php");
+include("../../wrappers/php/rainhawk.class.php");
 header("content-type: application/json; charset=utf8");
 
-$eco = new eco("eSQpirMYxjXUs8xIjjaUo72gutwDJ4CP");
+$mashape_key = $_COOKIE["apiKey"];
+$rainhawk = new Rainhawk($mashape_key);
 
 $dataset = isset($_GET['dataset']) ? $_GET['dataset'] : null;
 $document = array();
@@ -14,12 +15,12 @@ foreach($_POST as $name => $value) {
     $document[$name] = $value;
 }
 
-$result = $eco->insert($dataset, $document);
+$result = $rainhawk->insertData($dataset, $document);
 
 if(!$result) {
     echo json_encode(array(
         "Result" => "ERROR",
-        "Message" => $eco->error()
+        "Message" => $rainhawk->error()
     ));
     exit;
 }
