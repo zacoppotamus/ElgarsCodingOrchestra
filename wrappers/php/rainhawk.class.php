@@ -144,13 +144,13 @@ class Rainhawk {
      */
 
     public function createDataset($name, $description) {
-        $post_data = array(
+        $postData = array(
             "name" => $name,
             "description" => $description
         );
 
         $url = $this->host . "/datasets";
-        $data = $this->sendRequest($url, self::POST, $post_data);
+        $data = $this->sendRequest($url, self::POST, $postData);
         $json = $this->parseJson($data);
 
         if(!$json) {
@@ -158,6 +158,26 @@ class Rainhawk {
         }
 
         return $json['data'];
+    }
+
+    /**
+     * Delete the specified dataset, provided you have write access to the
+     * set. This operation cannot be reversed.
+     *
+     * @param string $name  The dataset's name.
+     * @return bool  Returns the boolean on success, false on failure.
+     */
+
+    public function deleteDataset($name) {
+        $url = $this->host . "/datasets/" . $name;
+        $data = $this->sendRequest($url, self::DELETE);
+        $json = $this->parseJson($data);
+
+        if(!$json) {
+            return false;
+        }
+
+        return ($json['data']['deleted']);
     }
 
     /**
@@ -221,12 +241,12 @@ class Rainhawk {
      */
 
     public function insertMultiData($name, $documents) {
-        $post_data = array(
+        $postData = array(
             "documents" => json_encode($documents)
         );
 
         $url = $this->host . "/datasets/" . $name . "/data";
-        $data = $this->sendRequest($url, self::POST, $post_data);
+        $data = $this->sendRequest($url, self::POST, $postData);
         $json = $this->parseJson($data);
 
         if(!$json) {
@@ -249,13 +269,13 @@ class Rainhawk {
      */
 
     public function updateData($name, $query, $changes) {
-        $post_data = array(
+        $postData = array(
             "query" => json_encode($query),
             "changes" => json_encode($changes)
         );
 
         $url = $this->host . "/datasets/" . $name . "/data";
-        $data = $this->sendRequest($url, self::PUT, $post_data);
+        $data = $this->sendRequest($url, self::PUT, $postData);
         $json = $this->parseJson($data);
 
         if(!$json) {
@@ -275,12 +295,12 @@ class Rainhawk {
      */
 
     public function deleteData($name, $query) {
-        $post_data = array(
+        $postData = array(
             "query" => json_encode($query)
         );
 
         $url = $this->host . "/datasets/" . $name . "/data";
-        $data = $this->sendRequest($url, self::DELETE, $post_data);
+        $data = $this->sendRequest($url, self::DELETE, $postData);
         $json = $this->parseJson($data);
 
         if(!$json) {
@@ -298,7 +318,7 @@ class Rainhawk {
      * @return array|bool  Returns the indexes on success, false on failure.
      */
 
-    public function indexes($name) {
+    public function fetchIndexes($name) {
         $url = $this->host . "/datasets/" . $name . "/indexes";
         $data = $this->sendRequest($url, self::GET);
         $json = $this->parseJson($data);
@@ -320,12 +340,87 @@ class Rainhawk {
      */
 
     public function addIndex($name, $fields = array()) {
-        $post_data = array(
+        $postData = array(
             "fields" => json_encode($fields)
         );
 
         $url = $this->host . "/datasets/" . $name . "/indexes";
-        $data = $this->sendRequest($url, self::POST, $post_data);
+        $data = $this->sendRequest($url, self::POST, $postData);
+        $json = $this->parseJson($data);
+
+        if(!$json) {
+            return false;
+        }
+
+        return $json['data'];
+    }
+
+    /**
+     * Get the dataset's access list, which requires read access to view. Here
+     * we can see which usernames have been given access to read and write from
+     * and to the dataset.
+     *
+     * @param string $name  The dataset name.
+     * @return array|bool  Returns the data array on success, false on failure.
+     */
+
+    public function fetchAccessList($name) {
+        $url = $this->host . "/datasets/" . $name . "/access";
+        $data = $this->sendRequest($url, self::GET);
+        $json = $this->parseJson($data);
+
+        if(!$json) {
+            return false;
+        }
+
+        return $json['data'];
+    }
+
+    /**
+     * Give a user access to the specified dataset, which requires you to
+     * send the type and the username in a POST request.
+     *
+     * @param string $name  The dataset to create an index on.
+     * @param string $type  The type of access to give, "read" and "write".
+     * @param string $username  The username to give access to.
+     * @return array|bool  Returns the data array on success, false on failure.
+     */
+
+    public function giveAccess($name, $type, $username) {
+        $postData = array(
+            "type" => $type,
+            "username" => $username
+        );
+
+        $url = $this->host . "/datasets/" . $name . "/access";
+        $data = $this->sendRequest($url, self::POST, $postData);
+        $json = $this->parseJson($data);
+
+        if(!$json) {
+            return false;
+        }
+
+        return $json['data'];
+    }
+
+    /**
+     * Remove a user's access from the specified dataset, which requires
+     * you to have write access to the set.
+     *
+     * @param string $name  The dataset to create an index on.
+     * @param string $type  The type of access to give, "read" and "write".
+     * @param string $username  The username to give access to.
+     * @return array|bool  Returns the data array on success, false on failure.
+     */
+
+    public function removeAccess($name, $type, $username) {
+        $postData = array(
+            "type" => $type,
+            "username" => $username
+        );
+
+        $url = $this->host . "/datasets/" . $name . "/access";
+        $data = $this->sendRequest($url, self::DELETE, $postData);
         $json = $this->parseJson($data);
 
         if(!$json) {

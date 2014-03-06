@@ -330,6 +330,31 @@ class Dataset {
 
         return false;
     }
+
+    /**
+     * Remove this dataset entirely, destroying the data and
+     * removing the indexes from the index table.
+     *
+     * @return bool  Whether or not the operation succeeded.
+     */
+
+    public function remove() {
+        if(!$this->exists) {
+            return false;
+        }
+
+        try {
+            $result = $this->collection->drop();
+
+            if($result['ok'] == 1) {
+                \rainhawk\sets::remove($this);
+
+                return true;
+            }
+        } catch(Exception $e) {}
+
+        return false;
+    }
 }
 
 ?>

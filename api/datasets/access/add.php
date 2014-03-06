@@ -40,50 +40,42 @@ if(!$dataset->have_write_access(app::$username)) {
  */
 
 $json = array(
-    "indexes" => array()
+    "read_access" => array(),
+    "write_access" => array()
 );
 
 /*!
- * Try and add the indexes to the dataset as the user has specified,
- * which will always work even if the index already exists.
+ * Try and add the access to the dataset as the user has specified,
+ * which will always work even if the access already exists.
  */
 
-// Create a local variable for the fields.
-$fields = array();
-
-// Check which fields to index.
-if(!empty($data->fields)) {
-    $fields = $data->fields;
-} else {
-    $fields = app::find_index_names($dataset->fields);
-}
-
-// Check if we need to add any indexes at all.
-if(empty($fields)) {
-    echo json_beautify(json_render_error(404, "We couldn't find any indexes to add."));
+// Check if the type is set.
+if(!isset($data->type)) {
+    echo json_beautify(json_render_error(404, "You didn't specify the type of access to give."));
     exit;
 }
 
-// Add each index.
-foreach($fields as $field) {
-    if(!$dataset->add_index($field)) {
-        echo json_beautify(json_render_error(405, "There was a problem while adding an index on '" . $field . "'."));
-        exit;
-    }
-}
-
-// Get a list of indexes.
-$indexes = $dataset->fetch_indexes();
-
-// Check if the listing failed.
-if(!$indexes) {
-    echo json_beautify(json_render_error(406, "There was a problem while fetching the indexes."));
+// Check if the username is set.
+if(!isset($data->username)) {
+    echo json_beautify(json_render_error(404, "You didn't specify the user to give access to."));
     exit;
 }
 
-// Return them into the JSON array.
-foreach($indexes as $index) {
-    $json['indexes'][$index['name']] = $index['key'];
+// Give the user access.
+$dataset->{$type . "_access"}[] = $data->username;
+$dataset->{$type . "_access"} = array_unique($dataset->{$type . "_access"});
+
+// Store the dataset information in the index table.
+\rainhawk\sets::update($dataset);
+
+// Return the read_access keys into the JSON.
+foreach($dataset->read_access as $username) {
+    $json['read_access'][] = $username;
+}
+
+// Return the write_access keys into the JSON.
+foreach($dataset->write_access as $username) {
+    $json['write_access'][] = $username;
 }
 
 /*!
