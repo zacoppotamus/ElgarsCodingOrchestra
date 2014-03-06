@@ -94,6 +94,8 @@ FileType getType( string fileName )
     return CSV;
   else if( fileStr.compare( "XLSX" ) == 0 )
     return XLSX;
+  else if( fileStr.compare( "ODS" ) == 0 )
+    return ODS;
   else
     return UNDEF;
 }
@@ -169,14 +171,11 @@ unsigned charsUntil( ifstream &input, char target )
 
 string getCSV( ifstream &input )
 {
-  //Test code commented out
   string result = "";
   char next = 0;
   bool quotes = false;
-  //cout << "_____" << "Initiating CSV-get tests..." << "\n";
   if( !input.good() )
   {
-    //cout << "_____" << "Bad filestream." << "\n";
     return "";
   }
   while( !input.eof() )
@@ -194,8 +193,6 @@ string getCSV( ifstream &input )
       }
     }
     result = result + next;
-    //cout << "______" << "Next = """ << next
-    //  << """, Current result: """ << result << """" << "\n";
   }
   return result;
 }
@@ -240,47 +237,40 @@ void insertValue( string csvalue, vector<sheetNode> &cell )
   }
 }
 
-vector< vector<sheetNode> > readCSV( string filename )
+page readCSV( string filename )
 {
-  //Test code commented out
-  //cout << "_" << "Filetype " << filetype << " detected." << "\n";
   ifstream input( filename );
-  //cout << "_" << "File opened..." << "\n";
+  string title = filename;
+  title.erase( title.find_last_of( '.' ) );
   if( !input.good() )
   {
-    //cout << "_" << "File not opened successfully." << "\n";
-    vector< vector<sheetNode> > failure;
+    page failure;
     return failure;
   }
-  //cout << "__" << "Initiating CSV reading tests..." << "\n";
   unsigned width = 0;
   unsigned height = 0;
   width = charsUntil( input, ',', '\n' ) + 1;
   height = charsUntil( input, '\n' );
-  //cout << "__" << "Character counts obtained..." << "\n";
   vector<sheetNode> blankvector;
-  vector< vector<sheetNode> > spreadsheet ( height, blankvector );
-  //cout << "__" << "Vector generated..." << "\n";
+  vector< vector<sheetNode> > blanksheet ( height, blankvector );
+  page spreadsheet =
+  {
+    .name = title,
+    .contents = blanksheet,
+  };
   unsigned cHeight = 0;
   string csvalue;
-  //cout << "__" << "Beginning population loop..." << "\n";
   while( cHeight < height )
   {
-    //cout << "___" << "Outer loop iteration " << cHeight << "." << "\n";
     unsigned cWidth = 0;
     while( cWidth < width )
     {
-      //cout << "____" << "Inner loop iteration " << cWidth << "." << "\n";
       csvalue = getCSV( input );
-      //cout << "____" << "CSValue obtained." << "\n";
-      insertValue( csvalue, spreadsheet[cHeight] );
-      //cout << "____" << "CSValue \"" << csvalue << "\" of type "
-      // << spreadsheet[cHeight][cWidth].getType() << " inserted." << "\n";
+      insertValue( csvalue, spreadsheet.contents[cHeight] );
       cWidth++;
     }
     cHeight++;
   }
-  //cout << "__" << "Spreadsheet populated..." << "\n";
   return spreadsheet;
 }
 
@@ -369,8 +359,6 @@ int loadCommonStrings( vector<string> &commonStrings,
         &xmlFileName[0], xmlFileInfo.size_filename,
         NULL, 0,
         NULL, 0 );
-      // cout << "File successfully read." << "\n";
-      // cout << "Name: " << xmlFileName << "\n";
       if( xmlFileName.compare( SHARED_STRINGS_PATH ) == 0 )
       {
         string xmlFileContents;
@@ -413,7 +401,6 @@ int sanitizeXMLStrings( vector<string> &strings )
     it != strings.end();
     it++ )
   {
-    // string initval = *it;
     currentPos = it->find_first_of( '&' );
     while( currentPos != string::npos )
     {
@@ -471,15 +458,12 @@ int sanitizeXMLStrings( vector<string> &strings )
       }
       currentPos = it->find_first_of( '&', currentPos );
     }
-    // string endval = *it;
-    // cout << initval << " -> " << endval << '\n';
   }
   return 1;
 }
 
 int fileIn( const char * filepath, unzFile zipFile )
 {
-  // cout << "Opening File..." << '\n';
   if( unzOpenCurrentFile( zipFile ) == UNZ_OK )
   {
     unz_file_info zipFileInfo;
@@ -498,20 +482,52 @@ int fileIn( const char * filepath, unzFile zipFile )
         NULL, 0,
         NULL, 0 );
       unzCloseCurrentFile( zipFile );
-      // cout << "File opened successfully!" << '\n';
-      // cout << "File path: " << zipFileName.substr( 0, strlen( filepath ) )
-      //   << '\n';
-      // cout << "Comp path: " << filepath << '\n';
       int comparison = 
         zipFileName.substr( 0, strlen( filepath ) ).compare( filepath );
       if( comparison == 0 )
       {
-        // cout << "Match!" << '\n';
         return 1;
       }
       else
       {
-        // cout << "No Match." << '\n';
+        return 0;
+      }
+    }
+  }
+  return -1;
+}
+
+int fileIn( const char * filepath, unzFile zipFile, string &title )
+{
+  if( unzOpenCurrentFile( zipFile ) == UNZ_OK )
+  {
+    unz_file_info zipFileInfo;
+    memset( &zipFileInfo, 0, sizeof( unz_file_info ) );
+    if( unzGetCurrentFileInfo( zipFile,
+      &zipFileInfo,
+      NULL, 0,
+      NULL, 0,
+      NULL, 0 ) == UNZ_OK )
+    {
+      string zipFileName;
+      zipFileName.resize( zipFileInfo.size_filename );
+      unzGetCurrentFileInfo( zipFile,
+        &zipFileInfo,
+        &zipFileName[0], zipFileInfo.size_filename,
+        NULL, 0,
+        NULL, 0 );
+      unzCloseCurrentFile( zipFile );
+      int comparison = 
+        zipFileName.substr( 0, strlen( filepath ) ).compare( filepath );
+      if( comparison == 0 )
+      {
+        title = zipFileName;
+        title = title.substr( title.find_last_of( '/' ) + 1 );
+        title.erase( title.find_last_of( '.' ) );
+        return 1;
+      }
+      else
+      {
         return 0;
       }
     }
@@ -522,28 +538,44 @@ int fileIn( const char * filepath, unzFile zipFile )
 int getSheetContents( vector< vector<sheetNode> > &spreadsheet,
   const vector<string> &commonStrings, const string &fileContents )
 {
+  cout << '\n';
   size_t currentPosition;
   size_t endPosition;
+  cout << "1";
   currentPosition = fileContents.find( "<d" );
   currentPosition += 16;
+  cout << "2";
   endPosition = fileContents.find_first_of( ':', currentPosition );
+  cout << "3";
   string topleft = fileContents.substr(
     currentPosition, endPosition - currentPosition );
+  cout << "4";
   currentPosition = endPosition + 1;
   endPosition = fileContents.find_first_of( '"', currentPosition );
   string bottomright = fileContents.substr(
     currentPosition, endPosition - currentPosition );
+  cout << "5";
   coord upper = decodeDimension( topleft );
   coord lower = decodeDimension( bottomright );
   coord size;
   size.x = lower.x + 1 - upper.x;
   size.y = lower.y + 1 - upper.y;
+  if( (int)lower.x == -1 || (int)upper.x == -1 || (int)lower.y == -1 ||
+    (int)upper.y == -1 || (int)size.x == 0 || (int)size.y == 0 )
+  {
+    return 0;
+  }
   sheetNode blankcell;
   vector<sheetNode> blankvector( size.x, blankcell );
   spreadsheet.assign( size.y, blankvector );
+  cout << "6";
   currentPosition = fileContents.find( "<c ", endPosition );
   string newDimension;
   coord newPosition;
+  cout << "7";
+  cout << '\n';
+  size_t nextType;
+  size_t nextCell;
   while( currentPosition != string::npos )
   {
     currentPosition += 6;
@@ -553,42 +585,50 @@ int getSheetContents( vector< vector<sheetNode> > &spreadsheet,
     newPosition = decodeDimension( newDimension );
     newPosition.x -= upper.x;
     newPosition.y -= upper.y;
-    currentPosition = fileContents.find( "t=", endPosition );
-    currentPosition += 3;
+    nextType = fileContents.find( " t=", endPosition );
+    nextCell = fileContents.find_first_of( '/', endPosition );
     sheetNode * newCell;
-    char cellType = fileContents[currentPosition];
-    currentPosition = fileContents.find( "<v", currentPosition );
-    currentPosition += 3;
-    endPosition = fileContents.find_first_of( '<', currentPosition );
-    string value = fileContents.substr(
-      currentPosition, endPosition - currentPosition );
-    stringstream converter( value );
-    double newValue;
-    if( !( converter >> newValue ) )
+    if( nextType > nextCell )
     {
-      newValue = 0;
+      newCell = new sheetNode();
     }
-    switch( cellType )
+    else
     {
-      case 's':
-        newCell = new sheetNode( commonStrings[(int)newValue] );
-        break;
-      case 'n':
-        newCell = new sheetNode( newValue );
-        break;
-      case 'b':
-        if( newValue == 0 )
-        {
-          newCell = new sheetNode( false );
-        }
-        else
-        {
-          newCell = new sheetNode( true );
-        }
-        break;
-      default:
-        newCell = new sheetNode();
-        break;
+      currentPosition = nextType + 3;
+      char cellType = fileContents[currentPosition];
+      currentPosition = fileContents.find( "<v", currentPosition );
+      currentPosition += 3;
+      endPosition = fileContents.find_first_of( '<', currentPosition );
+      string value = fileContents.substr(
+        currentPosition, endPosition - currentPosition );
+      stringstream converter( value );
+      double newValue;
+      if( !( converter >> newValue ) )
+      {
+        newValue = 0;
+      }
+      switch( cellType )
+      {
+        case 's':
+          newCell = new sheetNode( commonStrings[(int)newValue] );
+          break;
+        case 'n':
+          newCell = new sheetNode( newValue );
+          break;
+        case 'b':
+          if( newValue == 0 )
+          {
+            newCell = new sheetNode( false );
+          }
+          else
+          {
+            newCell = new sheetNode( true );
+          }
+          break;
+        default:
+          newCell = new sheetNode();
+          break;
+      }
     }
     spreadsheet[newPosition.y][newPosition.x] = *newCell;
     currentPosition = fileContents.find( "<c ", endPosition );
@@ -596,12 +636,13 @@ int getSheetContents( vector< vector<sheetNode> > &spreadsheet,
   return 1;
 }
 
-int readXMLSheet( vector< vector< vector<sheetNode> > > &sheetList,
+int readXMLSheet( vector< page > &sheetList, string title,
   const vector<string> &commonStrings, unzFile xlsxFile )
 {
-  // cout << "\t" << "Initialising XML reading protocols" << '\n';
+  cout << '\n';
   if( unzOpenCurrentFile( xlsxFile ) == UNZ_OK )
   {
+    cout << "1";
     unz_file_info xmlFileInfo;
     memset( &xmlFileInfo, 0, sizeof( unz_file_info ) );
     if( unzGetCurrentFileInfo( xlsxFile,
@@ -610,7 +651,7 @@ int readXMLSheet( vector< vector< vector<sheetNode> > > &sheetList,
       NULL, 0,
       NULL, 0 ) == UNZ_OK )
     {
-      // cout << "\t" << "File successfully opened" << '\n';
+      cout << "2";
       string xmlFileContents;
       uLong xmlFileSize = xmlFileInfo.uncompressed_size;
       unsigned long long maxBufferSize = 1;
@@ -623,11 +664,9 @@ int readXMLSheet( vector< vector< vector<sheetNode> > > &sheetList,
         maxBufferSize <<= sizeof( unsigned ) * 8;
         maxBufferSize--;
       }
-      // cout << "\t" << "File Size = " << xmlFileSize << '\n';
-      // cout << "\t" << "Max Buffer Size = " << maxBufferSize << '\n';
       if( xmlFileSize <= maxBufferSize )
       {
-        // cout << "\t" << "Loading direct into buffer..." << '\n';
+        cout << "3";
         xmlFileContents.resize( xmlFileSize );
         voidp xmlFileBuffer = &xmlFileContents[0];
         vector< vector<sheetNode> > spreadsheet;
@@ -635,160 +674,90 @@ int readXMLSheet( vector< vector< vector<sheetNode> > > &sheetList,
           unzReadCurrentFile( xlsxFile, xmlFileBuffer, xmlFileSize );
         if( fileReadStatus > 0 )
         {
-          // cout << "\t" << "Reading contents of file..." << '\n';
+          cout << "4";
           if( getSheetContents( spreadsheet,
             commonStrings, xmlFileContents ) == 1 )
           {
-            // cout << "\t" << "File successfully read." << '\n';
-            sheetList.push_back( spreadsheet );
+            cout << "5";
+            page newsheet =
+            {
+              .name = title,
+              .contents = spreadsheet,
+            };
+            sheetList.push_back( newsheet );
             return 1;
           }
         }
+        cout << "6";
       }
     }
   }
   return -1;
 }
 
-vector< vector< vector<sheetNode> > > readXLSX( string filename )
+vector< page > readXLSX( string filename )
 {
-  vector< vector< vector<sheetNode> > > falseResult;
-  // cout << "Beginning XLSX read tests..." << '\n';
+  vector< page > falseResult;
+  cout << "1";
   unzFile xlsxFile = unzOpen( filename.c_str() );
   if( xlsxFile )
   {
     int fileAccessStatus = unzGoToFirstFile( xlsxFile );
     int commonStringsFound = 0;
     vector<string> commonStrings;
+    cout << "2";
     while( fileAccessStatus == UNZ_OK && commonStringsFound == 0 )
     {
       commonStringsFound = loadCommonStrings( commonStrings, xlsxFile );
       fileAccessStatus = unzGoToNextFile( xlsxFile );
     }
-    if( commonStringsFound == 1 )
+    if( commonStringsFound == 0 )
     {
-      // cout << "Success! Printing " << commonStrings.size() <<
-      //   " common strings..." << '\n';
-      /*
-      for( vector<string>::iterator it = commonStrings.begin();
-        it != commonStrings.end();
-        it++ )
-      {
-        cout << "\t" << *it << '\n';
-      }
-      */
-    }
-    else if( commonStringsFound == 0 )
-    {
-      // cout << "Common strings not found." << '\n';
       return falseResult;
     }
     else if( commonStringsFound == -1 )
     {
-      // cout << "Invalid common strings file." << '\n';
       return falseResult;
     }
     if( !sanitizeXMLStrings( commonStrings ) )
     {
-      // cout << "Invalid common string content." << '\n';
       return falseResult;
     }
-    // cout << '\n';
-    // cout << "Common strings sanitized." << '\n';
-    /*
-    for( vector<string>::iterator it = commonStrings.begin();
-      it != commonStrings.end();
-      it++ )
-    {
-      cout << "\t" << *it << '\n';
-    }
-    */
-    vector< vector< vector<sheetNode> > > sheetList;
+    cout << "3";
+    vector< page > sheetList;
     fileAccessStatus = unzGoToFirstFile( xlsxFile );
+    cout << "4" << '\n';
     while( fileAccessStatus == UNZ_OK )
     {
-      if( fileIn( "xl/worksheets/", xlsxFile ) )
+      string title;
+      cout << "F: ";
+      if( fileIn( "xl/worksheets/", xlsxFile, title ) )
       {
-        // cout << "Spreadsheet detected, loading..." << '\n';
-        readXMLSheet( sheetList, commonStrings, xlsxFile );
+        cout << title;
+        readXMLSheet( sheetList, title, commonStrings, xlsxFile );
       }
+      cout << '\n';
       fileAccessStatus = unzGoToNextFile( xlsxFile );
     }
-    // cout << '\n' << "File reading complete." << '\n';
-    // cout << sheetList.size() << " spreadsheets loaded." << '\n';
-    // cout << "Testing Complete." << "\n";
+    cout << "5";
     return sheetList;
   }
+  cout << "6";
   return falseResult;
 }
 
-vector< vector< vector<sheetNode> > > getFile( string fileName )
+vector< page > getFile( string fileName )
 {
-  // Test code commented out
-  // cout << "_" << "Testing file access on " << fileName << "..." << "\n";
   FileType filetype = getType( fileName );
   if( filetype == CSV )
   {
-    // cout << "_" << "Reading CSV file..." << "\n";
-    vector< vector< vector<sheetNode> > > csvSheet( 1, readCSV( fileName ) ); 
+    vector< page > csvSheet( 1, readCSV( fileName ) ); 
     return csvSheet;
   }
   else if( filetype == XLSX )
   {
-    // cout << "_" << "Reading XLSX file..." << "\n";
     return readXLSX( fileName );
   }
-  else if( filetype == UNDEF )
-  {
-    // cout << "_" << "Undefined file type." << "\n";
-    vector< vector< vector<sheetNode> > > failure;
-    return failure;
-  }
-  vector< vector< vector<sheetNode> > > failure;
+  vector< page > failure;
   return failure;
 }
-
-/*
-int main()
-{
-  cout << "Initiating testing protocols..." << "\n";
-  vector< vector<sheetNode> > csvtest ( getFile("testread.csv") );
-  for(
-    vector< vector<sheetNode> >::iterator it1 = csvtest.begin();
-    it1 != csvtest.end();
-    it1++
-  )
-  {
-    for(
-      vector<sheetNode>::iterator it2 = it1->begin();
-      it2 != it1->end();
-      it2++
-    )
-    {
-      if( it2->getType() == STRING )
-      {
-        cout << it2->getString() << "  ";
-      }
-      else if( it2->getType() == NUMBER )
-      {
-        cout << it2->getNumber() << "  ";
-      }
-      else if( it2->getType() == BOOL )
-      {
-        cout << it2->getBool() << "  ";
-      }
-      else if( it2->getType() == NULLVALUE )
-      {
-        cout << "NULL" << "  ";
-      }
-      else
-      {
-        cout << "UNKNOWN ";
-      }
-    }
-    cout << "\n";
-  }
-  cout << "Testing Complete." << "\n";;
-  return 0;
-}
-*/

@@ -5,6 +5,7 @@
 #include "readFile.h"
 #include <vector>
 
-vector< vector<JSONObject> > processData( vector< vector<sheetNode> > spreadsheet );
+vector< vector<JSONObject> > processData(
+  vector< vector<sheetNode> > spreadsheet );
 
 #endif

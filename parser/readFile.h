@@ -5,7 +5,7 @@
 #include <vector>
 using namespace std;
 
-enum FileType { CSV, XLSX, UNDEF };
+enum FileType { CSV, XLSX, UNDEF, ODS };
 enum JType { STRING, NUMBER, OBJECT, ARRAY, BOOL, NULLVALUE };
 
 //TODO: Fix value storage; only data of one type (string, number, and
@@ -29,6 +29,12 @@ class sheetNode
     bool boolval;
 };
 
-vector< vector< vector<sheetNode> > > getFile( string fileName );
+typedef struct
+{
+  string name;
+  vector< vector<sheetNode> > contents;
+} page;
+ 
+vector< page > getFile( string fileName );
 
 #endif
