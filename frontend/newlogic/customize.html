@@ -3,18 +3,13 @@
 		<h1>
 			Dataset
 		</h1>
-		<div class="btn-group btn-vert-block">
-			<pre>{{selectedDataset}}</pre>
-			<!-- FIX THIS! -->
-			<button type="button" ng-repeat="dataset in datasets" class="btn btn-primary btn-block center-block" ng-model="selectedDataset">{{dataset}}</button>
-		</div>
+		<select class="form-control" ng-model="selectedDataset" ng-options="f for f in datasets"><option></option></select>
 	</div>
 	<div class="col-md-4 text-center">
 		<h1>
 			Fields
 		</h1>
 		<div class="btn-group btn-vert-block">
-			<pre>Selected Field</pre>
 			<button type="button" class="btn btn-primary btn-block center-block">Year</button>
 			<button type="button" class="btn btn-primary btn-block center-block">Team</button>
 			<button type="button" class="btn btn-primary btn-block center-block">Payroll</button>

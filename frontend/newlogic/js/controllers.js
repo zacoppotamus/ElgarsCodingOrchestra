@@ -8,18 +8,21 @@ angular.module('eco.controllers', [])
 	$scope.vizTypes = [
 		{'id': 1 , 'name':'Pie Chart'},
 		{'id': 2 , 'name':'Bar Chart'},
-		{'id': 3 , 'name':'Bubbles'}
+		{'id': 3 , 'name':'Bubble Chart'},
+		{'id': 4 , 'name':'Map'},
 	];
 
 	// selected radio button
 	$scope.selectedVizType = {id:2};
 
 	// currently selected dataset
-	$scope.selectedDataset = '23nations';
+	$scope.selectedDataset = '';
 	$scope.datasets = [
 		'nysubway',
 		'23nations',
-		'nbapayrolls'
+		'nbapayrolls',
+		'bristolairquality',
+		'londoncrimerate'
 	];
 
 	// years for sample vis (nbapayrolls)
