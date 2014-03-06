@@ -7,21 +7,21 @@
 	</div>
 	<div class="col-md-4 text-center">
 		<h1>
+			Type
+		</h1>
+		<div class="btn-group btn-vert-block">
+			<pre>{{selectedVizType}}</pre>
+			<button type="button" ng-repeat="type in vizTypes" class="btn btn-primary btn-block center-block" ng-repeat="type in vizTypes" ng-model="selectedVizType.id" btn-radio="type.id">{{type.name}}</button>
+		</div>
+	</div>
+	<div class="col-md-4 text-center">
+		<h1>
 			Fields
 		</h1>
 		<div class="btn-group btn-vert-block">
 			<button type="button" class="btn btn-primary btn-block center-block">Year</button>
 			<button type="button" class="btn btn-primary btn-block center-block">Team</button>
 			<button type="button" class="btn btn-primary btn-block center-block">Payroll</button>
-		</div>
-	</div>
-		<div class="col-md-4 text-center">
-		<h1>
-			Type
-		</h1>
-		<div class="btn-group btn-vert-block">
-			<pre>{{selectedVizType}}</pre>
-			<button type="button" ng-repeat="type in vizTypes" class="btn btn-primary btn-block center-block" ng-repeat="type in vizTypes" ng-model="selectedVizType.id" btn-radio="type.id">{{type.name}}</button>
 		</div>
 	</div>
 </div>
