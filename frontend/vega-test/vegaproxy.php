@@ -25,7 +25,7 @@ $records = array();
 $results = $rainhawk->selectData($dataset, $query, $offset, $limit, $sort, $fields, $exclude);
 var_dump($results);
 
-echo json_encode($results["data"]["results"]);
+echo json_encode($results["results"]);
 
 ?>
 
