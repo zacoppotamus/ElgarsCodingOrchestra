@@ -1,7 +1,6 @@
 {
   "width": 1000,
   "height": 500,
-  "padding": {"top": 10, "left": 30, "bottom": 30, "right": 10},
   "data": [
     {
       "name": "table",
@@ -18,7 +17,6 @@
     {
       "name": "y",
       "range": "height",
-      "domainMax" : 50000,
       "nice": true,
       "domain": {"data": "table", "field": "data.y2000"}
     }
