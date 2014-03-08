@@ -18,6 +18,7 @@
       "name": "y",
       "range": "height",
       "nice": true,
+      "domainMax":5000,
       "domain": {"data": "table", "field": "data.y2000"}
     }
   ],
