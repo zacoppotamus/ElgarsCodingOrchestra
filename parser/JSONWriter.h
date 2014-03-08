@@ -15,8 +15,8 @@ class JSONObject
     void addPair( string name, double value );
     void addPair( string name, bool value );
     void addPair( string name );
-    string getName( int pos );
-    string getValue( int pos );
+    string getName( unsigned pos );
+    string getValue( unsigned pos );
     int fieldCount();
   private:
     unsigned fields;
