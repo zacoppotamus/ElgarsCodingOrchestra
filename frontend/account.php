@@ -57,9 +57,9 @@ else
                     </tr>
 
                     <?php
-                    for($i=0; $i<count($datasetsInfo["datasets"]); $i++)
+                    for($i=0; $i<count($datasetsInfo); $i++)
                     {
-                        $dataset = $datasetsInfo["datasets"][$i];
+                        $dataset = $datasetsInfo[$i];
                         echo("<tr>\n".
                             "<td><a href='edit.php?dataset=$dataset[name]'>$dataset[name]</a></td>\n".
                             "<td>$dataset[description]</td>\n".
