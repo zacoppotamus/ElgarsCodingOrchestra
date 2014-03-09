@@ -58,7 +58,10 @@ $fields = $rainhawk->fetchDataset($dataset)["fields"];
               <?php
               for($i=0; $i<count($fields); $i++)
               {
-                  echo "<option value=$fields[$i]>$fields[$i]</option>";
+                  if($fields[$i] != "_id")
+                  {
+                    echo "<option value=$fields[$i]>$fields[$i]</option>";
+                  }
               }
               ?>
             </select>
