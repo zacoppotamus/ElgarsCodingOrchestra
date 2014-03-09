@@ -63,6 +63,11 @@ $fields = $rainhawk->fetchDataset($dataset)["fields"];
               ?>
             </select>
           </div>
+          <div class="form-group">
+            <label for="yMax">Y Max</label>
+            <input name="yMax" id="yMax" type="text" value="50000" onchange="updateChart()" class="form-control">
+            </select>
+          </div>
         </form>
       </div>
       <div class="row">
@@ -76,7 +81,7 @@ $fields = $rainhawk->fetchDataset($dataset)["fields"];
     vg.parse.spec(spec, function(chart) { chart({el:"#vis"}).update(); });
   }
 
-  function barspec(xName, yName) {
+  function barspec(xName, yName, yMax) {
       return ({
         "width": 1000,
         "height": 500,
@@ -97,7 +102,7 @@ $fields = $rainhawk->fetchDataset($dataset)["fields"];
             "name": "y",
             "range": "height",
             "nice": true,
-            "domainMax":50000,
+            "domainMax":yMax,
             "domain": {"data": "table", "field": "data."+yName}
           }
         ],
@@ -128,7 +133,7 @@ $fields = $rainhawk->fetchDataset($dataset)["fields"];
       });
   }
 
-  parse(barspec(document.getElementById("xName").value, document.getElementById("yName").value));
+  parse(barspec(document.getElementById("xName").value, document.getElementById("yName").value), document.getElementById("yMax").value);
 
   function updateChart() {
     parse(barspec(document.getElementById("xName").value, document.getElementById("yName").value));
