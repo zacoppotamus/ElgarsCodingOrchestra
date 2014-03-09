@@ -59,7 +59,6 @@ else
                         <th>Description</th>
                         <th>Records</th>
                         <th>Fields</th>
-                        <th>Read Access</th>
                         <th>Write Access</th>
                     </tr>
 
