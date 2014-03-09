@@ -37,7 +37,7 @@ $fields = $rainhawk->fetchDataset($dataset)["fields"];
         <h1>Ben's Test Visualisation</h>
       </div>
       <div class="row">
-        <form role="form" class="form-inline">
+        <div role="form" class="form-inline">
           <div class="form-group">
             <label for="xName">Ordinal Data</label>
             <select name="xName" id="xName" onchange="updateChart()" class="form-control">
@@ -68,7 +68,7 @@ $fields = $rainhawk->fetchDataset($dataset)["fields"];
             <input name="yMax" id="yMax" type="text" value="50000" onchange="updateChart()" class="form-control">
             </select>
           </div>
-        </form>
+        </div>
       </div>
       <div class="row">
         <div id="vis"></div>
