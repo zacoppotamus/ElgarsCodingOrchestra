@@ -19,7 +19,7 @@
           }).responseText;
           
       // Create our data table out of JSON data loaded from server.
-      var data = new google.visualization.DataTable(jsonData);
+      var data = new google.visualization.arrayToDataTable(jsonData);
 
       // Instantiate and draw our chart, passing in some options.
       var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
