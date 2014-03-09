@@ -34,7 +34,7 @@ for($i=0; $i<count($data); $i++)
     $result[] = $values;
 }
 
-echo $result;
+echo json_encode($result);
 
 
 
