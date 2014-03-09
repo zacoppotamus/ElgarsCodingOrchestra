@@ -54,7 +54,7 @@ else
             </div>
             <div class="row">
                 <?php if(isset($_GET["deletefailed"])){echo "<div class='alert alert-danger'><strong>Error!</strong> Deletion failed</div>";}?>
-                <?php if(isset($_GET["deleted"])){echo "<div class='alert alert-success'><strong>Deleted</strong> Successfull Deletion</div>";}?>
+                <?php if(isset($_GET["deleted"])){echo "<div class='alert alert-success'><strong>Deleted</strong> Successful Deletion</div>";}?>
             </div>
             <div class="row">
                 <table class="table">
