@@ -102,7 +102,7 @@ $fields = $rainhawk->fetchDataset($dataset)["fields"];
             "name": "y",
             "range": "height",
             "nice": true,
-            "domainMax":yMax,
+            "domainMax": yMax,
             "domain": {"data": "table", "field": "data."+yName}
           }
         ],
@@ -133,7 +133,7 @@ $fields = $rainhawk->fetchDataset($dataset)["fields"];
       });
   }
 
-  parse(barspec(document.getElementById("xName").value, document.getElementById("yName").value), document.getElementById("yMax").value);
+  parse(barspec(document.getElementById("xName").value, document.getElementById("yName").value, document.getElementById("yMax").value));
 
   function updateChart() {
     parse(barspec(document.getElementById("xName").value, document.getElementById("yName").value));
