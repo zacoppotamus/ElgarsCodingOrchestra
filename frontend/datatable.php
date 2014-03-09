@@ -32,7 +32,7 @@ for($i=0; $i<count($data); $i++)
     $values = array();
     foreach($fields as $field => $field_val)
     {
-        $values[] = $field_val;
+        $values[] = $field;
     }
     $result[] = $values;
 }
