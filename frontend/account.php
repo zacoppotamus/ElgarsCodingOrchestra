@@ -51,6 +51,8 @@ else
                 <h1>Welcome <?php echo $user; ?></h1>
                 <h2>Please pick a dataset to view/edit</h>
                 <a href="login.php?logout" type="button" class="btn btn-warning pull-right">Logout</a>
+            </div>
+            <div class="row">
                 <?php if(isset($_GET["deletefailed"])){echo "<div class='alert alert-danger'><strong>Error!</strong> Deletion failed</div>";}?>
                 <?php if(isset($_GET["deleted"])){echo "<div class='alert alert-success'><strong>Deleted</strong> Successfull Deletion</div>";}?>
             </div>
