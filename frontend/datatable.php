@@ -27,6 +27,7 @@ $result = array($fields);
 for($i=0; $i<count($data); $i++)
 {
     var_dump($data[$i]);
+    echo "<br><br>";
     $values = array();
     foreach($fields as $field => $field_val)
     {
