@@ -9,11 +9,11 @@ $dataset = isset($_GET['dataset']) ? $_GET['dataset'] : null;
 
 if($rainhawk->deleteDataset($dataset))
 {
-    header("location: account.php?deleted");
+    header("Location: account.php?deleted");
 }
 else
 {
-    header("location: account.php?deletefailed");
+    header("Location: account.php?deletefailed");
 }
 
 ?>
