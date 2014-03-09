@@ -24,6 +24,7 @@ $sort = isset($_GET['sort']) ? $_GET['sort'] : null;
 
 $data = $rainhawk->selectData($dataset, $query, $offset, $limit, $sort, $fields)["results"];
 $result = array($fields);
+var_dump($fields);
 for($i=0; $i<count($data); $i++)
 {
     var_dump($data[$i]);
