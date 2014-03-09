@@ -18,19 +18,8 @@ angular.module('eco.controllers', [])
 	// currently selected dataset
 	$scope.selectedDataset = '';
 
-	// $scope.datasets = [
-	// 	'nysubway',
-	// 	'23nations',
-	// 	'nbapayrolls',
-	// 	'bristolairquality',
-	// 	'londoncrimerate'
-	// ];
-
-	// years for sample vis (nbapayrolls)
-	$scope.years = [];
-	for (var i = 1998; i <= 2017; i++) {
-		$scope.years.push(i);
-	}
+	// currently selected field
+	$scope.currentField = '';
 
 	// the fields for the selected dataset
 	$scope.fields = [];
@@ -39,20 +28,27 @@ angular.module('eco.controllers', [])
 	$scope.apiKey = "EU6h9H8BUXELDmfO1Mbh0jLasSQxrAZd";
 	$scope.username = 'benelgar';
 
+	// years for sample vis (nbapayrolls)
+	$scope.years = [];
+	for (var i = 1998; i <= 2017; i++) {
+		$scope.years.push(i);
+	}
+
 	// test json response when passing header
 	$scope.getFields = function() {
 		$http({
 			method: 'GET',
-			url: 'https://sneeza-eco.p.mashape.com/datasets/'+$scope.username+$scope.selectedDataset+'/data',
+			url: 'https://sneeza-eco.p.mashape.com/datasets/'+$scope.username+'.'+$scope.selectedDataset+'/data',
 			headers: {
 				'X-Mashape-Authorization' : $scope.apiKey
 			}
 		}).
 		success(function(json) {
-			console.log(json);
-			if(!json.data["rows"]===0) {
-				$.each(json.data.results[0], function(key, val) {
-					console.log(key);
+			if(json.data["rows"]!=0) {
+				$.each(json.data["results"][0], function(key, val) {
+					if (key!='_id') {
+						$scope.fields.push(key);
+					}
 				});
 			}
 			else {
@@ -64,8 +60,6 @@ angular.module('eco.controllers', [])
 	// (don't have this be a function so it only runs once)
 	$scope.getDatasetNames = function() {
 		// todo: get user's API key from cookie
-		console.log('api is: '+$scope.apiKey);
-
 		$http({
 			method: 'GET',
 			url: 'https://sneeza-eco.p.mashape.com/datasets',
@@ -76,7 +70,6 @@ angular.module('eco.controllers', [])
 		success(function(json) {
 			// attach the data to the scope
 			$scope.datasets = [];
-			console.log(json.data);
 			$.each(json.data.datasets, function(key,val) {
 				var datasetName = val.name.split('.')[1];
 				$scope.datasets.push(datasetName);
@@ -95,14 +88,8 @@ angular.module('eco.controllers', [])
 	};
 
 	// when a new dataset is selected from the dropdown get its fields
-	$scope.$watch('selectedDataset', $scope.getFields)
-
-	// parse the fields for the selected dataset
-/*	$scope.getFields = function() {
-
-	}*/
+	$scope.$watch('selectedDataset', $scope.getFields, true)
 
 	// get the datasets immediately
 	$scope.getDatasetNames();
-	// getFields();
 });

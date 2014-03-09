@@ -20,9 +20,8 @@
 			Fields
 		</h1>
 		<div class="btn-group btn-vert-block">
-			<button type="button" class="btn btn-primary btn-block center-block">Year</button>
-			<button type="button" class="btn btn-primary btn-block center-block">Team</button>
-			<button type="button" class="btn btn-primary btn-block center-block">Payroll</button>
+			<pre>{{currentField}}</pre>
+			<button type="button" ng-repeat="field in fields" class="btn btn-primary btn-block center-block" ng-model="currentField" >{{field}}</button>
 		</div>
 	</div>
 </div>
