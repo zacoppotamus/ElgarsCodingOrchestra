@@ -15,9 +15,6 @@ if(stristr($datasetInfo["message"], "Invalid Mashape key"))
     exit;
 }
 
-//Remove id field
-unset($datasetInfo["fields"]["_id"]);
-
 $query = isset($_GET['query']) ? json_decode($_GET['query']) : null;
 $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : null;
 $offset = isset($_GET['offset']) ? (int)$_GET['offset'] : 0;
@@ -29,8 +26,6 @@ $data = $rainhawk->selectData($dataset, $query, $offset, $limit, $sort, $fields)
 $result = array($fields);
 for($i=0; $i<count($data); $i++)
 {
-    var_dump($data[$i]);
-    echo "<br><br>";
     $values = array();
     foreach($fields as $field => $field_val)
     {
