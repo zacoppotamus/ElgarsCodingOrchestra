@@ -84,6 +84,58 @@ $fields = $rainhawk->fetchDataset($dataset)["fields"];
     vg.parse.spec(spec, function(chart) { chart({el:"#vis"}).update(); });
   }
 
+  function areaspec(xName, yName, yMax) {
+      return ({
+        "width": 1000,
+        "height": 500,
+        "data": [
+          {
+            "name": "table",
+            "url": "vegaproxy.php?dataset=<?php echo $dataset; ?>&fields=[%22"+xName+"%22,%22"+yName+"%22]"
+          }
+        ],
+        "scales": [
+          {
+            "name": "x",
+            "type": "linear",
+            "range": "width",
+            "domain": {"data": "table", "field": "data."+xName}
+          },
+          {
+            "name": "y",
+            "range": "height",
+            "nice": true,
+            "domainMax": yMax,
+            "domain": {"data": "table", "field": "data."+yName}
+          }
+        ],
+        "axes": [
+          {"type": "x", "scale": "x"},
+          {"type": "y", "scale": "y"}
+        ],
+        "marks": [
+          {
+            "type": "area",
+            "from": {"data": "table"},
+            "properties": {
+              "enter": {
+                "interpolate": {"value": "monotone"},
+                "x": {"scale": "x", "field": "data."+xName},
+                "y": {"scale": "y", "field": "data."+yName},
+                "y2": {"scale": "y", "value": 0}
+              },
+              "update": {
+                "fill": {"value": "steelblue"}
+              },
+              "hover": {
+                "fill": {"value": "red"}
+              }
+            }
+          }
+        ]
+      });
+  }
+
   function barspec(xName, yName, yMax) {
       return ({
         "width": 1000,
@@ -139,7 +191,7 @@ $fields = $rainhawk->fetchDataset($dataset)["fields"];
   updateChart()
 
   function updateChart() {
-    parse(barspec(document.getElementById("xName").value, document.getElementById("yName").value, document.getElementById("yMax").value));
+    parse(areaspec(document.getElementById("xName").value, document.getElementById("yName").value, document.getElementById("yMax").value));
   }
   </script>
 </html>
