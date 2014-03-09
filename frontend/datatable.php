@@ -36,7 +36,5 @@ for($i=0; $i<count($data); $i++)
 
 echo json_encode($result);
 
-
-
 ?>
 
