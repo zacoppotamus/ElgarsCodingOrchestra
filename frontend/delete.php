@@ -1,5 +1,5 @@
 <?php
-include("../../wrappers/php/rainhawk.class.php");
+require_once("../wrappers/php/rainhawk.class.php");
 
 $mashape_key = isset($_POST["apiKey"]) ? $_POST["apiKey"] : $_COOKIE["apiKey"];
 
