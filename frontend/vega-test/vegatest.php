@@ -1,3 +1,22 @@
+<?php
+require_once("../../wrappers/php/rainhawk.class.php");
+
+$mashape_key = isset($_POST["apiKey"]) ? $_POST["apiKey"] : $_COOKIE["apiKey"];
+
+$rainhawk = new Rainhawk($mashape_key);
+
+$ping = $rainhawk->ping();
+
+if(stristr($ping["message"], "Invalid Mashape key"))
+{
+    echo json_encode("Invalid mashape key");
+    exit;
+}
+
+$dataset = isset($_GET['dataset']) ? $_GET['dataset'] : null;
+$fields = $rainhawk->fetchDataset($dataset)["fields"];
+
+?>
 <html>
   <head>
     <title>Vega Scaffold</title>
@@ -22,16 +41,23 @@
           <div class="form-group">
             <label for="xName">X Value</label>
             <select name="xName" id="xName" onchange="updateChart()" class="form-control">
-              <option value="Type">Type</option>
-              <option value="y2000">y2000</option>
+              <?php
+              for($i=0; $i<count($fields); $i++)
+              {
+                  echo "<option value=$fields[$i]>$fields[$i]</option>";
+              }
+              ?>
             </select>
           </div>
           <div class="form-group">
             <label for="yName">Y Value</label>
             <select name="yName" id="yName" onchange="updateChart()" class="form-control">
-              <option value="Type">Type</option>
-              <option value="y2000">y2000</option>
-              <option value="y2001">y2001</option>
+              <?php
+              for($i=0; $i<count($fields); $i++)
+              {
+                  echo "<option value=$fields[$i]>$fields[$i]</option>";
+              }
+              ?>
             </select>
           </div>
         </form>
