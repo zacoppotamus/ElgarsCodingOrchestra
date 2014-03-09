@@ -21,14 +21,14 @@
         <form role="form" class="form-inline">
           <div class="form-group">
             <label for="xName">X Value</label>
-            <select name="xName" class="form-control">
+            <select name="xName" id="xName" onchange="updateChart()" class="form-control">
               <option value="Type">Type</option>
               <option value="y2000">y2000</option>
             </select>
           </div>
           <div class="form-group">
             <label for="yName">Y Value</label>
-            <select name="xName" class="form-control">
+            <select name="yName" id="yName" onchange="updateChart()" class="form-control">
               <option value="Type">Type</option>
               <option value="y2000">y2000</option>
               <option value="y2001">y2001</option>
@@ -99,6 +99,8 @@
       });
   }
 
-  parse(barspec("Type", "y2000"));
+  function updateChart() {
+    parse(barspec($(#xName).val(), $(yName).val()));
+  }
   </script>
 </html>
