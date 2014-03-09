@@ -21,7 +21,6 @@ $fields = isset($_GET['fields']) ? json_decode($_GET['fields']) : null;
 $exclude = isset($_GET['exclude']) ? json_decode($_GET['exclude']) : null;
 $sort = isset($_GET['sort']) ? $_GET['sort'] : null;
 
-$records = array();
 $results = $rainhawk->selectData($dataset, $query, $offset, $limit, $sort, $fields, $exclude);
 
 echo json_encode($results["results"]);
