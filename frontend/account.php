@@ -38,7 +38,7 @@ else
         <div class="container">
             <div class="row">
                 <h1>Welcome <?php echo $user; ?></h1>
-                <h2>Please pick a dataset to view/edit</h>
+                <h3>Please pick a dataset to view, edit or visualise</h>
                 <a href="login.php?logout" type="button" class="btn btn-warning pull-right">Logout</a>
             </div>
             <div class="row">
