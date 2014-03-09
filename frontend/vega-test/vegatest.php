@@ -91,7 +91,7 @@ $fields = $rainhawk->fetchDataset($dataset)["fields"];
         "data": [
           {
             "name": "table",
-            "url": "vegaproxy.php?dataset=benelgar.zactest1&fields=[%22"+xName+"%22,%22"+yName+"%22]"
+                "url": "vegaproxy.php?dataset="+<?php echo $dataset; ?>+"&fields=[%22"+xName+"%22,%22"+yName+"%22]"
           }
         ],
         "scales": [
