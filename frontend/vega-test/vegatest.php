@@ -136,10 +136,10 @@ $fields = $rainhawk->fetchDataset($dataset)["fields"];
       });
   }
 
-  parse(barspec(document.getElementById("xName").value, document.getElementById("yName").value, document.getElementById("yMax").value));
+  updateChart()
 
   function updateChart() {
-    parse(barspec(document.getElementById("xName").value, document.getElementById("yName").value));
+    parse(barspec(document.getElementById("xName").value, document.getElementById("yName").value, document.getElementById("yMax").value));
   }
   </script>
 </html>
