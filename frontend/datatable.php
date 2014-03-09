@@ -18,7 +18,7 @@ if(stristr($datasetInfo["message"], "Invalid Mashape key"))
 $query = isset($_GET['query']) ? json_decode($_GET['query']) : null;
 $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : null;
 $offset = isset($_GET['offset']) ? (int)$_GET['offset'] : 0;
-$fields = isset($_GET['fields']) ? json_decode($_GET['fields']) : $datasetInfo["fields"];
+$fields = isset($_GET['fields']) ? json_decode($_GET['fields']) : json_decode($datasetInfo["fields"]);
 $sort = isset($_GET['sort']) ? $_GET['sort'] : null;
 
 
