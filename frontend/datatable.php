@@ -31,7 +31,7 @@ for($i=0; $i<count($data); $i++)
     $values = array();
     foreach($fields as $field => $field_val)
     {
-        $values[] = isset($data[$i][$field_val]) ? $field_val : null;
+        $values[] = isset($data[$i][$field_val]) ? $data[$i][$field_val]:null;
     }
     $result[] = $values;
 }
