@@ -99,10 +99,10 @@
       });
   }
 
-  parse(barspec($(#xName).val(), $(yName).val()));
+  parse(barspec(document.getElementById("xName").value, document.getElementById("yName").value));
 
   function updateChart() {
-    parse(barspec($(#xName).val(), $(yName).val()));
+    parse(barspec(document.getElementById("xName").value, document.getElementById("yName").value));
   }
   </script>
 </html>
