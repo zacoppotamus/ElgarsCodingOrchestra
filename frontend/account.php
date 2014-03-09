@@ -1,25 +1,14 @@
 <?php
+require_once("../wrappers/php/rainhawk.class.php");
 
 $mashape_key = isset($_POST["apiKey"]) ? $_POST["apiKey"] : $_COOKIE["apiKey"];
 
-function getRequest($requestURL, $auth_key)
-{
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $requestURL);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_USERAGENT, "ECO / Login System 0.1");
-    curl_setopt($ch, CURLOPT_HTTPHEADER, array("X-Mashape-Authorization: " . $auth_key));
-    curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-    $result=json_decode(curl_exec($ch), true);
-    curl_close($ch);
-    return $result;
-}
+$rainhawk = new Rainhawk($mashape_key);
 
-$url          = "https://sneeza-eco.p.mashape.com/";
-$datasetsInfo = getRequest($url."datasets", $mashape_key);
-$user         = getRequest($url."ping",     $mashape_key)["data"]["mashape_user"];
+$datasetsInfo = $rainhawk->datasets();
+$user         = $rainhawk->ping()["mashape_user"];
 
-if (stristr($datasetsInfo["message"], "Invalid Mashape key"))
+if ($user == false)
 {
     header('Location: login.php?fail');
 }
@@ -68,9 +57,9 @@ else
                     </tr>
 
                     <?php
-                    for($i=0; $i<count($datasetsInfo["data"]["datasets"]); $i++)
+                    for($i=0; $i<count($datasetsInfo["datasets"]); $i++)
                     {
-                        $dataset = $datasetsInfo["data"]["datasets"][$i];
+                        $dataset = $datasetsInfo["datasets"][$i];
                         echo("<tr>\n".
                             "<td><a href='edit.php?dataset=$dataset[name]'>$dataset[name]</a></td>\n".
                             "<td>$dataset[description]</td>\n".
