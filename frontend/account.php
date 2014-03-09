@@ -75,7 +75,7 @@ else
                             "<td>".count($dataset[fields])."</td>\n".
                             //"<td>".(in_array($user, $dataset["read_access" ]) ? "True" : "False")."</td>\n".
                             "<td>".(in_array($user, $dataset["write_access"]) ? "True" : "False")."</td>\n".
-                            "<td><a href='delete.php?dataset=$dataset[name]' class='btn btn-danger'>Delete</a></td>"
+                            "<td><a href='delete.php?dataset=$dataset[name]' class='btn btn-danger'>Delete</a></td>".
                             "</tr>\n");
                     }
 
