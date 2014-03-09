@@ -1,0 +1,30 @@
+[
+    {
+        "Type": "HOMICIDES",
+        "y2000": 673
+    },
+    {
+        "Type": "RAPE",
+        "y2000": 2068
+    },
+    {
+        "Type": "ROBBERY",
+        "y2000": 32562
+    },
+    {
+        "Type": "FELONY ASSAULT",
+        "y2000": 25924
+    },
+    {
+        "Type": "BURGLARY",
+        "y2000": 38352
+    },
+    {
+        "Type": "GRAND LARCENY",
+        "y2000": 49631
+    },
+    {
+        "Type": "GRAND THEFT AUTO",
+        "y2000": 35442
+    }
+]
