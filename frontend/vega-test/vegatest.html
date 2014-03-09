@@ -15,8 +15,8 @@ function parse(spec) {
   vg.parse.spec(spec, function(chart) { chart({el:"#vis"}).update(); });
 }
 
-var barspec =
-    {
+function barspec(xName, yName) {
+    return ({
       "width": 1000,
       "height": 500,
       "data": [
@@ -30,14 +30,14 @@ var barspec =
           "name": "x",
           "type": "ordinal",
           "range": "width",
-          "domain": {"data": "table", "field": "data.Type"}
+          "domain": {"data": "table", "field": "data."+xName}
         },
         {
           "name": "y",
           "range": "height",
           "nice": true,
           "domainMax":50000,
-          "domain": {"data": "table", "field": "data.y2000"}
+          "domain": {"data": "table", "field": "data."+yName}
         }
       ],
       "axes": [
@@ -50,9 +50,9 @@ var barspec =
           "from": {"data": "table"},
           "properties": {
             "enter": {
-              "x": {"scale": "x", "field": "data.Type"},
+              "x": {"scale": "x", "field": "data."+xName},
               "width": {"scale": "x", "band": true, "offset": -1},
-              "y": {"scale": "y", "field": "data.y2000"},
+              "y": {"scale": "y", "field": "data."+yName},
               "y2": {"scale": "y", "value": 0}
             },
             "update": {
@@ -64,8 +64,9 @@ var barspec =
           }
         }
       ]
-    }
+    });
+}
 
-parse(barspec);
+parse(barspec("Type", "y2000"));
 </script>
 </html>
