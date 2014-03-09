@@ -1,24 +1,15 @@
 <?php
+require_once("../wrappers/php/rainhawk.class.php");
+
+$mashape_key = isset($_POST["apiKey"]) ? $_POST["apiKey"] : $_COOKIE["apiKey"];
+
+$rainhawk = new Rainhawk($mashape_key);
 
 $dataset = isset($_GET['dataset']) ? htmlspecialchars($_GET['dataset']) : null;
-$mashape_key = $_COOKIE["apiKey"];
 
-function getRequest($requestURL, $auth_key)
-{
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $requestURL);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_USERAGENT, "ECO / Edit System 0.5");
-    curl_setopt($ch, CURLOPT_HTTPHEADER, array("X-Mashape-Authorization: " . $auth_key));
-    curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-    $result=json_decode(curl_exec($ch), true);
-    curl_close($ch);
-    return $result;
-}
-
-$datasetInfo = getRequest("https://sneeza-eco.p.mashape.com/datasets/".$dataset, $mashape_key);
-$user = getRequest("https://sneeza-eco.p.mashape.com/ping", $mashape_key)["data"]["mashape_user"];
-$fields = $datasetInfo["data"]["fields"];
+$datasetInfo = $rainhawk->fetchDataset($dataset);
+$user        = $rainhawk->ping()["mashape_user"];
+$fields      = $datasetInfo["fields"];
 
 ?>
 <!doctype html>
@@ -37,8 +28,8 @@ $fields = $datasetInfo["data"]["fields"];
     <body>
         <div class="container">
             <div class="row">
-                <h1><?php echo $datasetInfo["data"]["name"];?></h>
-                <h3><?php echo $datasetInfo["data"]["description"];?></h>
+                <h1><?php echo $datasetInfo["name"];?></h>
+                <h3><?php echo $datasetInfo["description"];?></h>
                 <a href="account.php" type="button" class="btn btn-warning pull-right">Back</a>
             </div>
             <div class="row">
@@ -55,7 +46,7 @@ $fields = $datasetInfo["data"]["fields"];
                             actions: {
                                 listAction: 'http://project.spe.sneeza.me/proxy/list.php?dataset=<?php echo $dataset; ?>',
                                 <?php
-                                if(in_array($user, $datasetInfo["data"]["write_access"]))
+                                if(in_array($user, $datasetInfo["write_access"]))
                                 {
                                     echo("createAction: 'http://project.spe.sneeza.me/proxy/create.php?dataset=$dataset',"
                                        . "updateAction: 'http://project.spe.sneeza.me/proxy/update.php?dataset=$dataset',"
