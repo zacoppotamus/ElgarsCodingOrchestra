@@ -54,6 +54,7 @@ else
                         <th>Fields</th>
                         <th>Write Access</th>
                         <th></th>
+                        <th></th>
                     </tr>
 
                     <?php
