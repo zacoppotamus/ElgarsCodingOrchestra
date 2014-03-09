@@ -101,14 +101,14 @@ $fields = $rainhawk->fetchDataset($dataset)["fields"];
           "type": "linear",
           "range": "width",
           "zero": false,
-          "domain": {"data": "table", "field": "data."+xName}
+          "domain": {"data": "table", "field": ("data."+xName)}
         },
         {
           "name": "y",
           "type": "linear",
           "range": "height",
           "nice": true,
-          "domain": {"data": "table", "field": "data."+yName}
+          "domain": {"data": "table", "field": ("data."+yName)}
         }
       ],
       "axes": [
@@ -122,8 +122,8 @@ $fields = $rainhawk->fetchDataset($dataset)["fields"];
           "properties": {
             "enter": {
               "interpolate": {"value": "monotone"},
-              "x": {"scale": "x", "field": "data."+xName},
-              "y": {"scale": "y", "field": "data."+yName},
+              "x": {"scale": "x", "field": ("data."+xName)},
+              "y": {"scale": "y", "field": ("data."+yName)},
               "y2": {"scale": "y", "value": 0},
               "fill": {"value": "steelblue"}
             },
