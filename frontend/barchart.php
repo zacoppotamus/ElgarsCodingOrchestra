@@ -40,7 +40,8 @@ $fields = $rainhawk->fetchDataset($dataset)["fields"];
       var jsonData = $.ajax({
           url: "http://project.spe.sneeza.me/datatable.php?dataset=benelgar.test&fields=[%22" +
             document.getElementById("xName").value +"%22,%22" +
-            document.getElementById("yName").value + "%22]",
+            document.getElementById("y1Name").value +"%22,%22" +
+            document.getElementById("y2Name").value + "%22]",
           dataType:"json",
           async: false
           }).responseText;
@@ -80,8 +81,19 @@ $fields = $rainhawk->fetchDataset($dataset)["fields"];
             </select>
           </div>
           <div class="form-group">
-            <label for="yName">Continuous Data</label>
-            <select name="yName" id="yName" onchange="drawChart()" class="form-control">
+            <label for="yName[]">Continuous Data</label>
+            <select name="yName[]" id="y1Name" onchange="drawChart()" class="form-control">
+              <?php
+              for($i=0; $i<count($fields); $i++)
+              {
+                  if($fields[$i] != "_id")
+                  {
+                    echo "<option value=$fields[$i]>$fields[$i]</option>";
+                  }
+              }
+              ?>
+            </select>
+            <select name="yName[]" id="y2Name" onchange="drawChart()" class="form-control">
               <?php
               for($i=0; $i<count($fields); $i++)
               {
