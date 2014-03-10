@@ -81,8 +81,8 @@ $fields = $rainhawk->fetchDataset($dataset)["fields"];
             </select>
           </div>
           <div class="form-group">
-            <label for="yName[]">Continuous Data</label>
-            <select name="yName[]" id="y1Name" onchange="drawChart()" class="form-control">
+            <label for="y1Name">Continuous Data</label>
+            <select name="y1Name" id="y1Name" onchange="drawChart()" class="form-control">
               <?php
               for($i=0; $i<count($fields); $i++)
               {
@@ -93,7 +93,10 @@ $fields = $rainhawk->fetchDataset($dataset)["fields"];
               }
               ?>
             </select>
-            <select name="yName[]" id="y2Name" onchange="drawChart()" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="y2Name">Continuous Data</label>
+            <select name="y2Name" id="y2Name" onchange="drawChart()" class="form-control">
               <?php
               for($i=0; $i<count($fields); $i++)
               {
