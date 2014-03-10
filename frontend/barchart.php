@@ -38,9 +38,11 @@ $fields = $rainhawk->fetchDataset($dataset)["fields"];
 
 
     function drawChart() {
+
       var jsonData = $.ajax({
           url: "http://project.spe.sneeza.me/datatable.php?dataset=benelgar.test&fields=[%22" +
             document.getElementById("xName").value +"%22,%22" +
+            document.getElementById("y0Name").value +"%22,%22" +
             document.getElementById("y1Name").value +"%22,%22" +
             document.getElementById("y2Name").value + "%22]",
           dataType:"json",
