@@ -38,7 +38,7 @@ $fields = $rainhawk->fetchDataset($dataset)["fields"];
 
     function drawChart() {
       var jsonData = $.ajax({
-          url: "http://project.spe.sneeza.me/datatable.php?dataset=benelgar.test&fields=[%22Type%22,%22y2000%22]",
+          url: "http://project.spe.sneeza.me/datatable.php?dataset=benelgar.test&fields=[%22"+ $("xName").val() +"%22,%22" + $("yName") + "%22]",
           dataType:"json",
           async: false
           }).responseText;
@@ -65,7 +65,7 @@ $fields = $rainhawk->fetchDataset($dataset)["fields"];
         <div role="form" class="form-inline">
           <div class="form-group">
             <label for="xName">Ordinal Data</label>
-            <select name="xName" id="xName" onchange="updateChart()" class="form-control">
+            <select name="xName" id="xName" onchange="drawChart()" class="form-control">
               <?php
               for($i=0; $i<count($fields); $i++)
               {
@@ -79,7 +79,7 @@ $fields = $rainhawk->fetchDataset($dataset)["fields"];
           </div>
           <div class="form-group">
             <label for="yName">Continuous Data</label>
-            <select name="yName" id="yName" onchange="updateChart()" class="form-control">
+            <select name="yName" id="yName" onchange="drawChart()" class="form-control">
               <?php
               for($i=0; $i<count($fields); $i++)
               {
