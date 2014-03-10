@@ -36,9 +36,6 @@ $fields = $rainhawk->fetchDataset($dataset)["fields"];
     // Set a callback to run when the Google Visualization API is loaded.
     google.setOnLoadCallback(drawChart);
 
-    google.visualization.events.addListener(chart, "error", function(err){
-        alert(err);
-    });
 
     function drawChart() {
       var jsonData = $.ajax({
@@ -56,6 +53,10 @@ $fields = $rainhawk->fetchDataset($dataset)["fields"];
       // Instantiate and draw our chart, passing in some options.
       var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
       chart.draw(data, {title: "Crimes by Type"});
+
+      google.visualization.events.addListener(chart, "error", function(err){
+          alert(err);
+      });
     }
 
     </script>
