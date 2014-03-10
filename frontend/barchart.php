@@ -54,9 +54,6 @@ $fields = $rainhawk->fetchDataset($dataset)["fields"];
       var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
       chart.draw(data, {title: "Crimes by Type"});
 
-      google.visualization.events.addListener(chart, "error", function(err){
-          alert(err);
-      });
     }
 
     </script>
