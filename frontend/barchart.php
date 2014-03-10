@@ -36,6 +36,10 @@ $fields = $rainhawk->fetchDataset($dataset)["fields"];
     // Set a callback to run when the Google Visualization API is loaded.
     google.setOnLoadCallback(drawChart);
 
+    google.visualization.events.addListener(chart, "error", function(err){
+        alert(err);
+    });
+
     function drawChart() {
       var jsonData = $.ajax({
           url: "http://project.spe.sneeza.me/datatable.php?dataset=benelgar.test&fields=[%22" +
