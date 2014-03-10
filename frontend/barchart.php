@@ -82,34 +82,23 @@ $fields = $rainhawk->fetchDataset($dataset)["fields"];
               ?>
             </select>
           </div>
-          <div class="form-group">
-            <label for="y1Name">Continuous Data</label>
-            <select name="y1Name" id="y1Name" onchange="drawChart()" class="form-control">
-              <?php
-              for($i=0; $i<count($fields); $i++)
-              {
-                  if($fields[$i] != "_id")
+          <?php
+          for($i=0; $i<count($fields); $i++)
+          {
+              echo "<div class='form-group'>".
+                "<label for='yName[]'>Continuous Data</label>".
+                "<select name='yName[]' id='y".$i."Name' onchange='drawChart()' class='form-control'>";
+                  for($j=0; $j<count($fields); $j++)
                   {
-                    echo "<option value=$fields[$i]>$fields[$i]</option>";
+                      if($fields[$j] != '_id')
+                      {
+                        echo "<option value=$fields[$j]>$fields[$j]</option>";
+                      }
                   }
-              }
-              ?>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="y2Name">Continuous Data 2</label>
-            <select name="y2Name" id="y2Name" onchange="drawChart()" class="form-control">
-              <?php
-              for($i=0; $i<count($fields); $i++)
-              {
-                  if($fields[$i] != "_id")
-                  {
-                    echo "<option value=$fields[$i]>$fields[$i]</option>";
-                  }
-              }
-              ?>
-            </select>
-          </div>
+                echo "</select>".
+              "</div>";
+          }
+          ?>
       </div>
       <div class="row">
         <div id="chart_div" style="height: 80%"></div>
