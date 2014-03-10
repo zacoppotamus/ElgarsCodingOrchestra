@@ -95,7 +95,7 @@ $fields = $rainhawk->fetchDataset($dataset)["fields"];
           </div>
       </div>
       <div class="row">
-        <div id="chart_div" style="height: 100%"></div>
+        <div id="chart_div" style="height: 80%"></div>
       </div>
   </body>
 </html>
