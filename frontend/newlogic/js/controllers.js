@@ -2,14 +2,17 @@
 
 /* controllers */
 
+// to do: Get data from our api, make it all faster
+
 angular.module('eco.controllers', [])
 .controller('ecoCtrl', function ($scope, $http) {
-	// different kind of visualizations
+
+	// different kind of visualizations and choices
 	$scope.vizTypes = [
-		{'id': 1 , 'name':'Pie Chart'},
-		{'id': 2 , 'name':'Bar Chart'},
-		{'id': 3 , 'name':'Bubble Chart'},
-		{'id': 4 , 'name':'Map'},
+		{'id': 0, 'name':'Pie Chart', 'choices':['Values', 'Names']},
+		{'id': 1, 'name':'Bar Chart', 'choices':['X-Axis', 'Y-Axis', 'Y Max']},
+		{'id': 2, 'name':'Bubble Chart', 'choices':['X', 'Y', 'Max Radius', 'Label']},
+		{'id': 3, 'name':'Map', 'choices':['Latitude', 'Longitude']}
 	];
 
 	// selected radio button
@@ -44,6 +47,7 @@ angular.module('eco.controllers', [])
 			}
 		}).
 		success(function(json) {
+			$scope.fields = [];
 			if(json.data["rows"]!=0) {
 				$.each(json.data["results"][0], function(key, val) {
 					if (key!='_id') {

@@ -3,7 +3,19 @@ eco.charts.barchart = function() {
 	return {
 		title: 'Bar Chart',
 		description: 'The simplest and most used tool, the reliable barchart',
-		model: 'bla',
+		model: {
+			xAxis : {
+				value : []
+			},
+
+			yAxis : {
+				value : []
+			},
+
+			yMax : {
+				value : []
+			}
+		},
 
 		options : {
 			width : {
