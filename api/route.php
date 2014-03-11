@@ -113,6 +113,10 @@ route::add(route::DELETE, "/datasets/(\w+)\.(\w+)/data", function($prefix, $name
     $data->prefix = $prefix;
     $data->name = $name;
 
+    if(isset($_GET['d3bug'])) {
+        print_r($_DELETE);
+    }
+
     $data->query = isset($_DELETE['query']) ? json_decode($_DELETE['query'], true) : null;
 
     include("datasets/data/delete.php");
