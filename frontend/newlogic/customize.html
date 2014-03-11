@@ -1,35 +1,54 @@
-<div class="row">
-	<div class="col-md-4 text-center">
-		<h1>
-			Dataset
-		</h1>
-		<select class="form-control" ng-model="selectedDataset" ng-options="f for f in datasets"><option></option></select>
-	</div>
-	<div class="col-md-4 text-center">
-		<h1>
-			Type
-		</h1>
-		<div class="btn-group btn-vert-block">
-			<pre>{{selectedVizType}}</pre>
-			<button type="button" ng-repeat="type in vizTypes" class="btn btn-primary btn-block center-block" ng-repeat="type in vizTypes" ng-model="selectedVizType.id" btn-radio="type.id">{{type.name}}</button>
+<div class="container">
+	<div class="row">
+		<div class="col-sm-6 text-center">
+			<h1>
+				Dataset
+			</h1>
+			<pre>{{selectedDataset}}</pre>
+			<select class="form-control" ng-model="selectedDataset" ng-options="f for f in datasets"><option></option></select>
+		</div>
+		<div class="col-sm-6 text-center">
+			<h1>
+				Type
+			</h1>
+			<div class="btn-group btn-vert-block">
+				<pre>{{selectedVizType}}</pre>
+				<button type="button" ng-repeat="type in vizTypes" class="btn btn-primary btn-block center-block" ng-repeat="type in vizTypes" ng-model="selectedVizType.id" btn-radio="type.id">{{type.name}}</button>
+			</div>
 		</div>
 	</div>
-	<div class="col-md-4 text-center">
-		<h1>
-			Fields
-		</h1>
-		<div class="btn-group btn-vert-block">
-			<button type="button" class="btn btn-primary btn-block center-block">Year</button>
-			<button type="button" class="btn btn-primary btn-block center-block">Team</button>
-			<button type="button" class="btn btn-primary btn-block center-block">Payroll</button>
+
+	<br>
+	<br>
+
+	<div class="row">
+		<div class="col-sm-6 text-center">
+			<h1>
+				Fields
+			</h1>
+			<br>
+			<div class="fields">
+				<ul class="field col-sm-3 text-center" ng-repeat="field in fields">
+					<li>{{field}}</li>
+				</ul>
+			</div>
+		</div>
+		<div class="col-sm-6 text-center">
+			<h1>
+				Choices
+			</h1>
+			<div class="col-sm-6 text-center" ng-repeat="choice in vizTypes[selectedVizType.id].choices">
+				<h2>{{choice}}</h2>
+				<select class="form-control" ng-model="selectedDataset" ng-options="field for field in fields"><option></option></select>
+			</div>
 		</div>
 	</div>
-</div>
-<br>
-<div class="visualize-btn row">
-	<div class="col-md-12 text-center">
-		<h1>
-			<a href="#visualization">Visualize</a>
-		</h1>
+
+	<div class="visualize-btn row">
+		<div class="col-sm-12 text-center">
+			<h1>
+				<a href="#visualization">Visualize</a>
+			</h1>
+		</div>
 	</div>
 </div>

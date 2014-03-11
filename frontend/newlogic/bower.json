@@ -1,15 +1,17 @@
 {
-	"name" : "custD3",
+	"name" : "eco",
 	"version" : "0.0.1",
 	"authors" : [
 		"Zac Ioannidis"
 	],
 	"license" : "MIT",
 	"dependencies" : {
-		"angular" : "latest",
-		"d3" : "latest",
-		"bootstrap" : "latest",
-		"angular-bootstrap" : "latest",
-		"angular-route"	: "latest"
+		"angular" : "1.2.14",
+		"d3" : "3.4.2",
+		"bootstrap" : "3.1.1",
+		"angular-bootstrap" : "0.10.0",
+		"angular-route"	: "3.11",
+		"jquery-ui": "1.10.2",
+		"angular-dragdrop": "latest"
 	}
 }

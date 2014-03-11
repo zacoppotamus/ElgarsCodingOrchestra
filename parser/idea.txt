@@ -1,5 +1,0 @@
-By jove I've got it! A probability measure!
-Increase the probability based on any number of factors, ranging from the
-obvious (consecutive strings) to the obscure (rows of strings at different heights)
-Various other factors may decrease the probability, such as blank squares in
-the table, or inconsistent field types in a column
