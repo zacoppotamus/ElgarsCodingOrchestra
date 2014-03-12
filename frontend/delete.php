@@ -17,14 +17,5 @@ $dataset = isset($_GET['dataset']) ? $_GET['dataset'] : null;
 $result = $rainhawk->deleteDataset($dataset);
 var_dump($result);
 
-if($result)
-{
-    header("Location: account.php?deleted");
-}
-else
-{
-    header("Location: account.php?deletefailed");
-}
-
 ?>
 
