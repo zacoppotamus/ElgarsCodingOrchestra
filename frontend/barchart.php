@@ -40,8 +40,10 @@ $fields = $rainhawk->fetchDataset($dataset)["fields"];
       function drawChart() {
 
         var dataInputs = [];
-        $("select[name='yName[]'][value!='']").each(function(){
-          dataInputs += ",%22" + $(this).val() + "%22";
+        $("select[name='yName[]']").each(function(){
+          if(this.value != "") {
+            dataInputs += ",%22" + $(this).val() + "%22";
+          }
         });
 
         var jsonData = $.ajax({
