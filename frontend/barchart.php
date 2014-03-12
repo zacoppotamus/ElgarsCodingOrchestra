@@ -39,7 +39,7 @@ $fields = $rainhawk->fetchDataset($dataset)["fields"];
       function drawChart() {
 
         var dataInputs = [];
-        $("select[name='yName[]']").each(function(){
+        $("select[name='yName[]'][value!='']").each(function(){
           dataInputs += ",%22" + $(this).val() + "%22";
         });
 
@@ -75,6 +75,7 @@ $fields = $rainhawk->fetchDataset($dataset)["fields"];
           <div class="form-group">
             <label for="xName">Ordinal Data</label>
             <select name="xName" id="xName" onchange="drawChart()" class="form-control">
+              <option></option>
             <?php
               for($i=0; $i<count($fields); $i++)
               {
@@ -91,7 +92,8 @@ $fields = $rainhawk->fetchDataset($dataset)["fields"];
           {
             echo "<div class='form-group'>".
                  "<label for='yName[]'>Continuous Data $i</label>".
-                 "<select name='yName[]' id='y".$i."Name' onchange='drawChart()' class='form-control'>";
+                 "<select name='yName[]' id='y".$i."Name' onchange='drawChart()' class='form-control'>".
+                 "<option></option>";
             for($j=0; $j<count($fields); $j++)
             {
               if($fields[$j] != '_id')
