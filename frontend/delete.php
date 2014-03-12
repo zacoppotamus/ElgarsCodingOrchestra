@@ -7,15 +7,15 @@ $rainhawk = new Rainhawk($mashape_key);
 
 $user         = $rainhawk->ping()["mashape_user"];
 
-var_dump($user);
-exit();
-
 if($user === false)
 {
     header('Location: login.php?fail');
 }
 
 $dataset = isset($_GET['dataset']) ? $_GET['dataset'] : null;
+
+var_dump($dataset);
+exit();
 
 $result = $rainhawk->deleteDataset($dataset);
 
