@@ -31,7 +31,7 @@ $fields = $rainhawk->fetchDataset($dataset)["fields"];
     <script type="text/javascript">
 
       // Load the Visualization API and the piechart package.
-      google.load('visualization', '1', {'packages':['corechart']});
+      google.load('visualization', '1', {'packages':['corechart', 'table']});
 
       // Set a callback to run when the Google Visualization API is loaded.
       google.setOnLoadCallback(drawChart);
