@@ -41,7 +41,7 @@ $fields = $rainhawk->fetchDataset($dataset)["fields"];
         var dataInputs = [];
         $("select[name='yName[]']").each(function(){
           dataInputs += ",%22" + $(this).val() + "%22";
-        }
+        });
 
         var jsonData = $.ajax({
           url: "http://project.spe.sneeza.me/datatable.php?dataset=benelgar.test&fields=[%22" +
