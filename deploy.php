@@ -6,6 +6,7 @@ header("content-type: text/plain; charset=utf8");
 // Define the commands to be run.
 $commands = array(
     "whoami",
+    "/usr/bin/git reset --hard"
     "/usr/bin/git pull",
     "/usr/bin/git status",
     "/usr/bin/git submodule sync",
