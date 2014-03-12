@@ -78,7 +78,7 @@ else
                         ?>
                     <tbody>
                     <tfoot>
-                        <tr><td colspan='0'><p class="text-center"><strong><a href='upload.html'>Upload your own data</a></strong></p></td></tr>
+                        <tr><td colspan='100%'><p class="text-center"><strong><a href='upload.html'>Upload your own data</a></strong></p></td></tr>
                     </tfoot>
                 </table>
             </div>
