@@ -38,14 +38,18 @@ $fields = $rainhawk->fetchDataset($dataset)["fields"];
 
       function drawChart() {
 
+        var dataInputs = [];
+        $("select[name='yName[]']").each(function(){
+          dataInputs += ",%22" + $(this).val() + "%22";
+        }
+
         var jsonData = $.ajax({
           url: "http://project.spe.sneeza.me/datatable.php?dataset=benelgar.test&fields=[%22" +
             document.getElementById("xName").value +"%22,%22" +
-            document.getElementById("y0Name").value +"%22,%22" +
-            document.getElementById("y1Name").value +"%22,%22" +
-            document.getElementById("y2Name").value + "%22]",
-            dataType:"json",
-            async: false
+            dataInputs +
+            "]",
+          dataType:"json",
+          async: false
         }).responseText;
 
         // Create our data table out of JSON data loaded from server.
