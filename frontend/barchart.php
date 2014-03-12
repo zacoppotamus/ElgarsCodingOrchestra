@@ -29,6 +29,7 @@ $fields = $rainhawk->fetchDataset($dataset)["fields"];
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript" src="js/jquery-1.10.2.js"></script>
     <script type="text/javascript">
+
       // Load the Visualization API and the piechart package.
       google.load('visualization', '1', {'packages':['corechart']});
 
@@ -75,7 +76,7 @@ $fields = $rainhawk->fetchDataset($dataset)["fields"];
           <div class="form-group">
             <label for="xName">Ordinal Data</label>
             <select name="xName" id="xName" onchange="drawChart()" class="form-control">
-              <option></option>
+              <option value=""></option>
             <?php
               for($i=0; $i<count($fields); $i++)
               {
@@ -93,7 +94,7 @@ $fields = $rainhawk->fetchDataset($dataset)["fields"];
             echo "<div class='form-group'>".
                  "<label for='yName[]'>Continuous Data $i</label>".
                  "<select name='yName[]' id='y".$i."Name' onchange='drawChart()' class='form-control'>".
-                 "<option></option>";
+                 "<option value=''></option>";
             for($j=0; $j<count($fields); $j++)
             {
               if($fields[$j] != '_id')
