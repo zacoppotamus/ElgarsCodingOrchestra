@@ -9,8 +9,8 @@ $ping = $rainhawk->ping();
 
 if(stristr($ping["message"], "Invalid Mashape key"))
 {
-    echo json_encode("Invalid mashape key");
-    exit;
+  echo json_encode("Invalid mashape key");
+  exit;
 }
 
 $dataset = isset($_GET['dataset']) ? $_GET['dataset'] : null;
@@ -29,35 +29,33 @@ $fields = $rainhawk->fetchDataset($dataset)["fields"];
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript" src="js/jquery-1.10.2.js"></script>
     <script type="text/javascript">
+      // Load the Visualization API and the piechart package.
+      google.load('visualization', '1', {'packages':['corechart']});
 
-    // Load the Visualization API and the piechart package.
-    google.load('visualization', '1', {'packages':['corechart']});
-
-    // Set a callback to run when the Google Visualization API is loaded.
-    google.setOnLoadCallback(drawChart);
+      // Set a callback to run when the Google Visualization API is loaded.
+      google.setOnLoadCallback(drawChart);
 
 
-    function drawChart() {
+      function drawChart() {
 
-      var jsonData = $.ajax({
+        var jsonData = $.ajax({
           url: "http://project.spe.sneeza.me/datatable.php?dataset=benelgar.test&fields=[%22" +
             document.getElementById("xName").value +"%22,%22" +
             document.getElementById("y0Name").value +"%22,%22" +
             document.getElementById("y1Name").value +"%22,%22" +
             document.getElementById("y2Name").value + "%22]",
-          dataType:"json",
-          async: false
-          }).responseText;
+            dataType:"json",
+            async: false
+        }).responseText;
 
-      // Create our data table out of JSON data loaded from server.
-      var data = new google.visualization.arrayToDataTable(JSON.parse(jsonData));
+        // Create our data table out of JSON data loaded from server.
+        var data = new google.visualization.arrayToDataTable(JSON.parse(jsonData));
 
-      // Instantiate and draw our chart, passing in some options.
-      var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
-      chart.draw(data, {title: "Crimes by Type"});
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+        chart.draw(data, {title: "Crimes by Type"});
 
-    }
-
+      }
     </script>
   </head>
 
@@ -73,32 +71,32 @@ $fields = $rainhawk->fetchDataset($dataset)["fields"];
           <div class="form-group">
             <label for="xName">Ordinal Data</label>
             <select name="xName" id="xName" onchange="drawChart()" class="form-control">
-              <?php
+            <?php
               for($i=0; $i<count($fields); $i++)
               {
-                  if($fields[$i] != "_id")
-                  {
-                    echo "<option value=$fields[$i]>$fields[$i]</option>";
-                  }
+                if($fields[$i] != "_id")
+                {
+                  echo "<option value=$fields[$i]>$fields[$i]</option>";
+                }
               }
-              ?>
+            ?>
             </select>
           </div>
           <?php
           for($i=0; $i<count($fields)-1; $i++)
           {
-              echo "<div class='form-group'>".
-                "<label for='yName[]'>Continuous Data $i</label>".
-                "<select name='yName[]' id='y".$i."Name' onchange='drawChart()' class='form-control'>";
-                  for($j=0; $j<count($fields); $j++)
-                  {
-                      if($fields[$j] != '_id')
-                      {
-                        echo "<option value=$fields[$j]>$fields[$j]</option>";
-                      }
-                  }
-                echo "</select>".
-              "</div>";
+            echo "<div class='form-group'>".
+                 "<label for='yName[]'>Continuous Data $i</label>".
+                 "<select name='yName[]' id='y".$i."Name' onchange='drawChart()' class='form-control'>";
+            for($j=0; $j<count($fields); $j++)
+            {
+              if($fields[$j] != '_id')
+              {
+                echo "<option value=$fields[$j]>$fields[$j]</option>";
+              }
+            }
+            echo "</select>".
+                 "</div>";
           }
           ?>
       </div>
