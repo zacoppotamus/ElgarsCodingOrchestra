@@ -57,12 +57,16 @@ $fields = $rainhawk->fetchDataset($dataset)["fields"];
 
         // Create our data table out of JSON data loaded from server.
         var data = new google.visualization.arrayToDataTable(JSON.parse(jsonData));
+        var chartOptions = {
+          'title': <?php echo "'$dataset'"; ?>,
+          'height': 400
+        }
 
         // Instantiate and draw our chart, passing in some options.
         var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
         var table = new google.visualization.Table(document.getElementById('table_div'));
         table.draw(data, {showRowNumber: true});
-        chart.draw(data, {title: "Crimes by Type"});
+        chart.draw(data, chartOptions);
 
       }
     </script>
@@ -112,7 +116,7 @@ $fields = $rainhawk->fetchDataset($dataset)["fields"];
           ?>
       </div>
       <div class="row">
-        <div id="chart_div" style="height: 80%"></div>
+        <div id="chart_div"></div>
       </div>
       <div class="row">
         <div id="table_div"></div>
