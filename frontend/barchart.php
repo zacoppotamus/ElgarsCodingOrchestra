@@ -60,6 +60,8 @@ $fields = $rainhawk->fetchDataset($dataset)["fields"];
 
         // Instantiate and draw our chart, passing in some options.
         var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+        var table = new google.visualization.Table(document.getElementById('table_div'));
+        table.draw(data, {showRowNumber: true});
         chart.draw(data, {title: "Crimes by Type"});
 
       }
@@ -111,6 +113,9 @@ $fields = $rainhawk->fetchDataset($dataset)["fields"];
       </div>
       <div class="row">
         <div id="chart_div" style="height: 80%"></div>
+      </div>
+      <div class="row">
+        <div id="table_div"></div>
       </div>
   </body>
 </html>
