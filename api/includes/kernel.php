@@ -84,6 +84,6 @@ rainhawk::select_database(app::$stack['mongodb']['database']);
  * services.
  */
 
-app::$username = isset($_SERVER['HTTP_X_MASHAPE_USER']) ? trim(strtolower($_SERVER['HTTP_X_MASHAPE_USER'])) : "anonymous";
+app::$username = isset($_SERVER['HTTP_X_MASHAPE_USER']) ? trim(strtolower($_SERVER['HTTP_X_MASHAPE_USER'])) : "global";
 
 ?>

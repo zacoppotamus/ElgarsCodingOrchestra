@@ -159,7 +159,16 @@ class Sets {
         $datasets = self::get_system_datasets();
 
         try {
-            $results = $datasets->find(array('$or' => array(array("read_access" => $username), array("write_access" => $username))));
+            $results = $datasets->find(array(
+                '$or' => array(
+                    array("read_access" =>
+                        array('$in' => array($username, "global"))
+                    ),
+                    array("write_access" =>
+                        array('$in' => array($username, "global"))
+                    )
+                )
+            ));
 
             return $results;
         } catch(Exception $e) {}
