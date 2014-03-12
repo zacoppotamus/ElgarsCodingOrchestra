@@ -14,7 +14,10 @@ if ($user == false)
 
 $dataset = isset($_GET['dataset']) ? $_GET['dataset'] : null;
 
-if($rainhawk->deleteDataset($dataset))
+$result = $rainhawk->deleteDataset($dataset);
+var_dump($result);
+
+if($result)
 {
     header("Location: account.php?deleted");
 }
