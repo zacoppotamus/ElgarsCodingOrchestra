@@ -7,6 +7,9 @@ $rainhawk = new Rainhawk($mashape_key);
 
 $user         = $rainhawk->ping()["mashape_user"];
 
+var_dump($user);
+exit();
+
 if($user === false)
 {
     header('Location: login.php?fail');
