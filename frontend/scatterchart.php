@@ -82,7 +82,7 @@ $fields = $rainhawk->fetchDataset($dataset)["fields"];
       <div class="row">
         <div role="form" class="form-inline">
           <div class="form-group">
-            <label for="xName">Ordinal Data</label>
+            <label for="xName">X-Axis Data</label>
             <select name="xName" id="xName" onchange="drawChart()" class="form-control">
               <option value=""></option>
             <?php
@@ -100,7 +100,7 @@ $fields = $rainhawk->fetchDataset($dataset)["fields"];
           for($i=0; $i<count($fields)-1; $i++)
           {
             echo "<div class='form-group'>".
-                 "<label for='yName[]'>Continuous Data $i</label>".
+              "<label for='yName[]'>Y-Axis Data $i</label>".
                  "<select name='yName[]' id='y".$i."Name' onchange='drawChart()' class='form-control'>".
                  "<option value=''></option>";
             for($j=0; $j<count($fields); $j++)
