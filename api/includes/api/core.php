@@ -69,11 +69,16 @@ function json_beautify($json) {
         if($char == '"' && $previous_character != '\\') {
             $out_of_quotes = !$out_of_quotes;
         } else if(($char == "}" || $char == "]") && $out_of_quotes) {
-            $result .= $newline;
-            $pos--;
+            if(substr(trim($result), -1) == "[") {
+                $result = trim($result);
+                $pos--;
+            } else {
+                $result .= $newline;
+                $pos--;
 
-            for($j = 0; $j < $pos; $j++) {
-                $result .= $indent;
+                for($j = 0; $j < $pos; $j++) {
+                    $result .= $indent;
+                }
             }
         }
 
