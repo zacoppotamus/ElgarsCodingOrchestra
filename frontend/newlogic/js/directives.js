@@ -119,3 +119,21 @@ angular.module('eco.directives', [])
 		}
 	}
 })
+.directive('vegaBarChart', function() {
+	//  -- TO DO -- 
+	// Abstract this to be Vega Vis that will call
+	// other functions depending on selectedVizType
+
+	// Inherit scope from parent controller
+	return {
+		restrict: 'E',
+		terminal: true,
+		scope: {
+			// id is 1 here
+			vizTypes: '=',
+			selectedVizType: '='
+		},
+		link: function(scope, element, attrs) {
+
+		}
+})

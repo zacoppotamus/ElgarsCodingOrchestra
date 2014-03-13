@@ -40,6 +40,7 @@
 			<div class="col-sm-6 text-center" ng-repeat="choice in vizTypes[selectedVizType.id].choices">
 				<h2>{{choice}}</h2>
 				<!-- CHANGE THE MODEL HERE -->
+				<!-- Beware: This is pretty hacky -->
 				<pre>{{vizTypes[selectedVizType.id].options[choice]}}</pre>
 				<select class="form-control" ng-model="vizTypes[selectedVizType.id].options[choice]" ng-options="field for field in fields"><option></option></select>
 			</div>

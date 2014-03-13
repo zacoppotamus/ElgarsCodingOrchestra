@@ -7,9 +7,20 @@
 angular.module('eco.controllers', [])
 .controller('ecoCtrl', function ($scope, $http) {
 
+	/*
+		TO DO: If one option is null or two or more are the same throw error.
+		Make viztypes a function like in charts/barchart.js and instantiate the 
+		inner objects on $scope.watch() so that they are null, each time
+		$selectedVizType changes.
+
+		When Visualize button is pressed, check that all parameters are != null.
+
+		Maybe put vizTypes in a different file altogether
+	*/
+
 	// different kind of visualizations and choices
 	// Try different alternatives for decoupling the DOM and controller
-	// this can also be a class-function instantiated on $scope.watch
+	// this can also be a class-function instantiated on $scope.watch so that everything becomes null
 	$scope.vizTypes = [
 		{
 			'id' : 0, 
