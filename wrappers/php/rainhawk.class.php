@@ -177,7 +177,7 @@ class Rainhawk {
             return false;
         }
 
-        return ($json['data']['deleted']);
+        return $json['data']['deleted'];
     }
 
     /**
@@ -217,32 +217,32 @@ class Rainhawk {
     }
 
     /**
-     * Insert is an alias of insert_multi, and we just manipulate the
-     * parameters passed to wrap one document to look like an array of
-     * documents.
+     * Insert is an alias of insertMulti, and we just manipulate the
+     * parameters passed to wrap one row to look like an array of
+     * rows.
      *
-     * @param string $name  The dataset to insert documents into.
-     * @param array $document  The document to insert.
+     * @param string $name  The dataset to insert rows into.
+     * @param array $row  The row to insert.
      * @return array|bool  Returns the data array on success, false on failure.
      */
 
-    public function insertData($name, $document) {
-        return $this->insertMultiData($name, array($document));
+    public function insertData($name, $row) {
+        return $this->insertMultiData($name, array($row))[0];
     }
 
     /**
-     * Insert multiple documents into a dataset. The API will return
-     * a success parameter as well as the number of documents added
+     * Insert multiple rows into a dataset. The API will return
+     * a success parameter as well as the number of rows added
      * which we can use to verify our request.
      *
-     * @param string $name  The dataset to insert documents into.
-     * @param array $document  The documents to insert.
+     * @param string $name  The dataset to insert the rows into.
+     * @param array $rows  The rows to insert.
      * @return array|bool  Returns the data array on success, false on failure.
      */
 
-    public function insertMultiData($name, $documents) {
+    public function insertMultiData($name, $rows) {
         $postData = array(
-            "documents" => json_encode($documents)
+            "rows" => json_encode($rows)
         );
 
         $url = $this->host . "/datasets/" . $name . "/data";
@@ -253,7 +253,7 @@ class Rainhawk {
             return false;
         }
 
-        return $json['data'];
+        return $json['data']['rows'];
     }
 
     /**
