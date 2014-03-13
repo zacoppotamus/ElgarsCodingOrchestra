@@ -563,13 +563,13 @@ class Rainhawk {
             curl_setopt($ch, CURLOPT_POST, true);
 
             if(!empty($params)) {
-                curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($params));
             }
         } else if($method == self::PUT || $method == self::DELETE) {
             curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
 
             if(!empty($params)) {
-                curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($params));
             }
         }
 

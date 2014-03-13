@@ -96,6 +96,7 @@ print_r($dataset);
  * inserted properly and has a unique identifier.
  *
  * @covers Rainhawk::insertData()
+ * @covers Rainhawk::insertMultiData()
  */
 
 $data = array(
@@ -114,6 +115,48 @@ if(!$data) {
 }
 
 print_r($data);
+
+/**
+ * Test selecting data from the dataset, so that we can make sure that complex
+ * queries are being run.
+ *
+ * @covers Rainhawk::selectData()
+ */
+
+$query = array(
+    "roles" => array(
+        '$in' => array("content")
+    )
+);
+
+echo "[+] Selecting all rows that are content creators...\n";
+$rows = $rainhawk->selectData($name, $query);
+
+if(!$rows) {
+    echo "[!] Could not select data - " . $rainhawk->error() . "\n";
+    exit;
+}
+
+print_r($rows);
+
+/**
+ * Delete the rows that we have inserted so that we can clean out the indexes
+ * and test this command before removing the dataset.
+ */
+
+$query = array(
+    "name" => "John"
+);
+
+echo "[+] Deleting our test data...\n";
+$deleted = $rainhawk->deleteData($name, $query);
+
+if(!$deleted) {
+    echo "[!] Could not delete data - " . $rainhawk->error() . "\n";
+    exit;
+}
+
+print_r($deleted);
 
 /**
  * Remove our test dataset, to ensure that the script doesn't leave any broken
