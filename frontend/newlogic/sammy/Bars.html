@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>D3 Page Template</title>
+        <script type="text/javascript" src="D3/d3.js"></script>
+        <style type ="text/css">
+            .axis path,
+            .axis line
+            {
+                fill: black;
+                stroke: black;
+                shape-rendering: crispEdges;
+            }
+            .axis text
+            {
+                font-family: sans-serif;
+                font-size: 12px;
+            }
+        
+        
+            div.bar 
+            {
+                display: inline-block;
+                width: 20px;
+                height: 75px;
+                background-color: orange;
+                margin-right: 2px;
+            }
+            
+            #tooltip 
+            {
+                position: absolute;
+                width: auto;
+                height: 30px;
+                padding: 10px;
+                background-color: white;
+                -webkit-border-radius: 10px;
+                -moz-border-radius: 10px;
+                border-radius: 10px;
+                -webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+                -moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+                box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+                pointer-events: none;
+            }
+
+            #tooltip.hidden 
+            {
+                display: none;
+            }
+
+            #tooltip p 
+            {
+                margin: 0;
+                font-family: sans-serif;
+                font-size: 16px;
+                line-height: 20px;
+            }
+            
+            .grid .tick 
+            {
+                stroke: lightgrey;
+                opacity: 0.7;
+            }
+            .grid path 
+            {
+                  stroke-width: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="tooltip" class="hidden">
+            <p><strong>Post Code: <span id="area">ll123ll</span></strong></p>
+            <p>Crimerate: <span id="rate">100</span></p>
+        </div>
+        <script type="text/javascript">
+            
+            
+            var svgW = 1000, svgH = 400, xPad = 100, yPad = 50;
+            var svg = d3.select("body")
+                .append("svg")
+                .attr("width", svgW + xPad)
+                .attr("height", svgH + yPad);
+
+            d3.json("crimetable.json", function(json)
+            {
+                console.log(json);
+                var stretch = 15;
+                var jsonarray = json.data.results;
+                var arraySize = jsonarray.length;
+                var maxArrayElement = d3.max(d3.values(jsonarray), function(i)
+                    {
+                        return i.crimerate;
+                    });
+                var yScale = d3.scale.linear()
+                    .domain([0, maxArrayElement])
+                    .range([maxArrayElement*stretch, 0]);
+                    
+                var yAxis = d3.svg.axis()
+                    .scale(yScale)
+                    .orient("left")
+                    .ticks(maxArrayElement/2);
+                    
+                var xScale = d3.scale.linear()
+                    .domain([0, svgW])
+                    .range([0, svgW+xPad/4]);
+                
+                function xGrid() 
+                {        
+                    return d3.svg.axis()
+                        .scale(xScale)
+                        .orient("bottom")
+                        .ticks(maxArrayElement/2)
+                }
+
+                function yGrid() 
+                {        
+                    return d3.svg.axis()
+                        .scale(yScale)
+                        .orient("left")
+                        .ticks(maxArrayElement/2)
+                }
+                
+
+                svg.append("g")         
+                    .attr("class", "grid")
+                    .attr("transform", "translate(" + ((xPad/4)-5) + "," + (svgH-maxArrayElement*stretch+yPad/2) + ")")
+                    .call(yGrid()
+                        .tickSize(-svgW-xPad/2, 0, 0)
+                        .tickFormat(""))
+                        
+                svg.append("g")
+                    .attr("class", "axis")
+                    .attr("transform", "translate("+((xPad-4)/2)+","+(svgH-maxArrayElement*stretch+yPad/2)+")")
+                    .call(yAxis)
+                
+                svg.selectAll("rect")
+                .data(jsonarray)
+                .enter()
+                .append("rect")
+                .attr
+                ({
+                    x : function(d, i)
+                        {
+                            return i*(svgW/jsonarray.length)+xPad/2;
+                        },
+                    y : function(d)
+                        {
+                            return svgH-d.crimerate*stretch+yPad/2;
+                        },
+                    width : svgW/jsonarray.length - 1,
+                    height : function(d)
+                        {
+                            return d.crimerate*stretch;
+                        },
+                    fill : function(d)
+                        {
+                            return "rgb("+(d.crimerate*10)+",34,34)";
+                        }
+                })
+                .on
+                ({
+                    mouseover : function(d,i)
+                        {
+                            d3.select(this).attr("fill","teal");
+                            
+                            var xPos = parseFloat(d3.select(this).attr("x"));
+                            var yPos = d3.select(this).attr("y") - 50 - 5;
+                            //Update the tooltip position and value
+                            d3.select("#tooltip")
+                              .style("left", xPos + "px")
+                              .style("top", yPos + "px")
+                              .select("#area")
+                              .text(jsonarray[i].postcode);
+                            d3.select("#tooltip")
+                              .style("left", xPos + "px")
+                              .style("top", yPos + "px")
+                              .style("color", "rgb("+(d.crimerate*10)+",34,34)")
+                              .select("#rate")
+                              .text(jsonarray[i].crimerate);
+                              
+
+                            //Show the tooltip
+                            d3.select("#tooltip").classed("hidden", false);
+                        },
+                    mouseout : function(d)
+                        {
+                            d3.select(this)
+                            .transition()
+                            .duration(75)
+                            .attr("fill","rgb("+(d.crimerate*10)+",34,34)");
+                            
+                            //Hide the tooltip
+                            d3.select("#tooltip").classed("hidden", true);
+                        }
+                });
+            });
+        </script>
+    </body>
+</html>
