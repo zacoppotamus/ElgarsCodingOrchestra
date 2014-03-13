@@ -14,6 +14,7 @@ if($user === false)
 
 $dataset = isset($_GET['dataset']) ? $_GET['dataset'] : null;
 
+echo "deleting";
 $result = $rainhawk->deleteDataset($dataset);
 
 if($result)
