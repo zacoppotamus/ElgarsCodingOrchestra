@@ -1,0 +1,78 @@
+{
+  "meta": {
+    "code": 200,
+    "version": "β",
+    "runtime": 0.016
+  },
+  "data": {
+    "rows": 13,
+    "offset": 0,
+    "results": [
+      {
+        "_id": "52f3b1e241f7f7172a8b45e6",
+        "postcode": "BS14FX",
+        "crimerate": 4
+      },
+      {
+        "_id": "52f3b1e241f7f7172a8b45e7",
+        "postcode": "BS36GB",
+        "crimerate": 8
+      },
+      {
+        "_id": "52f3b1e241f7f7172a8b45e8",
+        "postcode": "BS18SP",
+        "crimerate": 5
+      },
+      {
+        "_id": "52f3b1e241f7f7172a8b45e9",
+        "postcode": "BS51QL",
+        "crimerate": 11
+      },
+      {
+        "_id": "52f3b1e241f7f7172a8b45ea",
+        "postcode": "BS73IK",
+        "crimerate": 7
+      },
+      {
+        "_id": "52f3b1e241f7f7172a8b45eb",
+        "postcode": "BS11HJ",
+        "crimerate": 9
+      },
+      {
+        "_id": "52f3b1e241f7f7172a8b45ec",
+        "postcode": "BS134VB",
+        "crimerate": 22
+      },
+      {
+        "_id": "52f3b1e241f7f7172a8b45ed",
+        "postcode": "BS129FJ",
+        "crimerate": 8
+      },
+      {
+        "_id": "52f3b1e241f7f7172a8b45ee",
+        "postcode": "BS28PZ",
+        "crimerate": 8
+      },
+      {
+        "_id": "52f3b1e241f7f7172a8b45ef",
+        "postcode": "BS51KV",
+        "crimerate": 14
+      },
+      {
+        "_id": "52f3b1e241f7f7172a8b45f0",
+        "postcode": "BS14FN",
+        "crimerate": 11
+      },
+      {
+        "_id": "52f3b1e241f7f7172a8b45f1",
+        "postcode": "BS87GF",
+        "crimerate": 14
+      },
+      {
+        "_id": "52f3b1e241f7f7172a8b45f2",
+        "postcode": "BS91DF",
+        "crimerate": 3
+      }
+    ]
+  }
+}
