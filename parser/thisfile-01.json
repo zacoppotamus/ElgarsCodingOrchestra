@@ -1,0 +1,24 @@
+{
+	City:Bristol,
+	Population:800000,
+	Monarch:Steve,
+	European?:true
+}
+{
+	City:New York,
+	Population:60,
+	Monarch:Obama,
+	European?:false
+}
+{
+	City:Paris,
+	Population:1e+07,
+	Monarch:Louis,
+	European?:true
+}
+{
+	City:Toulouse,
+	Population:10,
+	Monarch:Tom,
+	European?:true
+}

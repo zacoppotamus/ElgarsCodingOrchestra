@@ -39,6 +39,7 @@ int main( int argc, char * argv[] )
         it++
       )
       {
+        cout << pageString( *it ) << '\n';
         vector< vector<JSONObject> > processedData(
           processData( it->contents ) );
         processedDataSheets.push_back( processedData );
