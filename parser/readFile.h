@@ -36,5 +36,6 @@ typedef struct
 } page;
  
 vector< page > getFile( string fileName );
+string pageString( page spreadsheet );
 
 #endif
