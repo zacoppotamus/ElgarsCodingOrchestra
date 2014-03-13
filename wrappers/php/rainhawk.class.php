@@ -171,9 +171,6 @@ class Rainhawk {
     public function deleteDataset($name) {
         $url = $this->host . "/datasets/" . $name;
         $data = $this->sendRequest($url, self::DELETE);
-
-        print_r($data);
-
         $json = $this->parseJson($data);
 
         if(!$json) {
