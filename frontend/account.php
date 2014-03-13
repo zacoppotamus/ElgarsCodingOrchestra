@@ -47,34 +47,39 @@ else
             </div>
             <div class="row">
                 <table class="table">
-                    <tr>
-                        <th>Name</th>
-                        <th>Description</th>
-                        <th>Records</th>
-                        <th>Fields</th>
-                        <th>Write Access</th>
-                        <th></th>
-                        <th></th>
-                    </tr>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Records</th>
+                            <th>Fields</th>
+                            <th>Write Access</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </head>
+                    <tbody>
+                        <?php
+                        for($i=0; $i<count($datasetsInfo); $i++)
+                        {
+                            $dataset = $datasetsInfo[$i];
+                            echo("<tr>\n".
+                                "<td><a href='edit.php?dataset=$dataset[name]'>$dataset[name]</a></td>\n".
+                                "<td>$dataset[description]</td>\n".
+                                "<td>$dataset[rows]</td>\n".
+                                "<td>".count($dataset[fields])."</td>\n".
+                                //"<td>".(in_array($user, $dataset["read_access" ]) ? "True" : "False")."</td>\n".
+                                "<td>".(in_array($user, $dataset["write_access"]) ? "True" : "False")."</td>\n".
+                                "<td><a href='vega-test/vegatest.php?dataset=$dataset[name]' class='btn btn-success btn-sm'>Visualise</a></td>".
+                                "<td><a href='delete.php?dataset=$dataset[name]' class='btn btn-danger btn-sm'>Delete</a></td>".
+                                "</tr>\n");
+                        }
 
-                    <?php
-                    for($i=0; $i<count($datasetsInfo); $i++)
-                    {
-                        $dataset = $datasetsInfo[$i];
-                        echo("<tr>\n".
-                            "<td><a href='edit.php?dataset=$dataset[name]'>$dataset[name]</a></td>\n".
-                            "<td>$dataset[description]</td>\n".
-                            "<td>$dataset[rows]</td>\n".
-                            "<td>".count($dataset[fields])."</td>\n".
-                            //"<td>".(in_array($user, $dataset["read_access" ]) ? "True" : "False")."</td>\n".
-                            "<td>".(in_array($user, $dataset["write_access"]) ? "True" : "False")."</td>\n".
-                            "<td><a href='vega-test/vegatest.php?dataset=$dataset[name]' class='btn btn-success btn-sm'>Visualise</a></td>".
-                            "<td><a href='delete.php?dataset=$dataset[name]' class='btn btn-danger btn-sm'>Delete</a></td>".
-                            "</tr>\n");
-                    }
-
-                    ?>
-                    <tr><td colspan='0'><p class="text-center"><strong><a href='upload.html'>Upload your own data</a></strong></p></td></tr>
+                        ?>
+                    <tbody>
+                    <tfoot>
+                        <tr><td colspan='100%'><p class="text-center"><strong><a href='upload.html'>Upload your own data</a></strong></p></td></tr>
+                    </tfoot>
                 </table>
             </div>
     </body>

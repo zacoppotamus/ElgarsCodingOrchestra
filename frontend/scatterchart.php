@@ -63,7 +63,7 @@ $fields = $rainhawk->fetchDataset($dataset)["fields"];
         }
 
         // Instantiate and draw our chart, passing in some options.
-        var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+        var chart = new google.visualization.ScatterChart(document.getElementById('chart_div'));
         var table = new google.visualization.Table(document.getElementById('table_div'));
         table.draw(data, {showRowNumber: true});
         chart.draw(data, chartOptions);
@@ -82,7 +82,7 @@ $fields = $rainhawk->fetchDataset($dataset)["fields"];
       <div class="row">
         <div role="form" class="form-inline">
           <div class="form-group">
-            <label for="xName">Ordinal Data</label>
+            <label for="xName">X-Axis Data</label>
             <select name="xName" id="xName" onchange="drawChart()" class="form-control">
               <option value=""></option>
             <?php
@@ -100,7 +100,7 @@ $fields = $rainhawk->fetchDataset($dataset)["fields"];
           for($i=0; $i<count($fields)-1; $i++)
           {
             echo "<div class='form-group'>".
-                 "<label for='yName[]'>Continuous Data $i</label>".
+              "<label for='yName[]'>Y-Axis Data $i</label>".
                  "<select name='yName[]' id='y".$i."Name' onchange='drawChart()' class='form-control'>".
                  "<option value=''></option>";
             for($j=0; $j<count($fields); $j++)
