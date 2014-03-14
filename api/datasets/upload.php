@@ -84,7 +84,23 @@ if(!empty($result)) {
 	}
 }
 
-$json['result'] = $result;
+// Remove the temporary file.
+unlink($file);
+
+// Find the generated JSON files.
+$files = scandir("/tmp");
+$file = pathinfo($file, PATHINFO_FILENAME);
+
+// Iterate through the /tmp directory to find them.
+foreach($files as $tmp_file) {
+	if(stripos($tmp_file, $file) !== false && pathinfo($file, PATHINFO_EXTENSION) == "json") {
+		// Do something with JSON.
+		// todo
+
+		// Delete JSON.
+		unlink($tmp_file);
+	}
+}
 
 // If we're good, output the JSON.
 $json['uploaded'] = true;
