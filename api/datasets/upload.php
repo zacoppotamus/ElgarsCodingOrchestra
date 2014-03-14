@@ -95,18 +95,27 @@ $file = pathinfo($file, PATHINFO_FILENAME);
 foreach($files as $tmp_file) {
 	if(stripos($tmp_file, $file) !== false && pathinfo($tmp_file, PATHINFO_EXTENSION) == "json") {
 		$tmp_file = "/tmp/" . $tmp_file;
-		$data = json_decode("[" . file_get_contents($tmp_file) . "]", true);
+		$rows = json_decode(file_get_contents($tmp_file), true);
 
-		// Do something with JSON.
-		echo "[" . file_get_contents($tmp_file) . "]";
+		// Insert the rows of data into the dataset.
+		$rows = $dataset->insert_multi($rows);
+
+		// Check that it was a success.
+		if(!$rows) {
+		    echo json_beautify(json_render_error(404, "An unknown error occured while inserting your data into the dataset."));
+		    exit;
+		}
+
+		// Set the JSON output.
+		foreach($rows as $row) {
+		    $row['_id'] = (string)$row['_id'];
+		    $json['rows'][] = $row;
+		}
 
 		// Delete JSON.
 		unlink($tmp_file);
 	}
 }
-
-// If we're good, output the JSON.
-$json['uploaded'] = true;
 
 /*!
  * Output our JSON payload for use in whatever needs to be using
