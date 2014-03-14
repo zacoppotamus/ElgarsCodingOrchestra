@@ -58,10 +58,12 @@ fclose($input);
  * Once we've uploaded the file, send it to the parser for processing.
  */
 
-exec("cd ../sadparser/ && ./sadparser '" . $filename . "' 2>&1", $result);
+exec("cd ../parser/ && ./sadparser '" . $filename . "' 2>&1", $result);
 
-var_dump($result);
-exit;
+if(!empty($result)) {
+	echo json_beautify(json_render_error(405, "There was a problem while processing your data - " . implode(", ", $result)));
+    exit;
+}
 
 $json['uploaded'] = true;
 
