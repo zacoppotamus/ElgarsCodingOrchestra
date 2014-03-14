@@ -110,7 +110,7 @@ string JSONString( JSONObject object )
     }
     document += '\n';
   }
-  document += "}\n";
+  document += "}";
   return document;
 }
 
@@ -129,12 +129,15 @@ int createJDocument( string name, vector<JSONObject> objects )
   {
     return 1;
   }
+  ofs << "[";
   for( vector<JSONObject>::iterator it = objects.begin();
     it != objects.end();
     it++ )
   {
+    if(it != objects.begin()) ofs << ",\n";
     ofs << JSONString( *it );
   }
+  ofs << "]";
   ofs.close();
   return 0;
 }
