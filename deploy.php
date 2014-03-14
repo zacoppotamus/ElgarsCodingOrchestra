@@ -6,13 +6,15 @@ header("content-type: text/plain; charset=utf8");
 // Define the commands to be run.
 $commands = array(
     "whoami",
+    "/usr/bin/git clean -d -f",
     "/usr/bin/git reset --hard",
     "/usr/bin/git pull",
     "/usr/bin/git status",
     "/usr/bin/git submodule sync",
     "/usr/bin/git submodule update",
     "/usr/bin/git submodule status",
-    "cd parser && /usr/bin/make sadparser"
+    "cd parser && /usr/bin/make clean",
+    "cd parser && /usr/bin/make"
 );
 
 // Run them all.
