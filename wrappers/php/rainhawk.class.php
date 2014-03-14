@@ -331,7 +331,6 @@ class Rainhawk {
 
         $url = $this->host . "/datasets/" . $name . "/upload/" . pathinfo($file, PATHINFO_EXTENSION);
         $data = $this->sendRequest($url, self::PUT_FILE, $postData);
-        echo $data . "\n";
         $json = $this->parseJson($data);
 
         if(!$json) {
