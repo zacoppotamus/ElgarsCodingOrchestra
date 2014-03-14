@@ -125,7 +125,7 @@ route::add(route::PUT, "/datasets/(\w+)\.(\w+)/upload/(\w+)", function($prefix, 
     $data->prefix = $prefix;
     $data->name = $name;
 
-    $data->type = in_array(strtolower($type), array("csv", "xlsx", "ods") ? strtolower($type) : null;
+    $data->type = in_array(strtolower($type), array("csv", "xlsx", "ods")) ? strtolower($type) : null;
 
     include("datasets/upload.php");
 });
