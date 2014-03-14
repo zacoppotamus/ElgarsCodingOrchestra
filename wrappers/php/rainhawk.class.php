@@ -329,7 +329,7 @@ class Rainhawk {
             "size" => $size
         );
 
-        $url = $this->host . "/datasets/" . $name . "/upload";
+        $url = $this->host . "/datasets/" . $name . "/upload/" . pathinfo($file, PATHINFO_EXTENSION);
         $data = $this->sendRequest($url, self::PUT_FILE, $postData);
         echo $data . "\n";
         $json = $this->parseJson($data);
@@ -604,6 +604,7 @@ class Rainhawk {
             }
         } else if($method == self::PUT_FILE) {
             curl_setopt($ch, CURLOPT_PUT, true);
+
             curl_setopt($ch, CURLOPT_INFILE, $params['fp']);
             curl_setopt($ch, CURLOPT_INFILESIZE, $params['size']);
         }

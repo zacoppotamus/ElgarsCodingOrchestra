@@ -119,11 +119,13 @@ route::add(route::DELETE, "/datasets/(\w+)\.(\w+)/data", function($prefix, $name
 });
 
 // Create an endpoint to insert new data into the dataset.
-route::add(route::PUT, "/datasets/(\w+)\.(\w+)/upload", function($prefix, $name) {
+route::add(route::PUT, "/datasets/(\w+)\.(\w+)/upload/(\w+)", function($prefix, $name, $type) {
     $data = new stdClass();
 
     $data->prefix = $prefix;
     $data->name = $name;
+
+    $data->type = in_array(strtolower($type), array("csv", "xlsx", "ods") ? strtolower($type) : null;
 
     include("datasets/upload.php");
 });

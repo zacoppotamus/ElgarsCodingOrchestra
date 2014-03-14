@@ -39,18 +39,28 @@ if(!$dataset->have_write_access(app::$username)) {
  * we can run it through the parser.
  */
 
-$file = "/tmp/upload_" . sprintf("%07d", rand(1, 1000000));
-$fp = fopen($file, "w");
-
-if(!$input = fopen("php://input", "r")) {
-    echo json_beautify(json_render_error(404, "You didn't send any file contents to process."));
+// Check that the type has been set.
+if(empty($data->type)) {
+	echo json_beautify(json_render_error(404, "You specified a type that we don't support. Currently we support: csv, xlsx, ods."));
     exit;
 }
 
+// Set a temporary location for the file.
+$file = "/tmp/upload_" . sprintf("%07d", rand(1, 1000000)) . "." . $data->type;
+$fp = fopen($file, "w");
+
+// Check if the user sent a file or not.
+if(!$input = fopen("php://input", "r")) {
+    echo json_beautify(json_render_error(405, "You didn't send any file contents to process."));
+    exit;
+}
+
+// Read the data and write it to the file, 8kB at a time.
 while($data = fread($input, 1024 * 8)) {
     fwrite($fp, $data);
 }
 
+// Close the file pointers.
 fclose($fp);
 fclose($input);
 
@@ -58,20 +68,23 @@ fclose($input);
  * Once we've uploaded the file, send it to the parser for processing.
  */
 
+// Run the parser command.
 exec("cd ../parser/ && ./sadparser '" . $file . "' 2>&1", $result);
 
+// Check for any errors.
 if(!empty($result)) {
 	foreach($result as $line) {
 		if(stripos($line, "invalid") !== false) {
-			echo json_beautify(json_render_error(405, "There was a problem while processing your data - your data could not be read. Currently we only support: csv, xlsx."));
+			echo json_beautify(json_render_error(406, "There was a problem while processing your data - your data could not be read. Currently we only support: csv, xlsx."));
 		    exit;
 		} else if(stripos($line, "could not") !== false) {
-			echo json_beautify(json_render_error(406, "There was a problem while processing your data - we seem to be having technical difficulties with our parser. Please try again later."));
+			echo json_beautify(json_render_error(407, "There was a problem while processing your data - we seem to be having technical difficulties with our parser. Please try again later."));
 		    exit;
 		}
 	}
 }
 
+// If we're good, output the JSON.
 $json['uploaded'] = true;
 
 /*!
