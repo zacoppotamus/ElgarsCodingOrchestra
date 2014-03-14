@@ -61,6 +61,8 @@ fclose($input);
 exec("cd ../sadparser/ && ./sadparser '" . $filename . "' 2>&1", $output, $errors);
 
 if(!empty($errors)) {
+	var_dump($errors);
+
 	echo json_beautify(json_render_error(405, "We encountered some problems while processing your data! " . implode(" ", $errors)));
     exit;
 }
