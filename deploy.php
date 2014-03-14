@@ -15,14 +15,14 @@ $commands = array(
     "/usr/bin/git submodule update",
     "/usr/bin/git submodule status",
     "cd /var/www/parser && /usr/bin/make clean",
-    "cd /var/www/parser && /usr/bin/make 2>&1"
+    "cd /var/www/parser && /usr/bin/make"
 );
 
 // Run them all.
 foreach($commands as $command) {
     echo "$ {$command}\n";
 
-    $output = shell_exec($command);
+    $output = shell_exec($command . " 2>&1");
     echo "{$output}\n";
 }
 
