@@ -22,7 +22,7 @@ $commands = array(
 foreach($commands as $command) {
     echo "$ {$command}\n";
 
-    $output = shell_exec("export PATH='/usr/local/bin/'; " . $command . " 2>&1");
+    $output = shell_exec("export PATH=/usr/local/bin:/usr/bin:/bin; " . $command . " 2>&1");
     echo "{$output}\n";
 }
 
