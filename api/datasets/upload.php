@@ -58,10 +58,9 @@ fclose($input);
  * Once we've uploaded the file, send it to the parser for processing.
  */
 
-$output = exec("cd ../sadparser/ && ./sadparser '" . $filename . "' 2>&1", $result);
+exec("cd ../sadparser/ && ./sadparser '" . $filename . "' 2>&1", $result);
 
-print_r($result);
-print_r($output);
+var_dump($result);
 exit;
 
 $json['uploaded'] = true;
