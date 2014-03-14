@@ -15,7 +15,7 @@ $commands = array(
     "/usr/bin/git submodule update",
     "/usr/bin/git submodule status",
     "cd /var/www/parser && /usr/bin/make clean",
-    "cd /var/www/parser && /usr/bin/make"
+    "cd /var/www/parser && /usr/bin/make 2>&1"
 );
 
 // Run them all.
