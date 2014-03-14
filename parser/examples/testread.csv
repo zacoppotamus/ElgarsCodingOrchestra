@@ -1,0 +1,7 @@
+Name,Value,>5?
+Eight,8,TRUE
+Eleven,11,TRUE
+Two,2,FALSE
+Zero,0,FALSE
+Forty-two,42,TRUE
+Negative One,-1,FALSE
