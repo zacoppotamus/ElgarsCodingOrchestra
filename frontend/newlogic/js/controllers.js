@@ -8,12 +8,57 @@ angular.module('eco.controllers', [])
 .controller('ecoCtrl', function ($scope, $http) {
 
 	// different kind of visualizations and choices
+	// Try different alternatives for decoupling the DOM and controller
+	// this can also be a class-function instantiated on $scope.watch
 	$scope.vizTypes = [
-		{'id': 0, 'name':'Pie Chart', 'choices':['Values', 'Names']},
-		{'id': 1, 'name':'Bar Chart', 'choices':['X-Axis', 'Y-Axis', 'Y Max']},
-		{'id': 2, 'name':'Bubble Chart', 'choices':['X', 'Y', 'Max Radius', 'Label']},
-		{'id': 3, 'name':'Map', 'choices':['Latitude', 'Longitude']}
+		{
+			'id' : 0, 
+			'name' : 'Pie Chart', 
+			'choices' : ['values', 'names'],
+			'options' : {
+				// Can uppercase these in CSS and set a separate model for the
+				// dropdowns in the HTML
+				'values' : null,
+				'names' : null
+			}
+		},
+		{
+			'id': 1,
+			'name':'Bar Chart',
+			'choices':['xAxis', 'yAxis', 'yMax'],
+			'options' : {
+				'xAxis' : null,
+				'yAxis' : null,
+				'yMax' : null
+			}
+		},
+		{
+			'id': 2,
+			'name':'Bubble Chart',
+			'choices':['x', 'y', 'maxRadius', 'label'],
+			'options' : {
+				'x' : null,
+				'y' : null,
+				'maxRadius' : null,
+				'label' : null
+			}
+		},
+		{
+			'id': 3,
+			'name':'Map',
+			'choices':['latitude', 'longitude'],
+			'options' : {
+				'latitude' : null,
+				'longitude' : null
+			}
+
+		}
 	];
+
+	// random shit for testing
+	$scope.vizTypes[1].options.xAxis = 'Name';
+	$scope.vizTypes[1].options.yAxis = 'TD';
+	$scope.vizTypes[1].options.yMax = 70;
 
 	// selected radio button
 	$scope.selectedVizType = {id:2};
