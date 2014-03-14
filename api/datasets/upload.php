@@ -95,10 +95,10 @@ $file = pathinfo($file, PATHINFO_FILENAME);
 foreach($files as $tmp_file) {
 	if(stripos($tmp_file, $file) !== false && pathinfo($tmp_file, PATHINFO_EXTENSION) == "json") {
 		$tmp_file = "/tmp/" . $tmp_file;
-		$data = json_decode(file_get_contents($tmp_file), true);
+		$data = json_decode("[" . file_get_contents($tmp_file) . "]", true);
 
 		// Do something with JSON.
-		// todo
+		print_r($data);
 
 		// Delete JSON.
 		unlink($tmp_file);
