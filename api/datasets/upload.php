@@ -58,7 +58,7 @@ fclose($input);
  * Once we've uploaded the file, send it to the parser for processing.
  */
 
-exec("cd ../sadparser/ && ./sadparser '" . $filename . "' 2>&1", $output, $errors);
+exec("cd ../sadparser/ && ./sadparser '" . $filename . "' 2>&1", $output);
 
 if(!empty($output)) {
 	print_r($output);
