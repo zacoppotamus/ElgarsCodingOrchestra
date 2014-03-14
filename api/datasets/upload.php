@@ -93,7 +93,7 @@ $file = pathinfo($file, PATHINFO_FILENAME);
 
 // Iterate through the /tmp directory to find them.
 foreach($files as $tmp_file) {
-	if(stripos($tmp_file, $file) !== false && pathinfo($file, PATHINFO_EXTENSION) == "json") {
+	if(stripos($tmp_file, $file) !== false && pathinfo($tmp_file, PATHINFO_EXTENSION) == "json") {
 		// Do something with JSON.
 		// todo
 
