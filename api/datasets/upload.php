@@ -58,13 +58,15 @@ fclose($input);
  * Once we've uploaded the file, send it to the parser for processing.
  */
 
-$json['command'] = "cd ../parser/ && ./sadparser '" . $file . "' 2>&1";
-
 exec("cd ../parser/ && ./sadparser '" . $file . "' 2>&1", $result);
 
 if(!empty($result)) {
-	echo json_beautify(json_render_error(405, "There was a problem while processing your data - " . implode(", ", $result)));
-    exit;
+	foreach($result as $line) {
+		if(stripos($line, "invalid") !== false) {
+			echo json_beautify(json_render_error(405, "There was a problem while processing your data - your data could not be read. Currently we only support: csv, xlsx."));
+		    exit;
+		}
+	}
 }
 
 $json['uploaded'] = true;
