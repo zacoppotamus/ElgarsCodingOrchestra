@@ -98,7 +98,7 @@ foreach($files as $tmp_file) {
 		$data = json_decode("[" . file_get_contents($tmp_file) . "]", true);
 
 		// Do something with JSON.
-		print_r($data);
+		echo "[" . file_get_contents($tmp_file) . "]";
 
 		// Delete JSON.
 		unlink($tmp_file);
