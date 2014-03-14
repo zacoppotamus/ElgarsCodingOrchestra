@@ -84,6 +84,8 @@ if(!empty($result)) {
 	}
 }
 
+$json['result'] = $result;
+
 // If we're good, output the JSON.
 $json['uploaded'] = true;
 
