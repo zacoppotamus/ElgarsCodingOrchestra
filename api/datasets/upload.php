@@ -60,16 +60,8 @@ fclose($input);
 
 exec("cd ../sadparser/ && ./sadparser '" . $filename . "' 2>&1", $output);
 
-if(!empty($output)) {
-	print_r($output);
-
-	//echo json_beautify(json_render_error(405, "We encountered some problems while processing your data! " . implode(" ", $errors)));
-    //exit;
-}
-
-if(!empty($output)) {
-	$json = $output;
-}
+print_r($output);
+exit;
 
 $json['uploaded'] = true;
 
