@@ -4,7 +4,7 @@ include("includes/kernel.php");
 include("includes/api/core.php");
 
 /*!
- * Check if the user provided enough information to upload data to 
+ * Check if the user provided enough information to upload data to
  * the dataset, which requires the dataset name and prefix.
  */
 
@@ -39,7 +39,7 @@ if(!$dataset->have_write_access(app::$username)) {
  * we can run it through the parser.
  */
 
-$file = "/tmp/upload_" . sprintf("%7d", rand(1, 1000000));
+$file = "/tmp/upload_" . sprintf("%07d", rand(1, 1000000));
 $fp = fopen($file, "w");
 
 if(!$input = fopen("php://input", "r")) {

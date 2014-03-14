@@ -22,6 +22,7 @@ class Rainhawk {
     const POST = "POST";
     const PUT = "PUT";
     const DELETE = "DELETE";
+    const PUT_FILE = "PUTFILE";
 
     /**
      * Store the base address for the API.
@@ -311,6 +312,35 @@ class Rainhawk {
     }
 
     /**
+     * Upload a data file to the specified dataset. We currently support lots
+     * of different types of files including .ods, .csv, .txt and more.
+     *
+     * @param string $name  The dataset to insert the data into.
+     * @param string $file  The path to the file to upload.
+     * @return array|bool  Returns the data array on success, false on failure.
+     */
+
+    public function uploadData($name, $file) {
+        $fp = fopen($file, "rb");
+        $size = filesize($file);
+
+        $postData = array(
+            "fp" => $fp,
+            "size" => $size
+        );
+
+        $url = $this->host . "/datasets/" . $name . "/upload";
+        $data = $this->sendRequest($url, self::PUT_FILE, $postData);
+        $json = $this->parseJson($data);
+
+        if(!$json) {
+            return false;
+        }
+
+        return $json['data'];
+    }
+
+    /**
      * List the indexes that have been created on a dataset. We
      * should have at least one on _id by default.
      *
@@ -571,6 +601,10 @@ class Rainhawk {
             if(!empty($params)) {
                 curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($params));
             }
+        } else if($method == self::PUT_FILE) {
+            curl_setopt($ch, CURLOPT_PUT, true);
+            curl_setopt($ch, CURLOPT_INFILE, $params['fp']);
+            curl_setopt($ch, CURLOPT_INFILESIZE, $params['size']);
         }
 
         $result = curl_exec($ch);
