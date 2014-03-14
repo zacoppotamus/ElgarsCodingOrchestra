@@ -98,9 +98,11 @@ string JSONString( JSONObject object )
   while( count < max )
   {
     document += "\t";
+    document += "\"";
     document += object.getName(count);
-    document += ":";
+    document += "\": \"";
     document += object.getValue(count);
+    document += "\"";
     count++;
     if( count < max )
     {
