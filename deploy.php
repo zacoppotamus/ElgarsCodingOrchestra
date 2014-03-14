@@ -2,6 +2,7 @@
 
 // Define the headers.
 header("content-type: text/plain; charset=utf8");
+chdir("/var/www");
 
 // Define the commands to be run.
 $commands = array(
@@ -19,9 +20,9 @@ $commands = array(
 
 // Run them all.
 foreach($commands as $command) {
-    $output = shell_exec($command);
-
     echo "$ {$command}\n";
+
+    $output = shell_exec($command);
     echo "{$output}\n";
 }
 
