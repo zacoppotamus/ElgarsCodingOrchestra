@@ -65,6 +65,9 @@ if(!empty($result)) {
 		if(stripos($line, "invalid") !== false) {
 			echo json_beautify(json_render_error(405, "There was a problem while processing your data - your data could not be read. Currently we only support: csv, xlsx."));
 		    exit;
+		} else if(stripos($line, "could not") !== false) {
+			echo json_beautify(json_render_error(406, "There was a problem while processing your data - we seem to be having technical difficulties with our parser. Please try again later."));
+		    exit;
 		}
 	}
 }

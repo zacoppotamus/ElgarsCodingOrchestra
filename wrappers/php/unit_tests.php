@@ -122,7 +122,7 @@ print_r($data);
  * @covers Rainhawk::uploadData()
  */
 
-$data = "test_set.ods";
+$data = "test_data.csv";
 
 echo "[+] Uploading '$data' to the dataset...\n";
 $data = $rainhawk->uploadData($name, $data);
