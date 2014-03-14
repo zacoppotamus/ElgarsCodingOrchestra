@@ -58,7 +58,9 @@ fclose($input);
  * Once we've uploaded the file, send it to the parser for processing.
  */
 
-exec("cd ../parser/ && ./sadparser '" . $filename . "' 2>&1", $result);
+$json['command'] = "cd ../parser/ && ./sadparser '" . $file . "' 2>&1";
+
+exec("cd ../parser/ && ./sadparser '" . $file . "' 2>&1", $result);
 
 if(!empty($result)) {
 	echo json_beautify(json_render_error(405, "There was a problem while processing your data - " . implode(", ", $result)));
