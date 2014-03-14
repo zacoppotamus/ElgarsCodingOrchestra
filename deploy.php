@@ -13,8 +13,8 @@ $commands = array(
     "/usr/bin/git submodule sync",
     "/usr/bin/git submodule update",
     "/usr/bin/git submodule status",
-    "cd parser && /usr/bin/make clean",
-    "cd parser && /usr/bin/make"
+    "cd /var/www/parser && /usr/bin/make clean",
+    "cd /var/www/parser && /usr/bin/make"
 );
 
 // Run them all.
