@@ -117,6 +117,24 @@ if(!$data) {
 print_r($data);
 
 /**
+ * Test uploading data to our dataset, using the provided test_set.ods file.
+ *
+ * @covers Rainhawk::uploadData()
+ */
+
+$data = "test_data.csv";
+
+echo "[+] Uploading '$data' to the dataset...\n";
+$data = $rainhawk->uploadData($name, $data);
+
+if(!$data) {
+    echo "[!] Could not upload data - " . $rainhawk->error() . "\n";
+    exit;
+}
+
+print_r($data);
+
+/**
  * Test selecting data from the dataset, so that we can make sure that complex
  * queries are being run.
  *

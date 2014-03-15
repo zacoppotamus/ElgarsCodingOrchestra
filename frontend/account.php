@@ -11,6 +11,7 @@ $user         = $rainhawk->ping()["mashape_user"];
 if ($user == false)
 {
     header('Location: login.php?fail');
+    exit();
 }
 else
 {
@@ -67,7 +68,7 @@ else
                                 "<td><a href='edit.php?dataset=$dataset[name]'>$dataset[name]</a></td>\n".
                                 "<td>$dataset[description]</td>\n".
                                 "<td>$dataset[rows]</td>\n".
-                                "<td>".count($dataset[fields])."</td>\n".
+                                "<td>".count($dataset['fields'])."</td>\n".
                                 //"<td>".(in_array($user, $dataset["read_access" ]) ? "True" : "False")."</td>\n".
                                 "<td>".(in_array($user, $dataset["write_access"]) ? "True" : "False")."</td>\n".
                                 "<td><a href='vega-test/vegatest.php?dataset=$dataset[name]' class='btn btn-success btn-sm'>Visualise</a></td>".
