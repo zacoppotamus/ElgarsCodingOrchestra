@@ -104,7 +104,7 @@ angular.module('eco.controllers', [])
 		}).
 		success(function(json) {
 			$scope.fields = [];
-			if(json.data["rows"]!=0) {
+			if(json.data["rows"] != undefined) {
 				$.each(json.data["results"][0], function(key, val) {
 					if (key!='_id') {
 						$scope.fields.push(key);
@@ -147,9 +147,10 @@ angular.module('eco.controllers', [])
 		});
 	};
 
+	// get the datasets immediately
+	$scope.getDatasetNames();
+
 	// when a new dataset is selected from the dropdown get its fields
 	$scope.$watch('selectedDataset', $scope.getFields, true)
 
-	// get the datasets immediately
-	$scope.getDatasetNames();
 });

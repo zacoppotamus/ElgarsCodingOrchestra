@@ -119,14 +119,14 @@ angular.module('eco.directives', [])
 		}
 	}
 })
-.directive('vegaBarChart', function() {
+.directive('vegachart', function() {
 	//  -- TO DO -- 
 	// Abstract this to be Vega Vis that will call
 	// other functions depending on selectedVizType
 
 	// Inherit scope from parent controller
 	return {
-		restrict: 'E',
+		restrict: 'AEC',
 		terminal: true,
 		scope: {
 			// id is 1 here
@@ -134,6 +134,10 @@ angular.module('eco.directives', [])
 			selectedVizType: '='
 		},
 		link: function(scope, element, attrs) {
-
+			// Dynamically create Vega JSON based on the controller data
+			vg.parse.spec(eco.charts.vegabarchart().spec(), function(chart){
+				chart({el:"#vegachart"}).update();
+			})
 		}
-})
+	}
+});
