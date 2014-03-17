@@ -9,9 +9,6 @@ angular.module('eco.controllers', [])
 
 	/*
 		TO DO: If one option is null or two or more are the same throw error.
-		Make viztypes a function like in charts/barchart.js and instantiate the 
-		inner objects on $scope.watch() so that they are null, each time
-		$selectedVizType changes.
 
 		When Visualize button is pressed, check that all parameters are != null.
 
@@ -21,51 +18,52 @@ angular.module('eco.controllers', [])
 	// different kind of visualizations and choices
 	// Try different alternatives for decoupling the DOM and controller
 	// this can also be a class-function instantiated on $scope.watch so that everything becomes null
-	$scope.vizTypes = [
-		{
-			'id' : 0, 
-			'name' : 'Pie Chart', 
-			'choices' : ['values', 'names'],
-			'options' : {
-				// Can uppercase these in CSS and set a separate model for the
-				// dropdowns in the HTML
-				'values' : null,
-				'names' : null
-			}
-		},
-		{
-			'id': 1,
-			'name':'Bar Chart',
-			'choices':['xAxis', 'yAxis', 'yMax'],
-			'options' : {
-				'xAxis' : null,
-				'yAxis' : null,
-				'yMax' : null
-			}
-		},
-		{
-			'id': 2,
-			'name':'Bubble Chart',
-			'choices':['x', 'y', 'maxRadius', 'label'],
-			'options' : {
-				'x' : null,
-				'y' : null,
-				'maxRadius' : null,
-				'label' : null
-			}
-		},
-		{
-			'id': 3,
-			'name':'Map',
-			'choices':['latitude', 'longitude'],
-			'options' : {
-				'latitude' : null,
-				'longitude' : null
-			}
+	$scope.getParamOptions = function () {
+		return [
+			{
+				'id' : 0, 
+				'name' : 'Pie Chart', 
+				'choices' : ['values', 'names'],
+				'options' : {
+					'values' : null,
+					'names' : null
+				}
+			},
+			{
+				'id': 1,
+				'name':'Bar Chart',
+				'choices':['xAxis', 'yAxis', 'yMax'],
+				'options' : {
+					'xAxis' : null,
+					'yAxis' : null,
+					'yMax' : null
+				}
+			},
+			{
+				'id': 2,
+				'name':'Bubble Chart',
+				'choices':['x', 'y', 'maxRadius', 'label'],
+				'options' : {
+					'x' : null,
+					'y' : null,
+					'maxRadius' : null,
+					'label' : null
+				}
+			},
+			{
+				'id': 3,
+				'name':'Map',
+				'choices':['latitude', 'longitude'],
+				'options' : {
+					'latitude' : null,
+					'longitude' : null
+				}
 
-		}
-	];
+			}
+		];
+	}
 
+	$scope.vizTypes = $scope.getParamOptions();
 	// random shit for testing
 	$scope.vizTypes[1].options.xAxis = 'Name';
 	$scope.vizTypes[1].options.yAxis = 'TD';
@@ -88,12 +86,12 @@ angular.module('eco.controllers', [])
 	$scope.username = 'benelgar';
 
 	// years for sample vis (nbapayrolls)
-	$scope.years = [];
-	for (var i = 1998; i <= 2017; i++) {
-		$scope.years.push(i);
-	}
+	// $scope.years = [];
+	// for (var i = 1998; i <= 2017; i++) {
+	// 	$scope.years.push(i);
+	// }
 
-	// test json response when passing header
+	// reinitialize $scope.vizTypes here
 	$scope.getFields = function() {
 		$http({
 			method: 'GET',
@@ -147,10 +145,59 @@ angular.module('eco.controllers', [])
 		});
 	};
 
+	// check to see that no parameter is empty
+	$scope.checkParameters = function() {
+		// if ($scope.valid == false) {
+		// 	alert("Invalid options");
+		// }
+		$scope.validParams = true;
+		for (var field in $scope.vizTypes[$scope.selectedVizType.id].options)
+		{
+			if ($scope.vizTypes[$scope.selectedVizType.id].options[field] === null) {
+				$scope.validParams = false;
+				console.log("Invalid parameters!");
+				return;
+			}
+		}
+	};
+
+	// get data for the selected dataset
+	// TODO check for empty datasets 
+	$scope.getData = function(currentDataset) {
+		$http({
+			method: 'GET',
+			url: 'https://sneeza-eco.p.mashape.com/datasets/'+$scope.username+'.'+currentDataset+'/data',
+			headers: {
+				'X-Mashape-Authorization' : $scope.apiKey
+			}
+		}).
+		success(function(json) {
+			console.log(json.data.results);
+			return json.data.results;
+		})
+	}
+	$scope.getData('nflqb2013');
+
+	// $scope.validParams = true;
+
 	// get the datasets immediately
 	$scope.getDatasetNames();
 
 	// when a new dataset is selected from the dropdown get its fields
-	$scope.$watch('selectedDataset', $scope.getFields, true)
+	$scope.$watch('selectedDataset', function() {
+		$scope.getFields();
+		// reinitialize parameter options
+		$scope.vizTypes = $scope.getParamOptions();
+	});	
+
+	$scope.$watch('selectedVizType.id', function() {
+		$scope.validParams = true;
+		console.log(1);
+	});
+
+	$scope.$watch('vizTypes', function() {
+		console.log('bla');
+		$scope.checkParameters();
+	})
 
 });
