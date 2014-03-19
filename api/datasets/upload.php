@@ -64,6 +64,14 @@ while($data = fread($input, 1024 * 8)) {
 fclose($fp);
 fclose($input);
 
+// Check if the file is empty or not.
+if(filesize($file) == 0) {
+	unlink($file);
+
+	echo json_beautify(json_render_error(406, "The contents of the file you uploaded is empty."));
+    exit;
+}
+
 /*!
  * Once we've uploaded the file, send it to the parser for processing.
  */
@@ -75,10 +83,10 @@ exec("cd ../parser/ && ./sadparser '" . $file . "' 2>&1", $result);
 if(!empty($result)) {
 	foreach($result as $line) {
 		if(stripos($line, "invalid") !== false) {
-			echo json_beautify(json_render_error(406, "There was a problem while processing your data - your data could not be read. Currently we only support: csv, xlsx."));
+			echo json_beautify(json_render_error(407, "There was a problem while processing your data - your data could not be read. Currently we only support: csv, xlsx."));
 		    exit;
 		} else if(stripos($line, "could not") !== false) {
-			echo json_beautify(json_render_error(407, "There was a problem while processing your data - we seem to be having technical difficulties with our parser. Please try again later."));
+			echo json_beautify(json_render_error(408, "There was a problem while processing your data - we seem to be having technical difficulties with our parser. Please try again later."));
 		    exit;
 		}
 	}
@@ -102,7 +110,7 @@ foreach($files as $tmp_file) {
 
 		// Check that it was a success.
 		if(!$rows) {
-		    echo json_beautify(json_render_error(404, "An unknown error occured while inserting your data into the dataset."));
+		    echo json_beautify(json_render_error(409, "An unknown error occured while inserting your data into the dataset."));
 		    exit;
 		}
 
@@ -115,6 +123,12 @@ foreach($files as $tmp_file) {
 		// Delete JSON.
 		unlink($tmp_file);
 	}
+}
+
+// Check if the number of rows inserted was zero.
+if(!isset($json['rows']) || count($json['rows']) == 0) {
+	echo json_beautify(json_render_error(410, "After parsing the uploaded file we couldn't find any data."));
+    exit;
 }
 
 /*!
