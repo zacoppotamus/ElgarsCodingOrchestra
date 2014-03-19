@@ -117,15 +117,12 @@ function uploadDataset(event)
     var type = $('#datasetType').val();
     var url = 'https://sneeza-eco.p.mashape.com/datasets/' + name + "/upload/" + type;
 
-    var putdata = new FormData();
-    putdata.append("file", file);
-
     $.ajax({
       url: url,
       type: 'PUT',
       processData: false,
       contentType: false,
-      data: putdata,
+      data: file,
       datatype: 'json',
       success: function(data) {
         if(data.meta.code === 200)
