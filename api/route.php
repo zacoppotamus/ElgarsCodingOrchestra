@@ -15,22 +15,22 @@ header("access-control-allow-origin: *");
  */
 
 // Create a main endpoint.
-route::add(route::GET, "/", function() {
+route::get("/", function() {
     include("main.php");
 });
 
 // Create an endpoint for the ping command.
-route::add(route::GET, "/ping", function() {
+route::get("/ping", function() {
     include("ping.php");
 });
 
 // Create an endpoint to list all available datasets.
-route::add(route::GET, "/datasets", function() {
+route::get("/datasets", function() {
     include("datasets.php");
 });
 
 // Create an endpoint to create a new dataset.
-route::add(route::POST, "/datasets", function() {
+route::post("/datasets", function() {
     $data = new stdClass();
 
     $data->name = isset($_POST['name']) ? strtolower(trim($_POST['name'])) : null;
@@ -40,7 +40,7 @@ route::add(route::POST, "/datasets", function() {
 });
 
 // Create an endpoint to get the info about a dataset.
-route::add(route::GET, "/datasets/(\w+)\.(\w+)", function($prefix, $name) {
+route::get("/datasets/(\w+)\.(\w+)", function($prefix, $name) {
     $data = new stdClass();
 
     $data->prefix = $prefix;
@@ -50,7 +50,7 @@ route::add(route::GET, "/datasets/(\w+)\.(\w+)", function($prefix, $name) {
 });
 
 // Create an endpoint to get the info about a dataset.
-route::add(route::DELETE, "/datasets/(\w+)\.(\w+)", function($prefix, $name) {
+route::delete("/datasets/(\w+)\.(\w+)", function($prefix, $name) {
     $data = new stdClass();
 
     $data->prefix = $prefix;
@@ -60,7 +60,7 @@ route::add(route::DELETE, "/datasets/(\w+)\.(\w+)", function($prefix, $name) {
 });
 
 // Create an endpoint to perform a query on a dataset.
-route::add(route::GET, "/datasets/(\w+)\.(\w+)/data", function($prefix, $name) {
+route::get("/datasets/(\w+)\.(\w+)/data", function($prefix, $name) {
     $data = new stdClass();
 
     $data->prefix = $prefix;
@@ -77,7 +77,7 @@ route::add(route::GET, "/datasets/(\w+)\.(\w+)/data", function($prefix, $name) {
 });
 
 // Create an endpoint to insert new data into the dataset.
-route::add(route::POST, "/datasets/(\w+)\.(\w+)/data", function($prefix, $name) {
+route::post("/datasets/(\w+)\.(\w+)/data", function($prefix, $name) {
     $data = new stdClass();
 
     $data->prefix = $prefix;
@@ -90,7 +90,7 @@ route::add(route::POST, "/datasets/(\w+)\.(\w+)/data", function($prefix, $name) 
 });
 
 // Create an endpoint to update data in the dataset.
-route::add(route::PUT, "/datasets/(\w+)\.(\w+)/data", function($prefix, $name) {
+route::put("/datasets/(\w+)\.(\w+)/data", function($prefix, $name) {
     $data = new stdClass();
 
     parse_str(file_get_contents("php://input"), $_PUT);
@@ -105,7 +105,7 @@ route::add(route::PUT, "/datasets/(\w+)\.(\w+)/data", function($prefix, $name) {
 });
 
 // Create an endpoint to delete data from the dataset.
-route::add(route::DELETE, "/datasets/(\w+)\.(\w+)/data", function($prefix, $name) {
+route::delete("/datasets/(\w+)\.(\w+)/data", function($prefix, $name) {
     $data = new stdClass();
 
     parse_str(file_get_contents("php://input"), $_DELETE);
@@ -119,7 +119,7 @@ route::add(route::DELETE, "/datasets/(\w+)\.(\w+)/data", function($prefix, $name
 });
 
 // Create an endpoint to insert new data into the dataset.
-route::add(route::PUT, "/datasets/(\w+)\.(\w+)/upload/(\w+)", function($prefix, $name, $type) {
+route::put("/datasets/(\w+)\.(\w+)/upload/(\w+)", function($prefix, $name, $type) {
     $data = new stdClass();
 
     $data->prefix = $prefix;
@@ -131,7 +131,7 @@ route::add(route::PUT, "/datasets/(\w+)\.(\w+)/upload/(\w+)", function($prefix, 
 });
 
 // Create an endpoint to list the indexes on a dataset.
-route::add(route::GET, "/datasets/(\w+)\.(\w+)/indexes", function($prefix, $name) {
+route::get("/datasets/(\w+)\.(\w+)/indexes", function($prefix, $name) {
     $data = new stdClass();
 
     $data->prefix = $prefix;
@@ -141,7 +141,7 @@ route::add(route::GET, "/datasets/(\w+)\.(\w+)/indexes", function($prefix, $name
 });
 
 // Create an endpoint to add an index to a dataset.
-route::add(route::POST, "/datasets/(\w+)\.(\w+)/indexes", function($prefix, $name) {
+route::post("/datasets/(\w+)\.(\w+)/indexes", function($prefix, $name) {
     $data = new stdClass();
 
     $data->prefix = $prefix;
@@ -153,7 +153,7 @@ route::add(route::POST, "/datasets/(\w+)\.(\w+)/indexes", function($prefix, $nam
 });
 
 // Create an endpoint to list the indexes on a dataset.
-route::add(route::GET, "/datasets/(\w+)\.(\w+)/access", function($prefix, $name) {
+route::get("/datasets/(\w+)\.(\w+)/access", function($prefix, $name) {
     $data = new stdClass();
 
     $data->prefix = $prefix;
@@ -163,7 +163,7 @@ route::add(route::GET, "/datasets/(\w+)\.(\w+)/access", function($prefix, $name)
 });
 
 // Create an endpoint to add an index to a dataset.
-route::add(route::POST, "/datasets/(\w+)\.(\w+)/access", function($prefix, $name) {
+route::post("/datasets/(\w+)\.(\w+)/access", function($prefix, $name) {
     $data = new stdClass();
 
     $data->prefix = $prefix;
@@ -176,7 +176,7 @@ route::add(route::POST, "/datasets/(\w+)\.(\w+)/access", function($prefix, $name
 });
 
 // Create an endpoint to add an index to a dataset.
-route::add(route::DELETE, "/datasets/(\w+)\.(\w+)/access", function($prefix, $name) {
+route::delete("/datasets/(\w+)\.(\w+)/access", function($prefix, $name) {
     $data = new stdClass();
 
     $data->prefix = $prefix;
@@ -189,7 +189,7 @@ route::add(route::DELETE, "/datasets/(\w+)\.(\w+)/access", function($prefix, $na
 });
 
 // Create an endpoint for the polyfit calculations.
-route::add(route::GET, "/datasets/(\w+)\.(\w+)/calc/polyfit", function($prefix, $name) {
+route::get("/datasets/(\w+)\.(\w+)/calc/polyfit", function($prefix, $name) {
     $data = new stdClass();
 
     $data->prefix = $prefix;
@@ -202,7 +202,7 @@ route::add(route::GET, "/datasets/(\w+)\.(\w+)/calc/polyfit", function($prefix, 
 });
 
 // Create an endpoint for the stats calculations.
-route::add(route::GET, "/datasets/(\w+)\.(\w+)/calc/stats", function($prefix, $name) {
+route::get("/datasets/(\w+)\.(\w+)/calc/stats", function($prefix, $name) {
     $data = new stdClass();
 
     $data->prefix = $prefix;
@@ -216,8 +216,8 @@ route::add(route::GET, "/datasets/(\w+)\.(\w+)/calc/stats", function($prefix, $n
 
 /*
 // Add endpoints for the tests.
-route::add("/tests/run", "tests/run.php");
-route::add("/tests/import", "tests/import.php");
+route::get("/tests/run", "tests/run.php");
+route::get("/tests/import", "tests/import.php");
 */
 
 /*!
