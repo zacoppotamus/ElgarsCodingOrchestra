@@ -19,10 +19,6 @@ if ($user == false)
     header('Location: login.php?fail');
     exit();
 }
-else
-{
-    setcookie("apiKey", $mashape_key, 0, "/");
-}
 ?>
 
 <!DOCTYPE html>

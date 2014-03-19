@@ -38,7 +38,7 @@ if(isset($_SESSION["apiKey"]) && !isset($_GET["logout"]))
                 }
                 elseif(isset($_GET["logout"]))
                 {
-                    setcookie("apiKey", "", time()-3600, "/");
+                    session_unset();
                     echo "<p class='text-success'>Successfully logged out.</p>";
                 }
                 ?>
