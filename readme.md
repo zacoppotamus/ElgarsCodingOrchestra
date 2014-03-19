@@ -44,7 +44,7 @@ In order to develop with Vagrant, you need to do the following:
     127.0.0.1    rainhawk.dev    api.rainhawk.dev
     ```
 
-5. Once step 3 has completed provisioning, navigate your browser to [rainhawk.dev](http://rainhawk.dev/) and you'll be able to access the project website.
+5. Once step 3 has completed provisioning, navigate your browser to [rainhawk.dev:8080](http://rainhawk.dev:8080) and you'll be able to access the project website.
 
 6. To get access to the dev machine, use the following command from anywhere in the directory. This will create an SSH tunnel into the virtual machine, where `/vagrant` is a syncronised folder to the git directory.
 
