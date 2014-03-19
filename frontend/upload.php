@@ -21,7 +21,7 @@ else
 
 <html>
   <head>
-    <title>Create</title>
+    <title>Upload</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -39,9 +39,9 @@ else
   <body>
     <div class="container">
       <div class="row">
-        <h1>Create</h1>
+        <h1>Upload</h1>
         <h3>
-          Create a new dataset
+          Upload a data file
           <a href="account.php" type="button"
             class="btn btn-warning pull-right">Back</a>
         </h3>
@@ -50,46 +50,91 @@ else
         <form role="form">
           <div class="form-group">
             <label for="datasetName">Dataset Name</label>
-            <div class="input-group">
-              <span class="input-group-addon"><?php echo $user; ?>.</span>
-              <input type="text" class="form-control" id="datasetName"
-                name="datasetName" placeholder="Dataset Name" required autofocus>
-            </div>
+            <input type="text" class="form-control" id="datasetName"
+              name="datasetName" placeholder="Dataset Name" required autofocus>
           </div>
           <div class="form-group">
-            <label for="datasetDescription">Dataset Description</label>
-            <input type="text" class="form-control" id="datasetDescription"
-              name="datasetDescription" placeholder="Dataset Description">
+            <label for="datasetFile">Type</label>
+            <select class="form-control" id="datasetType">
+              <option value="csv">csv</option>
+              <option value="xlsx">xlsx</option>
+              <option value="ods">ods</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="datasetFile">File</label>
+            <input type="file" id="datasetFile" name="datasetFile">
           </div>
           <button type="submit" class="btn btn-default">Submit</button>
         </form>
       </div>
     </div>
 <script>
-$('form').submit(createDataset);
+var file;
 
-function createDataset(event)
+$('form').submit(uploadDataset);
+$('input[type=file]').change(prepareUpload);
+
+function prepareUpload(event)
 {
-    event.stopPropagation();
-    event.preventDefault();
+  file = event.target.files[0];
+}
 
-    var postdata = new Object();
-    postdata.name = $('#datasetName').val();
-    postdata.description = $('#datasetDescription').val();
+function verifyDataset(name, success)
+{
+  var url = 'https://sneeza-eco.p.mashape.com/datasets/' + name;
+
+  $.ajax({
+    url: url,
+    type: "GET",
+    success: function(data){
+      if(data.meta.code === 200)
+      {
+        success();
+      }
+      else
+      {
+        errormsg("Dataset does not exist or you do not have write access.")
+      }
+    },
+    error: function(data){return false;},
+    beforeSend: function(xhr) {
+      xhr.setRequestHeader("X-Mashape-Authorization", "<?php echo $mashape_key; ?>");
+    }
+  });
+
+}
+
+function uploadDataset(event)
+{
+  event.stopPropagation();
+  event.preventDefault();
+
+  var name = $('#datasetName').val();
+
+  verifyDataset(name, function(){
+
+    var type = $('#datasetType').val();
+    var url = 'https://sneeza-eco.p.mashape.com/datasets/' + name + "/upload/" + type;
+
+    var putdata = new FormData();
+    putdata.append("file", file);
 
     $.ajax({
-      url: 'https://sneeza-eco.p.mashape.com/datasets',
-      type: 'POST',
-      data: postdata,
+      url: url,
+      type: 'PUT',
+      processData: false,
+      contentType: false,
+      data: putdata,
       datatype: 'json',
       success: function(data) {
         if(data.meta.code === 200)
         {
-          success(data);
+          successmsg();
         }
         else
         {
-          error(data);
+          errormsg(data.data.message);
         }
       },
       error: function(err) { alert(err); },
@@ -98,23 +143,25 @@ function createDataset(event)
       }
     });
 
-    return false;
+  });
+
+  return false;
 }
 
-function error(data)
+function errormsg(message)
 {
   $("form").prepend(
     "<div class='alert alert-danger fade in'>"+
-      "<strong>Error!</strong> " + data.data.message +
+      "<strong>Error!</strong> " + message +
       "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"+
     "</div>");
 }
 
-function success(data)
+function successmsg()
 {
   $("form").prepend(
     "<div class='alert alert-success fade in'>"+
-      "<strong>Created!</strong> Dataset" + data.data.name + "successfully created."+
+      "<strong>Done!</strong> File successfully uploaded."+
       "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"+
     "</div>");
 }
