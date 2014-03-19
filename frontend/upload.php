@@ -94,7 +94,8 @@ function verifyDataset(name, success)
       }
       else
       {
-        errormsg("Dataset does not exist or you do not have write access.")
+        errormsg("Dataset does not exist or you do not have write access. "+
+        "Please create a dataset using the <a href='create.php'>create</a> interface.")
       }
     },
     error: function(data){return false;},
@@ -117,15 +118,12 @@ function uploadDataset(event)
     var type = $('#datasetType').val();
     var url = 'https://sneeza-eco.p.mashape.com/datasets/' + name + "/upload/" + type;
 
-    var putdata = new FormData();
-    putdata.append("file", file);
-
     $.ajax({
       url: url,
       type: 'PUT',
       processData: false,
       contentType: false,
-      data: putdata,
+      data: file,
       datatype: 'json',
       success: function(data) {
         if(data.meta.code === 200)
