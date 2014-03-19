@@ -44,19 +44,12 @@ $json = array(
 );
 
 /*!
- * Fetch the access arrays from the dataset, and list them back to
+ * Fetch the constraint arrays from the dataset, and list them back to
  * the user in a friendly format.
  */
 
-// Return the read_access keys into the JSON.
-foreach($dataset->read_access as $username) {
-    $json['read_access'][] = $username;
-}
-
-// Return the write_access keys into the JSON.
-foreach($dataset->write_access as $username) {
-    $json['write_access'][] = $username;
-}
+// Return the constraints into the JSON.
+$json['constraints'] = $dataset->constraints;
 
 /*!
  * Output our JSON payload for use in whatever needs to be using
