@@ -15,9 +15,7 @@ if ($user == false)
 }
 else
 {
-    // Could not set httponly to true as the cookie is used in the upload
-    // feature
-    setcookie(apiKey, $mashape_key, 0, "/", "project.spe.sneeza.me", isset($_SERVER["HTTPS"]), false);
+    setcookie("apiKey", $mashape_key, 0, "/");
 }
 ?>
 
@@ -38,7 +36,7 @@ else
     <body>
         <div class="container">
             <div class="row">
-                <h1>Welcome <?php echo $user; ?></h1>
+                <h1>Hello <?php echo $user; ?></h1>
                 <h3>Please pick a dataset to view, edit or visualise</h>
                 <a href="login.php?logout" type="button" class="btn btn-warning pull-right">Logout</a>
             </div>
