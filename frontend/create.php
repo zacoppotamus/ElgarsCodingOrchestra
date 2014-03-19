@@ -114,7 +114,7 @@ function success(data)
 {
   $("form").prepend(
     "<div class='alert alert-success fade in'>"+
-      "<strong>Created!</strong> Dataset" + data.data.name + "successfully created."+
+      "<strong>Created!</strong> Dataset" + data.data.name + " successfully created."+
       "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"+
     "</div>");
 }
