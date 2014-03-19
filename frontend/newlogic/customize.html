@@ -35,11 +35,13 @@
 		</div>
 		<div class="col-sm-6 text-center">
 			<h1>
-				Choices
+				Parameters
 			</h1>
 			<div class="col-sm-6 text-center" ng-repeat="choice in vizTypes[selectedVizType.id].choices">
 				<h2>{{choice}}</h2>
-				<select class="form-control" ng-model="selectedDataset" ng-options="field for field in fields"><option></option></select>
+				<!-- CHANGE THE MODEL HERE -->
+				<pre>{{vizTypes[selectedVizType.id].options[choice]}}</pre>
+				<select class="form-control" ng-model="vizTypes[selectedVizType.id].options[choice]" ng-options="field for field in fields"><option></option></select>
 			</div>
 		</div>
 	</div>

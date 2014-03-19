@@ -1,0 +1,8 @@
+name    'example42-wget'
+version '0.1.0'
+source 'http://github.com/maestrodev/puppet-wget'
+author 'maestrodev'
+license 'Apache License, Version 2.0'
+summary 'wget module for Puppet'
+description 'A Puppet module for wget that allows downloading of files, supporting authentication'
+project_page 'http://github.com/example42/puppet-wget'

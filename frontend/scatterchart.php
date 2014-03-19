@@ -78,6 +78,7 @@ $fields = $rainhawk->fetchDataset($dataset)["fields"];
       <div class="row">
         <h1>Google Chart Visualisation</h1>
         <h3>Select data and parameters for your visualisation</h3>
+        <a href="account.php" type="button" class="btn btn-warning pull-right">Back</a>
       </div>
       <div class="row">
         <div role="form" class="form-inline">

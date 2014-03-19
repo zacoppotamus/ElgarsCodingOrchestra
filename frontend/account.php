@@ -11,12 +11,11 @@ $user         = $rainhawk->ping()["mashape_user"];
 if ($user == false)
 {
     header('Location: login.php?fail');
+    exit();
 }
 else
 {
-    // Could not set httponly to true as the cookie is used in the upload
-    // feature
-    setcookie(apiKey, $mashape_key, 0, "/", "project.spe.sneeza.me", isset($_SERVER["HTTPS"]), false);
+    setcookie("apiKey", $mashape_key, 0, "/");
 }
 ?>
 
@@ -37,7 +36,7 @@ else
     <body>
         <div class="container">
             <div class="row">
-                <h1>Welcome <?php echo $user; ?></h1>
+                <h1>Hello <?php echo $user; ?></h1>
                 <h3>Please pick a dataset to view, edit or visualise</h>
                 <a href="login.php?logout" type="button" class="btn btn-warning pull-right">Logout</a>
             </div>
@@ -67,7 +66,7 @@ else
                                 "<td><a href='edit.php?dataset=$dataset[name]'>$dataset[name]</a></td>\n".
                                 "<td>$dataset[description]</td>\n".
                                 "<td>$dataset[rows]</td>\n".
-                                "<td>".count($dataset[fields])."</td>\n".
+                                "<td>".count($dataset['fields'])."</td>\n".
                                 //"<td>".(in_array($user, $dataset["read_access" ]) ? "True" : "False")."</td>\n".
                                 "<td>".(in_array($user, $dataset["write_access"]) ? "True" : "False")."</td>\n".
                                 "<td><a href='vega-test/vegatest.php?dataset=$dataset[name]' class='btn btn-success btn-sm'>Visualise</a></td>".

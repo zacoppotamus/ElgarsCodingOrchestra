@@ -103,6 +103,7 @@ FileType getType( string fileName )
 string pageString( page spreadsheet )
 {
   string output = "";
+  output += spreadsheet.name + '\n';
   for( 
     vector< vector<sheetNode> >::iterator outIt = spreadsheet.contents.begin();
     outIt != spreadsheet.contents.end();
@@ -234,6 +235,19 @@ string getCSV( ifstream &input )
   return result;
 }
 
+string purgeQuotes( string value )
+{
+  if( value.size() > 2 )
+  {
+    if( value[0] == '"' && value[value.size()-1] == '"' )
+    {
+      string newvalue = value.substr( 1, value.size()-2 );
+      return newvalue;
+    }
+  }
+  return value;
+}
+
 void insertValue( string csvalue, vector<sheetNode> &cell )
 {
   if( csvalue.compare( "" ) == 0 )
@@ -271,7 +285,8 @@ void insertValue( string csvalue, vector<sheetNode> &cell )
     }
     else
     {
-      sheetNode newsheet( csvalue );
+      string fixedValue = purgeQuotes( csvalue );
+      sheetNode newsheet( fixedValue );
       cell.push_back( newsheet );
       return;
     }
@@ -719,8 +734,9 @@ int readXMLSheet( vector< page > &sheetList, string title,
           {
             //cout << "5";
             page newsheet;
-      newsheet.name = title;
-      newsheet.contents = spreadsheet;
+            newsheet.name = title;
+            newsheet.contents = spreadsheet;
+            cout << pageString( newsheet );
             sheetList.push_back( newsheet );
             return 1;
           }
