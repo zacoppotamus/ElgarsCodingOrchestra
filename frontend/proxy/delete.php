@@ -3,7 +3,9 @@
 include("../../wrappers/php/rainhawk.class.php");
 header("content-type: application/json; charset=utf8");
 
-$mashape_key = $_COOKIE["apiKey"];
+session_start();
+$mashape_key = isset($_SESSION['apiKey']) ? trim($_SESSION['apiKey']) : null;
+
 $rainhawk = new Rainhawk($mashape_key);
 
 $dataset = isset($_GET['dataset']) ? $_GET['dataset'] : null;

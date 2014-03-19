@@ -1,7 +1,13 @@
 <?php
 require_once("../wrappers/php/rainhawk.class.php");
 
-$mashape_key = isset($_POST["apiKey"]) ? $_POST["apiKey"] : $_COOKIE["apiKey"];
+session_start();
+
+if(isset($_POST['apiKey'])) {
+    $_SESSION['apiKey'] = trim($_POST['apiKey']);
+}
+
+$mashape_key = isset($_SESSION['apiKey']) ? trim($_SESSION['apiKey']) : null;
 
 $rainhawk = new Rainhawk($mashape_key);
 
@@ -73,7 +79,6 @@ else
                                 "<td><a href='delete.php?dataset=$dataset[name]' class='btn btn-danger btn-sm'>Delete</a></td>".
                                 "</tr>\n");
                         }
-
                         ?>
                     <tbody>
                     <tfoot>
