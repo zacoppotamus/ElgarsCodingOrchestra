@@ -77,7 +77,8 @@ else
                         ?>
                     <tbody>
                     <tfoot>
-                        <tr><td colspan='100%'><p class="text-center"><strong><a href='upload.html'>Upload your own data</a></strong></p></td></tr>
+                        <tr><td colspan='100%'><p class="text-center"><strong><a href='create.php'>Create a dataset</a></strong></p></td>
+                        <tr><td colspan='100%'><p class="text-center"><strong><a href='upload.php'>Upload your own data</a></strong></p></td></tr>
                     </tfoot>
                 </table>
             </div>
