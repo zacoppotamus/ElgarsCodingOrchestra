@@ -14,7 +14,9 @@ eco.charts.vegabarchart = function() {
 			}
 		},
 
-		spec : function(){
+		spec : function(data, xValue, yValue){
+			console.log('--------\n' + xValue + yValue)
+
 			return {
 				"width": this.options.width,
 				"height": this.options.height,
@@ -27,16 +29,12 @@ eco.charts.vegabarchart = function() {
 				"data": [
 					{
 						"name": "table",
-						"values": [
-							{"x":"A", "y":28}, {"x":"B", "y":55}, {"x":"C", "y":43},
-							{"x":"D", "y":91}, {"x":"E", "y":81}, {"x":"F", "y":53},
-							{"x":"G", "y":19}, {"x":"H", "y":87}, {"x":"I", "y":52}
-						]
+						"values": data
 					}
 				],
 				"scales": [
-					{"name":"x", "type":"ordinal", "range":"width", "domain":{"data":"table", "field":"data.x"}},
-					{"name":"y", "range":"height", "nice":true, "domain":{"data":"table", "field":"data.y"}}
+					{"name":"x", "type":"ordinal", "range":"width", "domain":{"data":"table", "field":"data."+xValue}},
+					{"name":"y", "range":"height", "nice":true, "domain":{"data":"table", "field":"data."+yValue}}
 				],
 				"axes": [
 					{"type":"x", "scale":"x"},
@@ -48,9 +46,9 @@ eco.charts.vegabarchart = function() {
 						"from": {"data":"table"},
 						"properties": {
 							"enter": {
-							"x": {"scale":"x", "field":"data.x"},
+							"x": {"scale":"x", "field":"data."+xValue},
 							"width": {"scale":"x", "band":true, "offset":-1},
-							"y": {"scale":"y", "field":"data.y"},
+							"y": {"scale":"y", "field":"data."+yValue},
 							"y2": {"scale":"y", "value":0}
 							},
 							"update": { "fill": {"value":"steelblue"} },

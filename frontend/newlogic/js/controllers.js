@@ -5,7 +5,7 @@
 // to do: Get data from our api, make it all faster
 
 angular.module('eco.controllers', [])
-.controller('ecoCtrl', function ($scope, $http) {
+.controller('ecoCtrl', function ($scope, $http, dataService) {
 
 	/*
 		TO DO: If one option is null or two or more are the same throw error.
@@ -19,6 +19,7 @@ angular.module('eco.controllers', [])
 	// Try different alternatives for decoupling the DOM and controller
 	// this can also be a class-function instantiated on $scope.watch so that everything becomes null
 	$scope.getParamOptions = function () {
+		// choices must have the exact same values as options.
 		return [
 			{
 				'id' : 0, 
@@ -32,11 +33,10 @@ angular.module('eco.controllers', [])
 			{
 				'id': 1,
 				'name':'Bar Chart',
-				'choices':['xAxis', 'yAxis', 'yMax'],
+				'choices':['xAxis', 'yAxis'],
 				'options' : {
 					'xAxis' : null,
-					'yAxis' : null,
-					'yMax' : null
+					'yAxis' : null
 				}
 			},
 			{
@@ -80,6 +80,8 @@ angular.module('eco.controllers', [])
 
 	// the fields for the selected dataset
 	$scope.fields = [];
+
+	$scope.currentData = '';
 
 	// use ben's cookie and username for the time being
 	$scope.apiKey = "EU6h9H8BUXELDmfO1Mbh0jLasSQxrAZd";
@@ -161,27 +163,13 @@ angular.module('eco.controllers', [])
 		}
 	};
 
-	// get data for the selected dataset
-	// TODO check for empty datasets 
-	$scope.getData = function(currentDataset) {
-		$http({
-			method: 'GET',
-			url: 'https://sneeza-eco.p.mashape.com/datasets/'+$scope.username+'.'+currentDataset+'/data',
-			headers: {
-				'X-Mashape-Authorization' : $scope.apiKey
-			}
-		}).
-		success(function(json) {
-			console.log(json.data.results);
-			return json.data.results;
-		})
-	}
-	$scope.getData('nflqb2013');
-
+	dataService.sayhey();
+	// console.log($scope.currentData);
 	// $scope.validParams = true;
 
 	// get the datasets immediately
 	$scope.getDatasetNames();
+	console.log($scope.datasets);
 
 	// when a new dataset is selected from the dropdown get its fields
 	$scope.$watch('selectedDataset', function() {
@@ -192,11 +180,9 @@ angular.module('eco.controllers', [])
 
 	$scope.$watch('selectedVizType.id', function() {
 		$scope.validParams = true;
-		console.log(1);
 	});
 
 	$scope.$watch('vizTypes', function() {
-		console.log('bla');
 		$scope.checkParameters();
 	})
 

@@ -119,7 +119,7 @@ angular.module('eco.directives', [])
 		}
 	}
 })
-.directive('vegachart', function() {
+.directive('vegachart', function(dataService) {
 	//  -- TO DO -- 
 	// Abstract this to be Vega Vis that will call
 	// other functions depending on selectedVizType
@@ -129,13 +129,14 @@ angular.module('eco.directives', [])
 		restrict: 'AEC',
 		terminal: true,
 		scope: {
-			// id is 1 here
-			vizTypes: '=',
-			selectedVizType: '='
+			type: '=selectedVizType',
+			currentData: '=currentData'
 		},
 		link: function(scope, element, attrs) {
 			// Dynamically create Vega JSON based on the controller data
-			vg.parse.spec(eco.charts.vegabarchart().spec(), function(chart){
+			console.log(scope.type);
+			console.log("Bla!");
+			vg.parse.spec(eco.charts.vegabarchart().spec(scope.data,"Name","TD"), function(chart){
 				chart({el:"#vegachart"}).update();
 			})
 		}
