@@ -44,13 +44,13 @@ $fields      = $datasetInfo["fields"];
                             sorting: true,
                             defaultSorting: 'name ASC',
                             actions: {
-                                listAction: 'http://project.spe.sneeza.me/proxy/list.php?dataset=<?php echo $dataset; ?>',
+                                listAction: 'proxy/list.php?dataset=<?php echo $dataset; ?>',
                                 <?php
                                 if(in_array($user, $datasetInfo["write_access"]))
                                 {
-                                    echo("createAction: 'http://project.spe.sneeza.me/proxy/create.php?dataset=$dataset',"
-                                       . "updateAction: 'http://project.spe.sneeza.me/proxy/update.php?dataset=$dataset',"
-                                       . "deleteAction: 'http://project.spe.sneeza.me/proxy/delete.php?dataset=$dataset'");
+                                    echo("createAction: 'proxy/create.php?dataset=$dataset',"
+                                       . "updateAction: 'proxy/update.php?dataset=$dataset',"
+                                       . "deleteAction: 'proxy/delete.php?dataset=$dataset'");
                                 }
                                 ?>
                             },
