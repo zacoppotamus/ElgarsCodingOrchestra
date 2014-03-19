@@ -2,3 +2,4 @@
 .gitconfig
 .ssh
 .DS_Store
+.vagrant

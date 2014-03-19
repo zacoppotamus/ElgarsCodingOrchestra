@@ -1,0 +1,16 @@
+#/bin/bash
+echo "This command runs a git sync on Puppet defined local directories"
+echo
+echo "Choose git repo to sync:"
+cd <%= @basedir %>
+ls -1 git_reposync_* | cut -c 14-
+echo
+echo "Enter a project to sync. TO exit without any action , just hit ENTER"
+read git_project
+git_project=${git_project:=none}
+
+if [ "x$git_project" == "xnone" ] ; then
+  exit
+else
+  <%= @basedir %>/git_reposync_${git_project}
+fi

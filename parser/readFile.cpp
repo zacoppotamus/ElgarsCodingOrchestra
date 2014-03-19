@@ -103,6 +103,7 @@ FileType getType( string fileName )
 string pageString( page spreadsheet )
 {
   string output = "";
+  output += spreadsheet.name + '\n';
   for( 
     vector< vector<sheetNode> >::iterator outIt = spreadsheet.contents.begin();
     outIt != spreadsheet.contents.end();
@@ -733,8 +734,9 @@ int readXMLSheet( vector< page > &sheetList, string title,
           {
             //cout << "5";
             page newsheet;
-      newsheet.name = title;
-      newsheet.contents = spreadsheet;
+            newsheet.name = title;
+            newsheet.contents = spreadsheet;
+            cout << pageString( newsheet );
             sheetList.push_back( newsheet );
             return 1;
           }

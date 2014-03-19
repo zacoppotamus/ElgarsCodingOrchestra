@@ -35,6 +35,7 @@ $fields = $rainhawk->fetchDataset($dataset)["fields"];
     <div class="container">
       <div class="row">
         <h1>Ben's Test Visualisation</h>
+        <a href="account.php" type="button" class="btn btn-warning pull-right">Back</a>
       </div>
       <div class="row">
         <div role="form" class="form-inline">
