@@ -40,8 +40,7 @@ if(!$dataset->have_write_access(app::$username)) {
  */
 
 $json = array(
-    "read_access" => array(),
-    "write_access" => array()
+    "constraints" => array()
 );
 
 /*!
