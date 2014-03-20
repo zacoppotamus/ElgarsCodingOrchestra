@@ -117,7 +117,9 @@ foreach($files as $tmp_file) {
 		// Set the JSON output.
 		foreach($rows as $row) {
 		    if(isset($row['_id'])) {
-		        $row['_id'] = (string)$row['_id'];
+		        $_id = (string)$row['_id'];
+		        unset($row['id']);
+		        $row = array("_id" => $_id) + $row;
 		    }
 
 		    foreach($row as $field => $value) {
