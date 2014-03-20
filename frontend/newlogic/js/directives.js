@@ -139,13 +139,17 @@ angular.module('eco.directives', [])
 			var chartType = dataService.getSelectedVizType();
 			var vizOptions = dataService.vizOptions;
 			console.log(vizOptions);
-			var xValue = vizOptions[chartType].options['xAxis'];
-			var yValue = vizOptions[chartType].options['yAxis'];
-			console.log(xValue);
-			console.log(yValue);
-			vg.parse.spec(eco.charts.vegabarchart().spec(data, xValue, yValue), function(chart){
-				chart({el:"#vegachart"}).update();
-			})
+
+			if (chartType == 1) {
+				var xValue = vizOptions[chartType].options['xAxis'];
+				var yValue = vizOptions[chartType].options['yAxis'];
+				console.log(xValue);
+				console.log(yValue);
+				// vg.parse.spec(eco.charts.vegabarchart().spec(data, xValue, yValue), function(chart){
+				// 	chart({el:"#vegachart"}).update();
+				// })
+				eco.charts.d3barchart().render(data, xValue, yValue, element[0]);
+			}
 		}
 	}
 });
