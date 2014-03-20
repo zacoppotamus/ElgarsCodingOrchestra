@@ -1,7 +1,13 @@
 <?php
 require_once("../wrappers/php/rainhawk.class.php");
 
-$mashape_key = isset($_POST["apiKey"]) ? $_POST["apiKey"] : $_COOKIE["apiKey"];
+session_start();
+
+if(isset($_POST['apiKey'])) {
+    $_SESSION['apiKey'] = trim($_POST['apiKey']);
+}
+
+$mashape_key = isset($_SESSION['apiKey']) ? trim($_SESSION['apiKey']) : null;
 
 $rainhawk = new Rainhawk($mashape_key);
 
@@ -60,10 +66,9 @@ $fields      = $datasetInfo["fields"];
                                     {
                                         if($fields[$i] !== "_id")
                                         {
-                                            echo ("$fields[$i]: {title:'$fields[$i]'},");
+                                            echo ("'$fields[$i]': {title:'$fields[$i]'},");
                                         }
                                     }
-
                                 ?>
                                 _id: {
                                     key: true,

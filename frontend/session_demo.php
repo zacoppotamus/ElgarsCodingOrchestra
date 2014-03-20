@@ -1,10 +1,20 @@
 <?php
+
 session_start();
 
-if(isset($_SESSION["apiKey"]) && !isset($_GET["logout"]))
-{
-    header("Location: account.php");
+if(isset($_POST['apiKey'])) {
+    $_SESSION['apiKey'] = trim($_POST['apiKey']);
 }
+
+$api_key = isset($_SESSION['apiKey']) ? trim($_SESSION['apiKey']) : null;
+
+if(!isset($api_key)) {
+    // Blah.
+}
+
+// Unset apiKey is simple as.
+// unset($_SESSION['apiKey']);
+
 ?>
 <html lan="en-GB">
     <head>
@@ -18,30 +28,30 @@ if(isset($_SESSION["apiKey"]) && !isset($_GET["logout"]))
     </head>
     <body>
         <div class="container">
+            <?php
+
+            if(isset($api_key)) {
+                ?>
+                <div class="row">
+                    <p>API Key: <?php echo $api_key; ?></p>
+                </div>
+                <?php
+            }
+
+            ?>
             <div class="row">
                 <h1>Login to Project Rainhawk</h>
                 <a href="/" class="btn btn-warning pull-right">Home</a>
             </div>
             <div class="row">
                 <p>Please insert your API key</p>
-                <form action="account.php" role="form" method="post">
-                    <div class="form-group<?php if(isset($_GET["fail"])){echo " has-warning";}?>">
+                <form action="session_demo.php" role="form" method="post">
+                    <div class="form-group">
                         <label for="apiKey">API Key</label>
                         <input type="text" placeholder="API Key" name="apiKey" class="form-control" autofocus>
                     </div>
                     <button type="submit" class="btn btn-default">Submit</button>
                 </form>
-                <?php
-                if(isset($_GET["fail"]))
-                {
-                   echo "<p class='text-danger'>Incorrect API Key.</p>";
-                }
-                elseif(isset($_GET["logout"]))
-                {
-                    session_unset();
-                    echo "<p class='text-success'>Successfully logged out.</p>";
-                }
-                ?>
             </div>
         </div>
     </body>

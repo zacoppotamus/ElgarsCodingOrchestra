@@ -35,19 +35,21 @@ if(!$dataset->have_read_access(app::$username)) {
 }
 
 /*!
- * Define our output by filling up the JSON array with the variables
- * from the dataset object.
+ * Define an empty array to store the results of whatever we need
+ * to send back.
  */
 
 $json = array(
-    "name" => $dataset->prefix . "." . $dataset->name,
-    "description" => $dataset->description,
-    "rows" => $dataset->rows,
-    "fields" => array_keys($dataset->fields),
-    "constraints" => $dataset->constraints,
-    "read_access" => $dataset->read_access,
-    "write_access" => $dataset->write_access
+    "constraints" => array()
 );
+
+/*!
+ * Fetch the constraint arrays from the dataset, and list them back to
+ * the user in a friendly format.
+ */
+
+// Return the constraints into the JSON.
+$json['constraints'] = $dataset->constraints;
 
 /*!
  * Output our JSON payload for use in whatever needs to be using

@@ -41,6 +41,7 @@ class Sets {
                 "description" => $dataset->description,
                 "rows" => $dataset->rows,
                 "fields" => $dataset->fields,
+                "constraints" => $dataset->constraints,
                 "read_access" => $dataset->read_access,
                 "write_access" => $dataset->write_access
             ));
@@ -72,6 +73,7 @@ class Sets {
                     "description" => $dataset->description,
                     "rows" => $dataset->rows,
                     "fields" => $dataset->fields,
+                    "constraints" => $dataset->constraints,
                     "read_access" => $dataset->read_access,
                     "write_access" => $dataset->write_access
                 )

@@ -68,6 +68,7 @@ php::ini { "/etc/php.ini":
     memory_limit => "256M",
     short_open_tag => "Off",
     date_timezone => "UTC",
+    session_save_path => "/tmp",
     notify => Service["php5-fpm"],
 }
 
@@ -76,6 +77,7 @@ php::ini { "/etc/php5/fpm/php.ini":
     memory_limit => "256M",
     short_open_tag => "Off",
     date_timezone => "UTC",
+    session_save_path => "/tmp",
     require => Service["php5-fpm"],
 }
 

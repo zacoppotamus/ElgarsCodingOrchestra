@@ -69,7 +69,7 @@ $fields = $rainhawk->fetchDataset($dataset)["fields"];
         }
 
         // Instantiate and draw our chart, passing in some options.
-        var chart = new google.visualization.ScatterChart(document.getElementById('chart_div'));
+        var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
         var table = new google.visualization.Table(document.getElementById('table_div'));
         table.draw(data, {showRowNumber: true});
         chart.draw(data, chartOptions);
@@ -79,7 +79,6 @@ $fields = $rainhawk->fetchDataset($dataset)["fields"];
   </head>
 
   <body>
-    <!--Div that will hold the pie chart-->
     <div class="container">
       <div class="row">
         <h1>Google Chart Visualisation</h1>
