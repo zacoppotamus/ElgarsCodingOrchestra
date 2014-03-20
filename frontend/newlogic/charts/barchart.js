@@ -7,7 +7,7 @@ eco.charts.vegabarchart = function() {
 			width : 800,
 			height : 600,
 			margin : {
-				top: 10,
+				top: 100,
 				right: 10,
 				bottom: 20,
 				left: 80
