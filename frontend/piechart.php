@@ -80,7 +80,7 @@ $fields = $rainhawk->fetchDataset($dataset)["fields"];
               {
                   if($fields[$i] != "_id")
                   {
-                    echo "<option value=$fields[$i]>$fields[$i]</option>";
+                    echo "<option value='$fields[$i]'>$fields[$i]</option>";
                   }
               }
               ?>
@@ -94,7 +94,7 @@ $fields = $rainhawk->fetchDataset($dataset)["fields"];
               {
                   if($fields[$i] != "_id")
                   {
-                    echo "<option value=$fields[$i]>$fields[$i]</option>";
+                    echo "<option value='$fields[$i]'>$fields[$i]</option>";
                   }
               }
               ?>
