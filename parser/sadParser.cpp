@@ -27,6 +27,19 @@ int main( int argc, char * argv[] )
   for( int cfile = 1; cfile < argc; cfile++ )
   {
     filename = argv[cfile];
+    if( filename[0] == '-' )
+    {
+      if( filename.compare("-n") == 0 )
+      {
+        //Placeholder text
+        continue;
+      }
+      else
+      {
+        cout << "Flag not recognized: \"" << filename << "\"" << '\n';
+        continue;
+      }
+    }
     cout << "Getting contents..." << '\n';
     vector< page > fileContents( getFile( filename ) );
     if( fileContents.size() > 0 )
