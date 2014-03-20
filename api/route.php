@@ -131,6 +131,7 @@ route::post("/datasets/(\w+|\-+)\.(\w+|\-+)/constraints", function($prefix, $nam
     $data->name = $name;
 
     $data->field = isset($_POST['field']) ? trim($_POST['field']) : null;
+    $data->type = isset($_POST['type']) ? trim(strtolower($_POST['type'])) : null;
 
     include("datasets/constraints/add.php");
 });
