@@ -49,7 +49,7 @@ $json = array(
  */
 
 // Check if the field is set.
-if(!isset($data->field)) {
+if(empty($data->field)) {
     echo json_beautify(json_render_error(404, "You didn't specify the field to add a constraint to."));
     exit;
 }
@@ -61,7 +61,7 @@ if(isset($dataset->constraints[$data->field])) {
 }
 
 // Check if the datatype has been set.
-if(!isset($data->type) || !in_array($data->type, array("string", "integer", "float", "timestamp", "latitude", "longitude"))) {
+if(empty($data->type) || !in_array($data->type, array("string", "integer", "float", "timestamp", "latitude", "longitude"))) {
     echo json_beautify(json_render_error(406, "The data type that you've selected is not supported. We currently support: string, integer, float, timestamp, latitude, longitude."));
     exit;
 }

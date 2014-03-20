@@ -50,13 +50,13 @@ $json = array(
  */
 
 // Check if the type is set.
-if(!isset($data->type)) {
+if(empty($data->type)) {
     echo json_beautify(json_render_error(404, "You didn't specify the type of access to give."));
     exit;
 }
 
 // Check if the username is set.
-if(!isset($data->username)) {
+if(empty($data->username)) {
     echo json_beautify(json_render_error(404, "You didn't specify the user to give access to."));
     exit;
 }

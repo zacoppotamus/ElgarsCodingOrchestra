@@ -48,6 +48,8 @@ string JSONObject::getValue( unsigned pos )
 void JSONObject::addPair( string name )
 {
   names.push_back(name);
+  //if( jasdksjdfkvj ) values.push_back("0");
+  //else values.push_back("null");
   values.push_back("null");
   fields++;
 }
