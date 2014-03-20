@@ -53,7 +53,7 @@ $fields = $rainhawk->fetchDataset($dataset)["fields"];
         });
 
         var jsonData = $.ajax({
-          url: "http://project.spe.sneeza.me/datatable.php?dataset=benelgar.test&fields=[%22" +
+          url: "http://project.spe.sneeza.me/datatable.php?dataset=<?php echo $dataset; ?>&fields=[%22" +
             document.getElementById("xName").value +"%22" +
             dataInputs +
             "]",
@@ -97,7 +97,7 @@ $fields = $rainhawk->fetchDataset($dataset)["fields"];
               {
                 if($fields[$i] != "_id")
                 {
-                  echo "<option value=$fields[$i]>$fields[$i]</option>";
+                  echo "<option value='$fields[$i]'>$fields[$i]</option>";
                 }
               }
             ?>
@@ -114,7 +114,7 @@ $fields = $rainhawk->fetchDataset($dataset)["fields"];
             {
               if($fields[$j] != '_id')
               {
-                echo "<option value=$fields[$j]>$fields[$j]</option>";
+                echo "<option value='$fields[$j]'>$fields[$j]</option>";
               }
             }
             echo "</select>".

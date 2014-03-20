@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 #include <sstream>
+#include <stdexcept>
 
 using namespace std;
 
@@ -90,19 +91,57 @@ void JSONObject::addPair( string name, bool value )
 // End of JSONObject Implementation
 /////////////////////////////////////////////////////
 
+//Only clears spaces and tabs
+string clearWhiteSpace( string &target )
+{
+  size_t start = 0;
+  size_t end = target.size() - 1;
+  while( target[start] == ' ' || target[start] == '\t' ) start++;
+  while( target[end] == ' ' || target[end] == '\t' ) end--;
+  if( start != 0 || end != target.size() - 1 )
+  {
+    if( start >= end ) return "";
+    string result = target;
+    result.resize( end + 1 );
+    return result.substr( start );
+  }
+  return target;
+}
+
 string JSONString( JSONObject object )
 {
   string document = "{\n";
   unsigned count = 0;
   unsigned max = object.fieldCount();
+  size_t idx;
   while( count < max )
   {
     document += "\t";
     document += "\"";
     document += object.getName(count);
-    document += "\": \"";
-    document += object.getValue(count);
-    document += "\"";
+    document += "\": ";
+    string value = object.getValue(count);
+    value = clearWhiteSpace(value);
+    try
+    {
+      stod( value, &idx );
+      if( idx < value.size() )
+      {
+        document += '\"';
+        document += value;
+        document += '\"';
+      }
+      else
+      {
+        document += value;
+      }
+    }
+    catch( const invalid_argument &e )
+    {
+      document += '\"';
+      document += value;
+      document += '\"';
+    }
     count++;
     if( count < max )
     {

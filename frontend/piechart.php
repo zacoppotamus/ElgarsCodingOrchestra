@@ -44,7 +44,7 @@ $fields = $rainhawk->fetchDataset($dataset)["fields"];
 
     function drawChart() {
       var jsonData = $.ajax({
-          url: "http://project.spe.sneeza.me/datatable.php?dataset=benelgar.test&fields=[%22" +
+          url: "http://project.spe.sneeza.me/datatable.php?dataset=<?php echo $dataset; ?>&fields=[%22" +
             document.getElementById("xName").value +"%22,%22" +
             document.getElementById("yName").value + "%22]",
           dataType:"json",
@@ -80,7 +80,7 @@ $fields = $rainhawk->fetchDataset($dataset)["fields"];
               {
                   if($fields[$i] != "_id")
                   {
-                    echo "<option value=$fields[$i]>$fields[$i]</option>";
+                    echo "<option value='$fields[$i]'>$fields[$i]</option>";
                   }
               }
               ?>
@@ -94,7 +94,7 @@ $fields = $rainhawk->fetchDataset($dataset)["fields"];
               {
                   if($fields[$i] != "_id")
                   {
-                    echo "<option value=$fields[$i]>$fields[$i]</option>";
+                    echo "<option value='$fields[$i]'>$fields[$i]</option>";
                   }
               }
               ?>
