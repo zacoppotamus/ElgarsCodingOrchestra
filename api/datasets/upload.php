@@ -126,7 +126,7 @@ foreach($files as $tmp_file) {
 }
 
 // Check if the number of rows inserted was zero.
-if(!isset($json['rows']) || count($json['rows']) == 0) {
+if(!isset($json['rows']) || empty($json['rows'])) {
 	echo json_beautify(json_render_error(410, "After parsing the uploaded file we couldn't find any data."));
     exit;
 }
