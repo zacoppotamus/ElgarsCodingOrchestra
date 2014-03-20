@@ -129,14 +129,21 @@ angular.module('eco.directives', [])
 		restrict: 'AEC',
 		terminal: true,
 		scope: {
-			type: '=selectedVizType',
-			currentData: '=currentData'
+			type: '=',
+			currentData: '='
 		},
 		link: function(scope, element, attrs) {
-			// Dynamically create Vega JSON based on the controller data
-			console.log(scope.type);
-			console.log("Bla!");
-			vg.parse.spec(eco.charts.vegabarchart().spec(scope.data,"Name","TD"), function(chart){
+			var data = dataService.getCurrentData();
+
+			// each number corresponds to a different type of visualization
+			var chartType = dataService.getSelectedVizType();
+			var vizOptions = dataService.vizOptions;
+			console.log(vizOptions);
+			var xValue = vizOptions[chartType].options['xAxis'];
+			var yValue = vizOptions[chartType].options['yAxis'];
+			console.log(xValue);
+			console.log(yValue);
+			vg.parse.spec(eco.charts.vegabarchart().spec(data, xValue, yValue), function(chart){
 				chart({el:"#vegachart"}).update();
 			})
 		}

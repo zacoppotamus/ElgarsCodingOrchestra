@@ -15,7 +15,6 @@ eco.charts.vegabarchart = function() {
 		},
 
 		spec : function(data, xValue, yValue){
-			console.log('--------\n' + xValue + yValue)
 
 			return {
 				"width": this.options.width,

@@ -16,19 +16,19 @@ angular.module('eco', [
 		.when('/visualization', {
 			templateUrl: 'visualization.html',
 			controller: 'ecoCtrl',
-			resolve: {
-				// controller won't be instantiated before all
-				// dependencies are resolved
-				'dataService':function(dataService) {
-					return dataService.getData();
-				}
-			}
 		})
 
 		// is '/' when starting server within newlogic/
 		.when('/', {
 			templateUrl: 'customize.html',
 			controller: 'ecoCtrl'
+			// resolve: {
+			// 	// controller won't be instantiated before all
+			// 	// dependencies are resolved
+			// 	'dataService':function(dataService) {
+			// 		return dataService.getData();
+			// 	}
+			// }
 		});
 
 	$locationProvider.html5Mode(true);

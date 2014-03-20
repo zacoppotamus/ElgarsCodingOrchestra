@@ -63,11 +63,6 @@ angular.module('eco.controllers', [])
 		];
 	}
 
-	$scope.vizTypes = $scope.getParamOptions();
-	// random shit for testing
-	$scope.vizTypes[1].options.xAxis = 'Name';
-	$scope.vizTypes[1].options.yAxis = 'TD';
-	$scope.vizTypes[1].options.yMax = 70;
 
 	// selected radio button
 	$scope.selectedVizType = {id:2};
@@ -80,8 +75,6 @@ angular.module('eco.controllers', [])
 
 	// the fields for the selected dataset
 	$scope.fields = [];
-
-	$scope.currentData = '';
 
 	// use ben's cookie and username for the time being
 	$scope.apiKey = "EU6h9H8BUXELDmfO1Mbh0jLasSQxrAZd";
@@ -163,20 +156,34 @@ angular.module('eco.controllers', [])
 		}
 	};
 
-	dataService.sayhey();
-	// console.log($scope.currentData);
+	// send visualization options to the service and vis type.
+	// Do this when the 'visualize' is clicked but in the future, 
+	// validate the options made accordingly.
+	$scope.sendVizOptionsToService = function() {
+		console.log('Sending options to service!');
+		dataService.selectedVizType = $scope.selectedVizType.id;
+		dataService.vizOptions = $scope.vizTypes;
+	}
+
+	// dataService.sayhey('zac');
 	// $scope.validParams = true;
 
 	// get the datasets immediately
 	$scope.getDatasetNames();
-	console.log($scope.datasets);
 
 	// when a new dataset is selected from the dropdown get its fields
 	$scope.$watch('selectedDataset', function() {
-		$scope.getFields();
+		if ($scope.selectedDataset != '')
+		{
+			$scope.getFields();
+			dataService.selectedDataset = $scope.selectedDataset;
+			dataService.getSelectedDataset();
+			$scope.currentData = dataService.getData($scope.selectedDataset, $scope.username, $scope.apiKey);
+			console.log($scope.currentData);
+		}
 		// reinitialize parameter options
 		$scope.vizTypes = $scope.getParamOptions();
-	});	
+	});
 
 	$scope.$watch('selectedVizType.id', function() {
 		$scope.validParams = true;
