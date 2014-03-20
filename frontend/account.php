@@ -89,9 +89,10 @@ if ($user == false)
                                             "Visualise <span class='caret'></span>".
                                         "</a>".
                                         "<ul class='dropdown-menu' role='menu'>".
-                                            "<li><a href='barchart.php?dataset=$dataset[name]'>Barchart</a></li>".
+                                            "<li><a href='barchart.php?dataset=$dataset[name]'>Bar Chart</a></li>".
                                             "<li><a href='piechart.php?dataset=$dataset[name]'>Pie Chart</a></li>".
                                             "<li><a href='scatterchart.php?dataset=$dataset[name]'>Scatter Chart</a></li>".
+                                            "<li><a href='areachart.php?dataset=$dataset[name]'>Area Chart</a></li>".
                                         "</ul>".
                                     "</div>".
                                 "</td>".
