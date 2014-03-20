@@ -135,6 +135,12 @@ foreach($query as $row) {
         $row['_id'] = (string)$row['_id'];
     }
 
+    foreach($row as $field => $value) {
+        if(isset($dataset->constraints[$field])) {
+            $row[$field] = \rainhawk\data::check($dataset->constraints[$field]['type'], $value);
+        }
+    }
+
     $json['results'][] = $row;
 }
 

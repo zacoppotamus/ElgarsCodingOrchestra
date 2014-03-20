@@ -52,7 +52,7 @@ $dataset = escapeshellarg($data->dataset);
 $degree = $data->degree;
 
 // Check that the two fields are set.
-if(!isset($data->fields) || !is_array($data->fields) || !(count($data->fields) == 2)) {
+if(!is_array($data->fields) || !(count($data->fields) == 2)) {
     echo json_beautify(json_render_error(404, "You didn't specify the two fields to use!"));
     exit;
 }

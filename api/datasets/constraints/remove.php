@@ -49,7 +49,7 @@ $json = array(
  */
 
 // Check if the field is set.
-if(!isset($data->field)) {
+if(empty($data->field)) {
     echo json_beautify(json_render_error(404, "You didn't specify the field to remove the constraint on."));
     exit;
 }
