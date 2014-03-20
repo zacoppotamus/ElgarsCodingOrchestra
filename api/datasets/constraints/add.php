@@ -40,8 +40,7 @@ if(!$dataset->have_write_access(app::$username)) {
  */
 
 $json = array(
-    "read_access" => array(),
-    "write_access" => array()
+    "added" => false
 );
 
 /*!
@@ -49,34 +48,34 @@ $json = array(
  * which will always work even if the access already exists.
  */
 
-// Check if the type is set.
-if(!isset($data->type)) {
-    echo json_beautify(json_render_error(404, "You didn't specify the type of access to give."));
+// Check if the field is set.
+if(empty($data->field)) {
+    echo json_beautify(json_render_error(404, "You didn't specify the field to add a constraint to."));
     exit;
 }
 
-// Check if the username is set.
-if(!isset($data->username)) {
-    echo json_beautify(json_render_error(404, "You didn't specify the user to give access to."));
+// Check if the field already has a constraint.
+if(isset($dataset->constraints[$data->field])) {
+    echo json_beautify(json_render_error(405, "This field already has a constraint, please remove the current constraint before adding a new one."));
     exit;
 }
 
-// Give the user access.
-$dataset->{$type . "_access"}[] = $data->username;
-$dataset->{$type . "_access"} = array_unique($dataset->{$type . "_access"});
+// Check if the datatype has been set.
+if(empty($data->type) || !in_array($data->type, array("string", "integer", "float", "timestamp", "latitude", "longitude"))) {
+    echo json_beautify(json_render_error(406, "The data type that you've selected is not supported. We currently support: string, integer, float, timestamp, latitude, longitude."));
+    exit;
+}
+
+// Add the constraint to the field.
+$dataset->constraints[$data->field] = array(
+    "type" => $data->type
+);
 
 // Store the dataset information in the index table.
 \rainhawk\sets::update($dataset);
 
-// Return the read_access keys into the JSON.
-foreach($dataset->read_access as $username) {
-    $json['read_access'][] = $username;
-}
-
-// Return the write_access keys into the JSON.
-foreach($dataset->write_access as $username) {
-    $json['write_access'][] = $username;
-}
+// Return the added attribute to the JSON.
+$json['added'] = true;
 
 /*!
  * Output our JSON payload for use in whatever needs to be using

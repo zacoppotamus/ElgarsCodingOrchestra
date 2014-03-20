@@ -116,7 +116,18 @@ foreach($files as $tmp_file) {
 
 		// Set the JSON output.
 		foreach($rows as $row) {
-		    $row['_id'] = (string)$row['_id'];
+		    if(isset($row['_id'])) {
+		        $_id = (string)$row['_id'];
+		        unset($row['id']);
+		        $row = array("_id" => $_id) + $row;
+		    }
+
+		    foreach($row as $field => $value) {
+		        if(isset($dataset->constraints[$field])) {
+		            $row[$field] = \rainhawk\data::check($dataset->constraints[$field]['type'], $value);
+		        }
+		    }
+
 		    $json['rows'][] = $row;
 		}
 
@@ -126,7 +137,7 @@ foreach($files as $tmp_file) {
 }
 
 // Check if the number of rows inserted was zero.
-if(!isset($json['rows']) || count($json['rows']) == 0) {
+if(!isset($json['rows']) || empty($json['rows'])) {
 	echo json_beautify(json_render_error(410, "After parsing the uploaded file we couldn't find any data."));
     exit;
 }
