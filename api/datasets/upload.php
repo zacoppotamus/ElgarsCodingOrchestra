@@ -116,7 +116,16 @@ foreach($files as $tmp_file) {
 
 		// Set the JSON output.
 		foreach($rows as $row) {
-		    $row['_id'] = (string)$row['_id'];
+		    if(isset($row['_id'])) {
+		        $row['_id'] = (string)$row['_id'];
+		    }
+
+		    foreach($row as $field => $value) {
+		        if(isset($dataset->constraints[$field])) {
+		            $row[$field] = \rainhawk\data::check($dataset->constraints[$field]['type'], $value);
+		        }
+		    }
+
 		    $json['rows'][] = $row;
 		}
 
