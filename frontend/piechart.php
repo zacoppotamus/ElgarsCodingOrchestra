@@ -56,7 +56,7 @@ $fields = $rainhawk->fetchDataset($dataset)["fields"];
 
       // Instantiate and draw our chart, passing in some options.
       var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
-      chart.draw(data, {title: "Crimes by Type"});
+      chart.draw(data, {title: "<?php echo $dataset; ?>"});
     }
 
     </script>

@@ -32,7 +32,7 @@ if ($user == false)
         <link rel="stylesheet" href="css/bootstrap.css">
 
         <script src="js/jquery-1.10.2.js"></script>
-        <script src="js/jquery-ui-1.10.4.custom.min.js"></script>
+        <script src="js/bootstrap.js"></script>
 
     </head>
     <body>
@@ -43,8 +43,20 @@ if ($user == false)
                 <a href="login.php?logout" type="button" class="btn btn-warning pull-right">Logout</a>
             </div>
             <div class="row">
-                <?php if(isset($_GET["deletefailed"])){echo "<div class='alert alert-danger'><strong>Error!</strong> Deletion failed</div>";}?>
-                <?php if(isset($_GET["deleted"])){echo "<div class='alert alert-success'><strong>Deleted</strong> Successful Deletion</div>";}?>
+                <?php if(isset($_GET["deletefailed"]))
+                {
+                    echo "<div class='alert alert-danger fade in'>".
+                            "<strong>Error!</strong> Deletion failed".
+                            "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>".
+                        "</div>";
+                }?>
+                <?php if(isset($_GET["deleted"]))
+                {
+                    echo "<div class='alert alert-success fade in'>".
+                            "<strong>Deleted</strong> Successful Deletion".
+                            "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>".
+                        "</div>";
+                }?>
             </div>
             <div class="row">
                 <table class="table">
@@ -71,7 +83,19 @@ if ($user == false)
                                 "<td>".count($dataset['fields'])."</td>\n".
                                 //"<td>".(in_array($user, $dataset["read_access" ]) ? "True" : "False")."</td>\n".
                                 "<td>".(in_array($user, $dataset["write_access"]) ? "True" : "False")."</td>\n".
-                                "<td><a href='vega-test/vegatest.php?dataset=$dataset[name]' class='btn btn-success btn-sm'>Visualise</a></td>".
+                                "<td>".
+                                    "<div class='dropdown'>".
+                                        "<a class='dropdown-toggle btn btn-success btn-sm' role='button' data-toggle='dropdown' href='#'>".
+                                            "Visualise <span class='caret'></span>".
+                                        "</a>".
+                                        "<ul class='dropdown-menu' role='menu'>".
+                                            "<li><a href='barchart.php?dataset=$dataset[name]'>Bar Chart</a></li>".
+                                            "<li><a href='piechart.php?dataset=$dataset[name]'>Pie Chart</a></li>".
+                                            "<li><a href='scatterchart.php?dataset=$dataset[name]'>Scatter Chart</a></li>".
+                                            "<li><a href='areachart.php?dataset=$dataset[name]'>Area Chart</a></li>".
+                                        "</ul>".
+                                    "</div>".
+                                "</td>".
                                 "<td><a href='delete.php?dataset=$dataset[name]' class='btn btn-danger btn-sm'>Delete</a></td>".
                                 "</tr>\n");
                         }
