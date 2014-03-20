@@ -22,12 +22,16 @@ $offset = isset($_GET['offset']) ? (int)$_GET['offset'] : 0;
 $fields = isset($_GET['fields']) ? json_decode($_GET['fields']) : $datasetInfo["fields"];
 $sort = isset($_GET['sort']) ? $_GET['sort'] : null;
 
+var_dump($fields);
 
 $data = $rainhawk->selectData($dataset, $query, $offset, $limit, $sort, $fields)["results"];
+var_dump($data);
+
 $result = array($fields);
 for($i=0; $i<count($data); $i++)
 {
     $values = array();
+    var_dump($data[$i]);
     foreach($fields as $field => $field_val)
     {
         $values[] = isset($data[$i][$field_val]) ? $data[$i][$field_val]:null;
