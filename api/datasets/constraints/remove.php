@@ -40,7 +40,7 @@ if(!$dataset->have_write_access(app::$username)) {
  */
 
 $json = array(
-    "constraints" => array()
+    "removed" => false
 );
 
 /*!
@@ -48,33 +48,20 @@ $json = array(
  * which will always work even if the access already exists.
  */
 
-// Check if the type is set.
-if(!isset($data->type)) {
-    echo json_beautify(json_render_error(404, "You didn't specify the type of access to remove."));
+// Check if the field is set.
+if(!isset($data->field)) {
+    echo json_beautify(json_render_error(404, "You didn't specify the field to remove the constraint on."));
     exit;
 }
 
-// Check if the username is set.
-if(!isset($data->username)) {
-    echo json_beautify(json_render_error(404, "You didn't specify the user to remove access from."));
-    exit;
-}
-
-// Remove the user's access.
-$dataset->{$type . "_access"} = array_diff($dataset->{$type . "_access"}, array($data->username));
+// Remove the constraint from the field.
+unset($dataset->constraints[$data->field]);
 
 // Store the dataset information in the index table.
 \rainhawk\sets::update($dataset);
 
-// Return the read_access keys into the JSON.
-foreach($dataset->read_access as $username) {
-    $json['read_access'][] = $username;
-}
-
-// Return the write_access keys into the JSON.
-foreach($dataset->write_access as $username) {
-    $json['write_access'][] = $username;
-}
+// Set the output.
+$json['removed'] = true;
 
 /*!
  * Output our JSON payload for use in whatever needs to be using
