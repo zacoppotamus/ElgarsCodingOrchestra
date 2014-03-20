@@ -12,6 +12,6 @@
 		"angular-bootstrap" : "0.10.0",
 		"angular-route"	: "3.11",
 		"jquery-ui": "1.10.2",
-		"angular-dragdrop": "latest"
+		"three.js": "latest"
 	}
 }

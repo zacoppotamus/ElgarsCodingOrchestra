@@ -4,7 +4,7 @@ eco.charts.d3barchart = function() {
 		title: 'Bar Chart',
 		
 		options : {
-			width : 1100,
+			width : 1300,
 			height : 600,
 			margin : {
 				top: 40,
