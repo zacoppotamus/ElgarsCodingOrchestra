@@ -31,6 +31,7 @@ else
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/style.css">
     <link href="css/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="css/font-awesome/css/font-awesome.min.css"></link>
 
     <!-- jQuery -->
     <script src="js/jquery-1.10.2.js"></script>
@@ -44,8 +45,9 @@ else
         <h1>Upload</h1>
         <h3>
           Upload a data file
-          <a href="account.php" type="button"
-            class="btn btn-warning pull-right">Back</a>
+          <a href="account.php" type="button" class="btn btn-warning pull-right">
+              <i class="fa fa-arrow-left"></i>&nbsp Back
+          </a>
         </h3>
       </div>
       <div class="row">
@@ -103,7 +105,7 @@ function verifyDataset(name, success)
       else
       {
         errormsg("Dataset does not exist or you do not have write access. "+
-        "Please create a dataset using the <a href='create.php'>create</a> interface.")
+        "Please create a dataset using the <a class='alert-link' href='create.php'>create</a> interface.")
       }
     },
     error: function(data){return false;},
@@ -119,7 +121,14 @@ function uploadDataset(event)
   event.stopPropagation();
   event.preventDefault();
 
-  var name = $('#datasetName').val();
+  if($('#datasetName').length)
+  {
+    var name = $('#datasetName').val();
+  }
+  else
+  {
+    name = '<?php echo $_GET["dataset"]; ?>';
+  }
 
   verifyDataset(name, function(){
 
@@ -136,7 +145,7 @@ function uploadDataset(event)
       success: function(data) {
         if(data.meta.code === 200)
         {
-          successmsg();
+          successmsg(name);
         }
         else
         {
@@ -163,11 +172,11 @@ function errormsg(message)
     "</div>");
 }
 
-function successmsg()
+function successmsg(name)
 {
   $("form").prepend(
     "<div class='alert alert-success fade in'>"+
-      "<strong>Done!</strong> File successfully uploaded."+
+      "<strong>Done!</strong> Data successfully uploaded to dataset <a class='alert-link' href='edit.php?dataset="+name+"'>"+name+"</a>"+
       "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"+
     "</div>");
 }
