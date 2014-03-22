@@ -126,7 +126,7 @@ string JSONString( JSONObject object )
     value = clearWhiteSpace(value);
     try
     {
-      stod( value, &idx );
+      stold( value, &idx );
       if( idx < value.size() )
       {
         document += '\"';
@@ -139,6 +139,12 @@ string JSONString( JSONObject object )
       }
     }
     catch( const invalid_argument &e )
+    {
+      document += '\"';
+      document += value;
+      document += '\"';
+    }
+    catch( const out_of_range &e )
     {
       document += '\"';
       document += value;
