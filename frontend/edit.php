@@ -30,14 +30,29 @@ $fields      = $datasetInfo["fields"];
         <script src="js/jquery-1.10.2.js"></script>
         <script src="js/jquery-ui-1.10.4.custom.min.js"></script>
         <script src="js/jtable.2.3.1/jquery.jtable.js"></script>
+        <script src="js/bootstrap.js"></script>
         <title>Our Datasets</title>
     </head>
     <body>
         <div class="container">
             <div class="row">
                 <h1><?php echo $datasetInfo["name"];?></h>
+            </div>
+            <div class="row">
                 <h3><?php echo $datasetInfo["description"];?></h>
                 <a href="account.php" type="button" class="btn btn-warning pull-right"><i class="fa fa-arrow-left"></i>&nbsp Back</a>
+                <a href='upload.php?dataset=<?php echo $dataset; ?>' class='btn btn-primary pull-right'><i class='fa fa-cloud-upload'></i>&nbsp Upload</a>
+                <div class='dropdown pull-right'>
+                    <a class='dropdown-toggle btn btn-success' role='button' data-toggle='dropdown' href='#'>
+                        <i class='fa fa-bar-chart-o'></i>&nbsp Visualise <span class='caret'></span>
+                    </a>
+                    <ul class='dropdown-menu' role='menu'>
+                    <li><a href='barchart.php?dataset=<?php echo $dataset; ?>'>Bar Chart</a></li>
+                        <li><a href='piechart.php?dataset=<?php echo $dataset; ?>'>Pie Chart</a></li>
+                        <li><a href='scatterchart.php?dataset=<?php echo $dataset; ?>'>Scatter Chart</a></li>
+                        <li><a href='areachart.php?dataset=<?php echo $dataset; ?>'>Area Chart</a></li>
+                    </ul>
+                </div>
             </div>
             <div class="row">
                 <div id="dataTable"></div>
