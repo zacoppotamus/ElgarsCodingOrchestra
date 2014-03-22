@@ -87,7 +87,8 @@ if ($user == false)
                                 "<td>".(in_array($user, $dataset["write_access"]) ? "True" : "False")."</td>\n".
                                 "<td>".
                                     "<div class='dropdown'>".
-                                        "<a class='dropdown-toggle btn btn-success btn-sm' role='button' data-toggle='dropdown' href='#'>".
+                                    "<a class='dropdown-toggle btn btn-success btn-sm' role='button' data-toggle='dropdown' ".
+                                        "href='#' ". (($dataset["rows"] == 0) ? "disabled>" : ">") .
                                             "<i class='fa fa-bar-chart-o'></i>&nbsp Visualise <span class='caret'></span>".
                                         "</a>".
                                         "<ul class='dropdown-menu' role='menu'>".
