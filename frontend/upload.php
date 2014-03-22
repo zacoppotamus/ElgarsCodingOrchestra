@@ -1,7 +1,7 @@
 <?php
 require_once("../wrappers/php/rainhawk.class.php");
 
-$mashape_key = isset($_POST["apiKey"]) ? $_POST["apiKey"] : $_COOKIE["apiKey"];
+$mashape_key = isset($_POST["apiKey"]) ? $_POST["apiKey"] : $_SESSION["apiKey"];
 
 $rainhawk = new Rainhawk($mashape_key);
 
