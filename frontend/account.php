@@ -100,7 +100,8 @@ if ($user == false)
                                 "</td>".
                                 "<td>".
                                     "<a href='upload.php?dataset=$dataset[name]' class='btn btn-primary btn-sm'>".
-                                    "<i class='fa fa-cloud-upload'></i>&nbsp Upload</a></td>".
+                                    "<i class='fa fa-cloud-upload'></i>&nbsp Upload</a>".
+                                "</td>".
                                 "<td><a href='delete.php?dataset=$dataset[name]' class='btn btn-danger btn-sm'><i class='fa fa-ban'></i>&nbsp Delete</a></td>".
                                 "</tr>\n");
                         }
@@ -108,7 +109,6 @@ if ($user == false)
                     <tbody>
                     <tfoot>
                         <tr><td colspan='100%'><p class="text-center"><strong><a href='create.php'>Create a dataset</a></strong></p></td>
-                        <tr><td colspan='100%'><p class="text-center"><strong><a href='upload.php'>Upload your own data</a></strong></p></td></tr>
                     </tfoot>
                 </table>
             </div>
