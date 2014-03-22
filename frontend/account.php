@@ -69,6 +69,7 @@ if ($user == false)
                             <th>Write Access</th>
                             <th></th>
                             <th></th>
+                            <th></th>
                         </tr>
                     </head>
                     <tbody>
@@ -96,6 +97,7 @@ if ($user == false)
                                         "</ul>".
                                     "</div>".
                                 "</td>".
+                                "<td><a href='upload.php?dataset=$dataset[name]' class='btn btn-primary btn-sm'>Upload</a></td>".
                                 "<td><a href='delete.php?dataset=$dataset[name]' class='btn btn-danger btn-sm'>Delete</a></td>".
                                 "</tr>\n");
                         }

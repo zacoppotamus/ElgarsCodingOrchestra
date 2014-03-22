@@ -50,8 +50,14 @@ else
         <form role="form">
           <div class="form-group">
             <label for="datasetName">Dataset Name</label>
-            <input type="text" class="form-control" id="datasetName"
-              name="datasetName" placeholder="Dataset Name" required autofocus>
+            <?php if(isset($_GET["dataset"])){
+              echo "<p class='form-control-static'>$_GET[dataset]</p>";
+            }
+            else
+            {
+              echo "<input type='text' class='form-control' id='datasetName'".
+                   "name='datasetName' placeholder='Dataset Name' required autofocus>";
+            }?>
           </div>
           <div class="form-group">
             <label for="datasetFile">Type</label>
