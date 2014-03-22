@@ -30,7 +30,7 @@ if ($user == false)
         <!-- Bootstrap -->
         <link href="css/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" type="text/css">
         <link rel="stylesheet" href="css/bootstrap.css">
-    <link rel="stylesheet" href="css/font-awesome/css/font-awesome.min.css"></link>
+        <link rel="stylesheet" href="css/font-awesome/css/font-awesome.min.css"></link>
 
         <script src="js/jquery-1.10.2.js"></script>
         <script src="js/bootstrap.js"></script>
@@ -41,7 +41,7 @@ if ($user == false)
             <div class="row">
                 <h1>Hello <?php echo $user; ?></h1>
                 <h3>Please pick a dataset to view, edit or visualise</h>
-                <a href="login.php?logout" type="button" class="btn btn-warning pull-right">Logout</a>
+                <a href="login.php?logout" type="button" class="btn btn-warning pull-right"><i class="fa fa-sign-out"></i>&nbsp Logout</a>
             </div>
             <div class="row">
                 <?php if(isset($_GET["deletefailed"]))

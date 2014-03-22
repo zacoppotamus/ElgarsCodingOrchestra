@@ -26,6 +26,7 @@ $fields      = $datasetInfo["fields"];
         <link rel="stylesheet" href="../css/bootstrap.css">
         <link href="css/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" type="text/css">
         <link href="js/jtable.2.3.1/themes/metro/blue/jtable.min.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="css/font-awesome/css/font-awesome.min.css"></link>
         <script src="js/jquery-1.10.2.js"></script>
         <script src="js/jquery-ui-1.10.4.custom.min.js"></script>
         <script src="js/jtable.2.3.1/jquery.jtable.js"></script>
@@ -36,7 +37,7 @@ $fields      = $datasetInfo["fields"];
             <div class="row">
                 <h1><?php echo $datasetInfo["name"];?></h>
                 <h3><?php echo $datasetInfo["description"];?></h>
-                <a href="account.php" type="button" class="btn btn-warning pull-right">Back</a>
+                <a href="account.php" type="button" class="btn btn-warning pull-right"><i class="fa fa-arrow-left"></i>&nbsp Back</a>
             </div>
             <div class="row">
                 <div id="dataTable"></div>
@@ -62,11 +63,12 @@ $fields      = $datasetInfo["fields"];
                             },
                             fields: {
                                 <?php
+                                    $colwidth = 100/count($fields);
                                     for($i=0; $i<count($fields); $i++)
                                     {
                                         if($fields[$i] !== "_id")
                                         {
-                                            echo ("'$fields[$i]': {title:'$fields[$i]'},");
+                                            echo ("'$fields[$i]': {title:'$fields[$i]', width:'$colwidth%'}, ");
                                         }
                                     }
                                 ?>
