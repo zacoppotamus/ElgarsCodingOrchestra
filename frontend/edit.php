@@ -44,7 +44,7 @@ $fields      = $datasetInfo["fields"];
                 <a href='upload.php?dataset=<?php echo $dataset; ?>' class='btn btn-primary pull-right'><i class='fa fa-cloud-upload'></i>&nbsp Upload</a>
                 <div class='dropdown pull-right'>
                     <a class='dropdown-toggle btn btn-success' role='button' data-toggle='dropdown' href='#'>
-                        <i class='fa fa-bar-chart-o'></i>&nbsp Visualise <span class='caret'></span>
+                        <i class='fa fa-bar-chart-o'></i>&nbsp Visualise&nbsp <span class='caret'></span>
                     </a>
                     <ul class='dropdown-menu' role='menu'>
                     <li><a href='barchart.php?dataset=<?php echo $dataset; ?>'>Bar Chart</a></li>

@@ -89,7 +89,7 @@ if ($user == false)
                                     "<div class='dropdown'>".
                                     "<a class='dropdown-toggle btn btn-success btn-sm' role='button' data-toggle='dropdown' ".
                                         "href='#' ". (($dataset["rows"] == 0) ? "disabled>" : ">") .
-                                            "<i class='fa fa-bar-chart-o'></i>&nbsp Visualise <span class='caret'></span>".
+                                            "<i class='fa fa-bar-chart-o'></i>&nbsp Visualise &nbsp<span class='caret'></span>".
                                         "</a>".
                                         "<ul class='dropdown-menu' role='menu'>".
                                             "<li><a href='barchart.php?dataset=$dataset[name]'>Bar Chart</a></li>".
