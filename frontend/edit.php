@@ -52,7 +52,7 @@ $fields      = $datasetInfo["fields"];
                             actions: {
                                 listAction: 'proxy/list.php?dataset=<?php echo $dataset; ?>',
                                 <?php
-                                if(in_array($user, $datasetInfo["write_access"]))
+                                if(in_array($user, $datasetInfo["write_access"]) && $datasetInfo["rows"] != 0)
                                 {
                                     echo("createAction: 'proxy/create.php?dataset=$dataset',"
                                        . "updateAction: 'proxy/update.php?dataset=$dataset',"
