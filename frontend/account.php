@@ -54,7 +54,7 @@ if ($user == false)
                 <?php if(isset($_GET["deleted"]))
                 {
                     echo "<div class='alert alert-success fade in'>".
-                            "<strong>Gone!</strong> Successful Deletion".
+                            "<strong>Gone!</strong> Dataset successfully deleted.".
                             "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>".
                         "</div>";
                 }?>
