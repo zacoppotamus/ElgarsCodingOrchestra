@@ -152,7 +152,7 @@ function uploadDataset(event)
           errormsg(data.data.message);
         }
       },
-      error: function(err) { alert(err); },
+      error: function(err) { errormsg(JSON.stringify(err)); },
       beforeSend: function(xhr) {
         xhr.setRequestHeader("X-Mashape-Authorization", "<?php echo $mashape_key; ?>");
       }
