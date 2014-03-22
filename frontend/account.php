@@ -30,6 +30,7 @@ if ($user == false)
         <!-- Bootstrap -->
         <link href="css/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" type="text/css">
         <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/font-awesome/css/font-awesome.min.css"></link>
 
         <script src="js/jquery-1.10.2.js"></script>
         <script src="js/bootstrap.js"></script>
@@ -87,7 +88,7 @@ if ($user == false)
                                 "<td>".
                                     "<div class='dropdown'>".
                                         "<a class='dropdown-toggle btn btn-success btn-sm' role='button' data-toggle='dropdown' href='#'>".
-                                            "Visualise <span class='caret'></span>".
+                                            "<i class='fa fa-bar-chart-o'></i>&nbsp Visualise <span class='caret'></span>".
                                         "</a>".
                                         "<ul class='dropdown-menu' role='menu'>".
                                             "<li><a href='barchart.php?dataset=$dataset[name]'>Bar Chart</a></li>".
@@ -97,8 +98,10 @@ if ($user == false)
                                         "</ul>".
                                     "</div>".
                                 "</td>".
-                                "<td><a href='upload.php?dataset=$dataset[name]' class='btn btn-primary btn-sm'>Upload</a></td>".
-                                "<td><a href='delete.php?dataset=$dataset[name]' class='btn btn-danger btn-sm'>Delete</a></td>".
+                                "<td>".
+                                    "<a href='upload.php?dataset=$dataset[name]' class='btn btn-primary btn-sm'>".
+                                    "<i class='fa fa-cloud-upload'></i>&nbsp Upload</a></td>".
+                                "<td><a href='delete.php?dataset=$dataset[name]' class='btn btn-danger btn-sm'><i class='fa fa-ban'></i>&nbsp Delete</a></td>".
                                 "</tr>\n");
                         }
                         ?>
