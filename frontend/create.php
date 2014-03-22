@@ -65,7 +65,7 @@ else
           <div class="form-group">
             <label for="datasetDescription">Dataset Description</label>
             <input type="text" class="form-control" id="datasetDescription"
-              name="datasetDescription" placeholder="Dataset Description">
+              name="datasetDescription" placeholder="Dataset Description" required>
           </div>
           <button type="submit" class="btn btn-default">Submit</button>
         </form>
@@ -119,9 +119,9 @@ function error(data)
 function success(data)
 {
   $("form").prepend(
-    "<div class='alert alert-success fade in'>"+
-      "<strong>Created!</strong> Dataset" + data.data.name + " successfully created."+
-      "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"+
+    "<div class='alert alert-success alert-dismissable fade in'>"+
+      "<strong>Created!</strong> Dataset <a class='alert-link' href='edit.php?dataset=" + data.data.name + "'>" + data.data.name + "</a> successfully created."+
+      "<button type='button' class='close pull-right' data-dismiss='alert' aria-hidden='true'>&times;</button>"+
     "</div>");
 }
 
