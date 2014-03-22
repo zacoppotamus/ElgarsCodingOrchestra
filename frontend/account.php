@@ -100,7 +100,7 @@ if ($user == false)
                                     "</div>".
                                 "</td>".
                                 "<td>".
-                                    "<a href='upload.php?dataset=$dataset[name]' class='btn btn-primary btn-sm'>".
+                                    "<a href='upload.php?dataset=$dataset[name]' class='btn btn-primary btn-sm'".(in_array($user, $dataset["write_access"]) ? "" : "disabled").">".
                                     "<i class='fa fa-cloud-upload'></i>&nbsp Upload</a>".
                                 "</td>".
                                 "<td><a href='delete.php?dataset=$dataset[name]' class='btn btn-danger btn-sm'><i class='fa fa-ban'></i>&nbsp Delete</a></td>".
