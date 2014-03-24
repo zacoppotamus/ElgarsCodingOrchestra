@@ -34,9 +34,15 @@ if ($user == false)
 
         <script src="js/jquery-1.10.2.js"></script>
         <script src="js/bootstrap.js"></script>
-        <script src="js/jquery.popconfirm.js"></script>
+        <script src="js/jquery.confirm.min.js"></script>
         <script>
-            $(".popconfirm").popConfirm();
+            $(document).ready(function(){
+                $(".confirm").confirm({
+                    text: "Are you sure you wish to delete this dataset? This action is irreversible",
+                    title: "Really delete?",
+                    confirmButton: "Delete"
+                });
+            });
         </script>
 
     </head>
@@ -108,7 +114,7 @@ if ($user == false)
                                     "<i class='fa fa-cloud-upload'></i>&nbsp Upload</a>".
                                 "</td>".
                                 "<td><a href='delete.php?dataset=$dataset[name]' id='del".explode(".", $dataset["name"])[1].
-                                    "' class='btn btn-danger btn-sm popconfirm'><i class='fa fa-ban'></i>&nbsp Delete</a></td>".
+                                    "' class='btn btn-danger btn-sm confirm'><i class='fa fa-ban'></i>&nbsp Delete</a></td>".
                                 "</tr>\n");
                         }
                         ?>
