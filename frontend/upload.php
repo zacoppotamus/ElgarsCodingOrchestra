@@ -105,7 +105,7 @@ function verifyDataset(name, success)
       else
       {
         errormsg("Dataset does not exist or you do not have write access. "+
-        "Please create a dataset using the <a class='alert-link' href='create.php'>create</a> interface.")
+        "Try creating a dataset using the <a class='alert-link' href='create.php'>create</a> interface.")
       }
     },
     error: function(data){return false;},
