@@ -34,6 +34,10 @@ if ($user == false)
 
         <script src="js/jquery-1.10.2.js"></script>
         <script src="js/bootstrap.js"></script>
+        <script src="js/jquery.popconfirm.js"></script>
+        <script>
+            $(".popconfirm").popConfirm();
+        </script>
 
     </head>
     <body>
@@ -103,7 +107,7 @@ if ($user == false)
                                     "<a href='upload.php?dataset=$dataset[name]' class='btn btn-primary btn-sm'".(in_array($user, $dataset["write_access"]) ? "" : "disabled").">".
                                     "<i class='fa fa-cloud-upload'></i>&nbsp Upload</a>".
                                 "</td>".
-                                "<td><a href='delete.php?dataset=$dataset[name]' class='btn btn-danger btn-sm'><i class='fa fa-ban'></i>&nbsp Delete</a></td>".
+                                "<td><a href='delete.php?dataset=$dataset[name]' class='btn btn-danger btn-sm popconfirm'><i class='fa fa-ban'></i>&nbsp Delete</a></td>".
                                 "</tr>\n");
                         }
                         ?>
