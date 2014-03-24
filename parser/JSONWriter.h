@@ -12,7 +12,7 @@ class JSONObject
     JSONObject();
     void addPair( string name, const char * value );
     void addPair( string name, string &value );
-    void addPair( string name, double value );
+    void addPair( string name, long double value );
     void addPair( string name, bool value );
     void addPair( string name );
     string getName( unsigned pos );

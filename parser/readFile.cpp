@@ -30,7 +30,7 @@ sheetNode::sheetNode( string newString )
   strval = newString;
 }
 
-sheetNode::sheetNode( double newNumber )
+sheetNode::sheetNode( long double newNumber )
 {
   jType = NUMBER;
   numval = newNumber;
@@ -50,7 +50,7 @@ string sheetNode::getString()
     return strval;
 }
 
-double sheetNode::getNumber()
+long double sheetNode::getNumber()
 {
   if( jType != NUMBER )
     return 0;
@@ -276,7 +276,7 @@ void insertValue( string csvalue, vector<sheetNode> &cell )
   else
   {
     stringstream conversion( csvalue );
-    double numval;
+    long double numval;
     if( ( conversion >> numval ) )
     {
       sheetNode newsheet( numval );
@@ -647,7 +647,7 @@ int getSheetContents( vector< vector<sheetNode> > &spreadsheet,
       string value = fileContents.substr(
         currentPosition, endPosition - currentPosition );
       stringstream converter( value );
-      double newValue;
+      long double newValue;
       if( !( converter >> newValue ) )
       {
         newValue = 0;
