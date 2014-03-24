@@ -46,7 +46,7 @@ else
         <h3>
           Upload a data file
           <a href="account.php" type="button" class="btn btn-warning pull-right">
-              <i class="fa fa-arrow-left"></i>&nbsp Back
+              <i class="fa fa-bars"></i>&nbsp Datasets
           </a>
         </h3>
       </div>

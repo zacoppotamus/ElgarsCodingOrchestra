@@ -40,7 +40,7 @@ $fields      = $datasetInfo["fields"];
             </div>
             <div class="row">
                 <h3><?php echo $datasetInfo["description"];?></h>
-                <a href="account.php" type="button" class="btn btn-warning pull-right"><i class="fa fa-arrow-left"></i>&nbsp Back</a>
+                <a href="account.php" type="button" class="btn btn-warning pull-right"><i class="fa fa-bars"></i>&nbsp Datasets</a>
                 <a href='upload.php?dataset=<?php echo $dataset; ?>' class='btn btn-primary pull-right'><i class='fa fa-cloud-upload'></i>&nbsp Upload</a>
                 <div class='dropdown pull-right'>
                     <a class='dropdown-toggle btn btn-success' role='button' data-toggle='dropdown' href='#'>

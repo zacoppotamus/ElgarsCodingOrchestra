@@ -35,6 +35,7 @@ else
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/style.css">
     <link href="css/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="css/font-awesome/css/font-awesome.min.css"></link>
 
     <!-- jQuery -->
     <script src="js/jquery-1.10.2.js"></script>
@@ -49,7 +50,9 @@ else
         <h3>
           Create a new dataset
           <a href="account.php" type="button"
-            class="btn btn-warning pull-right">Back</a>
+            class="btn btn-warning pull-right">
+                <i class="fa fa-bars"></i>&nbsp Datasets
+          </a>
         </h3>
       </div>
       <div class="row">
