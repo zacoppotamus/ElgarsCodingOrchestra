@@ -98,6 +98,7 @@ string JSONString( JSONObject object )
   string document = "{\n";
   unsigned count = 0;
   unsigned max = object.fieldCount();
+  while( count < max )
   {
     document += "\t";
     document += "\"";

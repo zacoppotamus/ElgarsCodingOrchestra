@@ -243,20 +243,18 @@ string clearWhiteSpace( string target )
   while( target[end] == ' ' || target[end] == '\t' ) end--;
   if( start != 0 || end != target.size() - 1 )
   {
-    if( start >= end ) return "";
+    if( start >= end || end == string::npos ) return "";
     string result = target;
-    result.resize( end + 1 );
     cout << '"' << result << "\", " << start << ", " << end << '\n';
+    result.resize( end + 1 );
     return result.substr( start );
   }
-  cout << "No Whitespace." << '\n';
   return target;
 }
 
 vector<JSONObject> encodeTable(
   vector< vector<sheetNode> > spreadsheet, table data )
 {
-  cout << "Go" << '\n';
   unsigned cX;
   unsigned cY = data.y1 + 1;
   string nameval;
@@ -277,13 +275,11 @@ vector<JSONObject> encodeTable(
       {
         case STRING:
           strval = spreadsheet[cY][cX].getString();
-          cout << "s" << '\n';
-          //strval = clearWhiteSpace( strval );
-          //strval = "\"" + strval + "\"";
+          strval = clearWhiteSpace( strval );
+          strval = "\"" + strval + "\"";
           next.addPair( nameval, strval );
           break;
         case NUMBER:
-          cout << "n" << '\n';
           numval = spreadsheet[cY][cX].getNumber();
           next.addPair( nameval, numval );
           break;
@@ -291,12 +287,10 @@ vector<JSONObject> encodeTable(
         case ARRAY:
           break;
         case BOOL:
-          cout << "b" << '\n';
           boolval = spreadsheet[cY][cX].getBool();
           next.addPair( nameval, boolval );
           break;
         case NULLVALUE:
-          cout << "_" << '\n';
           next.addPair( nameval );
           break;
       }
@@ -326,27 +320,18 @@ vector< vector<JSONObject> > processData( vector< vector<sheetNode> > spreadshee
 {
   //Padding the spreadsheet to prevent out-of-bounds access errors during
   //table scanning
-  cout << "Yeah" << '\n' << '\n';
   sheetNode nullcell;
-  cout << "Yeah" << '\n';
   vector<sheetNode> nullrow( spreadsheet[0].size()+1, nullcell );
-  cout << "Yeah" << '\n' << '\n';
   for( vector< vector<sheetNode> >::iterator it = spreadsheet.begin();
     it != spreadsheet.end();
     it++ )
   {
     it->push_back( nullcell );
   }
-  cout << "Yeah" << '\n';
   spreadsheet.push_back( nullrow );
-  cout << "Yeah" << '\n';
   vector<header> initialHeaders( detectRows( spreadsheet ) );
-  cout << "Yeah" << '\n';
   vector<table> initialTables( contentScan( spreadsheet, initialHeaders ) );
-  cout << "Yeah" << '\n';
   collisionScan( initialTables );
-  cout << "Yeah" << '\n';
   vector< vector<JSONObject> > result( encodeTables( spreadsheet, initialTables ) );
-  cout << "Yeah" << '\n';
   return result;
 }

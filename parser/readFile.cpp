@@ -301,6 +301,7 @@ page readCSV( string filename )
   if( !input.good() )
   {
     page failure;
+    failure.name = title;
     return failure;
   }
   unsigned width = 0;
