@@ -18,11 +18,16 @@ eco.charts.d3bubblechart = function() {
             var maxElement = d3.max(d3.values(data),function(i){
                 return +i[yValue];
             });
+
+            // radius scale
+            var rScale = d3.scale.linear()
+                .domain([0, maxElement])
+                .range([4.5, height/10]);
             
-            var svg = d3.select("body").append("svg")
+            var svg = target.append("svg")
                 .attr("class", "bubble-chart");
             
-            var div = d3.select("body").append("div")
+            var div = target.append("div")
                 .attr("class", "hidden")
                 .attr("id", "bubble-chart-tooltip");
                 
@@ -36,7 +41,7 @@ eco.charts.d3bubblechart = function() {
                 .nodes(data)
                 .size([width/1.5, height/1.5])
                 .gravity(0.5)
-                .charge(-maxElement*100)
+                .charge(-2000)
                 .start();
 
             var nodes = svg.selectAll(".bubble-chart-node")
@@ -51,7 +56,7 @@ eco.charts.d3bubblechart = function() {
             nodes.append("circle")
                 .attr("r", function(data)
                 {
-                    return data[yValue];
+                    return rScale(data[yValue]);
                 })
                 .attr("fill", function(d, i) 
                 {
@@ -69,7 +74,7 @@ eco.charts.d3bubblechart = function() {
             function mouseover(d)
             {
                 var xPos = d.x - 50 - 5;
-                var yPos = d.y - ((maxElement-d[yValue])+maxElement)*1.5;
+                var yPos = d.y - ((maxElement-rScale(d[yValue]))+maxElement)*1.5;
                 //Update the bubble-chart-tooltip position and value
                 d3.select("#bubble-chart-tooltip")
                   .style("left", xPos + "px")
@@ -89,7 +94,7 @@ eco.charts.d3bubblechart = function() {
                     .duration(150)
                     .attr("r", function(data)
                     {
-                        return data[yValue] * 1.2;
+                        return rScale(data[yValue]) * 1.2;
                     });
             };
             
@@ -103,7 +108,7 @@ eco.charts.d3bubblechart = function() {
                     .duration(150)
                     .attr("r", function(data)
                     {
-                        return data[yValue];
+                        return rScale(data[yValue]);
                     });
             };
         }
