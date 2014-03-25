@@ -1,16 +1,16 @@
-.mainsvg 
+.bubble-chart 
 {
     height:800px;
     /*border: 1px solid red;*/
     width: 1500px;
 }
 
-.node circle
+.bubble-chart-node circle
 {
     stroke-width: 1.5px;
 }
 
-#tooltip 
+#bubble-chart-tooltip 
 {
     position: absolute;
     width: auto;
@@ -22,12 +22,12 @@
     pointer-events: none;
 }
 
-#tooltip.hidden 
+#bubble-chart-tooltip.hidden 
 {
     display: none;
 }
 
-#tooltip p 
+#bubble-chart-tooltip p 
 {
     margin: 0;
     font-family: sans-serif;

@@ -3,7 +3,7 @@
 /* directives */
 
 angular.module('eco.directives', [])
-.directive('chart', function(dataService) {
+.directive('ecochart', function(dataService) {
 
 	// Inherit scope from parent controller
 	return {
@@ -32,6 +32,13 @@ angular.module('eco.directives', [])
 				var names = vizOptions[chartType].options['names'];
 
 				eco.charts.d3piechart().render(data, names, values, target);
+			}
+			else if (chartType == 2) {
+				var xValue = vizOptions[chartType].options['x'];
+				var yValue = vizOptions[chartType].options['y'];
+				var maxRadius = vizOptions[chartType].options['maxRadius'];
+
+				eco.charts.d3bubblechart().render(data, xValue, yValue, maxRadius, target);
 			}
 			else if (chartType == 3) {
 				var latitude = vizOptions[chartType].options['latitude'];
