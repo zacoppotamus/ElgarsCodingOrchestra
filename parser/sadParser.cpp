@@ -52,7 +52,6 @@ int main( int argc, char * argv[] )
         it++
       )
       {
-        //cout << pageString( *it ) << '\n';
         vector< vector<JSONObject> > processedData(
           processData( it->contents ) );
         processedDataSheets.push_back( processedData );
@@ -77,8 +76,8 @@ int main( int argc, char * argv[] )
           char * newFilename = new char[title.size()+8];
           sprintf( newFilename, "%s-%02d.json", title.c_str(), count+1 );
           string filetitle( newFilename );
-          cout << filetitle << " created." << '\n';
           createJDocument( filetitle, *inIt );
+          cout << filetitle << " created." << '\n';
           count++;
         }
         pagecount++;

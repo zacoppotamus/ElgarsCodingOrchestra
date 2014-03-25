@@ -30,9 +30,20 @@ if ($user == false)
         <!-- Bootstrap -->
         <link href="css/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" type="text/css">
         <link rel="stylesheet" href="css/bootstrap.css">
+        <link rel="stylesheet" href="css/font-awesome/css/font-awesome.min.css"></link>
 
         <script src="js/jquery-1.10.2.js"></script>
         <script src="js/bootstrap.js"></script>
+        <script src="js/jquery.confirm.min.js"></script>
+        <script>
+            $(document).ready(function(){
+                $(".confirm").confirm({
+                    text: "Are you sure you wish to delete this dataset? This action is irreversible",
+                    title: "Really delete?",
+                    confirmButton: "Delete"
+                });
+            });
+        </script>
 
     </head>
     <body>
@@ -40,7 +51,7 @@ if ($user == false)
             <div class="row">
                 <h1>Hello <?php echo $user; ?></h1>
                 <h3>Please pick a dataset to view, edit or visualise</h>
-                <a href="login.php?logout" type="button" class="btn btn-warning pull-right">Logout</a>
+                <a href="login.php?logout" type="button" class="btn btn-warning pull-right"><i class="fa fa-sign-out"></i>&nbsp Logout</a>
             </div>
             <div class="row">
                 <?php if(isset($_GET["deletefailed"]))
@@ -53,7 +64,7 @@ if ($user == false)
                 <?php if(isset($_GET["deleted"]))
                 {
                     echo "<div class='alert alert-success fade in'>".
-                            "<strong>Deleted</strong> Successful Deletion".
+                            "<strong>Gone!</strong> Dataset successfully deleted.".
                             "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>".
                         "</div>";
                 }?>
@@ -67,6 +78,7 @@ if ($user == false)
                             <th>Records</th>
                             <th>Fields</th>
                             <th>Write Access</th>
+                            <th></th>
                             <th></th>
                             <th></th>
                         </tr>
@@ -85,8 +97,9 @@ if ($user == false)
                                 "<td>".(in_array($user, $dataset["write_access"]) ? "True" : "False")."</td>\n".
                                 "<td>".
                                     "<div class='dropdown'>".
-                                        "<a class='dropdown-toggle btn btn-success btn-sm' role='button' data-toggle='dropdown' href='#'>".
-                                            "Visualise <span class='caret'></span>".
+                                    "<a class='dropdown-toggle btn btn-success btn-sm' role='button' data-toggle='dropdown' ".
+                                        "href='#' ". (($dataset["rows"] == 0) ? "disabled>" : ">") .
+                                            "<i class='fa fa-bar-chart-o'></i>&nbsp Visualise &nbsp<span class='caret'></span>".
                                         "</a>".
                                         "<ul class='dropdown-menu' role='menu'>".
                                             "<li><a href='barchart.php?dataset=$dataset[name]'>Bar Chart</a></li>".
@@ -96,14 +109,18 @@ if ($user == false)
                                         "</ul>".
                                     "</div>".
                                 "</td>".
-                                "<td><a href='delete.php?dataset=$dataset[name]' class='btn btn-danger btn-sm'>Delete</a></td>".
+                                "<td>".
+                                    "<a href='upload.php?dataset=$dataset[name]' class='btn btn-primary btn-sm'".(in_array($user, $dataset["write_access"]) ? "" : "disabled").">".
+                                    "<i class='fa fa-cloud-upload'></i>&nbsp Upload</a>".
+                                "</td>".
+                                "<td><a href='delete.php?dataset=$dataset[name]' id='del".explode(".", $dataset["name"])[1].
+                                    "' class='btn btn-danger btn-sm confirm'><i class='fa fa-ban'></i>&nbsp Delete</a></td>".
                                 "</tr>\n");
                         }
                         ?>
                     <tbody>
                     <tfoot>
                         <tr><td colspan='100%'><p class="text-center"><strong><a href='create.php'>Create a dataset</a></strong></p></td>
-                        <tr><td colspan='100%'><p class="text-center"><strong><a href='upload.php'>Upload your own data</a></strong></p></td></tr>
                     </tfoot>
                 </table>
             </div>
