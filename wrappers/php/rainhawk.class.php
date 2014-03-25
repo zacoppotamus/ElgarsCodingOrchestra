@@ -30,7 +30,7 @@ class Rainhawk {
      * @var string
      */
 
-    private $host = "https://sneeza-eco.p.mashape.com/";
+    private $host = "https://sneeza-eco.p.mashape.com";
 
     /**
      * Store the Mashape API key to use for authentication to the
@@ -69,10 +69,6 @@ class Rainhawk {
 
     public function __construct($mashapeKey) {
         $this->mashapeKey = $mashapeKey;
-
-        if(substr($this->host, -1) == "/") {
-            $this->host = substr($this->host, 0, -1);
-        }
     }
 
     /**
