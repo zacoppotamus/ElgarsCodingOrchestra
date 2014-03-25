@@ -234,6 +234,24 @@ vector<table> contentScan( vector< vector<sheetNode> > spreadsheet, vector<heade
   return tables;
 }
 
+//Only clears spaces and tabs
+string clearWhiteSpace( string target )
+{
+  size_t start = 0;
+  size_t end = target.size() - 1;
+  while( target[start] == ' ' || target[start] == '\t' ) start++;
+  while( target[end] == ' ' || target[end] == '\t' ) end--;
+  if( start != 0 || end != target.size() - 1 )
+  {
+    if( start >= end || end == string::npos ) return "";
+    string result = target;
+    cout << '"' << result << "\", " << start << ", " << end << '\n';
+    result.resize( end + 1 );
+    return result.substr( start );
+  }
+  return target;
+}
+
 vector<JSONObject> encodeTable(
   vector< vector<sheetNode> > spreadsheet, table data )
 {
@@ -241,7 +259,7 @@ vector<JSONObject> encodeTable(
   unsigned cY = data.y1 + 1;
   string nameval;
   string strval;
-  double numval;
+  long double numval;
   bool boolval;
   JType datatype;
   vector<JSONObject> result;
@@ -257,6 +275,8 @@ vector<JSONObject> encodeTable(
       {
         case STRING:
           strval = spreadsheet[cY][cX].getString();
+          strval = clearWhiteSpace( strval );
+          strval = "\"" + strval + "\"";
           next.addPair( nameval, strval );
           break;
         case NUMBER:

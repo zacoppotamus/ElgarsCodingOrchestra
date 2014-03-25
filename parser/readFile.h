@@ -16,16 +16,16 @@ class sheetNode
   public:
     sheetNode();
     sheetNode( string newString );
-    sheetNode( double newNumber );
+    sheetNode( long double newNumber );
     sheetNode( bool newBool );
     JType getType();
     string getString();
-    double getNumber();
+    long double getNumber();
     bool getBool();
   private:
     JType jType;
     string strval;
-    double numval;
+    long double numval;
     bool boolval;
 };
 
