@@ -20,3 +20,4 @@ $(UNZ_OBJS):
 clean: 
 	$(RM) sadparser *.o *~
 	cd unzip && $(MAKE) clean
+	$(RM) examples/*.json
