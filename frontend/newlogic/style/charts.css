@@ -1,12 +1,40 @@
-body, html {
-	width: 100%;
+/* Chart Styles
+=============================================== */
+
+/* Pie Chart */
+
+.pie-chart {
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
+  font-size: 11px;
 }
 
-.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+.pie-chart-arc path {
+  stroke: #fff;
+}
 
 
-.chart {
+/* Map */
 
+#ecoChart {
+  height: 100%;
+  width: 100%;
+}
+
+.map-dot, .map-dot svg {
+  position: absolute;
+}
+
+.map-dot svg {
+  width: 60px;
+  height: 20px;
+  padding-right: 100px;
+  font: 10px "Helvetica Neue", Helvetica, sans-serif;
+}
+
+.map-dot circle {
+  fill: brown;
+  stroke: black;
+  stroke-width: 1.5px;
 }
 
 /* Bar Chart */

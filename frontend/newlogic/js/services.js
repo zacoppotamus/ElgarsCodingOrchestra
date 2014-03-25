@@ -60,17 +60,17 @@ angular.module('eco.services', [])
 		};*/
 
 		dataService.getSelectedDataset = function() {
-			console.log(this.selectedDataset);
+			console.log('Selected Dataset: ' + this.selectedDataset);
 			return this.selectedDataset;
 		};
 
 		dataService.getCurrentData = function() {
-			console.log(this.currentData);
+			console.log('Current Data: ' + this.currentData);
 			return this.currentData;
 		};
 
 		dataService.getSelectedVizType = function() {
-			console.log(this.selectedVizType);
+			console.log('Selected Visualisation Type is: ' + this.selectedVizType);
 			return this.selectedVizType;
 		};
 

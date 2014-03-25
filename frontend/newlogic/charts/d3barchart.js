@@ -27,22 +27,26 @@ eco.charts.d3barchart = function() {
 				right: options.margin.right
 			};
 
+			var xCount = 0;
+			for (k in data) if (data.hasOwnProperty(k)) xCount++;
+			console.log(xCount);
+
 			// count the number of rows in the dataset for xValue.
 			// xCount = ...;
 			var xScale = d3.scale.ordinal()
-				.domain(d3.range(67))
+				.domain(d3.range(xCount))
 				.rangeRoundBands([0, width], .1);
 
 			// get the max value of the column for yValue.
 			// yMax = ...;
 			// CHANGE THIS
 			var yScale = d3.scale.linear()
-				.domain([0, 55])
+				.domain([0, d3.max(data, function(d) { return +d[yValue]; })])
 				.range([height, 0]);
 
 			var colorScale = d3.scale.category20();
 			
-			var svg = d3.select(target)
+			var svg = target
 				.append("svg")
 					.attr("width", width + margin.left + margin.right)
 					.attr("height", height + margin.top + margin.bottom)
@@ -55,6 +59,10 @@ eco.charts.d3barchart = function() {
 				.scale(yScale)
 				.orient("left")
 				.ticks(10);
+
+			var xAxis = d3.svg.axis()
+				.scale(xScale)
+				.orient("bottom");
 
 			var bar = svg.selectAll("g")
 				.data(data, function(d) {

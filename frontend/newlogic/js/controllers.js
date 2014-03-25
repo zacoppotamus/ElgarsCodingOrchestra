@@ -24,10 +24,10 @@ angular.module('eco.controllers', [])
 			{
 				'id' : 0, 
 				'name' : 'Pie Chart', 
-				'choices' : ['values', 'names'],
+				'choices' : ['names', 'values'],
 				'options' : {
-					'values' : null,
-					'names' : null
+					'names' : null,
+					'values' : null
 				}
 			},
 			{
