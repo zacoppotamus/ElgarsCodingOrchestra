@@ -21,10 +21,43 @@ class Route {
      * a request method and the regex for the path.
      */
 
-    public static function add($method, $path, $callback) {
+    public static function get($path, $callback) {
         $pattern = "/^" . str_replace("/", "\/", $path) . "$/";
 
-        self::$routes[$method][$pattern] = $callback;
+        self::$routes[self::GET][$pattern] = $callback;
+    }
+
+    /*!
+     * Add a new route to the defined routes array, provided both
+     * a request method and the regex for the path.
+     */
+
+    public static function post($path, $callback) {
+        $pattern = "/^" . str_replace("/", "\/", $path) . "$/";
+
+        self::$routes[self::POST][$pattern] = $callback;
+    }
+
+    /*!
+     * Add a new route to the defined routes array, provided both
+     * a request method and the regex for the path.
+     */
+
+    public static function put($path, $callback) {
+        $pattern = "/^" . str_replace("/", "\/", $path) . "$/";
+
+        self::$routes[self::PUT][$pattern] = $callback;
+    }
+
+    /*!
+     * Add a new route to the defined routes array, provided both
+     * a request method and the regex for the path.
+     */
+
+    public static function delete($path, $callback) {
+        $pattern = "/^" . str_replace("/", "\/", $path) . "$/";
+
+        self::$routes[self::DELETE][$pattern] = $callback;
     }
 
     /*!

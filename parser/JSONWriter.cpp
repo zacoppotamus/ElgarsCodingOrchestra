@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 #include <sstream>
+#include <stdexcept>
 
 using namespace std;
 
@@ -47,11 +48,13 @@ string JSONObject::getValue( unsigned pos )
 void JSONObject::addPair( string name )
 {
   names.push_back(name);
+  //if( jasdksjdfkvj ) values.push_back("0");
+  //else values.push_back("null");
   values.push_back("null");
   fields++;
 }
 
-void JSONObject::addPair( string name, double value )
+void JSONObject::addPair( string name, long double value )
 {
   names.push_back(name);
   ostringstream converter;
@@ -98,9 +101,11 @@ string JSONString( JSONObject object )
   while( count < max )
   {
     document += "\t";
+    document += "\"";
     document += object.getName(count);
-    document += ":";
-    document += object.getValue(count);
+    document += "\": ";
+    string value = object.getValue(count);
+    document += value;
     count++;
     if( count < max )
     {
@@ -108,7 +113,7 @@ string JSONString( JSONObject object )
     }
     document += '\n';
   }
-  document += "}\n";
+  document += "}";
   return document;
 }
 
@@ -127,12 +132,15 @@ int createJDocument( string name, vector<JSONObject> objects )
   {
     return 1;
   }
+  ofs << "[";
   for( vector<JSONObject>::iterator it = objects.begin();
     it != objects.end();
     it++ )
   {
+    if(it != objects.begin()) ofs << ",\n";
     ofs << JSONString( *it );
   }
+  ofs << "]";
   ofs.close();
   return 0;
 }

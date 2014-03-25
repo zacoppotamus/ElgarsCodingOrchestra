@@ -1,0 +1,12 @@
+#!/bin/bash
+# Managed by Puppet
+export PATH=$PATH:/usr/bin:/usr/sbin:/bin:/sbin
+
+# Wait up to 600 seconds 
+randomsec=$RANDOM
+let "randomsec %= 600"
+sleep $randomsec
+
+<%= @cron_command %>
+
+exit 0

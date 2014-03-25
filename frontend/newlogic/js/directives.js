@@ -119,3 +119,37 @@ angular.module('eco.directives', [])
 		}
 	}
 })
+.directive('vegachart', function(dataService) {
+	//  -- TO DO -- 
+	// Abstract this to be Vega Vis that will call
+	// other functions depending on selectedVizType
+
+	// Inherit scope from parent controller
+	return {
+		restrict: 'AEC',
+		terminal: true,
+		scope: {
+			type: '=',
+			currentData: '='
+		},
+		link: function(scope, element, attrs) {
+			var data = dataService.getCurrentData();
+
+			// each number corresponds to a different type of visualization
+			var chartType = dataService.getSelectedVizType();
+			var vizOptions = dataService.vizOptions;
+			console.log(vizOptions);
+
+			if (chartType == 1) {
+				var xValue = vizOptions[chartType].options['xAxis'];
+				var yValue = vizOptions[chartType].options['yAxis'];
+				console.log(xValue);
+				console.log(yValue);
+				// vg.parse.spec(eco.charts.vegabarchart().spec(data, xValue, yValue), function(chart){
+				// 	chart({el:"#vegachart"}).update();
+				// })
+				eco.charts.d3barchart().render(data, xValue, yValue, element[0]);
+			}
+		}
+	}
+});

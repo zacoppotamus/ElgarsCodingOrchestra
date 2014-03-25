@@ -1,5 +1,7 @@
 <?php
-if(isset($_COOKIE["apiKey"]) && !isset($_GET["logout"]))
+session_start();
+
+if(isset($_SESSION["apiKey"]) && !isset($_GET["logout"]))
 {
     header("Location: account.php");
 }
@@ -36,7 +38,7 @@ if(isset($_COOKIE["apiKey"]) && !isset($_GET["logout"]))
                 }
                 elseif(isset($_GET["logout"]))
                 {
-                    setcookie(apiKey, "", time()-3600, "/", "project.spe.sneeza.me", isset($_SERVER["HTTPS"]), false);
+                    session_unset();
                     echo "<p class='text-success'>Successfully logged out.</p>";
                 }
                 ?>

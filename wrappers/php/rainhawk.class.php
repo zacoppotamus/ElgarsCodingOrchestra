@@ -22,6 +22,7 @@ class Rainhawk {
     const POST = "POST";
     const PUT = "PUT";
     const DELETE = "DELETE";
+    const PUT_FILE = "PUTFILE";
 
     /**
      * Store the base address for the API.
@@ -29,7 +30,7 @@ class Rainhawk {
      * @var string
      */
 
-    private $host = "https://sneeza-eco.p.mashape.com/";
+    private $host = "https://sneeza-eco.p.mashape.com";
 
     /**
      * Store the Mashape API key to use for authentication to the
@@ -68,10 +69,6 @@ class Rainhawk {
 
     public function __construct($mashapeKey) {
         $this->mashapeKey = $mashapeKey;
-
-        if(substr($this->host, -1) == "/") {
-            $this->host = substr($this->host, 0, -1);
-        }
     }
 
     /**
@@ -301,6 +298,35 @@ class Rainhawk {
 
         $url = $this->host . "/datasets/" . $name . "/data";
         $data = $this->sendRequest($url, self::DELETE, $postData);
+        $json = $this->parseJson($data);
+
+        if(!$json) {
+            return false;
+        }
+
+        return $json['data'];
+    }
+
+    /**
+     * Upload a data file to the specified dataset. We currently support lots
+     * of different types of files including .ods, .csv, .txt and more.
+     *
+     * @param string $name  The dataset to insert the data into.
+     * @param string $file  The path to the file to upload.
+     * @return array|bool  Returns the data array on success, false on failure.
+     */
+
+    public function uploadData($name, $file) {
+        $fp = fopen($file, "rb");
+        $size = filesize($file);
+
+        $postData = array(
+            "fp" => $fp,
+            "size" => $size
+        );
+
+        $url = $this->host . "/datasets/" . $name . "/upload/" . pathinfo($file, PATHINFO_EXTENSION);
+        $data = $this->sendRequest($url, self::PUT_FILE, $postData);
         $json = $this->parseJson($data);
 
         if(!$json) {
@@ -571,6 +597,11 @@ class Rainhawk {
             if(!empty($params)) {
                 curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($params));
             }
+        } else if($method == self::PUT_FILE) {
+            curl_setopt($ch, CURLOPT_PUT, true);
+
+            curl_setopt($ch, CURLOPT_INFILE, $params['fp']);
+            curl_setopt($ch, CURLOPT_INFILESIZE, $params['size']);
         }
 
         $result = curl_exec($ch);

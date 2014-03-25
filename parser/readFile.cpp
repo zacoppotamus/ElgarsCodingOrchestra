@@ -30,7 +30,7 @@ sheetNode::sheetNode( string newString )
   strval = newString;
 }
 
-sheetNode::sheetNode( double newNumber )
+sheetNode::sheetNode( long double newNumber )
 {
   jType = NUMBER;
   numval = newNumber;
@@ -50,7 +50,7 @@ string sheetNode::getString()
     return strval;
 }
 
-double sheetNode::getNumber()
+long double sheetNode::getNumber()
 {
   if( jType != NUMBER )
     return 0;
@@ -103,6 +103,7 @@ FileType getType( string fileName )
 string pageString( page spreadsheet )
 {
   string output = "";
+  output += spreadsheet.name + '\n';
   for( 
     vector< vector<sheetNode> >::iterator outIt = spreadsheet.contents.begin();
     outIt != spreadsheet.contents.end();
@@ -234,6 +235,19 @@ string getCSV( ifstream &input )
   return result;
 }
 
+string purgeQuotes( string value )
+{
+  if( value.size() > 2 )
+  {
+    if( value[0] == '"' && value[value.size()-1] == '"' )
+    {
+      string newvalue = value.substr( 1, value.size()-2 );
+      return newvalue;
+    }
+  }
+  return value;
+}
+
 void insertValue( string csvalue, vector<sheetNode> &cell )
 {
   if( csvalue.compare( "" ) == 0 )
@@ -262,7 +276,7 @@ void insertValue( string csvalue, vector<sheetNode> &cell )
   else
   {
     stringstream conversion( csvalue );
-    double numval;
+    long double numval;
     if( ( conversion >> numval ) )
     {
       sheetNode newsheet( numval );
@@ -271,7 +285,8 @@ void insertValue( string csvalue, vector<sheetNode> &cell )
     }
     else
     {
-      sheetNode newsheet( csvalue );
+      string fixedValue = purgeQuotes( csvalue );
+      sheetNode newsheet( fixedValue );
       cell.push_back( newsheet );
       return;
     }
@@ -286,6 +301,7 @@ page readCSV( string filename )
   if( !input.good() )
   {
     page failure;
+    failure.name = title;
     return failure;
   }
   unsigned width = 0;
@@ -577,25 +593,19 @@ int fileIn( const char * filepath, unzFile zipFile, string &title )
 int getSheetContents( vector< vector<sheetNode> > &spreadsheet,
   const vector<string> &commonStrings, const string &fileContents )
 {
-  //cout << '\n';
   size_t currentPosition;
   size_t endPosition;
-  //cout << "1";
   currentPosition = fileContents.find( "<d" );
   currentPosition += 16;
-  //cout << "2";
   endPosition = fileContents.find_first_of( ':', currentPosition );
-  //cout << "3";
   string topleft = fileContents.substr(
     currentPosition, endPosition - currentPosition );
-  //cout << "4";
   currentPosition = endPosition + 1;
   endPosition = fileContents.find_first_of( '"', currentPosition );
   string bottomright = fileContents.substr(
     currentPosition, endPosition - currentPosition );
-  //cout << "5";
-  coord upper = decodeDimension( topleft );
   coord lower = decodeDimension( bottomright );
+  coord upper = decodeDimension( topleft );
   coord size;
   size.x = lower.x + 1 - upper.x;
   size.y = lower.y + 1 - upper.y;
@@ -607,12 +617,9 @@ int getSheetContents( vector< vector<sheetNode> > &spreadsheet,
   sheetNode blankcell;
   vector<sheetNode> blankvector( size.x, blankcell );
   spreadsheet.assign( size.y, blankvector );
-  //cout << "6";
   currentPosition = fileContents.find( "<c ", endPosition );
   string newDimension;
   coord newPosition;
-  //cout << "7";
-  //cout << '\n';
   size_t nextType;
   size_t nextCell;
   while( currentPosition != string::npos )
@@ -633,7 +640,7 @@ int getSheetContents( vector< vector<sheetNode> > &spreadsheet,
     }
     else
     {
-      currentPosition = nextType + 3;
+      currentPosition = nextType + 4;
       char cellType = fileContents[currentPosition];
       currentPosition = fileContents.find( "<v", currentPosition );
       currentPosition += 3;
@@ -641,7 +648,7 @@ int getSheetContents( vector< vector<sheetNode> > &spreadsheet,
       string value = fileContents.substr(
         currentPosition, endPosition - currentPosition );
       stringstream converter( value );
-      double newValue;
+      long double newValue;
       if( !( converter >> newValue ) )
       {
         newValue = 0;
@@ -678,10 +685,8 @@ int getSheetContents( vector< vector<sheetNode> > &spreadsheet,
 int readXMLSheet( vector< page > &sheetList, string title,
   const vector<string> &commonStrings, unzFile xlsxFile )
 {
-  //cout << '\n';
   if( unzOpenCurrentFile( xlsxFile ) == UNZ_OK )
   {
-    //cout << "1";
     unz_file_info xmlFileInfo;
     memset( &xmlFileInfo, 0, sizeof( unz_file_info ) );
     if( unzGetCurrentFileInfo( xlsxFile,
@@ -690,7 +695,6 @@ int readXMLSheet( vector< page > &sheetList, string title,
       NULL, 0,
       NULL, 0 ) == UNZ_OK )
     {
-      //cout << "2";
       string xmlFileContents;
       uLong xmlFileSize = xmlFileInfo.uncompressed_size;
       unsigned long long maxBufferSize = 1;
@@ -705,7 +709,6 @@ int readXMLSheet( vector< page > &sheetList, string title,
       }
       if( xmlFileSize <= maxBufferSize )
       {
-        //cout << "3";
         xmlFileContents.resize( xmlFileSize );
         voidp xmlFileBuffer = &xmlFileContents[0];
         vector< vector<sheetNode> > spreadsheet;
@@ -713,19 +716,16 @@ int readXMLSheet( vector< page > &sheetList, string title,
           unzReadCurrentFile( xlsxFile, xmlFileBuffer, xmlFileSize );
         if( fileReadStatus > 0 )
         {
-          //cout << "4";
           if( getSheetContents( spreadsheet,
             commonStrings, xmlFileContents ) == 1 )
           {
-            //cout << "5";
             page newsheet;
-      newsheet.name = title;
-      newsheet.contents = spreadsheet;
+            newsheet.name = title;
+            newsheet.contents = spreadsheet;
             sheetList.push_back( newsheet );
             return 1;
           }
         }
-        //cout << "6";
       }
     }
   }
@@ -733,7 +733,7 @@ int readXMLSheet( vector< page > &sheetList, string title,
 }
 
 //Necessarily takes an already opened unzFile and leaves it open
-int getCommonStrings( vector<string> commonStrings, unzFile xlsxFile )
+int getCommonStrings( vector<string> &commonStrings, unzFile xlsxFile )
 {
   int commonStringsFound = 0;
   int fileAccessStatus = unzGoToFirstFile( xlsxFile );
@@ -753,8 +753,8 @@ int getCommonStrings( vector<string> commonStrings, unzFile xlsxFile )
   return 1;
 }
 
-int getXMLSheets( vector< page > &sheetList, vector<string> commonStrings,
-    unzFile xlsxFile )
+int getXMLSheets( string filename, vector< page > &sheetList,
+  vector<string> commonStrings, unzFile xlsxFile )
 {
   int fileAccessStatus = unzGoToFirstFile( xlsxFile );
   while( fileAccessStatus == UNZ_OK )
@@ -762,7 +762,10 @@ int getXMLSheets( vector< page > &sheetList, vector<string> commonStrings,
     string title;
     if( fileIn( "xl/worksheets/", xlsxFile, title ) )
     {
-      readXMLSheet( sheetList, title, commonStrings, xlsxFile );
+      string pageName = filename;
+      pageName.resize( pageName.find_last_of('.') );
+      pageName = pageName + "_" + title;
+      readXMLSheet( sheetList, pageName, commonStrings, xlsxFile );
     }
     fileAccessStatus = unzGoToNextFile( xlsxFile );
   }
@@ -785,12 +788,8 @@ vector< page > readXLSX( string filename )
     {
       return falseResult;
     }
-    if( !sanitizeXMLStrings( commonStrings ) )
-    {
-      return falseResult;
-    }
     vector< page > sheetList;
-    int dataFound = getXMLSheets( sheetList, commonStrings, xlsxFile );
+    int dataFound = getXMLSheets(filename, sheetList, commonStrings, xlsxFile);
     if( dataFound != 1 )
     {
       return falseResult;

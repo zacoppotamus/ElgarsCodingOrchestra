@@ -19,6 +19,7 @@ class Dataset {
     public $description;
     public $rows = 0;
     public $fields = array();
+    public $constraints = array();
     public $read_access = array();
     public $write_access = array();
     public $exists = false;
@@ -45,6 +46,7 @@ class Dataset {
             $this->description = $set_data['description'];
             $this->rows = (int)$set_data['rows'];
             $this->fields = $set_data['fields'];
+            $this->constraints = $set_data['constraints'];
             $this->read_access = $set_data['read_access'];
             $this->write_access = $set_data['write_access'];
             $this->exists = true;

@@ -9,6 +9,7 @@ include("classes/xcache.class.php");
 include("classes/rainhawk/rainhawk.class.php");
 include("classes/rainhawk/dataset.class.php");
 include("classes/rainhawk/sets.class.php");
+include("classes/rainhawk/data.class.php");
 
 /*!
  * Set the timezone properly.
@@ -27,7 +28,7 @@ date_default_timezone_set("UTC");
 app::$development = (file_exists("/vagrant") || stripos($_SERVER['HTTP_HOST'], "dev") !== false);
 app::$debug = (isset($_GET['d3bug']));
 app::$maintenance = false;
-app::$version = "β";
+app::$version = "γ";
 app::$init_time = microtime(true);
 
 app::$stack = array(

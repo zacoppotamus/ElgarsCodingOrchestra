@@ -1,7 +1,13 @@
 <?php
 require_once("../wrappers/php/rainhawk.class.php");
 
-$mashape_key = isset($_POST["apiKey"]) ? $_POST["apiKey"] : $_COOKIE["apiKey"];
+session_start();
+
+if(isset($_POST['apiKey'])) {
+    $_SESSION['apiKey'] = trim($_POST['apiKey']);
+}
+
+$mashape_key = isset($_SESSION['apiKey']) ? trim($_SESSION['apiKey']) : null;
 
 $rainhawk = new Rainhawk($mashape_key);
 
@@ -38,7 +44,7 @@ $fields = $rainhawk->fetchDataset($dataset)["fields"];
 
     function drawChart() {
       var jsonData = $.ajax({
-          url: "http://project.spe.sneeza.me/datatable.php?dataset=benelgar.test&fields=[%22" +
+          url: "http://project.spe.sneeza.me/datatable.php?dataset=<?php echo $dataset; ?>&fields=[%22" +
             document.getElementById("xName").value +"%22,%22" +
             document.getElementById("yName").value + "%22]",
           dataType:"json",
@@ -50,7 +56,7 @@ $fields = $rainhawk->fetchDataset($dataset)["fields"];
 
       // Instantiate and draw our chart, passing in some options.
       var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
-      chart.draw(data, {title: "Crimes by Type"});
+      chart.draw(data, {title: "<?php echo $dataset; ?>"});
     }
 
     </script>
@@ -62,6 +68,7 @@ $fields = $rainhawk->fetchDataset($dataset)["fields"];
       <div class="row">
         <h1>Google Chart Visualisation</h1>
         <h3>Select data and parameters for your visualisation</h3>
+        <a href="account.php" type="button" class="btn btn-warning pull-right">Back</a>
       </div>
       <div class="row">
         <div role="form" class="form-inline">
@@ -73,7 +80,7 @@ $fields = $rainhawk->fetchDataset($dataset)["fields"];
               {
                   if($fields[$i] != "_id")
                   {
-                    echo "<option value=$fields[$i]>$fields[$i]</option>";
+                    echo "<option value='$fields[$i]'>$fields[$i]</option>";
                   }
               }
               ?>
@@ -87,7 +94,7 @@ $fields = $rainhawk->fetchDataset($dataset)["fields"];
               {
                   if($fields[$i] != "_id")
                   {
-                    echo "<option value=$fields[$i]>$fields[$i]</option>";
+                    echo "<option value='$fields[$i]'>$fields[$i]</option>";
                   }
               }
               ?>

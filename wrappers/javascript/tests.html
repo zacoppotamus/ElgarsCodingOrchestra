@@ -1,0 +1,49 @@
+<!html>
+<html lang="en">
+
+<head>
+	<title>Rainhawk.js Tests</title>
+	<script type="text/javascript" src="rainhawk.js"></script>
+	<style type="text/css">
+		pre {
+			line-height: 18px;
+			padding: 0;
+			margin: 0;
+		}
+	</style>
+</head>
+
+<body>
+	<pre>[+] Running tests.</pre>
+	<script type="text/javascript">
+		/**
+		 * Create a debug function.
+		 */
+
+		function debug(message) {
+			var pre = document.createElement("pre");
+			pre.innerHTML = message;
+			document.body.appendChild(pre);
+		}
+
+		/**
+		 * Set the API key.
+		 */
+
+		rainhawk.apiKey = "eSQpirMYxjXUs8xIjjaUo72gutwDJ4CP";
+
+		/**
+		 * Send a ping request to the API.
+		 */
+
+		debug("[+] Checking that the API is online...");
+
+		rainhawk.ping(function(data) {
+			debug("[+] --> Found username: '" + data.mashape_user + "'.");
+		}, function(message) {
+			debug("[!] Could not ping the service - " + message);
+		});
+	</script>
+</body>
+
+</html>

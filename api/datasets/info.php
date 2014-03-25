@@ -44,6 +44,7 @@ $json = array(
     "description" => $dataset->description,
     "rows" => $dataset->rows,
     "fields" => array_keys($dataset->fields),
+    "constraints" => $dataset->constraints,
     "read_access" => $dataset->read_access,
     "write_access" => $dataset->write_access
 );

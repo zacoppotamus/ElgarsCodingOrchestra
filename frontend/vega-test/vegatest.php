@@ -1,7 +1,13 @@
 <?php
 require_once("../../wrappers/php/rainhawk.class.php");
 
-$mashape_key = isset($_POST["apiKey"]) ? $_POST["apiKey"] : $_COOKIE["apiKey"];
+session_start();
+
+if(isset($_POST['apiKey'])) {
+    $_SESSION['apiKey'] = trim($_POST['apiKey']);
+}
+
+$mashape_key = isset($_SESSION['apiKey']) ? trim($_SESSION['apiKey']) : null;
 
 $rainhawk = new Rainhawk($mashape_key);
 
@@ -35,6 +41,7 @@ $fields = $rainhawk->fetchDataset($dataset)["fields"];
     <div class="container">
       <div class="row">
         <h1>Ben's Test Visualisation</h>
+        <a href="account.php" type="button" class="btn btn-warning pull-right">Back</a>
       </div>
       <div class="row">
         <div role="form" class="form-inline">

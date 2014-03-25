@@ -13,6 +13,11 @@ if(empty($data->name) || empty($data->description)) {
     exit;
 }
 
+if(!preg_match("/^[a-zA-Z0-9\-\_]+$/", $data->name)) {
+    echo json_beautify(json_render_error(402, "The dataset name you passed contains disallowed characters!"));
+    exit;
+}
+
 /*!
  * Come up with a new prefix to use for the dataset, by generating
  * a 6 character string and checking that it hasn't already been
@@ -24,7 +29,7 @@ $dataset = new rainhawk\dataset($data->prefix, $data->name);
 
 // Check if you already have a dataset with this name.
 if($dataset->exists) {
-    echo json_beautify(json_render_error(402, "You already have a dataset with this name!"));
+    echo json_beautify(json_render_error(403, "You already have a dataset with this name!"));
     exit;
 }
 
@@ -43,7 +48,7 @@ $dataset->write_access[] = app::$username;
 
 // Perform the creation command.
 if(!rainhawk\sets::create($dataset)) {
-    echo json_beautify(json_render_error(403, "There was a problem while trying to create your dataset - please try again later."));
+    echo json_beautify(json_render_error(404, "There was a problem while trying to create your dataset - please try again later."));
     exit;
 }
 
@@ -52,7 +57,7 @@ $dataset = new rainhawk\dataset($data->prefix, $data->name);
 
 // Create an index on _id to force-create the set.
 if(!$dataset->add_index("_id")) {
-    echo json_beautify(json_render_error(404, "There was a problem while trying to create your dataset - please try again later."));
+    echo json_beautify(json_render_error(405, "There was a problem while trying to create your dataset - please try again later."));
     exit;
 }
 
@@ -66,6 +71,7 @@ $json = array(
     "description" => $dataset->description,
     "rows" => $dataset->rows,
     "fields" => array_keys($dataset->fields),
+    "constraints" => $dataset->constraints,
     "read_access" => $dataset->read_access,
     "write_access" => $dataset->write_access
 );
