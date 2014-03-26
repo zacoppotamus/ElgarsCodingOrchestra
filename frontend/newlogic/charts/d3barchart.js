@@ -7,7 +7,7 @@ eco.charts.d3barchart = function() {
 			width : 1300,
 			height : 600,
 			margin : {
-				top: 40,
+				top: 100,
 				right: 20,
 				bottom: 30,
 				left: 80
@@ -26,23 +26,36 @@ eco.charts.d3barchart = function() {
 				left: options.margin.left,
 				right: options.margin.right
 			};
+			
+			var div = target.append("div")
+                .attr("class", "hidden")
+                .attr("id", "bar-chart-tooltip");
+                
+            div.append("p")
+                .attr("id", xValue);
+            div.append("p")
+                .attr("id", yValue);
+
+			var xCount = 0;
+			for (k in data) if (data.hasOwnProperty(k)) xCount++;
+			console.log(xCount);
 
 			// count the number of rows in the dataset for xValue.
 			// xCount = ...;
 			var xScale = d3.scale.ordinal()
-				.domain(d3.range(67))
+				.domain(d3.range(xCount))
 				.rangeRoundBands([0, width], .1);
 
 			// get the max value of the column for yValue.
 			// yMax = ...;
 			// CHANGE THIS
 			var yScale = d3.scale.linear()
-				.domain([0, 55])
+				.domain([0, d3.max(data, function(d) { return +d[yValue]; })])
 				.range([height, 0]);
 
 			var colorScale = d3.scale.category20();
 			
-			var svg = d3.select(target)
+			var svg = target
 				.append("svg")
 					.attr("width", width + margin.left + margin.right)
 					.attr("height", height + margin.top + margin.bottom)
@@ -56,6 +69,10 @@ eco.charts.d3barchart = function() {
 				.orient("left")
 				.ticks(10);
 
+			var xAxis = d3.svg.axis()
+				.scale(xScale)
+				.orient("bottom");
+
 			var bar = svg.selectAll("g")
 				.data(data, function(d) {
 					return d[yValue];
@@ -64,19 +81,31 @@ eco.charts.d3barchart = function() {
 				.append("g");
 
 			bar.append("rect")
-				.attr('x', function(d,i) {
-					return xScale(i);
-				})
-				.attr('y', function(d) {
-					return yScale(d[yValue]);
-				})
-				.attr('height', function(d) {
-					return height - yScale(d[yValue]);
-				})
-				.attr('width', xScale.rangeBand())
-				.attr("fill", function(d,i) {
-					return colorScale(i);
-				});
+				.attr
+				({
+				    x : function(d,i) 
+				        {
+					        return xScale(i);
+				        },
+				    y : function(d) 
+				        {
+					        return yScale(d[yValue]);
+				        },
+				    height: function(d) 
+				        {
+					        return height - yScale(d[yValue]);
+				        },
+				    width: xScale.rangeBand(),
+				    fill: function(d,i) 
+				        {
+					        return colorScale(i);
+				        }
+			    })
+                .on
+                ({
+                    mouseover : mouseover,
+                    mouseout : mouseout
+                });
 				
 			// add labels
 			bar.append("text")
@@ -102,6 +131,30 @@ eco.charts.d3barchart = function() {
 					.style("text-anchor", "end")
 					.style("font", "10px Helvetica")
 					.text(yValue);
+
+            function mouseover(d)
+            {
+                var xPos = d3.select(this).attr("x");
+                var yPos = d3.select(this).attr("y");
+                //Update the bar-chart-tooltip position and value
+                d3.select("#bar-chart-tooltip")
+                  .style("left", xPos + "px")
+                  .style("top", yPos + "px")
+                  .select("#"+xValue)
+                  .text(d[xValue]);
+                d3.select("#bar-chart-tooltip")
+                  .style("left", xPos + "px")
+                  .style("top", yPos + "px")
+                  .select("#"+yValue)
+                  .text(d[yValue]);
+                d3.select("#bar-chart-tooltip").classed("hidden", false);
+            }
+            
+            function mouseout(d)
+            {
+                //Hide the tooltip
+                d3.select("#bar-chart-tooltip").classed("hidden", true);
+            }
 
 			return this;
 		}

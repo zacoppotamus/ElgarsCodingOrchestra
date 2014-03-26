@@ -24,10 +24,10 @@ angular.module('eco.controllers', [])
 			{
 				'id' : 0, 
 				'name' : 'Pie Chart', 
-				'choices' : ['values', 'names'],
+				'choices' : ['names', 'values'],
 				'options' : {
-					'values' : null,
-					'names' : null
+					'names' : null,
+					'values' : null
 				}
 			},
 			{
@@ -42,12 +42,10 @@ angular.module('eco.controllers', [])
 			{
 				'id': 2,
 				'name':'Bubble Chart',
-				'choices':['x', 'y', 'maxRadius', 'label'],
+				'choices':['x', 'y'],
 				'options' : {
 					'x' : null,
-					'y' : null,
-					'maxRadius' : null,
-					'label' : null
+					'y' : null
 				}
 			},
 			{

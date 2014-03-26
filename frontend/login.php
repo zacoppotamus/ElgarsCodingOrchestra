@@ -14,13 +14,14 @@ if(isset($_SESSION["apiKey"]) && !isset($_GET["logout"]))
 
         <!-- Bootstrap -->
         <link href="css/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" type="text/css">
-        <link rel="stylesheet" href="../css/bootstrap.css">
+        <link rel="stylesheet" href="css/bootstrap.css">
+        <link rel="stylesheet" href="css/font-awesome/css/font-awesome.min.css"></link>
     </head>
     <body>
         <div class="container">
             <div class="row">
                 <h1>Login to Project Rainhawk</h>
-                <a href="/" class="btn btn-warning pull-right">Home</a>
+                <a href="/" class="btn btn-warning pull-right"><i class="fa fa-home"></i> &nbspHome</a>
             </div>
             <div class="row">
                 <p>Please insert your API key</p>
@@ -42,6 +43,10 @@ if(isset($_SESSION["apiKey"]) && !isset($_GET["logout"]))
                     echo "<p class='text-success'>Successfully logged out.</p>";
                 }
                 ?>
+            </div>
+            <div class='row'>
+                <h3><i class='fa fa-key'></i> Don't have an API key?</h3>
+                <p>Register an API key for Project Rainhawk at <a href='https://www.mashape.com/sneeza/project-rainhawk'>Mashape.com</a></p>
             </div>
         </div>
     </body>
