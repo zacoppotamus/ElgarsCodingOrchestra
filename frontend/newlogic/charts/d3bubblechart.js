@@ -18,25 +18,24 @@ eco.charts.d3bubblechart = function() {
             var maxElement = d3.max(d3.values(data),function(i){
                 return +i[yValue];
             });
+            var minElement = d3.min(d3.values(data),function(i){
+                return +i[yValue];
+            });
             
-            var svg = d3.select("body").append("svg")
+            var scale = d3.scale.linear()
+                    .range([10, height/10])
+                    .domain([minElement, maxElement]);
+                    
+            var scalingFactor = (height/10)/maxElement;
+            
+            var svg = target.append("svg")
                 .attr("class", "bubble-chart");
             
-            var div = d3.select("body").append("div")
-                .attr("class", "hidden")
-                .attr("id", "bubble-chart-tooltip");
-                
-            div.append("p")
-                .attr("id", xValue);
-            div.append("p")
-                .attr("id", yValue);
-            
-            //TODO change charge to be dependant on radius
             var force = d3.layout.force()
                 .nodes(data)
-                .size([width/1.5, height/1.5])
+                .size([width, height])
                 .gravity(0.5)
-                .charge(-maxElement*100)
+                .charge(-60000/data.length)
                 .start();
 
             var nodes = svg.selectAll(".bubble-chart-node")
@@ -51,7 +50,7 @@ eco.charts.d3bubblechart = function() {
             nodes.append("circle")
                 .attr("r", function(data)
                 {
-                    return data[yValue];
+                    return scale(data[yValue]);
                 })
                 .attr("fill", function(d, i) 
                 {
@@ -68,29 +67,25 @@ eco.charts.d3bubblechart = function() {
             
             function mouseover(d)
             {
-                var xPos = d.x - 50 - 5;
-                var yPos = d.y - ((maxElement-d[yValue])+maxElement)*1.5;
-                //Update the bubble-chart-tooltip position and value
-                d3.select("#bubble-chart-tooltip")
-                  .style("left", xPos + "px")
-                  .style("top", yPos + "px")
-                  .select("#"+xValue)
-                  .text(d[xValue]);
-                d3.select("#bubble-chart-tooltip")
-                  .style("left", xPos + "px")
-                  .style("top", yPos + "px")
-                  .select("#"+yValue)
-                  .text(d[yValue]);
-                d3.select("#bubble-chart-tooltip").classed("hidden", false);
-                
                 d3.select(this)
                     .select("circle")
                     .transition()
                     .duration(150)
                     .attr("r", function(data)
                     {
-                        return data[yValue] * 1.2;
+                        return scale(data[yValue]) * 1.2;
                     });
+                console.log(d);
+                
+                d3.selectAll("[class=bubble-text]").remove();
+                
+                svg.append("g")
+					.append("text")
+					.attr("x", 25)
+					.attr("y", 50)
+					.attr("class", "bubble-text")
+					.attr("fill", "#483D8B")
+                    .text(d[xValue] + ": " + d[yValue]);
             };
             
             function mouseout()
@@ -103,7 +98,7 @@ eco.charts.d3bubblechart = function() {
                     .duration(150)
                     .attr("r", function(data)
                     {
-                        return data[yValue];
+                        return scale(data[yValue]);
                     });
             };
         }
