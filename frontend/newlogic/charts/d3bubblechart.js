@@ -18,7 +18,6 @@ eco.charts.d3bubblechart = function() {
             var maxElement = d3.max(d3.values(data),function(i){
                 return +i[yValue];
             });
-<<<<<<< HEAD
             var minElement = d3.min(d3.values(data),function(i){
                 return +i[yValue];
             });
@@ -31,35 +30,12 @@ eco.charts.d3bubblechart = function() {
             
             var svg = target.append("svg")
                 .attr("class", "bubble-chart");
-=======
-
-            // radius scale
-            var rScale = d3.scale.linear()
-                .domain([0, maxElement])
-                .range([4.5, height/10]);
-            
-            var svg = target.append("svg")
-                .attr("class", "bubble-chart");
-            
-            var div = target.append("div")
-                .attr("class", "hidden")
-                .attr("id", "bubble-chart-tooltip");
-                
-            div.append("p")
-                .attr("id", xValue);
-            div.append("p")
-                .attr("id", yValue);
->>>>>>> 2fa66cde963463f19764b9b8f5ae1b20b89588bf
             
             var force = d3.layout.force()
                 .nodes(data)
                 .size([width, height])
                 .gravity(0.5)
-<<<<<<< HEAD
                 .charge(-60000/data.length)
-=======
-                .charge(-2000)
->>>>>>> 2fa66cde963463f19764b9b8f5ae1b20b89588bf
                 .start();
 
             var nodes = svg.selectAll(".bubble-chart-node")
@@ -74,11 +50,7 @@ eco.charts.d3bubblechart = function() {
             nodes.append("circle")
                 .attr("r", function(data)
                 {
-<<<<<<< HEAD
                     return scale(data[yValue]);
-=======
-                    return rScale(data[yValue]);
->>>>>>> 2fa66cde963463f19764b9b8f5ae1b20b89588bf
                 })
                 .attr("fill", function(d, i) 
                 {
@@ -95,35 +67,13 @@ eco.charts.d3bubblechart = function() {
             
             function mouseover(d)
             {
-<<<<<<< HEAD
-=======
-                var xPos = d.x - 50 - 5;
-                var yPos = d.y - ((maxElement-rScale(d[yValue]))+maxElement)*1.5;
-                //Update the bubble-chart-tooltip position and value
-                d3.select("#bubble-chart-tooltip")
-                  .style("left", xPos + "px")
-                  .style("top", yPos + "px")
-                  .select("#"+xValue)
-                  .text(d[xValue]);
-                d3.select("#bubble-chart-tooltip")
-                  .style("left", xPos + "px")
-                  .style("top", yPos + "px")
-                  .select("#"+yValue)
-                  .text(d[yValue]);
-                d3.select("#bubble-chart-tooltip").classed("hidden", false);
-                
->>>>>>> 2fa66cde963463f19764b9b8f5ae1b20b89588bf
                 d3.select(this)
                     .select("circle")
                     .transition()
                     .duration(150)
                     .attr("r", function(data)
                     {
-<<<<<<< HEAD
                         return scale(data[yValue]) * 1.2;
-=======
-                        return rScale(data[yValue]) * 1.2;
->>>>>>> 2fa66cde963463f19764b9b8f5ae1b20b89588bf
                     });
                 console.log(d);
                 
@@ -148,11 +98,7 @@ eco.charts.d3bubblechart = function() {
                     .duration(150)
                     .attr("r", function(data)
                     {
-<<<<<<< HEAD
                         return scale(data[yValue]);
-=======
-                        return rScale(data[yValue]);
->>>>>>> 2fa66cde963463f19764b9b8f5ae1b20b89588bf
                     });
             };
         }
