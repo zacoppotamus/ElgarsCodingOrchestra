@@ -62,6 +62,19 @@
   display: none;
 }
 
+.bar-text
+{
+    font-family: Helvetica, sans-serif;
+    font-size: 12px;
+}
+
+.bar-header-text
+{
+    font-family: Helvetica, sans-serif;
+    font-size: 32px;
+    
+}
+
 #bar-chart-tooltip 
 {
     position: absolute;

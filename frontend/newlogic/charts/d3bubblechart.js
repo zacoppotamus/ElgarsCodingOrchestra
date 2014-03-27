@@ -4,7 +4,13 @@ eco.charts.d3bubblechart = function() {
 
         options : {
             width : 1300,
-            height : 800
+            height : 800,
+            margin : {
+				top: 100,
+				right: 20,
+				bottom: 30,
+				left: 80
+			}
         },
 
         render : function(data, xValue, yValue, maxRadius, target) {

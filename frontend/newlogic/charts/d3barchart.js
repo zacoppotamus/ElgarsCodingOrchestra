@@ -7,9 +7,9 @@ eco.charts.d3barchart = function() {
 			width : 1300,
 			height : 600,
 			margin : {
-				top: 100,
+				top: 70,
 				right: 20,
-				bottom: 30,
+				bottom: 140,
 				left: 80
 			}
 		},
@@ -26,15 +26,6 @@ eco.charts.d3barchart = function() {
 				left: options.margin.left,
 				right: options.margin.right
 			};
-			
-			var div = target.append("div")
-                .attr("class", "hidden")
-                .attr("id", "bar-chart-tooltip");
-                
-            div.append("p")
-                .attr("id", xValue);
-            div.append("p")
-                .attr("id", yValue);
 
 			var xCount = 0;
 			for (k in data) if (data.hasOwnProperty(k)) xCount++;
@@ -109,17 +100,20 @@ eco.charts.d3barchart = function() {
 				
 			// add labels
 			bar.append("text")
+			    .attr("class", "bar-text")
 				.attr("text", "middle")
-				.attr("x", function(d, i) {
-						return xScale(i) + xScale.rangeBand() / 2;
-					})
-					.attr("y", function(d) {
-						return yScale(d[yValue]) - 10;
-					})
-					.attr("dy", ".35em")
-					.attr("height", 10)
-					.attr("width", 20)
-					.text(function(d) { return d[xValue]; });
+				.attr("dy", ".35em")
+				.attr("height", 10)
+				.attr("width", 20)
+				.attr('transform', function(d,i) 
+				{
+				    return d3.transform('translate(' 
+				    + (xScale(i) + (xScale.rangeBand()/2))
+				    + ',' 
+				    + (height + (d[xValue].length * 6.5))
+				    + ') rotate(-90)').toString();
+				})
+				.text(function(d) { return d[xValue]; });
 
 			svg.append("g")
 					.attr("class", "y axis")
@@ -136,24 +130,22 @@ eco.charts.d3barchart = function() {
             {
                 var xPos = d3.select(this).attr("x");
                 var yPos = d3.select(this).attr("y");
-                //Update the bar-chart-tooltip position and value
-                d3.select("#bar-chart-tooltip")
-                  .style("left", xPos + "px")
-                  .style("top", yPos + "px")
-                  .select("#"+xValue)
-                  .text(d[xValue]);
-                d3.select("#bar-chart-tooltip")
-                  .style("left", xPos + "px")
-                  .style("top", yPos + "px")
-                  .select("#"+yValue)
-                  .text(d[yValue]);
-                d3.select("#bar-chart-tooltip").classed("hidden", false);
+                
+                //text showing x and y values
+                d3.selectAll("[class=bar-header-text]").remove();
+                
+                svg.append("g")
+					.append("text")
+					.attr("x", 25 - margin.left)
+					.attr("y", 50 - margin.top)
+					.attr("class", "bar-header-text")
+					.attr("fill", "#483D8B")
+                    .text(d[xValue] + ": " + d[yValue]);
             }
             
             function mouseout(d)
             {
-                //Hide the tooltip
-                d3.select("#bar-chart-tooltip").classed("hidden", true);
+                
             }
 
 			return this;
