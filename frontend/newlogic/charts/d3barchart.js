@@ -26,6 +26,9 @@ eco.charts.d3barchart = function() {
 				left: options.margin.left,
 				right: options.margin.right
 			};
+			
+			//holds whether an element is being viewed
+			var viewToggle = false;
 
 			var xCount = 0;
 			for (k in data) if (data.hasOwnProperty(k)) xCount++;
@@ -44,7 +47,7 @@ eco.charts.d3barchart = function() {
 				.domain([0, d3.max(data, function(d) { return +d[yValue]; })])
 				.range([height, 0]);
 
-			var colorScale = d3.scale.category20();
+			var colorScale = d3.scale.category20b();
 			
 			var svg = target
 				.append("svg")
@@ -90,12 +93,14 @@ eco.charts.d3barchart = function() {
 				    fill: function(d,i) 
 				        {
 					        return colorScale(i);
-				        }
+				        },
+				    opacity: 0.9
 			    })
                 .on
                 ({
                     mouseover : mouseover,
-                    mouseout : mouseout
+                    mouseout : mouseout,
+                    click : mouseclick
                 });
 				
 			// add labels
@@ -110,8 +115,8 @@ eco.charts.d3barchart = function() {
 				    return d3.transform('translate(' 
 				    + (xScale(i) + (xScale.rangeBand()/2))
 				    + ',' 
-				    + (height + (d[xValue].length * 6.5))
-				    + ') rotate(-90)').toString();
+				    + (height + 5)
+				    + ') rotate(90)').toString();
 				})
 				.text(function(d) { return d[xValue]; });
 
@@ -141,11 +146,37 @@ eco.charts.d3barchart = function() {
 					.attr("class", "bar-header-text")
 					.attr("fill", "#483D8B")
                     .text(d[xValue] + ": " + d[yValue]);
+                    
+                d3.select(this)
+                    .attr("opacity", 1);
             }
             
             function mouseout(d)
             {
-                
+                if (!viewToggle)
+                {
+                    d3.selectAll("rect")
+                        .transition()
+                        .duration(200)
+                        .attr("opacity", 0.9);
+                }
+            }
+            
+            function mouseclick(d)
+            {
+                //select all but the selected element
+                var selectedElement = this;
+                d3.selectAll("rect")
+                    .filter(function(d) 
+                    {
+                        return (this !== selectedElement);
+                    })
+                    .transition()
+                    .duration(150)
+                    .attr("opacity", 0.4);
+                    
+                viewToggle = !viewToggle;
+                if (!viewToggle) mouseout(d);
             }
 
 			return this;

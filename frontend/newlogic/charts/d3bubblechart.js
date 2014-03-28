@@ -81,7 +81,6 @@ eco.charts.d3bubblechart = function() {
                     {
                         return scale(data[yValue]) * 1.2;
                     });
-                console.log(d);
                 
                 d3.selectAll("[class=bubble-text]").remove();
                 

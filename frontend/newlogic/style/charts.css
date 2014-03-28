@@ -3,13 +3,21 @@
 
 /* Pie Chart */
 
-.pie-chart {
+.pie-chart 
+{
   font-family: "Helvetica Neue", Helvetica, sans-serif;
   font-size: 11px;
 }
 
-.pie-chart-arc path {
+.pie-chart-arc path 
+{
   stroke: #fff;
+}
+
+.pie-header-text
+{
+    font-family: Helvetica, sans-serif;
+    font-size: 32px;
 }
 
 
@@ -72,7 +80,6 @@
 {
     font-family: Helvetica, sans-serif;
     font-size: 32px;
-    
 }
 
 #bar-chart-tooltip 
