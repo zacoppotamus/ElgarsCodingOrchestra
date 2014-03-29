@@ -33,16 +33,54 @@
 		rainhawk.apiKey = "eSQpirMYxjXUs8xIjjaUo72gutwDJ4CP";
 
 		/**
-		 * Send a ping request to the API.
+		 * Define the tests to perform in an array with functions and callbacks
+		 * so that we can keep references to which test we're on.
 		 */
 
-		debug("[+] Checking that the API is online...");
+		var tests = [
+			/**
+			 * Send a ping request to the API and output the user's Mashape
+			 * username.
+			 */
 
-		rainhawk.ping(function(data) {
-			debug("[+] --> Found username: '" + data.mashape_user + "'.");
-		}, function(message) {
-			debug("[!] Could not ping the service - " + message);
-		});
+			function(done) {
+				debug("[+] Checking that the API is online...");
+
+				rainhawk.ping(function(data) {
+					debug("[+] --> Found username: '" + data.mashape_user + "'.");
+					done();
+				}, function(message) {
+					debug("[!] Could not ping the service - " + message);
+					done();
+				});
+			},
+
+			/**
+			 * Output a finished message!
+			 */
+
+			function(done) {
+				debug("[+] Completed all tests!");
+				done();
+			}
+		];
+
+		/**
+		 * Run all of the tests synchronously so that we don't break the order of
+		 * operations and invalidate the tests by law.
+		 */
+
+		var i = 0;
+		var done = false;
+
+		setInterval(function() {
+			if(done && tests[i]) {
+				done = false;
+				tests[i](function() { done = true; i++; });
+			}
+		}, 10);
+
+		tests[i](function() { done = true; i++; });
 	</script>
 </body>
 
