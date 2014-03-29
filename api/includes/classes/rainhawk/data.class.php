@@ -72,6 +72,38 @@ class Data {
 
         return null;
     }
+
+    /**
+     * Detect the data type given a simple string which can be used to
+     * automatically work out what constraints to apply to a field or not.
+     *
+     * @param string $value
+     * @return string
+     */
+
+    public static function detect($value) {
+        if(preg_match("/^-?([1-8]?[1-9]|[1-9]0)\.{1}\d{1,6}$/", $value)) {
+            return self::LATITUDE;
+        }
+
+        if(preg_match("/^-?([1]?[1-7][1-9]|[1]?[1-8][0]|[1-9]?[0-9])\.{1}\d{1,6}$/", $value)) {
+            return self::LONGITUDE;
+        }
+
+        if(is_numeric($value)) {
+            if(is_int($integer = $value + 0)) {
+                return self::INTEGER;
+            }
+
+            return self::FLOAT;
+        }
+
+        if($timestamp = strtotime($value) !== false) {
+            return self::TIMESTAMP;
+        }
+
+        return self::STRING;
+    }
 }
 
 ?>
