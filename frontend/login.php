@@ -50,6 +50,16 @@ if(isset($_SESSION["apiKey"]) && !isset($_GET["logout"]))
                 <a href="/" class="btn btn-warning pull-right"><i class="fa fa-home"></i> &nbspHome</a>
             </div>
             <div class="row">
+                <?php
+                if(isset($_GET["dest"]))
+                {
+                echo <<<EOD
+                <div class='alert alert-warning'>
+                    <p>You need to be logged in to access this page</p>
+                </div>
+EOD;
+                }
+                ?>
                 <p>Please insert your API key</p>
                 <form action="login.php<?php if(isset($_GET['dest'])) {echo "?dest=".$_GET["dest"];} ?>" role="form" method="post">
                     <div class="form-group<?php if(isset($_GET["fail"])){echo " has-warning";}?>">
