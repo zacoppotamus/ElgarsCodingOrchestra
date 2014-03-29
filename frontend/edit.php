@@ -64,7 +64,7 @@ $fields      = $datasetInfo["fields"];
                 {
                     echo "<div class='alert alert-info'>".
                             "<strong>No data!</strong> There's no data here. Why don't you try ".
-                            "<a class='alert-link' href='upload.php?$dataset'>uploading</a> some?".
+                            "<a class='alert-link' href='upload.php?dataset='$dataset'>uploading</a> some?".
                         "</div>";
                 }
                 ?>

@@ -75,7 +75,7 @@ else
             <label for="datasetFile">File</label>
             <input type="file" id="datasetFile" name="datasetFile">
           </div>
-          <button type="submit" class="btn btn-default">Submit</button>
+          <button id='btnSubmit' type="submit" data-loading-text='Uploading...' class="btn btn-default">Submit</button>
         </form>
       </div>
     </div>
@@ -132,6 +132,7 @@ function uploadDataset(event)
 
   verifyDataset(name, function(){
 
+    $('#btnSubmit').button('loading');
     var type = $('#datasetType').val();
     var url = 'https://sneeza-eco.p.mashape.com/datasets/' + name + "/upload/" + type;
 
@@ -160,6 +161,7 @@ function uploadDataset(event)
 
   });
 
+
   return false;
 }
 
@@ -170,15 +172,22 @@ function errormsg(message)
       "<strong>Error!</strong> " + message +
       "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"+
     "</div>");
+
+    // Reset upload button
+    $('#btnSubmit').button('reset');
 }
 
 function successmsg(name)
 {
   $("form").prepend(
     "<div class='alert alert-success fade in'>"+
-      "<strong>Done!</strong> Data successfully uploaded to dataset <a class='alert-link' href='edit.php?dataset="+name+"'>"+name+"</a>"+
+      "<strong>Done!</strong> Data successfully uploaded to dataset <a class='alert-link' href='edit.php?dataset="+name+"'>"+name+"</a>. "+
+      "Now try <a class='alert-link' href='barchart.php?dataset='"+name+"'>visualising</a> the data."+
       "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"+
     "</div>");
+
+    // Reset upload button
+    $('#btnSubmit').button('reset');
 }
 
 </script>
