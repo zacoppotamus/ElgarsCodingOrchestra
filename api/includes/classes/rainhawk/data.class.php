@@ -82,14 +82,6 @@ class Data {
      */
 
     public static function detect($value) {
-        if(preg_match("/^-?([1-8]?[1-9]|[1-9]0)\.{1}\d{1,6}$/", $value)) {
-            return self::LATITUDE;
-        }
-
-        if(preg_match("/^-?([1]?[1-7][1-9]|[1]?[1-8][0]|[1-9]?[0-9])\.{1}\d{1,6}$/", $value)) {
-            return self::LONGITUDE;
-        }
-
         if(is_numeric($value)) {
             if(is_int($integer = $value + 0)) {
                 return self::INTEGER;

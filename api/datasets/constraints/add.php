@@ -115,9 +115,8 @@ if(!empty($data->field)) {
     foreach($fields as $field => $type) {
         if($type == "unknown") {
             // Set the JSON output.
-            $json['detected'][] = array(
-                "field" => $field,
-                "type" => $type
+            $json['detected'][$field] = array(
+                "type" => "unknown"
             );
         } else {
             // Set the constraint on the field.
@@ -129,8 +128,7 @@ if(!empty($data->field)) {
             \rainhawk\sets::update($dataset);
 
             // Set the JSON output.
-            $json['detected'][] = array(
-                "field" => $field,
+            $json['detected'][$field] = array(
                 "type" => $type
             );
         }
