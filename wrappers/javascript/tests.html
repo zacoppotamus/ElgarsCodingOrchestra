@@ -17,6 +17,15 @@
 	<pre>[+] Running tests.</pre>
 	<script type="text/javascript">
 		/**
+		 * Populate some test variables.
+		 */
+
+		var started = new Date().getTime();
+		var username;
+		var name = "jswrapper";
+		var full_name;
+
+		/**
 		 * Create a debug function.
 		 */
 
@@ -47,10 +56,38 @@
 				debug("[+] Checking that the API is online...");
 
 				rainhawk.ping(function(data) {
-					debug("[+] --> Found username: '" + data.mashape_user + "'.");
+					username = data.mashape_user;
+					full_name = username + "." + name;
+
+					debug("[+] --> Found username: '" + username + "'.");
 					done();
 				}, function(message) {
 					debug("[!] Could not ping the service - " + message);
+					done();
+				});
+			},
+
+			/**
+			 * Send a request to the API to fetch all of the user's datasets.
+			 */
+
+			function(done) {
+				debug("[+] Fetching list of datasets that we have access to...");
+
+				rainhawk.datasets(function(datasets) {
+					for(var i in datasets) {
+						var dataset = datasets[i];
+
+						if(dataset.name == full_name) {
+							debug("[+] --> Found '" + full_name + "', removing...");
+
+							// Delete the dataset.
+						}
+					}
+
+					done();
+				}, function(message) {
+					debug("[!] Could not list our datasets - " + message);
 					done();
 				});
 			},
@@ -60,7 +97,7 @@
 			 */
 
 			function(done) {
-				debug("[+] Completed all tests!");
+				debug("[+] Done! All tests passed in " + ((new Date().getTime() - started) / 1000) + " second(s).");
 				done();
 			}
 		];

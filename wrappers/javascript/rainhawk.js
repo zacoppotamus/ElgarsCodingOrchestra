@@ -49,7 +49,7 @@ var rainhawk = {
 		 * factories. Each one is tested in turn until a valid object is received
 		 * at which point we can send the result back.
 		 *
-		 * @return {Object} The new HTTP request object.
+		 * @return {Object}
 		 */
 
 		 createRequest: function(method, url) {
@@ -73,8 +73,8 @@ var rainhawk = {
 		  * Send a HTTP request to the specified endpoint so that we can get
 		  * some data back and process requests.
 		  *
-		  * @param {object} options The options to use for this request.
-		  * @return {HTTPRequest} The request object.
+		  * @param {object} options
+		  * @return {HTTPRequest}
 		  */
 
 		 send: function(options, success, failure) {
@@ -124,8 +124,8 @@ var rainhawk = {
 	 * Send a simple ping request to the API, which will respond with
      * the timestamp of the server's current time.
      *
-     * @param {function} success The function to call on success.
-     * @param {function} error The function to call when an error occurs.
+     * @param {function} success
+     * @param {function} error
 	 */
 
 	ping: function(success, error) {
@@ -137,5 +137,24 @@ var rainhawk = {
 		}, function(json) {
 			success(json.data);
 		}, error);
-	}
+	},
+
+	/**
+	 * List the datasets that the current user can access (either read or
+	 * write) and some basic information about them.
+	 *
+	 * @param {function} success
+     * @param {function} error
+	 */
+
+	 datasets: function(success, error) {
+	 	var url = this.host + "/datasets";
+
+	 	return this.http.send({
+			url: url,
+			method: this.http.methods.get
+		}, function(json) {
+			success(json.data.datasets);
+		}, error);
+	 }
 };
