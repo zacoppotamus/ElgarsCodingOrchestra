@@ -98,8 +98,8 @@ if(!empty($data->field)) {
     }
 
     // Strip the already-constrained fields.
-    foreach($dataset->constraints as $field => $constraint) {
-        unset($fields[$field]);
+    if(!empty($dataset->constraints)) {
+        foreach($dataset->constraints as $field => $constraint) unset($fields[$field]);
     }
 
     // Check if there are any constraints to add.
