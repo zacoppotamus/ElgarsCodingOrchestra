@@ -13,9 +13,9 @@ $rainhawk = new Rainhawk($mashape_key);
 
 $datasetsInfo = $rainhawk->datasets();
 
-$user = $rainhawk->ping()['mashape_user'];
+$user = isset($_SESSION['user']) ? $_SESSION['user'] : null;
 
-if ($user == false)
+if (!$user)
 {
     header('Location: login.php?dest='.urlencode($_SERVER['REQUEST_URI']));
     exit();

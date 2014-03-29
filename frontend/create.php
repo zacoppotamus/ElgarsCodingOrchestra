@@ -11,9 +11,9 @@ $mashape_key = isset($_SESSION['apiKey']) ? trim($_SESSION['apiKey']) : null;
 
 $rainhawk = new Rainhawk($mashape_key);
 
-$user = $rainhawk->ping()['mashape_user'];
+$user = isset($_SESSION['user']) ? $_SESSION['user'] : null;
 
-if ($user == false)
+if (!$user)
 {
     header('Location: login.php?dest='.urlencode($_SERVER['REQUEST_URI']));
     exit();

@@ -18,7 +18,7 @@ if(isset($_POST['apiKey'])) {
     else
     {
         $_SESSION['apiKey'] = trim($_POST['apiKey']);
-        //$_SESSION["user"] = $user;
+        $_SESSION["user"] = $user;
 
         $location = isset($_GET['dest']) ? urldecode($_GET['dest']) : 'account.php';
 
