@@ -127,4 +127,26 @@
     stroke-width: 1.5px;
 }
 
+/* Treemap */
+.treemap-node 
+{
+  border: solid 1px black;
+  font: 10px sans-serif;
+  line-height: 12px;
+  overflow: hidden;
+  position: absolute;
+  text-indent: 2px;
+}
+
+.treemap-header-text
+{
+    font-family: Helvetica, sans-serif;
+    font-size: 32px;
+}
+
+.treemap-text
+{
+    font-family: Helvetica, sans-serif;
+    font-size: 12px;
+}
 
