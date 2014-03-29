@@ -11,12 +11,19 @@ $mashape_key = isset($_SESSION['apiKey']) ? trim($_SESSION['apiKey']) : null;
 
 $rainhawk = new Rainhawk($mashape_key);
 
+$user = $rainhawk->ping()['mashape_user'];
+
+if ($user == false)
+{
+    header('Location: login.php?dest='.urlencode($_SERVER['REQUEST_URI']));
+    exit();
+}
+
 $dataset = isset($_GET['dataset']) ? htmlspecialchars($_GET['dataset']) : null;
 
 $datasetInfo = $rainhawk->fetchDataset($dataset);
-$user        = isset($_SESSION['user']) ? $_SESSION['user'] : "Guest";
-$fields      = $datasetInfo["fields"];
 
+$fields      = $datasetInfo["fields"];
 ?>
 <!doctype html>
 <html lang="en-gb">

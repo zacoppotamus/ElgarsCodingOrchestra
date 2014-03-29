@@ -11,16 +11,13 @@ $mashape_key = isset($_SESSION['apiKey']) ? trim($_SESSION['apiKey']) : null;
 
 $rainhawk = new Rainhawk($mashape_key);
 
-
 $datasetsInfo = $rainhawk->datasets();
 
-$_SESSION['user'] = $rainhawk->ping()["mashape_user"];
-$user             = isset($_SESSION['user']) ? $_SESSION['user'] : "Guest";
-
+$user = $rainhawk->ping()['mashape_user'];
 
 if ($user == false)
 {
-    header('Location: login.php?fail');
+    header('Location: login.php?dest='.urlencode($_SERVER['REQUEST_URI']));
     exit();
 }
 ?>

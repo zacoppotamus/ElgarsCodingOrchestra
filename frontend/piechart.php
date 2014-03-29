@@ -11,12 +11,12 @@ $mashape_key = isset($_SESSION['apiKey']) ? trim($_SESSION['apiKey']) : null;
 
 $rainhawk = new Rainhawk($mashape_key);
 
-$ping = $rainhawk->ping();
+$user = $rainhawk->ping()['mashape_user'];
 
-if(stristr($ping["message"], "Invalid Mashape key"))
+if ($user == false)
 {
-    echo json_encode("Invalid mashape key");
-    exit;
+    header('Location: login.php?dest='.urlencode($_SERVER['REQUEST_URI']));
+    exit();
 }
 
 $dataset = isset($_GET['dataset']) ? $_GET['dataset'] : null;

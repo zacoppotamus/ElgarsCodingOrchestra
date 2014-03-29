@@ -1,5 +1,31 @@
 <?php
+
 session_start();
+
+if(isset($_POST['apiKey'])) {
+    require_once("../wrappers/php/rainhawk.class.php");
+
+    $mashape_key = $_POST['apiKey'];
+
+    $rainhawk = new Rainhawk($mashape_key);
+
+    $user = $rainhawk->ping()['mashape_user'];
+
+    if ($user == false)
+    {
+        header('Location: login.php?fail');
+    }
+    else
+    {
+        $_SESSION['apiKey'] = trim($_POST['apiKey']);
+        //$_SESSION["user"] = $user;
+
+        $location = isset($_GET['dest']) ? urldecode($_GET['dest']) : 'account.php';
+
+        header('Location: '.$location);
+    }
+    exit();
+}
 
 if(isset($_SESSION["apiKey"]) && !isset($_GET["logout"]))
 {
@@ -25,7 +51,7 @@ if(isset($_SESSION["apiKey"]) && !isset($_GET["logout"]))
             </div>
             <div class="row">
                 <p>Please insert your API key</p>
-                <form action="account.php" role="form" method="post">
+                <form action="login.php<?php if(isset($_GET['dest'])) {echo "?dest=".$_GET["dest"];} ?>" role="form" method="post">
                     <div class="form-group<?php if(isset($_GET["fail"])){echo " has-warning";}?>">
                         <label for="apiKey">API Key</label>
                         <input type="text" placeholder="API Key" name="apiKey" class="form-control" autofocus>
