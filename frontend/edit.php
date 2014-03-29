@@ -14,7 +14,7 @@ $rainhawk = new Rainhawk($mashape_key);
 $dataset = isset($_GET['dataset']) ? htmlspecialchars($_GET['dataset']) : null;
 
 $datasetInfo = $rainhawk->fetchDataset($dataset);
-$user        = $rainhawk->ping()["mashape_user"];
+$user        = isset($_SESSION['user']) ? $_SESSION['user'] : "Guest";
 $fields      = $datasetInfo["fields"];
 
 ?>

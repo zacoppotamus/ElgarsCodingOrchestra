@@ -7,7 +7,7 @@ $mashape_key = isset($_SESSION['apiKey']) ? trim($_SESSION['apiKey']) : null;
 
 $rainhawk = new Rainhawk($mashape_key);
 
-$user = $rainhawk->ping()["mashape_user"];
+$user = isset($_SESSION['user']) ? $_SESSION['user'] : "Guest";
 
 if ($user == false)
 {
