@@ -123,7 +123,8 @@ function success(data)
 {
   $("form").prepend(
     "<div class='alert alert-success alert-dismissable fade in'>"+
-      "<strong>Created!</strong> Dataset <a class='alert-link' href='edit.php?dataset=" + data.data.name + "'>" + data.data.name + "</a> successfully created."+
+      "<strong>Created!</strong> Dataset <a class='alert-link' href='edit.php?dataset=" + data.data.name + "'>" + data.data.name + "</a> successfully created. "+
+      "Now try <a class='alert-link' href='upload.php?dataset="+data.data.name+"'>uploading</a> some data."+
       "<button type='button' class='close pull-right' data-dismiss='alert' aria-hidden='true'>&times;</button>"+
     "</div>");
 }
