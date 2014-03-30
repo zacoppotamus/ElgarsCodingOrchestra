@@ -41,7 +41,7 @@ class Data {
                 break;
 
             case self::INTEGER:
-                if(is_numeric($value) && is_int($integer = $value + 0)) {
+                if(is_numeric($value) && is_int($value + 0)) {
                     return $value + 0;
                 }
                 break;
@@ -53,8 +53,8 @@ class Data {
                 break;
 
             case self::TIMESTAMP:
-                if($timestamp = strtotime($value) !== false) {
-                    return $timestamp;
+                if(strtotime($value) !== false) {
+                    return strtotime($timestamp);
                 }
                 break;
 

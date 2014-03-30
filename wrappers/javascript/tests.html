@@ -145,10 +145,12 @@
 			 */
 
 			function(done) {
+				var taken = (new Date().getTime() - started) / 1000;
+
 				if(errors == 0) {
-					debug("[+] Done! All tests passed in " + ((new Date().getTime() - started) / 1000) + " second(s).");
+					debug("[+] Done! All tests passed in " + taken + " second(s).");
 				} else {
-					debug("[!] Done! Some tests failed in " + ((new Date().getTime() - started) / 1000) + " second(s).");
+					debug("[!] Done! Some tests failed in " + taken + " second(s).");
 				}
 
 				done();

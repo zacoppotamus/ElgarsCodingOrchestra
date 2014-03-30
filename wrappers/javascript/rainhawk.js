@@ -241,6 +241,87 @@ var rainhawk = {
 	},
 
 	/**
+	 * Operations specific to data points go here.
+	 */
+
+	data: {
+		/**
+		 * Fetch some data from the dataset, optionally specifying a query to
+		 * filter the rows that will be returned.
+		 *
+		 * @param {string} name
+		 * @param {object} options
+		 * @param {function} success
+		 * @param {function} error
+		 */
+
+		select: function(name, options, success, error) {
+			if(!options) options = {};
+
+			var url = rainhawk.host + "/datasets/" + name + "/data";
+			var params = {
+				query: options.hasOwnProperty("query") ? JSON.stringify(options.query) : null,
+				offset: options.hasOwnProperty("offset") ? options.offset : 0,
+				limit: options.hasOwnProperty("limit") ? options.limit : 0,
+				sort: options.hasOwnProperty("sort") ? JSON.stringify(options.sort) : null,
+				field: options.hasOwnProperty("field") ? JSON.stringify(options.field) : null,
+				exclude: options.hasOwnProperty("exclude") ? JSON.stringify(options.exclude) : null
+			};
+
+		 	return rainhawk.http.send({
+				url: url,
+				method: rainhawk.http.methods.get,
+				params: params
+			}, function(json) {
+				success(json.data);
+			}, error);
+		},
+
+		/**
+		 * Insert a single row of data into the specified dataset, which is
+		 * just an alias for insertMulti providing an array of one row instead.
+		 *
+		 * @param {string} name
+		 * @param {object} row
+		 * @param {function} success
+		 * @param {function} error
+		 */
+
+		insert: function(name, row, success, error) {
+			return this.insertMulti(name, [row], function(rows) {
+				success(rows[0]);
+			}, error);
+		},
+
+		/**
+		 * Insert multiple rows of data into the specified dataset, which calls
+		 * the API with an array of objects which are sent in batch.
+		 *
+		 * @param {string} name
+		 * @param {array} rows
+		 * @param {function} success
+		 * @param {function} error
+		 */
+
+		insertMulti: function(name, rows, success, error) {
+		},
+
+		/**
+		 *
+		 */
+
+		update: function(name, query, changes, success, error) {
+		},
+
+		/**
+		 *
+		 */
+
+		delete: function(name, query, success, error) {
+		}
+	},
+
+	/**
 	 * Support function to allow the library to count the size of an object,
 	 * which JS doesn't have native support for.
 	 *
