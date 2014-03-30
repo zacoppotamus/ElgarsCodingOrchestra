@@ -81,29 +81,41 @@ var rainhawk = {
 		 	if(!options.params) options.params = {};
 		 	if(!options.timeout) options.timeout = 10000;
 
-		 	if(options.method == this.methods.get && options.params.length > 0) {
-		 		var params;
+		 	var request;
+		 	var params;
+
+		 	if(rainhawk.objectSize(options.params) > 0) {
+		 		params = "";
 
 		 		for(var key in options.params) {
-		 			params += key + "=" + options.params[key] + "&";
+		 			params += key + "=" + encodeURIComponent(options.params[key]) + "&";
 		 		}
 
-		 		options.url = options.url + "?" + params.substring(0, -1);
+		 		params = params.substring(0, params.length - 1);
+
+		 		if(options.method == this.methods.get) {
+			 		options.url = options.url + "?" + params;
+			 		params = null;
+			 	}
 		 	}
 
-		 	var request = this.createRequest(options.method, options.url);
-
+		 	request = this.createRequest(options.method, options.url);
 		 	request.timeout = options.timeout;
 		 	request.setRequestHeader("X-Mashape-Authorization", rainhawk.apiKey);
+
+		 	if(options.method == this.methods.post) {
+		 		request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		 		request.setRequestHeader("Content-Length", params.length);
+		 	}
 
 		 	request.onload = function(e) {
 		 		if(request.status == 200) {
 		 			var json = JSON.parse(request.responseText);
 
-		 			if("meta" in json && "data" in json && json.meta.code == 200) {
+		 			if(json.hasOwnProperty("meta") && json.hasOwnProperty("data") && json.meta.code == 200) {
 		 				success(json);
 		 			} else {
-		 				failure("data" in json && "message" in json.data ? json.data.message : "Invalid JSON received from API.");
+		 				failure(json.hasOwnProperty("data") && json.data.hasOwnProperty("message") ? json.data.message : "Invalid JSON received from API.");
 		 			}
 		 		} else {
 		 			failure(request.statusText ? request.statusText : "An unknown error occured while performing the request.");
@@ -114,7 +126,7 @@ var rainhawk = {
 		 		failure(request.statusText ? request.statusText : "An unknown error occured while performing the request.");
 		 	};
 
-			request.send();
+			request.send(params);
 
 			return request;
 		 }
@@ -129,32 +141,120 @@ var rainhawk = {
 	 */
 
 	ping: function(success, error) {
-		var url = this.host + "/ping";
+		var url = rainhawk.host + "/ping";
 
-		return this.http.send({
+		return rainhawk.http.send({
 			url: url,
-			method: this.http.methods.get
+			method: rainhawk.http.methods.get
 		}, function(json) {
 			success(json.data);
 		}, error);
 	},
 
 	/**
-	 * List the datasets that the current user can access (either read or
-	 * write) and some basic information about them.
-	 *
-	 * @param {function} success
-     * @param {function} error
+	 * Operations specific to datasets go in here.
 	 */
 
-	 datasets: function(success, error) {
-	 	var url = this.host + "/datasets";
+	datasets: {
+		/**
+		 * List the datasets that the current user can access (either read or
+		 * write) and some basic information about them.
+		 *
+		 * @param {function} success
+	     * @param {function} error
+		 */
 
-	 	return this.http.send({
-			url: url,
-			method: this.http.methods.get
-		}, function(json) {
-			success(json.data.datasets);
-		}, error);
-	 }
+		list: function(success, error) {
+		 	var url = rainhawk.host + "/datasets";
+
+		 	return rainhawk.http.send({
+				url: url,
+				method: rainhawk.http.methods.get
+			}, function(json) {
+				success(json.data.datasets);
+			}, error);
+		},
+
+		/**
+		 * Fetch some information about a specific dataset, returning an array
+		 * of data that can be used to gather more insight into what the dataset
+		 * currently looks like.
+		 *
+		 * @param {string} name
+		 * @param {function} success
+		 * @param {function} error
+		 */
+
+		info: function(name, success, error) {
+			var url = rainhawk.host + "/datasets/" + name;
+
+		 	return rainhawk.http.send({
+				url: url,
+				method: rainhawk.http.methods.get
+			}, function(json) {
+				success(json.data);
+			}, error);
+		},
+
+		/**
+		 * Create a new dataset using the POST method on the same endpoint as
+		 * above, sending only the name of the dataset and not the username as
+		 * well.
+		 *
+		 * @param {string} name
+		 * @param {string} description
+		 * @param {function} success
+		 * @param {function} error
+		 */
+
+		create: function(name, description, success, error) {
+			var url = rainhawk.host + "/datasets";
+			var params = {name: name, description: description};
+
+		 	return rainhawk.http.send({
+				url: url,
+				method: rainhawk.http.methods.post,
+				params: params
+			}, function(json) {
+				success(json.data);
+			}, error);
+		},
+
+		/**
+		 * Remove a dataset using the DELETE method on the dataset's endpoint
+		 *
+		 * @param {string} name
+		 * @param {function} success
+		 * @param {function} error
+		 */
+
+		delete: function(name, success, error) {
+			var url = rainhawk.host + "/datasets/" + name;
+
+		 	return rainhawk.http.send({
+				url: url,
+				method: rainhawk.http.methods.del
+			}, function(json) {
+				success(json.data.deleted);
+			}, error);
+		}
+	},
+
+	/**
+	 * Support function to allow the library to count the size of an object,
+	 * which JS doesn't have native support for.
+	 *
+	 * @param {object} obj
+	 * @return {int}
+	 */
+
+	objectSize: function(obj) {
+		var size = 0, key;
+
+	    for(key in obj) {
+	        if(obj.hasOwnProperty(key)) size++;
+	    }
+
+	    return size;
+	}
 };

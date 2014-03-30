@@ -20,6 +20,7 @@
 		 * Populate some test variables.
 		 */
 
+		var errors = 0;
 		var started = new Date().getTime();
 		var username;
 		var name = "jswrapper";
@@ -30,6 +31,10 @@
 		 */
 
 		function debug(message) {
+			if(message.substring(0, 3) == "[!]") {
+				errors++;
+			}
+
 			var pre = document.createElement("pre");
 			pre.innerHTML = message;
 			document.body.appendChild(pre);
@@ -74,20 +79,63 @@
 			function(done) {
 				debug("[+] Fetching list of datasets that we have access to...");
 
-				rainhawk.datasets(function(datasets) {
+				rainhawk.datasets.list(function(datasets) {
+					var inner = false;
+
 					for(var i in datasets) {
 						var dataset = datasets[i];
 
 						if(dataset.name == full_name) {
 							debug("[+] --> Found '" + full_name + "', removing...");
+							inner = true;
 
-							// Delete the dataset.
+							rainhawk.datasets.delete(full_name, function() {
+								done();
+							}, function(message) {
+								debug("[!] Could not delete dataset - " + message);
+								done();
+							});
 						}
 					}
 
-					done();
+					if(!inner) {
+						done();
+					}
 				}, function(message) {
 					debug("[!] Could not list our datasets - " + message);
+					done();
+				});
+			},
+
+			/**
+			 * Send a request to the API to create our test dataset.
+			 */
+
+			function(done) {
+				debug("[+] Creating new dataset '" + name + "'...");
+
+				rainhawk.datasets.create(name, "An example dataset from the JS class for testing.", function(dataset) {
+					name = full_name;
+					delete full_name;
+					done();
+				}, function(message) {
+					debug("[!] Could not create dataset - " + message);
+					done();
+				});
+			},
+
+			/**
+			 * Send a request to the API to fetch information about one dataset.
+			 */
+
+			function(done) {
+				debug("[+] Fetching the new dataset, '" + name + "'...");
+
+				rainhawk.datasets.info(name, function(dataset) {
+					debug(JSON.stringify(dataset));
+					done();
+				}, function(message) {
+					debug("[!] Could not fetch the dataset's information - " + message);
 					done();
 				});
 			},
@@ -97,7 +145,12 @@
 			 */
 
 			function(done) {
-				debug("[+] Done! All tests passed in " + ((new Date().getTime() - started) / 1000) + " second(s).");
+				if(errors == 0) {
+					debug("[+] Done! All tests passed in " + ((new Date().getTime() - started) / 1000) + " second(s).");
+				} else {
+					debug("[!] Done! Some tests failed in " + ((new Date().getTime() - started) / 1000) + " second(s).");
+				}
+
 				done();
 			}
 		];
