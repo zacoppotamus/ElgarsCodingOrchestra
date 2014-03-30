@@ -78,7 +78,7 @@ if (!$user)
                             <th>Description</th>
                             <th>Records</th>
                             <th>Fields</th>
-                            <th>Write Access</th>
+                            <th>Access</th>
                             <th></th>
                             <th></th>
                             <th></th>
@@ -96,7 +96,7 @@ if (!$user)
                                 "<td>$dataset[rows]</td>\n".
                                 "<td>".count($dataset['fields'])."</td>\n".
                                 //"<td>".(in_array($user, $dataset["read_access" ]) ? "True" : "False")."</td>\n".
-                                "<td>".(in_array($user, $dataset["write_access"]) ? "True" : "False")."</td>\n".
+                                "<td>".(in_array($user, $dataset["write_access"]) ? "Write" : "Read")."</td>\n".
                                 "<td>".
                                     "<a href='edit.php?dataset=$dataset[name]' class='btn btn-warning btn-sm'>".
                                     "<i class='fa fa-edit'></i>&nbsp; Edit</a>".
