@@ -1,7 +1,5 @@
-eco.charts.d3treemap = function() 
-{
-	return 
-	{
+eco.charts.d3treemap = function() {
+	return {
 		title: 'Treemap',
 		
 		options : {
@@ -15,11 +13,10 @@ eco.charts.d3treemap = function()
 			}
 		},
 
-		render: function (data, xValue, yValue, target) 
-        {
+		render: function (data, xValue, yValue, target) {
             var data = {name: xValue,
                 "children": data};
-                   
+            var options = this.options;
             var margin = options.margin;
             var width = options.width - margin.left - margin.right,
                 height = options.height - margin.top - margin.bottom;
@@ -61,7 +58,7 @@ eco.charts.d3treemap = function()
                 .attr("class", "treemap-text")
                 .attr("x", function(d) { return +d.x + (d.dx/2 - 8) + margin.left; })
                 .attr("y", function(d) { return +d.y + (d.dy/2 + 3) + margin.top + 20; })
-                .text(function(d) { return d.children ? null : d[yValue] });
+                .text(function(d) { return d.children ? null : d[xValue] });
             
             function mouseover(d)
             {            

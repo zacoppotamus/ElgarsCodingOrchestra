@@ -50,6 +50,15 @@ angular.module('eco.controllers', [])
 			},
 			{
 				'id': 3,
+				'name': 'Treemap',
+				'choices': ['name', 'size'],
+				'options': {
+					'name' : null,
+					'size' : null
+				}
+			},
+			{
+				'id': 4,
 				'name':'Map',
 				'choices':['latitude', 'longitude'],
 				'options' : {

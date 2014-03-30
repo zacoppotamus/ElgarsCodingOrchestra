@@ -45,6 +45,7 @@ $mashape_key = isset($_SESSION['apiKey']) ? trim($_SESSION['apiKey']) : null;
         <script src="charts/d3piechart.js"></script>
         <script src="charts/d3map.js"></script>
         <script src="charts/d3bubblechart.js"></script>
+        <script src="charts/d3treemap.js"></script>
         <script src="charts/threetest.js"></script>
         <script src="js/directives.js"></script>
         <script src="js/services.js"></script>
