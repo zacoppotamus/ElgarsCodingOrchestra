@@ -41,6 +41,12 @@ angular.module('eco.directives', [])
 				eco.charts.d3bubblechart().render(data, xValue, yValue, maxRadius, target);
 			}
 			else if (chartType == 3) {
+				var xValue = vizOptions[chartType].options['name'];
+				var yValue = vizOptions[chartType].options['size'];
+
+				eco.charts.d3treemap().render(data, xValue, yValue, target);
+			}
+			else if (chartType == 4) {
 				var latitude = vizOptions[chartType].options['latitude'];
 				var longitude = vizOptions[chartType].options['longitude'];
 

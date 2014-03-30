@@ -73,6 +73,7 @@
 .bar-text
 {
     font-family: Helvetica, sans-serif;
+    font-size: 12px;
 }
 
 .bar-header-text
@@ -118,7 +119,7 @@
 {
     height:800px;
     /*border: 1px solid red;*/
-    width: 1500px;
+    width: 1400px;
 }
 
 .bubble-chart-node circle
