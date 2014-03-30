@@ -41,20 +41,24 @@ if (!$user)
     <div class='container'>
       <div class='row'>
         <h1>Constraints</h1>
-        <h3>Assign constraints to a dataset</h3>
+        <h3>
+          Assign constraints to a dataset
+          <a href="account.php" type="button" class="btn btn-warning pull-right"><i class="fa fa-bars"></i>&nbsp Datasets</a>
+        </h3>
       </div>
       <div class='row'>
-        <form role='form' class='form-horizontal'>
-<?php
-for($i=0; $i<count($fields); $i++)
-{
-  if($fields[$i] != "_id")
-  {
-    echo <<<EOD
+        <form role='form' method="post">
+          <?php
+          for($i=0; $i<count($fields); $i++)
+          {
+            if($fields[$i] != "_id")
+            {
+              echo <<<EOD
             <div class='form-group'>
               <label class='control-label col-sm-3' for='field$fields[$i]'>$fields[$i]</label>
               <div class='col-sm-9'>
                 <select id='$fields[$i]' class='form-control'>
+                  <option value=''></option>
                   <option value='string'>String</option>
                   <option value='integer'>Integer</option>
                   <option value='float'>Float</option>
@@ -71,6 +75,7 @@ EOD;
 
 ?>
           <button type='button' class="btn btn-default">Submit</button>
+          <button type='button' class="btn btn-primary">Auto Apply</button>
         </form>
       </div>
     </div>
