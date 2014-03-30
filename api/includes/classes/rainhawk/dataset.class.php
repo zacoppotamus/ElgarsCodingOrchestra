@@ -62,7 +62,7 @@ class Dataset {
      */
 
     public function have_read_access($username) {
-        return $this->exists && (in_array($username, $this->read_access) || in_array("global", $this->read_access));
+        return $this->exists && (in_array($username, $this->read_access) || in_array($username, $this->write_access) || in_array("global", $this->read_access));
     }
 
     /**
