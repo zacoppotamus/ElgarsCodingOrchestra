@@ -16,6 +16,11 @@ $dataset = isset($_GET['dataset']) ? htmlspecialchars($_GET['dataset']) : null;
 $datasetInfo = $rainhawk->fetchDataset($dataset);
 $fields      = $datasetInfo["fields"];
 
+$access     = $rainhawk->fetchAccessList($dataset);
+$readList   = $access["read_access"];
+$writeList  = $access["write_access"];
+$accessList = array_unique(array_merge($readList, $writeList));
+
 $user = isset($_SESSION['user']) ? $_SESSION['user'] : null;
 
 if (!$user)
@@ -47,28 +52,36 @@ if (!$user)
         </h3>
       </div>
       <div class='row'>
-        <table class='table'>
-          <thead>
-            <tr>
-              <th>User</th>
-              <th>Write Access</th>
-              <th>Read Access</th>
-            </tr>
-            <tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td> benelgar </td>
-              <td>
-                <input type="radio" name="benelgarOptions" id="benelgarWrite" value="write">
-              </td>
-              <td>
-                <input type="radio" name="benelgarOptions" id="benelgarRead" value="read">
-              </td>
-
-            </tr>
-          </tbody>
-        </table>
+        <form method="post">
+          <table class='table'>
+            <thead>
+              <tr>
+                <th>User</th>
+                <th>Write Access</th>
+                <th>Read Access</th>
+              </tr>
+              <tr>
+            </thead>
+            <tbody>
+            <?php
+              for($i=0; $i<count($accessList); $i++)
+              {
+                echo <<<EOD
+                <tr>
+                  <td>$accessList[$i]</td>
+                  <td>
+                    <input type="radio" name="$accessList[$i]" value="write">
+                  </td>
+                  <td>
+                    <input type="radio" name="$accessList[$i]" value="read">
+                  </td>
+                </tr>
+EOD;
+              }
+            ?>
+            </tbody>
+          </table>
+          </form>
         <button type='button' class="btn btn-default">Apply</button>
       </div>
     </div>
