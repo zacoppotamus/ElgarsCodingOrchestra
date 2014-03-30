@@ -22,7 +22,7 @@ class Data {
     const TIMESTAMP = "timestamp";
     const LATITUDE = "latitude";
     const LONGITUDE = "longitude";
-    const ARRAY = "array";
+    const ARR = "array";
 
     /**
      * Create a new dataset in the system.datasets index, with the
@@ -70,7 +70,7 @@ class Data {
                 }
                 break;
 
-            case self::ARRAY:
+            case self::ARR:
                 if(is_array($value) || is_object($value)) {
                     return (array)$value;
                 }
@@ -89,7 +89,7 @@ class Data {
 
     public static function detect($value) {
         if(is_array($value) || is_object($value)) {
-            return self::ARRAY;
+            return self::ARR;
         }
 
         $value = trim($value);
