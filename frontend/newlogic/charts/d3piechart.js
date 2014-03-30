@@ -92,7 +92,7 @@ eco.charts.d3piechart = function() {
                 
                 d3.select(this)
                     .transition()
-                    .duration(50)
+                    .duration(100)
                     .attr("opacity", 1);
 			}
 			
