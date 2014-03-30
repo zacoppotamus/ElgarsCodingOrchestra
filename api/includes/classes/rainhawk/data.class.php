@@ -83,14 +83,14 @@ class Data {
 
     public static function detect($value) {
         if(is_numeric($value)) {
-            if(is_int($integer = $value + 0)) {
+            if(is_int($value + 0)) {
                 return self::INTEGER;
             }
 
             return self::FLOAT;
         }
 
-        if($timestamp = strtotime($value) !== false) {
+        if(strtotime($value) !== false) {
             return self::TIMESTAMP;
         }
 
