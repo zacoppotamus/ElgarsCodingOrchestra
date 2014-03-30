@@ -103,9 +103,11 @@ var rainhawk = {
 		 	request.timeout = options.timeout;
 		 	request.setRequestHeader("X-Mashape-Authorization", rainhawk.apiKey);
 
-		 	if(options.method == this.methods.post) {
+		 	if(params && !options.hasOwnProperty("file")) {
 		 		request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 		 		request.setRequestHeader("Content-Length", params.length);
+		 	} else if(options.method == this.methods.put && options.hasOwnProperty("file")) {
+		 		params = options.file;
 		 	}
 
 		 	request.onload = function(e) {
@@ -304,20 +306,150 @@ var rainhawk = {
 		 */
 
 		insertMulti: function(name, rows, success, error) {
+			var url = rainhawk.host + "/datasets/" + name + "/data";
+			var params = {
+				rows: JSON.stringify(rows)
+			};
+
+			return rainhawk.http.send({
+				url: url,
+				method: rainhawk.http.methods.post,
+				params: params
+			}, function(json) {
+				success(json.data.rows);
+			}, error);
 		},
 
 		/**
+		 * Run an update query on the specified dataset, using the query to
+		 * match rows and then the changes object to specify the changes to
+		 * make.
 		 *
+		 * @param {string} name
+		 * @param {object} query
+		 * @param {object} changes
+		 * @param {function} success
+		 * @param {function} error
 		 */
 
 		update: function(name, query, changes, success, error) {
+			var url = rainhawk.host + "/datasets/" + name + "/data";
+			var params = {
+				query: JSON.stringify(query),
+				changes: JSON.stringify(changes)
+			};
+
+			return rainhawk.http.send({
+				url: url,
+				method: rainhawk.http.methods.put,
+				params: params
+			}, function(json) {
+				success(json.data.updated);
+			}, error);
 		},
 
 		/**
+		 * Delete the specified rows of data from the dataset. This is a
+		 * destructive operation and cannot be undone, so use it wisely.
 		 *
+		 * @param {string} name
+		 * @param {object} query
+		 * @param {function} success
+		 * @param {function} error
 		 */
 
 		delete: function(name, query, success, error) {
+			var url = rainhawk.host + "/datasets/" + name + "/data";
+			var params = {
+				query: JSON.stringify(query)
+			};
+
+			return rainhawk.http.send({
+				url: url,
+				method: rainhawk.http.methods.del,
+				params: params
+			}, function(json) {
+				success(json.data.deleted);
+			}, error);
+		},
+
+		/**
+		 * Upload data into the specified dataset, using a File object
+		 * which can be obtained from a form input field of type file.
+		 *
+		 * @param {string} name
+		 * @param {file} file
+		 * @param {function} success
+		 * @param {function} error
+		 */
+
+		upload: function(name, file, type, success, error) {
+			var url = rainhawk.host + "/datasets/" + name + "/upload/" + type;
+
+			return rainhawk.http.send({
+				url: url,
+				method: rainhawk.http.methods.put,
+				file: file
+			}, function(json) {
+				success(json.data.rows);
+			}, error);
+		},
+
+		/**
+		 * Calculation endpoints.
+		 */
+
+		calc: {
+			polyfit: function(name, fields, degree, success, error) {
+			},
+
+			stats: function(name, fields, query, success, error) {
+			}
+		}
+	},
+
+	/**
+	 * Operations specific to manipulate the indexes on a dataset.
+	 */
+
+	indexes: {
+		list: function(name, success, error) {
+		},
+
+		create: function(name, fields, success, error) {
+		},
+
+		delete: function(name, field, success, error) {
+		}
+	},
+
+	/**
+	 * Operations specific to access allowed to/on a dataset.
+	 */
+
+	access: {
+		list: function(name, success, error) {
+		},
+
+		give: function(name, username, type, success, error) {
+		},
+
+		remove: function(name, username, type, success, error) {
+		}
+	},
+
+	/**
+	 * Operations specific to constraints applied to datasets.
+	 */
+
+	constraints: {
+		list: function(name, success, error) {
+		},
+
+		add: function(name, field, type, success, error) {
+		},
+
+		remove: function(name, field, success, error) {
 		}
 	},
 
