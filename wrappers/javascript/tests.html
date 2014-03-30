@@ -89,7 +89,8 @@
 							debug("[+] --> Found '" + full_name + "', removing...");
 							inner = true;
 
-							rainhawk.datasets.delete(full_name, function() {
+							rainhawk.datasets.delete(full_name, function(deleted) {
+								debug("[+] Deleted: " + deleted);
 								done();
 							}, function(message) {
 								debug("[!] Could not delete dataset - " + message);
@@ -139,6 +140,98 @@
 					done();
 				});
 			},
+
+			/**
+			 * Insert one row of data into the dataset.
+			 */
+
+			function(done) {
+				debug("[+] Inserting one row into '" + name + "'.");
+
+				var row = {
+					name: "John",
+    				age: 20,
+    				weight: 320,
+    				roles: ["admin", "manager", "content"]
+    			};
+
+    			rainhawk.data.insert(name, row, function(row) {
+    				debug(JSON.stringify(row));
+    				done();
+    			}, function(message) {
+    				debug("[!] Could not insert data - " + message);
+    			});
+    		},
+
+    		/**
+    		 * Upload a CSV to the dataset.
+    		 */
+
+    		function(done) {
+    			debug("[+] Uploading 'test_data.csv' to the dataset...");
+
+    			var file = new Blob(["symbol,date,price\n" +
+					"MSFT,Jan 1 2000,39.81\n" +
+					"MSFT,Feb 1 2000,36.35\n" +
+					"MSFT,Mar 1 2000,43.22\n" +
+					"MSFT,Apr 1 2000,28.37\n" +
+					"MSFT,May 1 2000,25.45\n" +
+					"MSFT,Jun 1 2000,32.54\n"
+				], {
+					type: "text/csv"
+				});
+
+				rainhawk.data.upload(name, file, "csv", function(rows) {
+    				debug(JSON.stringify(rows));
+    				done();
+    			}, function(message) {
+    				debug("[!] Could not upload data - " + message);
+    			});
+    		},
+
+    		/**
+    		 * Select some rows using a query.
+    		 */
+
+    		function(done) {
+    			debug("[+] Selecting all rows that are content creators...");
+
+    			var query = {
+    				roles: {
+        				'$in': ["content"]
+     				}
+				};
+
+				rainhawk.data.select(name, {
+					query: query
+				}, function(data) {
+					debug(JSON.stringify(data.results));
+					done();
+				}, function(message) {
+					debug("[!] Could not select data - " + message);
+					done();
+				});
+    		},
+
+    		/**
+    		 * Delete the test data.
+    		 */
+
+    		function(done) {
+    			debug("[+] Deleting our test data...");
+
+    			var query = {
+    				name: "John"
+    			};
+
+    			rainhawk.data.delete(name, query, function(deleted) {
+					debug("[+] Deleted: " + deleted + " row(s).");
+					done();
+				}, function(message) {
+					debug("[!] Could not delete data - " + message);
+					done();
+				});
+    		},
 
 			/**
 			 * Output a finished message!
