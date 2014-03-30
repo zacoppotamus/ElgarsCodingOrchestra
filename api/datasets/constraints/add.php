@@ -48,15 +48,21 @@ $json = array();
 
 // Check if the field is set.
 if(!empty($data->field)) {
+    // Check if the field can be constrained.
+    if($data->field == "_id") {
+        echo json_beautify(json_render_error(405, "You can't apply a constraint to the _id field."));
+        exit;
+    }
+
     // Check if the field already has a constraint.
     if(isset($dataset->constraints[$data->field])) {
-        echo json_beautify(json_render_error(405, "This field already has a constraint, please remove the current constraint before adding a new one."));
+        echo json_beautify(json_render_error(406, "This field already has a constraint, please remove the current constraint before adding a new one."));
         exit;
     }
 
     // Check if the datatype has been set.
     if(empty($data->type) || !in_array($data->type, array("string", "integer", "float", "timestamp", "latitude", "longitude"))) {
-        echo json_beautify(json_render_error(406, "The data type that you've selected is not supported. We currently support: string, integer, float, timestamp, latitude, longitude."));
+        echo json_beautify(json_render_error(407, "The data type that you've selected is not supported. We currently support: string, integer, float, timestamp, latitude, longitude."));
         exit;
     }
 
@@ -78,6 +84,8 @@ if(!empty($data->field)) {
     // Iterate through the rows.
     foreach($rows as $row) {
         foreach($row as $field => $value) {
+            if($field == "_id") continue;
+
             if(isset($fields[$field])) {
                 $fields[$field] = \rainhawk\data::detect($value);
             } else {
@@ -104,7 +112,7 @@ if(!empty($data->field)) {
 
     // Check if there are any constraints to add.
     if(empty($fields)) {
-        echo json_beautify(json_render_error(407, "No unconstrained fields were found during automatic detection."));
+        echo json_beautify(json_render_error(408, "No unconstrained fields were found during automatic detection."));
         exit;
     }
 
