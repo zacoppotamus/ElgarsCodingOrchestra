@@ -54,7 +54,7 @@ class Data {
 
             case self::TIMESTAMP:
                 if(strtotime($value) !== false) {
-                    return strtotime($timestamp);
+                    return strtotime($value);
                 }
                 break;
 
