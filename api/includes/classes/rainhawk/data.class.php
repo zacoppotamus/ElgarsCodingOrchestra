@@ -82,6 +82,8 @@ class Data {
      */
 
     public static function detect($value) {
+        $value = trim($value);
+
         if(is_numeric($value)) {
             if(is_int($value + 0)) {
                 return self::INTEGER;

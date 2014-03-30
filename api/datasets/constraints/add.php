@@ -86,7 +86,8 @@ if(!empty($data->field)) {
         foreach($row as $field => $value) {
             if($field == "_id") continue;
 
-            if(isset($fields[$field])) {
+            // Check if the field has already been detected or not.
+            if(!isset($fields[$field])) {
                 $fields[$field] = \rainhawk\data::detect($value);
             } else {
                 $type = \rainhawk\data::detect($value);
