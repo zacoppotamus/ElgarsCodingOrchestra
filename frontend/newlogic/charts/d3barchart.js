@@ -113,12 +113,12 @@ eco.charts.d3barchart = function() {
 				.attr('transform', function(d,i) 
 				{
 				    return d3.transform('translate(' 
-				    + (xScale(i) + (xScale.rangeBand()/2))
-				    + ',' 
-				    + (height + 5)
-				    + ') rotate(90)').toString();
+				        + (xScale(i) + (xScale.rangeBand()/2))
+				        + ',' 
+				        + (height + 5)
+				        + ') rotate(90)').toString();
 				})
-				.text(function(d) { return d[xValue]; });
+				.text(function(d) { console.log(d);return d[xValue]; });
 
 			svg.append("g")
 					.attr("class", "y axis")
@@ -148,6 +148,8 @@ eco.charts.d3barchart = function() {
                     .text(d[xValue] + ": " + d[yValue]);
                     
                 d3.select(this)
+                    .transition()
+                    .duration(100)
                     .attr("opacity", 1);
             }
             

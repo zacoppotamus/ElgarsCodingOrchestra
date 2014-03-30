@@ -91,6 +91,8 @@ eco.charts.d3piechart = function() {
                     .text(d["data"][xValue] + ": " + d["data"][yValue]);
                 
                 d3.select(this)
+                    .transition()
+                    .duration(50)
                     .attr("opacity", 1);
 			}
 			
