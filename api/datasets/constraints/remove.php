@@ -39,9 +39,7 @@ if(!$dataset->have_write_access(app::$username)) {
  * to send back.
  */
 
-$json = array(
-    "removed" => false
-);
+$json = array();
 
 /*!
  * Try and add the access to the dataset as the user has specified,

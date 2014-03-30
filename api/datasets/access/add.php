@@ -39,10 +39,7 @@ if(!$dataset->have_write_access(app::$username)) {
  * to send back.
  */
 
-$json = array(
-    "read_access" => array(),
-    "write_access" => array()
-);
+$json = array();
 
 /*!
  * Try and add the access to the dataset as the user has specified,
@@ -61,22 +58,21 @@ if(empty($data->username)) {
     exit;
 }
 
+// Check if the user already has that access.
+if(in_array($data->username, $dataset->{$data->type . "_access"})) {
+    echo json_beautify(json_render_error(405, "The user you specified already has " . $data->type . " access to this dataset."));
+    exit;
+}
+
 // Give the user access.
-$dataset->{$type . "_access"}[] = $data->username;
-$dataset->{$type . "_access"} = array_unique($dataset->{$type . "_access"});
+$dataset->{$data->type . "_access"}[] = $data->username;
+$dataset->{$data->type . "_access"} = array_unique($dataset->{$data->type . "_access"});
 
 // Store the dataset information in the index table.
 \rainhawk\sets::update($dataset);
 
-// Return the read_access keys into the JSON.
-foreach($dataset->read_access as $username) {
-    $json['read_access'][] = $username;
-}
-
-// Return the write_access keys into the JSON.
-foreach($dataset->write_access as $username) {
-    $json['write_access'][] = $username;
-}
+// Return the added attribute to the JSON.
+$json['added'] = true;
 
 /*!
  * Output our JSON payload for use in whatever needs to be using
