@@ -135,6 +135,52 @@ if(!$data) {
 print_r($data);
 
 /**
+ * Set the constraints on our data automatically.
+ *
+ * @covers Rainhawk::addConstraint()
+ */
+
+echo "[+] Automatically detecting constraints and applying them...\n";
+$constraints = $rainhawk->addConstraint($name);
+
+if(!$constraints) {
+    echo "[!] Could not add constraints - " . $rainhawk->error() . "\n";
+    exit;
+}
+
+print_r($constraints);
+
+/**
+ * List the constraints currently being applied to the data.
+ *
+ * @covers Rainhawk::listConstraints()
+ */
+
+echo "[+] Listing the constraints being applied to the data...\n";
+$constraints = $rainhawk->listConstraints($name);
+
+if(!is_array($constraints)) {
+    echo "[!] Could not list constraints - " . $rainhawk->error() . "\n";
+    exit;
+}
+
+print_r($constraints);
+
+/**
+ * Remove one of the constraints.
+ *
+ * @covers Rainhawk::listConstraints()
+ */
+
+echo "[+] Removing the constraint on 'price'...\n";
+$removed = $rainhawk->removeConstraint($name, "price");
+
+if(!$removed) {
+    echo "[!] Could not remove constraint - " . $rainhawk->error() . "\n";
+    exit;
+}
+
+/**
  * Test selecting data from the dataset, so that we can make sure that complex
  * queries are being run.
  *

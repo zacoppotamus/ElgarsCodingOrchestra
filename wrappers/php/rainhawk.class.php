@@ -457,6 +457,81 @@ class Rainhawk {
     }
 
     /**
+     * List the constraints currently applied to a dataset. These constraints
+     * are run on the data being returned from any endpoint that shows dataset
+     * data.
+     *
+     * @param string $name  The dataset to list the constraints on.
+     * @return array|bool  Returns the constraints on success, false on failure.
+     */
+
+    public function listConstraints($name) {
+        $url = $this->host . "/datasets/" . $name . "/constraints";
+        $data = $this->sendRequest($url, self::GET);
+        $json = $this->parseJson($data);
+
+        if(!$json) {
+            return false;
+        }
+
+        return $json['data']['constraints'];
+    }
+
+    /**
+     * Add constraints to fields within a dataset. If the field name and type
+     * are both left blank then the system will automatically determine the
+     * type of each field and apply the constraints itself.
+     *
+     * @param string $name  The dataset to apply the constraints to.
+     * @param string $field  The field to constrain.
+     * @param string $type  The type to constrain to.
+     * @return mixed  Returns the constraints on success, false on failure.
+     */
+
+    public function addConstraint($name, $field = null, $type = null) {
+        $postData = array(
+            "field" => $field,
+            "type" => $type
+        );
+
+        $url = $this->host . "/datasets/" . $name . "/constraints";
+        $data = $this->sendRequest($url, self::POST, $postData);
+        $json = $this->parseJson($data);
+
+        if(!$json) {
+            return false;
+        }
+
+        return !empty($field) && !empty($type) ?
+            $json['data']['added'] : $json['data']['detected'];
+    }
+
+    /**
+     * Remove a constraint from a field, which requires that the above has
+     * already been run on a field (or multiple).
+     *
+     * @param string $name  The dataset to remove the constraints from.
+     * @param string $field  The field to unconstrain.
+     * @return bool  Returns true or false.
+     */
+
+    public function removeConstraint($name, $field) {
+        $postData = array(
+            "field" => $field
+        );
+
+        $url = $this->host . "/datasets/" . $name . "/constraints";
+        $data = $this->sendRequest($url, self::DELETE, $postData);
+        $json = $this->parseJson($data);
+
+        if(!$json) {
+            return false;
+        }
+
+        return $json['data']['removed'];
+    }
+
+    /**
      * Calculate the linear regression of two fields of data inside a
      * dataset, to the n-th degree.
      *
