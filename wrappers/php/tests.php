@@ -103,7 +103,7 @@ $data = array(
     "name" => "John",
     "age" => 20,
     "weight" => 320,
-    "roles" => array("admin", "manager", "content")
+    "role" => array("admin", "manager", "content")
 );
 
 echo "[+] Inserting one row into '$name'...\n";
@@ -206,6 +206,8 @@ print_r($rows);
 /**
  * Delete the rows that we have inserted so that we can clean out the indexes
  * and test this command before removing the dataset.
+ *
+ * @covers Rainhawk::deleteData()
  */
 
 $query = array(

@@ -396,14 +396,64 @@ var rainhawk = {
 		},
 
 		/**
-		 * Calculation endpoints.
+		 * Calculations are performed on data so we group the relevant endpoints
+		 * inside a sub-object.
 		 */
 
 		calc: {
+			/**
+			 * Calculate the coefficients of a line of best fit through certain
+			 * data points inside a dataset.
+			 *
+			 * @param {string} name
+			 * @param {array} fields
+			 * @param {int} degree
+			 * @param {function} success
+			 * @param {function} error
+			 */
+
 			polyfit: function(name, fields, degree, success, error) {
+				var url = rainhawk.host + "/datasets/" + name + "/calc/polyfit";
+				var params = {
+					fields: JSON.stringify(fields),
+					degree: degree
+				};
+
+				return rainhawk.http.send({
+					url: url,
+					method: rainhawk.http.methods.get,
+					params: params
+				}, function(json) {
+					success(json.data.coefficients);
+				}, error);
 			},
 
-			stats: function(name, fields, query, success, error) {
+			/**
+			 * Calculate the means and other statistical data for certain data
+			 * within a dataset. This method is mostly for convenience but can
+			 * also be useful for other things.
+			 *
+			 * @param {string} name
+			 * @param {array} fields
+			 * @param {object} query
+			 * @param {function} success
+			 * @param {function} error
+			 */
+
+			stats: function(name, field, query, success, error) {
+				var url = rainhawk.host + "/datasets/" + name + "/calc/stats";
+				var params = {
+					field: field,
+					query: JSON.stringify(query)
+				};
+
+				return rainhawk.http.send({
+					url: url,
+					method: rainhawk.http.methods.get,
+					params: params
+				}, function(json) {
+					success(json.data);
+				}, error);
 			}
 		}
 	},
@@ -413,14 +463,53 @@ var rainhawk = {
 	 */
 
 	indexes: {
+		/**
+		 * Generate a list of indexes that exist on a dataset which are
+		 * currently being applied to a dataset.
+		 *
+		 * @param {string} name
+		 * @param {function} success
+		 * @param {function} error
+		 */
+
 		list: function(name, success, error) {
+			var url = rainhawk.host + "/datasets/" + name + "/indexes";
+
+			return rainhawk.http.send({
+				url: url,
+				method: rainhawk.http.methods.get
+			}, function(json) {
+				success(json.data.indexes);
+			}, error);
 		},
+
+		/**
+		 * Create an index on the specified fields so that queries on those
+		 * fields can be much faster and more efficient.
+		 *
+		 * @param {string} name
+		 * @param {array} fields
+		 * @param {function} success
+		 * @param {function} error
+		 */
 
 		create: function(name, fields, success, error) {
+			var url = rainhawk.host + "/datasets/" + name + "/indexes";
+			var params = {
+				fields: JSON.stringify(fields)
+			};
+
+			return rainhawk.http.send({
+				url: url,
+				method: rainhawk.http.methods.post,
+				params: params
+			}, function(json) {
+				success(json.data.indexes);
+			}, error);
 		},
 
-		delete: function(name, field, success, error) {
-		}
+		//delete: function(name, field, success, error) {
+		//}
 	},
 
 	/**
