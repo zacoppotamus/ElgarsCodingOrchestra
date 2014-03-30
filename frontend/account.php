@@ -82,6 +82,7 @@ if (!$user)
                             <th></th>
                             <th></th>
                             <th></th>
+                            <th></th>
                         </tr>
                     </head>
                     <tbody>
@@ -90,17 +91,21 @@ if (!$user)
                         {
                             $dataset = $datasetsInfo[$i];
                             echo("<tr>\n".
-                                "<td><a href='edit.php?dataset=$dataset[name]'>$dataset[name]</a></td>\n".
+                                "<td><a href='properties.php?dataset=$dataset[name]'>$dataset[name]</a></td>\n".
                                 "<td>$dataset[description]</td>\n".
                                 "<td>$dataset[rows]</td>\n".
                                 "<td>".count($dataset['fields'])."</td>\n".
                                 //"<td>".(in_array($user, $dataset["read_access" ]) ? "True" : "False")."</td>\n".
                                 "<td>".(in_array($user, $dataset["write_access"]) ? "True" : "False")."</td>\n".
                                 "<td>".
+                                    "<a href='edit.php?dataset=$dataset[name]' class='btn btn-warning btn-sm'>".
+                                    "<i class='fa fa-edit'></i>&nbsp; Edit</a>".
+                                "</td>".
+                                "<td>".
                                     "<div class='dropdown'>".
                                     "<a class='dropdown-toggle btn btn-success btn-sm' role='button' data-toggle='dropdown' ".
                                         "href='#' ". (($dataset["rows"] == 0) ? "disabled>" : ">") .
-                                            "<i class='fa fa-bar-chart-o'></i>&nbsp Visualise &nbsp<span class='caret'></span>".
+                                            "<i class='fa fa-bar-chart-o'></i>&nbsp Visualise &nbsp;<span class='caret'></span>".
                                         "</a>".
                                         "<ul class='dropdown-menu' role='menu'>".
                                             "<li><a href='barchart.php?dataset=$dataset[name]'>Bar Chart</a></li>".
@@ -112,7 +117,7 @@ if (!$user)
                                 "</td>".
                                 "<td>".
                                     "<a href='upload.php?dataset=$dataset[name]' class='btn btn-primary btn-sm'".(in_array($user, $dataset["write_access"]) ? "" : "disabled").">".
-                                    "<i class='fa fa-cloud-upload'></i>&nbsp Upload</a>".
+                                    "<i class='fa fa-cloud-upload'></i>&nbsp; Upload</a>".
                                 "</td>".
                                 "<td><a href='delete.php?dataset=$dataset[name]' id='del".explode(".", $dataset["name"])[1].
                                     "' class='btn btn-danger btn-sm confirm'><i class='fa fa-ban'></i>&nbsp Delete</a></td>".

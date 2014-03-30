@@ -54,6 +54,10 @@ $accessList = array_unique(array_merge($readList, $writeList));
         </h3>
       </div>
 
+      <div class="row alert alert-warning">
+        <strong>Warning!</strong> This page is still under construction and is not fully functional.
+      </div>
+
       <div class="row">
 
         <div class="col-md-6">
@@ -65,8 +69,8 @@ $accessList = array_unique(array_merge($readList, $writeList));
               <table class='table'>
                 <thead>
                   <tr>
-                    <th>Name</th>
-                    <th>Type</th>
+                    <th class="col-md-7">Name</th>
+                    <th class="col-md-5">Constraint</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -75,13 +79,43 @@ $accessList = array_unique(array_merge($readList, $writeList));
                     {
                       if($fields[$i] != "_id")
                       {
-                        $type = (in_array($fields[$i], array_keys($constraints))) ? $constraints[$fields[$i]]["type"] : "-";
-                        echo <<<EOD
-                          <tr>
-                            <td>$fields[$i]</td>
-                            <td>$type</td>
-                          </tr>
+                        $type = (count($constraints)>0 && in_array($fields[$i], array_keys($constraints))) ? $constraints[$fields[$i]]["type"] : "none";
+                        if(in_array($user, $writeList))
+                        {
+                          $selected["none"] = "";
+                          $selected["integer"] = "";
+                          $selected["string"] = "";
+                          $selected["latitude"] = "";
+                          $selected["longitude"] = "";
+                          $selected["float"] = "";
+                          $selected["timestamp"] = "";
+                          $selected[$type] = "selected";
+                          echo <<<EOD
+                            <tr>
+                              <td>$fields[$i]</td>
+                              <td>
+                                <select id='$fields[$i]' class='form-control'>
+                                  <option value="none" $selected[none]>None</option>
+                                  <option value='string' $selected[string]>String</option>
+                                  <option value='integer' $selected[integer]>Integer</option>
+                                  <option value='float' $selected[float]>Float</option>
+                                  <option value='timestamp' $selected[timestamp]>Timestamp</option>
+                                  <option value='latitude' $selected[latitude]>Latitude</option>
+                                  <option value='longitude' $selected[longitude]>Longitude</option>
+                                </select>
+                              </td>
+                            </tr>
 EOD;
+                        }
+                        else
+                        {
+                          echo <<<EOD
+                            <tr>
+                              <td>$fields[$i]</td>
+                              <td>$type</td>
+                            </tr>
+EOD;
+                        }
                       }
                     }
                   ?>
@@ -97,7 +131,7 @@ EOD;
               <h4>Permissions</h4>
             </div>
             <div class="panel-body">
-              <form action="permissions.php?dataset=<?php echo $dataset; ?>" id="accessForm" method="post">
+              <form id="accessForm" method="post">
                 <table class='table'>
                   <thead>
                     <tr>
