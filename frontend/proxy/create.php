@@ -30,7 +30,7 @@ if(!$result) {
 
 echo json_encode(array(
     "Result" => "OK",
-    "Record" => $result['documents'][0]
+    "Record" => $result
 ));
 
 ?>

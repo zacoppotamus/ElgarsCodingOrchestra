@@ -279,7 +279,7 @@ class Rainhawk {
             return false;
         }
 
-        return $json['data'];
+        return $json['data']['updated'];
     }
 
     /**
@@ -304,7 +304,7 @@ class Rainhawk {
             return false;
         }
 
-        return $json['data'];
+        return $json['data']['deleted'];
     }
 
     /**
