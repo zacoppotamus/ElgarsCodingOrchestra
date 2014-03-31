@@ -76,11 +76,17 @@ if(!empty($data->field)) {
 } else {
     // Find the fields to index and the indexes.
     $fields = app::find_index_names(array_keys($dataset->fields));
-    $indexes = $dataset->fetch_indexes();
+    $indx = $dataset->fetch_indexes();
+    $indexes = array();
+
+    // Set the indexes properly.
+    foreach($indx as $index) {
+        $indexes[] = array_keys($index['key'])[0];
+    }
 
     // Remove the fields that already have indexes.
     foreach($fields as $index => $field) {
-        if(in_array($field, array_keys($indexes))) unset($fields[$index]);
+        if(in_array($field, $indexes)) unset($fields[$index]);
     }
 
     // Check if the fields are empty.
