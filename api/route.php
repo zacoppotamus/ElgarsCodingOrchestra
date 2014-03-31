@@ -161,7 +161,7 @@ route::post("/datasets/(\w+|\-+)\.(\w+|\-+)/indexes", function($prefix, $name) u
     $data->prefix = $prefix;
     $data->name = $name;
 
-    $data->fields = isset($_POST['fields']) ? json_decode($_POST['fields'], true) : null;
+    $data->field = isset($_POST['field']) ? trim($_POST['field']) : null;
 
     include("datasets/indexes/add.php");
 });

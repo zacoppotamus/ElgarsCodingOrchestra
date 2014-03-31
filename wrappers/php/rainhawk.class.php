@@ -361,13 +361,13 @@ class Rainhawk {
      * only works on a single field.
      *
      * @param string $name  The dataset to create an index on.
-     * @param array $fields  The fields to index. An blank field will cause auto-indexing.
+     * @param string $field  The field to index. A blank field will cause auto-indexing.
      * @return array|bool  Returns the data array on success, false on failure.
      */
 
-    public function addIndex($name, $fields = array()) {
+    public function addIndex($name, $field = null) {
         $postData = array(
-            "fields" => json_encode($fields)
+            "field" => $field
         );
 
         $url = $this->host . "/datasets/" . $name . "/indexes";
@@ -378,7 +378,7 @@ class Rainhawk {
             return false;
         }
 
-        return $json['data'];
+        return $json['data']['added'];
     }
 
     /**

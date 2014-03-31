@@ -59,7 +59,7 @@ if(!$indexes) {
 
 // Return them into the JSON array.
 foreach($indexes as $index) {
-    $json['indexes'][$index['name']] = $index['key'];
+    $json['indexes'][] = $index['name'];
 }
 
 /*!
