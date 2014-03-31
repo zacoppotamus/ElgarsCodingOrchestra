@@ -596,7 +596,7 @@ var rainhawk = {
 
             return rainhawk.http.send({
                 url: url,
-                method: rainhawk.http.methods.delete,
+                method: rainhawk.http.methods.del,
                 params: params
             }, function(json) {
                 success(json.data.removed);
