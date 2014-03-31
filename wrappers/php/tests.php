@@ -12,7 +12,6 @@ function debug($message) {
 // Create a failure logging function.
 function failed($message) {
     global $failed;
-
     $failed++;
 
     echo "[!] " . $message . "\n";
@@ -252,6 +251,23 @@ $tests = array(
         } else {
             debug("--> Deleted: " . json_encode($deleted));
         }
+    },
+
+    /**
+     * Test #7: Delete the dataset and clean up.
+     */
+
+    function() use($rainhawk) {
+        global $name;
+
+        debug("Removing our test dataset...");
+
+        $deleted = $rainhawk->deleteDataset($name);
+        if($deleted == false) {
+            failed("Could not delete dataset - " . $rainhawk->error());
+        } else {
+            debug("--> Deleted: " . json_encode($deleted));
+        }
     }
 );
 
@@ -270,65 +286,5 @@ if($failed > 0) {
 
 // Finish execution.
 exit;
-
-/**
- * Test selecting data from the dataset, so that we can make sure that complex
- * queries are being run.
- *
- * @covers Rainhawk::selectData()
- */
-
-$query = array(
-    "roles" => array(
-        '$in' => array("content")
-    )
-);
-
-echo "[+] Selecting all rows that are content creators...\n";
-$rows = $rainhawk->selectData($name, $query);
-
-if(!$rows) {
-    echo "[!] Could not select data - " . $rainhawk->error() . "\n";
-    exit;
-}
-
-print_r($rows);
-
-/**
- * Delete the rows that we have inserted so that we can clean out the indexes
- * and test this command before removing the dataset.
- *
- * @covers Rainhawk::deleteData()
- */
-
-$query = array(
-    "name" => "John"
-);
-
-echo "[+] Deleting our test data...\n";
-$deleted = $rainhawk->deleteData($name, $query);
-
-if(!$deleted) {
-    echo "[!] Could not delete data - " . $rainhawk->error() . "\n";
-    exit;
-}
-
-print_r($deleted);
-
-/**
- * Remove our test dataset, to ensure that the script doesn't leave any broken
- * data on the server.
- *
- * @covers Rainhawk::deleteDataset()
- */
-
-echo "[+] Removing the test dataset '$name'...\n";
-
-if(!$rainhawk->deleteDataset($name)) {
-    echo "[!] Could not delete dataset - " . $rainhawk->error() . "\n";
-    exit;
-}
-
-echo "[+] Done! All tests passed in " . number_format(microtime(true) - $started, 2) . " second(s).\n";
 
 ?>
