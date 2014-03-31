@@ -102,18 +102,10 @@ if (!$user)
                                     "<i class='fa fa-edit'></i>&nbsp; Edit</a>".
                                 "</td>".
                                 "<td>".
-                                    "<div class='dropdown'>".
-                                    "<a class='dropdown-toggle btn btn-success btn-sm' role='button' data-toggle='dropdown' ".
-                                        "href='#' ". (($dataset["rows"] == 0) ? "disabled>" : ">") .
-                                            "<i class='fa fa-bar-chart-o'></i>&nbsp Visualise &nbsp;<span class='caret'></span>".
-                                        "</a>".
-                                        "<ul class='dropdown-menu' role='menu'>".
-                                            "<li><a href='barchart.php?dataset=$dataset[name]'>Bar Chart</a></li>".
-                                            "<li><a href='piechart.php?dataset=$dataset[name]'>Pie Chart</a></li>".
-                                            "<li><a href='scatterchart.php?dataset=$dataset[name]'>Scatter Chart</a></li>".
-                                            "<li><a href='areachart.php?dataset=$dataset[name]'>Area Chart</a></li>".
-                                        "</ul>".
-                                    "</div>".
+                                    "<a class='btn btn-success btn-sm' href='newlogic/?dataset=$dataset[name]' ".
+                                        (($dataset["rows"] == 0) ? "disabled>" : ">") .
+                                            "<i class='fa fa-bar-chart-o'></i>&nbsp; Visualise".
+                                    "</a>".
                                 "</td>".
                                 "<td>".
                                     "<a href='upload.php?dataset=$dataset[name]' class='btn btn-primary btn-sm'".(in_array($user, $dataset["write_access"]) ? "" : "disabled").">".
