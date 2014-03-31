@@ -98,61 +98,66 @@ function revoke(btn)
               <h4>Fields</h4>
             </div>
             <div class="panel-body">
-              <table class='table'>
-                <thead>
-                  <tr>
-                    <th class="col-md-7">Name</th>
-                    <th class="col-md-5">Constraint</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <?php
-                    for($i=0; $i<count($fields); $i++)
-                    {
-                      if($fields[$i] != "_id")
+              <form id="fieldForm" action="permissions.php?dataset=<?php echo $dataset; ?>" method="post">
+                <table class='table'>
+                  <thead>
+                    <tr>
+                      <th class="col-md-7">Name</th>
+                      <th class="col-md-5">Constraint</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php
+                      for($i=0; $i<count($fields); $i++)
                       {
-                        $type = (count($constraints)>0 && in_array($fields[$i], array_keys($constraints))) ? $constraints[$fields[$i]]["type"] : "none";
-                        if(in_array($user, $writeList))
+                        if($fields[$i] != "_id")
                         {
-                          $selected["none"] = "";
-                          $selected["integer"] = "";
-                          $selected["string"] = "";
-                          $selected["latitude"] = "";
-                          $selected["longitude"] = "";
-                          $selected["float"] = "";
-                          $selected["timestamp"] = "";
-                          $selected[$type] = "selected";
-                          echo <<<EOD
-                            <tr>
-                              <td>$fields[$i]</td>
-                              <td>
-                                <select id='$fields[$i]' class='form-control'>
-                                  <option value="none" $selected[none]>None</option>
-                                  <option value='string' $selected[string]>String</option>
-                                  <option value='integer' $selected[integer]>Integer</option>
-                                  <option value='float' $selected[float]>Float</option>
-                                  <option value='timestamp' $selected[timestamp]>Timestamp</option>
-                                  <option value='latitude' $selected[latitude]>Latitude</option>
-                                  <option value='longitude' $selected[longitude]>Longitude</option>
-                                </select>
-                              </td>
-                            </tr>
+                          $type = (count($constraints)>0 && in_array($fields[$i], array_keys($constraints))) ? $constraints[$fields[$i]]["type"] : "none";
+                          if(in_array($user, $writeList))
+                          {
+                            $selected["none"] = "";
+                            $selected["integer"] = "";
+                            $selected["string"] = "";
+                            $selected["latitude"] = "";
+                            $selected["longitude"] = "";
+                            $selected["float"] = "";
+                            $selected["timestamp"] = "";
+                            $selected[$type] = "selected";
+                            echo <<<EOD
+                              <tr>
+                                <td>$fields[$i]</td>
+                                <td>
+                                  <select id='$fields[$i]' class='form-control'>
+                                    <option value="none" $selected[none]>None</option>
+                                    <option value='string' $selected[string]>String</option>
+                                    <option value='integer' $selected[integer]>Integer</option>
+                                    <option value='float' $selected[float]>Float</option>
+                                    <option value='timestamp' $selected[timestamp]>Timestamp</option>
+                                    <option value='latitude' $selected[latitude]>Latitude</option>
+                                    <option value='longitude' $selected[longitude]>Longitude</option>
+                                  </select>
+                                </td>
+                              </tr>
 EOD;
-                        }
-                        else
-                        {
-                          echo <<<EOD
-                            <tr>
-                              <td>$fields[$i]</td>
-                              <td>$type</td>
-                            </tr>
+                          }
+                          else
+                          {
+                            echo <<<EOD
+                              <tr>
+                                <td>$fields[$i]</td>
+                                <td>$type</td>
+                              </tr>
 EOD;
+                          }
                         }
                       }
-                    }
-                  ?>
-                </tbody>
-              </table>
+                    ?>
+                  </tbody>
+                </table>
+              </form>
+            </div>
+            <div class="panel-footer text-right">
+              <button type='submit' form="fieldForm" class="btn btn-default">Apply</button>
             </div>
           </div>
         </div>
