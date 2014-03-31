@@ -204,6 +204,15 @@ $tests = array(
         } else {
             debug("--> " . json_encode($indexes));
         }
+
+        debug("Listing all indexes currently on the dataset...");
+
+        $indexes = $rainhawk->listIndexes($name);
+        if($indexes == false) {
+            failed("Could not list the indexes - " . $rainhawk->error());
+        } else {
+            debug("--> " . json_encode($indexes));
+        }
     }
 );
 

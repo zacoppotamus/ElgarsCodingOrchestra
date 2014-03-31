@@ -378,7 +378,7 @@ class Rainhawk {
             return false;
         }
 
-        return isset($field) ?
+        return !empty($field) ?
             $json['data']['added'] : $json['data']['detected'];
     }
 
