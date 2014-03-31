@@ -98,7 +98,7 @@ class Rainhawk {
      * @return array|bool  Returns the datasets on success, false on failure.
      */
 
-    public function datasets() {
+    public function listDatasets() {
         $url = $this->host . "/datasets";
         $data = $this->sendRequest($url, self::GET);
         $json = $this->parseJson($data);
@@ -344,7 +344,7 @@ class Rainhawk {
      * @return array|bool  Returns the indexes on success, false on failure.
      */
 
-    public function fetchIndexes($name) {
+    public function listIndexes($name) {
         $url = $this->host . "/datasets/" . $name . "/indexes";
         $data = $this->sendRequest($url, self::GET);
         $json = $this->parseJson($data);
@@ -378,7 +378,8 @@ class Rainhawk {
             return false;
         }
 
-        return $json['data']['added'];
+        return isset($field) ?
+            $json['data']['added'] : $json['data']['detected'];
     }
 
     /**
@@ -390,7 +391,7 @@ class Rainhawk {
      * @return array|bool  Returns the data array on success, false on failure.
      */
 
-    public function fetchAccessList($name) {
+    public function listAccess($name) {
         $url = $this->host . "/datasets/" . $name . "/access";
         $data = $this->sendRequest($url, self::GET);
         $json = $this->parseJson($data);

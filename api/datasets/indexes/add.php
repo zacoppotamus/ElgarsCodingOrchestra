@@ -66,7 +66,7 @@ if(!empty($data->field)) {
     }
 
     // Add the index.
-    if(!$dataset->add_index($field)) {
+    if(!$dataset->add_index($data->field)) {
         echo json_beautify(json_render_error(406, "There was an unknown problem adding the index you specified."));
         exit;
     }

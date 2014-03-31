@@ -57,7 +57,7 @@ $tests = array(
 
         debug("Fetching a list of the datasets that we have access to...");
 
-        $datasets = $rainhawk->datasets();
+        $datasets = $rainhawk->listDatasets();
         if($datasets == false) {
             failed("Could not list the datasets - " . $rainhawk->error());
         } else {
@@ -196,6 +196,14 @@ $tests = array(
     function() use($rainhawk) {
         global $name;
 
+        debug("Adding indexes to all of the relevant fields automatically...");
+
+        $indexes = $rainhawk->addIndex($name);
+        if($indexes == false) {
+            failed("Could not add the indexes - " . $rainhawk->error());
+        } else {
+            debug("--> " . json_encode($indexes));
+        }
     }
 );
 
