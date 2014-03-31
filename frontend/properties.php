@@ -44,21 +44,35 @@ $accessList = array_unique(array_merge($readList, $writeList));
     <script src="js/jquery-1.10.2.js"></script>
     <script src="js/bootstrap.js"></script>
     <script src="js/jquery.confirm.min.js"></script>
+<script>
+<?php include("../wrappers/javascript/rainhawk.js"); ?>
+</script>
 
 <script>
+  var dataset = "<?php echo $dataset; ?>";
+  rainhawk.apiKey = "<?php echo $mashape_key; ?>";
+
   $(document).ready(function(){
     $(".confirm").confirm({
       text: "Are you sure you wish to revoke this user's permission?",
       title: "Really revoke?",
       confirmButton: "Revoke",
-      confirm: revoke(btn)
+      confirm: function revoke(btn)
+                {
+                  var username = $(btn).data("user");
+                  rainhawk.access.remove(dataset, username, "read",
+                    function (){
+                      $("[data-row-user="+username+"]").fadeOut();
+                    },
+                    function (msg){
+                      $("#accessBody").prepend("<div class='alert alert-danger'><strong>Error revoking.</strong> "+msg+"</div>");
+                    }
+                  )
+                }
     });
   });
 
-function revoke(btn)
-{
-  var username = $(btn).data("user");
-}
+
 
   var newUserCount = 0;
   function addUser()
@@ -98,61 +112,66 @@ function revoke(btn)
               <h4>Fields</h4>
             </div>
             <div class="panel-body">
-              <table class='table'>
-                <thead>
-                  <tr>
-                    <th class="col-md-7">Name</th>
-                    <th class="col-md-5">Constraint</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <?php
-                    for($i=0; $i<count($fields); $i++)
-                    {
-                      if($fields[$i] != "_id")
+              <form id="fieldForm" action="permissions.php?dataset=<?php echo $dataset; ?>" method="post">
+                <table class='table'>
+                  <thead>
+                    <tr>
+                      <th class="col-md-7">Name</th>
+                      <th class="col-md-5">Constraint</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php
+                      for($i=0; $i<count($fields); $i++)
                       {
-                        $type = (count($constraints)>0 && in_array($fields[$i], array_keys($constraints))) ? $constraints[$fields[$i]]["type"] : "none";
-                        if(in_array($user, $writeList))
+                        if($fields[$i] != "_id")
                         {
-                          $selected["none"] = "";
-                          $selected["integer"] = "";
-                          $selected["string"] = "";
-                          $selected["latitude"] = "";
-                          $selected["longitude"] = "";
-                          $selected["float"] = "";
-                          $selected["timestamp"] = "";
-                          $selected[$type] = "selected";
-                          echo <<<EOD
-                            <tr>
-                              <td>$fields[$i]</td>
-                              <td>
-                                <select id='$fields[$i]' class='form-control'>
-                                  <option value="none" $selected[none]>None</option>
-                                  <option value='string' $selected[string]>String</option>
-                                  <option value='integer' $selected[integer]>Integer</option>
-                                  <option value='float' $selected[float]>Float</option>
-                                  <option value='timestamp' $selected[timestamp]>Timestamp</option>
-                                  <option value='latitude' $selected[latitude]>Latitude</option>
-                                  <option value='longitude' $selected[longitude]>Longitude</option>
-                                </select>
-                              </td>
-                            </tr>
+                          $type = (count($constraints)>0 && in_array($fields[$i], array_keys($constraints))) ? $constraints[$fields[$i]]["type"] : "none";
+                          if(in_array($user, $writeList))
+                          {
+                            $selected["none"] = "";
+                            $selected["integer"] = "";
+                            $selected["string"] = "";
+                            $selected["latitude"] = "";
+                            $selected["longitude"] = "";
+                            $selected["float"] = "";
+                            $selected["timestamp"] = "";
+                            $selected[$type] = "selected";
+                            echo <<<EOD
+                              <tr>
+                                <td>$fields[$i]</td>
+                                <td>
+                                  <select id='$fields[$i]' class='form-control'>
+                                    <option value="none" $selected[none]>None</option>
+                                    <option value='string' $selected[string]>String</option>
+                                    <option value='integer' $selected[integer]>Integer</option>
+                                    <option value='float' $selected[float]>Float</option>
+                                    <option value='timestamp' $selected[timestamp]>Timestamp</option>
+                                    <option value='latitude' $selected[latitude]>Latitude</option>
+                                    <option value='longitude' $selected[longitude]>Longitude</option>
+                                  </select>
+                                </td>
+                              </tr>
 EOD;
-                        }
-                        else
-                        {
-                          echo <<<EOD
-                            <tr>
-                              <td>$fields[$i]</td>
-                              <td>$type</td>
-                            </tr>
+                          }
+                          else
+                          {
+                            echo <<<EOD
+                              <tr>
+                                <td>$fields[$i]</td>
+                                <td>$type</td>
+                              </tr>
 EOD;
+                          }
                         }
                       }
-                    }
-                  ?>
-                </tbody>
-              </table>
+                    ?>
+                  </tbody>
+                </table>
+              </form>
+            </div>
+            <div class="panel-footer text-right">
+              <button type='submit' form="fieldForm" class="btn btn-default">Apply</button>
             </div>
           </div>
         </div>
@@ -162,7 +181,7 @@ EOD;
             <div class="panel-heading">
               <h4>Permissions</h4>
             </div>
-            <div class="panel-body">
+            <div id="accessBody" class="panel-body">
               <form id="accessForm" action="permissions.php?dataset=<?php echo $dataset; ?>" method="post">
                 <table class='table'>
                   <thead>
@@ -181,7 +200,7 @@ EOD;
                       $writeChecked = $isWrite ? "checked" : "";
                       $readChecked  = $isWrite ? "" : "checked";
                       echo <<<EOD
-                      <tr>
+                      <tr data-row-user="$username">
                         <td>$username</td>
                         <td class="text-center">
                           <input type="radio" name="currentUser[$username]" value="read" $readChecked>
