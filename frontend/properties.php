@@ -43,6 +43,22 @@ $accessList = array_unique(array_merge($readList, $writeList));
 
     <script src="js/jquery-1.10.2.js"></script>
     <script src="js/bootstrap.js"></script>
+<script>
+  var newUserCount = 0;
+  function addUser()
+  {
+    newUserCount++;
+    $("#tblPermissions").append(
+    "<tr>"+
+      "<td><input type='text' name='newUser["+newUserCount+"][user]' class='form-control'></td>"+
+      "<td class='text-center'><input type='radio' name='newUser["+newUserCount+"][access]' value='read' checked></td>"+
+      "<td class='text-center'><input type='radio' name='newUser["+newUserCount+"][access]' value='write'></td>"+
+      "<td></td>"+
+      "</tr>");
+  }
+
+
+</script>
   </head>
   <body>
     <div class='container'>
@@ -131,7 +147,7 @@ EOD;
               <h4>Permissions</h4>
             </div>
             <div class="panel-body">
-              <form id="accessForm" method="post">
+              <form id="accessForm" action="permissions.php?dataset=<?php echo $dataset; ?>" method="post">
                 <table class='table'>
                   <thead>
                     <tr>
@@ -141,21 +157,21 @@ EOD;
                       <th class="col-md-1 text-center"></th>
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody id="tblPermissions">
                   <?php
-                    for($i=0; $i<count($accessList); $i++)
+                    foreach ($accessList as $key=>$username)
                     {
-                      $isWrite      = in_array($accessList[$i], $writeList);
+                      $isWrite      = in_array($username, $writeList);
                       $writeChecked = $isWrite ? "checked" : "";
                       $readChecked  = $isWrite ? "" : "checked";
                       echo <<<EOD
                       <tr>
-                        <td>$accessList[$i]</td>
+                        <td>$username</td>
                         <td class="text-center">
-                          <input type="radio" name="$accessList[$i]" value="read" $readChecked>
+                          <input type="radio" name="currentUser[$username]" value="read" $readChecked>
                         </td>
                         <td class="text-center">
-                          <input type="radio" name="$accessList[$i]" value="write" $writeChecked>
+                          <input type="radio" name="currentUser[$username]" value="write" $writeChecked>
                         </td>
                         <td><a class='btn btn-sm btn-danger'>Revoke</a></td>
                       </tr>
@@ -166,7 +182,7 @@ EOD;
                   <tfoot>
                     <tr>
                       <td class="text-center" colspan="100%">
-                        <a class="btn btn-sm btn-success" href="#">Add User</a>
+                        <button type="button" class="btn btn-sm btn-success" onclick="addUser()">Add User</a>
                       </td>
                     </tr>
                   </tfoot>
