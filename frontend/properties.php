@@ -44,21 +44,35 @@ $accessList = array_unique(array_merge($readList, $writeList));
     <script src="js/jquery-1.10.2.js"></script>
     <script src="js/bootstrap.js"></script>
     <script src="js/jquery.confirm.min.js"></script>
+<script>
+<?php include("../wrappers/javascript/rainhawk.js"); ?>
+</script>
 
 <script>
+  var dataset = "<?php echo $dataset; ?>";
+  rainhawk.apiKey = "<?php echo $mashape_key; ?>";
+
   $(document).ready(function(){
     $(".confirm").confirm({
       text: "Are you sure you wish to revoke this user's permission?",
       title: "Really revoke?",
       confirmButton: "Revoke",
-      confirm: revoke(btn)
+      confirm: function revoke(btn)
+                {
+                  var username = $(btn).data("user");
+                  rainhawk.access.remove(dataset, username, "read",
+                    function (){
+                      $("[data-row-user="+username+"]").fadeOut();
+                    },
+                    function (msg){
+                      $("#accessBody").prepend("<div class='alert alert-danger'><strong>Error revoking.</strong> "+msg+"</div>");
+                    }
+                  )
+                }
     });
   });
 
-function revoke(btn)
-{
-  var username = $(btn).data("user");
-}
+
 
   var newUserCount = 0;
   function addUser()
@@ -167,7 +181,7 @@ EOD;
             <div class="panel-heading">
               <h4>Permissions</h4>
             </div>
-            <div class="panel-body">
+            <div id="accessBody" class="panel-body">
               <form id="accessForm" action="permissions.php?dataset=<?php echo $dataset; ?>" method="post">
                 <table class='table'>
                   <thead>
@@ -186,7 +200,7 @@ EOD;
                       $writeChecked = $isWrite ? "checked" : "";
                       $readChecked  = $isWrite ? "" : "checked";
                       echo <<<EOD
-                      <tr>
+                      <tr data-row-user="$username">
                         <td>$username</td>
                         <td class="text-center">
                           <input type="radio" name="currentUser[$username]" value="read" $readChecked>
