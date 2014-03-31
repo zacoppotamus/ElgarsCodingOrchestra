@@ -476,21 +476,27 @@ var rainhawk = {
          * fields can be much faster and more efficient.
          *
          * @param {string} name
-         * @param {array} fields
+         * @param {string} field
          * @param {function} success
          * @param {function} error
          */
 
-        create: function(name, fields, success, error) {
+        add: function(name, field, success, error) {
             var url = rainhawk.host + "/datasets/" + name + "/indexes";
-            var params = {fields: JSON.stringify(fields)};
+            var params = {};
+
+            if(field) params.field = field;
 
             return rainhawk.http.send({
                 url: url,
                 method: rainhawk.http.methods.post,
                 params: params
             }, function(json) {
-                success(json.data.indexes);
+                if(field) {
+                    success(json.data.added);
+                } else {
+                    success(json.data.detected);
+                }
             }, error);
         },
 
@@ -499,13 +505,24 @@ var rainhawk = {
          * which requires that the indexes already exist.
          *
          * @param {string} name
-         * @param {array} fields
+         * @param {array} field
          * @param {function} success
          * @param {function} error
          */
 
-        delete: function(name, field, success, error) {
-            return;
+        remove: function(name, field, success, error) {
+            var url = rainhawk.host + "/datasets/" + name + "/indexes";
+            var params = {
+                field: field
+            };
+
+            return rainhawk.http.send({
+                url: url,
+                method: rainhawk.http.methods.del,
+                params: params
+            }, function(json) {
+                success(json.data.removed);
+            }, error);
         }
     },
 
