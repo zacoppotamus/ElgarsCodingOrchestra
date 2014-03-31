@@ -65,7 +65,7 @@ $accessList = array_unique(array_merge($readList, $writeList));
                       $("[data-row-user="+username+"]").fadeOut();
                     },
                     function (msg){
-                      $("#accessBody").prepend("<div class='alert alert-danger'><strong>Error revoking.</strong> "+msg+"</div>");
+                      $("#accessBody").prepend("<div class='alert alert-danger alert-dismissable'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><strong>Error revoking.</strong> "+msg+"</div>");
                     }
                   )
                 }
