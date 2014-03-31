@@ -49,7 +49,7 @@ var rainhawk = {
 		 * factories. Each one is tested in turn until a valid object is received
 		 * at which point we can send the result back.
 		 *
-		 * @return {Object}
+		 * @return {object}
 		 */
 
 		 createRequest: function(method, url) {
@@ -74,7 +74,7 @@ var rainhawk = {
 		  * some data back and process requests.
 		  *
 		  * @param {object} options
-		  * @return {HTTPRequest}
+		  * @return {httprequest}
 		  */
 
 		 send: function(options, success, failure) {
@@ -507,8 +507,19 @@ var rainhawk = {
 			}, error);
 		},
 
-		//delete: function(name, field, success, error) {
-		//}
+		/**
+		 * Delete an index from the specified dataset on the specified fields,
+		 * which requires that the indexes already exist.
+		 *
+		 * @param {string} name
+		 * @param {array} fields
+		 * @param {function} success
+		 * @param {function} error
+		 */
+
+		delete: function(name, field, success, error) {
+			return;
+		}
 	},
 
 	/**
@@ -516,13 +527,79 @@ var rainhawk = {
 	 */
 
 	access: {
+		/**
+		 * List the access that's currently available to a dataset, giving two
+		 * arrays - one for the users that have read access and another for those
+		 * who have write access.
+		 *
+		 * @param {string} name
+		 * @param {function} success
+		 * @param {function} error
+		 */
+
 		list: function(name, success, error) {
+			var url = rainhawk.host + "/datasets/" + name + "/access";
+
+			return rainhawk.http.send({
+				url: url,
+				method: rainhawk.http.methods.get
+			}, function(json) {
+				success(json.data);
+			}, error);
 		},
+
+		/**
+		 * Give a user certain access levels to a dataset, provided an array or
+		 * string of types of access.
+		 *
+		 * @param {string} name
+		 * @param {string} username
+		 * @param {string|array} type
+		 * @param {function} success
+		 * @param {function} error
+		 */
 
 		give: function(name, username, type, success, error) {
+			var url = rainhawk.host + "/datasets/" + name + "/access";
+			var params = {
+				username: username,
+				type: typeof type == "string" ? type : JSON.stringify(type)
+			};
+
+			return rainhawk.http.send({
+				url: url,
+				method: rainhawk.http.methods.post,
+				params: params
+			}, function(json) {
+				success(json.data.added);
+			}, error);
 		},
 
+		/**
+		 * Remove access from a user to the specified dataset, which uses a
+		 * string to represent either "read" or "write".
+		 *
+		 * @param {string} name
+		 * @param {string} username
+		 * @param {string} type
+		 * @param {function} success
+		 * @param {function} error
+		 */
+
 		remove: function(name, username, type, success, error) {
+			var url = rainhawk.host + "/datasets/" + name + "/access";
+			var params = {
+				username: username,
+				type: type
+			};
+
+			return rainhawk.http.send({
+				url: url,
+				method: rainhawk.http.methods.delete,
+				params: params
+			}, function(json) {
+				success(json.data.removed);
+			}, error);
 		}
 	},
 
@@ -531,7 +608,25 @@ var rainhawk = {
 	 */
 
 	constraints: {
+		/**
+		 * List the constraints that are currently being applied to a dataset,
+		 * which are essentially masks on fields. Currently supported: string,
+		 * array, integer, float, timestamp, latitude, longitude.
+		 *
+		 * @param {string} name
+		 * @param {function} success
+		 * @param {function} error
+		 */
+
 		list: function(name, success, error) {
+			var url = rainhawk.host + "/datasets/" + name + "/constraints";
+
+			return rainhawk.http.send({
+				url: url,
+				method: rainhawk.http.methods.get
+			}, function(json) {
+				success(json.data.constraints);
+			}, error);
 		},
 
 		add: function(name, field, type, success, error) {
