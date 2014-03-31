@@ -179,7 +179,7 @@ route::post("/datasets/(\w+|\-+)\.(\w+|\-+)/access", function($prefix, $name) us
     $data->prefix = $prefix;
     $data->name = $name;
 
-    $data->type = isset($_POST['type']) && in_array($_POST['type'], array("read", "write")) ? trim(strtolower($_POST['type'])) : null;
+    $data->type = isset($_POST['type']) ? $_POST['type'] : null;
     $data->username = isset($_POST['username']) ? trim(strtolower($_POST['username'])) : null;
 
     include("datasets/access/add.php");
