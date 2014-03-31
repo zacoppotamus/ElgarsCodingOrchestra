@@ -105,7 +105,6 @@ var rainhawk = {
 
 		 	if(params && !options.hasOwnProperty("file")) {
 		 		request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-		 		request.setRequestHeader("Content-Length", params.length);
 		 	} else if(options.method == this.methods.put && options.hasOwnProperty("file")) {
 		 		params = options.file;
 		 	}
