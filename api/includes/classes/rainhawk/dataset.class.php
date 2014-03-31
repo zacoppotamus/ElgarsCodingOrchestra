@@ -289,7 +289,7 @@ class Dataset {
      * Create an index on a specified field, in a specified
      * direction. If it already exists then nothing will happen.
      *
-     * @param array $field  The field to add an index to.
+     * @param string $field  The field to add an index to.
      * @return bool  Whether or not the indexes were created.
      */
 
@@ -304,6 +304,25 @@ class Dataset {
             if($result['ok'] == 1) {
                 return true;
             }
+        } catch(Exception $e) {}
+
+        return false;
+    }
+
+    /**
+     * Remove an index on the specified field.
+     *
+     * @param string $field  The field to remove the index on.
+     * @return bool  Whether or not the indexes were removed.
+     */
+
+    public function remove_index($field) {
+        if(!$this->exists) {
+            return false;
+        }
+
+        try {
+            return $this->collection->deleteIndex($field);
         } catch(Exception $e) {}
 
         return false;

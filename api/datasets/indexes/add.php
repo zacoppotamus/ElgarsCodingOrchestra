@@ -55,14 +55,18 @@ if(!empty($data->field)) {
     }
 
     // Get the current indexes.
-    $indexes = $dataset->fetch_indexes();
+    $indx = $dataset->fetch_indexes();
+    $indexes = array();
 
-    // Iterate through to find the indexes.
-    foreach($indexes as $field => $key) {
-        if($data->field == $field) {
-            echo json_beautify(json_render_error(405, "The field you specified already has an index."));
-            exit;
-        }
+    // Set the indexes properly.
+    foreach($indx as $index) {
+        $indexes[] = array_keys($index['key'])[0];
+    }
+
+    // Check if the index has already been set.
+    if(in_array($data->field, $indexes)) {
+        echo json_beautify(json_render_error(405, "The field you specified already has an index."));
+        exit;
     }
 
     // Add the index.

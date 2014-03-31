@@ -166,6 +166,16 @@ route::post("/datasets/(\w+|\-+)\.(\w+|\-+)/indexes", function($prefix, $name) u
     include("datasets/indexes/add.php");
 });
 
+// Create an endpoint to remove an index from a dataset.
+route::delete("/datasets/(\w+|\-+)\.(\w+|\-+)/indexes", function($prefix, $name) use($data) {
+    $data->prefix = $prefix;
+    $data->name = $name;
+
+    $data->field = isset($_POST['field']) ? trim($_POST['field']) : null;
+
+    include("datasets/indexes/remove.php");
+});
+
 // Create an endpoint to list the access to a dataset.
 route::get("/datasets/(\w+|\-+)\.(\w+|\-+)/access", function($prefix, $name) use($data) {
     $data->prefix = $prefix;

@@ -357,6 +357,31 @@ class Rainhawk {
     }
 
     /**
+     * Remove an index from the specified dataset, which works on a single
+     * field and will return a bool.
+     *
+     * @param string $name  The dataset to remove an index on.
+     * @param string $field  The field to remove the index on.
+     * @return bool  Returns true or false.
+     */
+
+    public function removeIndex($name, $field) {
+        $postData = array(
+            "field" => $field
+        );
+
+        $url = $this->host . "/datasets/" . $name . "/indexes";
+        $data = $this->sendRequest($url, self::DELETE, $postData);
+        $json = $this->parseJson($data);
+
+        if(!$json) {
+            return false;
+        }
+
+        return $json['data']['removed'];
+    }
+
+    /**
      * Create an index on the specified dataset, which currently
      * only works on a single field.
      *

@@ -205,6 +205,15 @@ $tests = array(
             debug("--> " . json_encode($indexes));
         }
 
+        debug("Removing the index on 'name'...");
+
+        $removed = $rainhawk->removeIndex($name, "name");
+        if($removed == false) {
+            failed("Could not remove the index on 'name' - " . $rainhawk->error());
+        } else {
+            debug("--> Removed: " . json_encode($removed));
+        }
+
         debug("Listing all indexes currently on the dataset...");
 
         $indexes = $rainhawk->listIndexes($name);
