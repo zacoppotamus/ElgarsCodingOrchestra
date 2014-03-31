@@ -43,7 +43,23 @@ $accessList = array_unique(array_merge($readList, $writeList));
 
     <script src="js/jquery-1.10.2.js"></script>
     <script src="js/bootstrap.js"></script>
+    <script src="js/jquery.confirm.min.js"></script>
+
 <script>
+  $(document).ready(function(){
+    $(".confirm").confirm({
+      text: "Are you sure you wish to revoke this user's permission?",
+      title: "Really revoke?",
+      confirmButton: "Revoke",
+      confirm: revoke(btn)
+    });
+  });
+
+function revoke(btn)
+{
+  var username = $(btn).data("user");
+}
+
   var newUserCount = 0;
   function addUser()
   {
@@ -173,7 +189,7 @@ EOD;
                         <td class="text-center">
                           <input type="radio" name="currentUser[$username]" value="write" $writeChecked>
                         </td>
-                        <td><a class='btn btn-sm btn-danger'>Revoke</a></td>
+                        <td><buttom type='button' data-user='$username' class='btn btn-sm btn-danger confirm'>Revoke</a></td>
                       </tr>
 EOD;
                     }
