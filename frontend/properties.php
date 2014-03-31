@@ -44,51 +44,48 @@ $accessList = array_unique(array_merge($readList, $writeList));
     <script src="js/jquery-1.10.2.js"></script>
     <script src="js/bootstrap.js"></script>
     <script src="js/jquery.confirm.min.js"></script>
-<script>
-<?php include("../wrappers/javascript/rainhawk.js"); ?>
-</script>
+    <script src="js/rainhawk.php"></script>
 
-<script>
-  var dataset = "<?php echo $dataset; ?>";
-  rainhawk.apiKey = "<?php echo $mashape_key; ?>";
+    <script>
+      var dataset = "<?php echo $dataset; ?>";
+      rainhawk.apiKey = "<?php echo $mashape_key; ?>";
 
-  $(document).ready(function(){
-    $(".confirm").confirm({
-      text: "Are you sure you wish to revoke this user's permission?",
-      title: "Really revoke?",
-      confirmButton: "Revoke",
-      confirm: function revoke(btn)
-                {
-                  var username = $(btn).data("user");
-                  rainhawk.access.remove(dataset, username, "read",
-                    function (){
-                      $("[data-row-user="+username+"]").fadeOut();
-                    },
-                    function (msg){
-                      $("#accessBody").prepend("<div class='alert alert-danger alert-dismissable'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><strong>Error revoking.</strong> "+msg+"</div>");
-                    }
-                  )
-                }
-    });
-  });
+      $(document).ready(function(){
+        $(".confirm").confirm({
+          text: "Are you sure you wish to revoke this user's permission?",
+          title: "Really revoke?",
+          confirmButton: "Revoke",
+          confirm: function revoke(btn) {
+            var username = $(btn).data("user");
+            rainhawk.access.remove(dataset, username, "read",
+              function (){
+                $("[data-row-user="+username+"]").fadeOut();
+              },
+              function (msg){
+                $("#accessBody").prepend("<div class='alert alert-danger alert-dismissable'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><strong>Error revoking.</strong> "+msg+"</div>");
+              }
+            )
+          }
+        });
+      });
 
 
 
-  var newUserCount = 0;
-  function addUser()
-  {
-    newUserCount++;
-    $("#tblPermissions").append(
-    "<tr>"+
-      "<td><input type='text' name='newUser["+newUserCount+"][user]' class='form-control'></td>"+
-      "<td class='text-center'><input type='radio' name='newUser["+newUserCount+"][access]' value='read' checked></td>"+
-      "<td class='text-center'><input type='radio' name='newUser["+newUserCount+"][access]' value='write'></td>"+
-      "<td></td>"+
-      "</tr>");
-  }
+      var newUserCount = 0;
+      function addUser()
+      {
+        newUserCount++;
+        $("#tblPermissions").append(
+        "<tr>"+
+          "<td><input type='text' name='newUser["+newUserCount+"][user]' class='form-control'></td>"+
+          "<td class='text-center'><input type='radio' name='newUser["+newUserCount+"][access]' value='read' checked></td>"+
+          "<td class='text-center'><input type='radio' name='newUser["+newUserCount+"][access]' value='write'></td>"+
+          "<td></td>"+
+          "</tr>");
+      }
 
 
-</script>
+    </script>
   </head>
   <body>
     <div class='container'>
