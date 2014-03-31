@@ -222,6 +222,36 @@ $tests = array(
         } else {
             debug("--> " . json_encode($indexes));
         }
+    },
+
+    /**
+     * Test #6: Select data from the dataset and then delete all of the data.
+     */
+
+    function() use($rainhawk) {
+        global $name;
+
+        debug("Selecting some of the data...");
+
+        $query = array(
+            "role" => "content"
+        );
+
+        $select = $rainhawk->selectData($name, $query);
+        if($select == false) {
+            failed("Could not run the select query - " . $rainhawk->error());
+        } else {
+            debug("--> " . json_encode($select));
+        }
+
+        debug("Removing all of the data...");
+
+        $deleted = $rainhawk->deleteData($name, array());
+        if($deleted == false) {
+            failed("Could not delete the data - " . $rainhawk->error());
+        } else {
+            debug("--> Deleted: " . json_encode($deleted));
+        }
     }
 );
 

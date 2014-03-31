@@ -44,24 +44,13 @@ $json = array(
 );
 
 /*!
- * Check that the required parameters are set, so that we can
- * ensure that no data gets erroneously removed.
- */
-
-// Check the query is set.
-if(empty($data->query)) {
-    echo json_beautify(json_render_error(404, "You can't use a catch-all query for delete statements, dummy."));
-    exit;
-}
-
-/*!
  * Run the delete command directly in MongoDB, but be careful that
  * they're not accidentally sending an empty query to delete all
  * documents.
  */
 
 // Set some local variables.
-$query = $data->query;
+$query = !empty($data->query) ? $data->query : array();
 
 // Change the MongoID if we have one.
 foreach($query as $key => $value) {
