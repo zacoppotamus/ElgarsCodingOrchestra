@@ -21,7 +21,7 @@ if (!$user)
 
 $dataset = isset($_GET['dataset']) ? htmlspecialchars($_GET['dataset']) : null;
 
-$access     = $rainhawk->fetchAccessList($dataset);
+$access     = $rainhawk->listAccess($dataset);
 $readList   = $access["read_access"];
 $writeList  = $access["write_access"];
 $accessList = array_unique(array_merge($readList, $writeList));
