@@ -1,333 +1,407 @@
-<!html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-	<title>Rainhawk.js Tests</title>
-	<script type="text/javascript" src="rainhawk.js"></script>
-	<style type="text/css">
-		pre {
-			line-height: 18px;
-			padding: 0;
-			margin: 0;
-		}
-	</style>
+    <title>Rainhawk.js Tests</title>
+    <script type="text/javascript" src="rainhawk.js"></script>
+    <style type="text/css">
+        pre {
+            width: 960px;
+            padding: 0;
+            margin: 0;
+            line-height: 18px;
+            word-break: break-word;
+        }
+    </style>
 </head>
 
 <body>
-	<pre>[+] Running tests.</pre>
-	<script type="text/javascript">
-		/**
-		 * Populate some test variables.
-		 */
+    <script type="text/javascript">
+        // Create a debugging function.
+        var debug = function(message) {
+            var pre = document.createElement("pre");
+            pre.innerHTML = "[+] " + message;
+            document.body.appendChild(pre);
+        };
 
-		var errors = 0;
-		var started = new Date().getTime();
-		var username;
-		var name = "jswrapper";
-		var full_name;
+        // Create a failure logging function.
+        var failed = function(message) {
+            errors++;
 
-		/**
-		 * Create a debug function.
-		 */
+            var pre = document.createElement("pre");
+            pre.innerHTML = "[!] " + message;
+            document.body.appendChild(pre);
+        };
 
-		function debug(message) {
-			if(message.substring(0, 3) == "[!]") {
-				errors++;
-			}
+        // Create the new instance.
+        rainhawk.apiKey = "eSQpirMYxjXUs8xIjjaUo72gutwDJ4CP";
+        var started = new Date().getTime();
+        var username;
+        var name = "jswrapper";
+        var errors = 0;
 
-			var pre = document.createElement("pre");
-			pre.innerHTML = message;
-			document.body.appendChild(pre);
-		}
-
-		/**
-		 * Set the API key.
-		 */
-
-		rainhawk.apiKey = "eSQpirMYxjXUs8xIjjaUo72gutwDJ4CP";
-
-		/**
-		 * Define the tests to perform in an array with functions and callbacks
-		 * so that we can keep references to which test we're on.
-		 */
-
-		var tests = [
-			/**
-			 * Send a ping request to the API and output the user's Mashape
-			 * username.
-			 */
-
-			function(done) {
-				debug("[+] Checking that the API is online...");
-
-				rainhawk.ping(function(data) {
-					username = data.mashape_user;
-					full_name = username + "." + name;
-
-					debug("[+] --> Found username: '" + username + "'.");
-					done();
-				}, function(message) {
-					debug("[!] Could not ping the service - " + message);
-					done();
-				});
-			},
-
-			/**
-			 * Send a request to the API to fetch all of the user's datasets.
-			 */
-
-			function(done) {
-				debug("[+] Fetching list of datasets that we have access to...");
-
-				rainhawk.datasets.list(function(datasets) {
-					var inner = false;
-
-					for(var i in datasets) {
-						var dataset = datasets[i];
-
-						if(dataset.name == full_name) {
-							debug("[+] --> Found '" + full_name + "', removing...");
-							inner = true;
-
-							rainhawk.datasets.delete(full_name, function(deleted) {
-								debug("[+] Deleted: " + deleted);
-								done();
-							}, function(message) {
-								debug("[!] Could not delete dataset - " + message);
-								done();
-							});
-						}
-					}
-
-					if(!inner) {
-						done();
-					}
-				}, function(message) {
-					debug("[!] Could not list our datasets - " + message);
-					done();
-				});
-			},
-
-			/**
-			 * Send a request to the API to create our test dataset.
-			 */
-
-			function(done) {
-				debug("[+] Creating new dataset '" + name + "'...");
-
-				rainhawk.datasets.create(name, "An example dataset from the JS class for testing.", function(dataset) {
-					name = full_name;
-					delete full_name;
-					done();
-				}, function(message) {
-					debug("[!] Could not create dataset - " + message);
-					done();
-				});
-			},
-
-			/**
-			 * Send a request to the API to fetch information about one dataset.
-			 */
-
-			function(done) {
-				debug("[+] Fetching the new dataset, '" + name + "'...");
-
-				rainhawk.datasets.info(name, function(dataset) {
-					debug(JSON.stringify(dataset));
-					done();
-				}, function(message) {
-					debug("[!] Could not fetch the dataset's information - " + message);
-					done();
-				});
-			},
-
-			/**
-			 * Insert one row of data into the dataset.
-			 */
-
-			function(done) {
-				debug("[+] Inserting one row into '" + name + "'.");
-
-				var row = {
-					name: "John",
-    				age: 20,
-    				weight: 320,
-    				roles: ["admin", "manager", "content"]
-    			};
-
-    			rainhawk.data.insert(name, row, function(row) {
-    				debug(JSON.stringify(row));
-    				done();
-    			}, function(message) {
-    				debug("[!] Could not insert data - " + message);
-    			});
-    		},
-
-    		/**
-    		 * Upload a CSV to the dataset.
-    		 */
-
-    		function(done) {
-    			debug("[+] Uploading 'test_data.csv' to the dataset...");
-
-    			var file = new Blob(["symbol,date,price\n" +
-					"MSFT,Jan 1 2000,39.81\n" +
-					"MSFT,Feb 1 2000,36.35\n" +
-					"MSFT,Mar 1 2000,43.22\n" +
-					"MSFT,Apr 1 2000,28.37\n" +
-					"MSFT,May 1 2000,25.45\n" +
-					"MSFT,Jun 1 2000,32.54\n"
-				], {
-					type: "text/csv"
-				});
-
-				rainhawk.data.upload(name, file, "csv", function(rows) {
-    				debug(JSON.stringify(rows));
-    				done();
-    			}, function(message) {
-    				debug("[!] Could not upload data - " + message);
-    			});
-    		},
-
+        // Create an array of the tests.
+        var tests = [
             /**
-             * Apply automatic constraints to fields.
+             * Test #1: Ping the API.
              */
 
             function(done) {
-                debug("[+] Automatically detecting constraints and applying them...");
+                debug("Checking that the API is online...");
+
+                rainhawk.ping(function(ping) {
+                    username = ping.mashape_user;
+
+                    debug("--> Server time offset: " + (parseInt(new Date().getTime() / 1000) - ping.server_time));
+                    debug("--> Found username: " + username);
+                    done();
+                }, function(message) {
+                    failed("Could not ping the service - " + message);
+                    done();
+                });
+            },
+
+            /**
+             * Test #2: List the datasets, delete the dataset if it already exists,
+             * create a dataset and then get information on the dataset.
+             */
+
+            function(done) {
+                debug("Fetching a list of the datasets that we have access to...");
+
+                rainhawk.datasets.list(function(datasets) {
+                    var inner = false;
+
+                    debug("--> Found a list of datasets.");
+
+                    for(var i in datasets) {
+                        var dataset = datasets[i];
+
+                        if(dataset.name == username + "." + name) {
+                            debug("--> Found " + dataset.name + ", cleaning up...");
+                            inner = true;
+
+                            rainhawk.datasets.delete(dataset.name, function(deleted) {
+                                done();
+                            }, function(message) {
+                                done();
+                            });
+                        }
+                    }
+
+                    if(!inner) {
+                        done();
+                    }
+                }, function(message) {
+                    failed("Could not list the datasets - " + message);
+                    done();
+                });
+            },
+
+            /**
+             * Test #2: List the datasets, delete the dataset if it already exists,
+             * create a dataset and then get information on the dataset.
+             */
+
+            function(done) {
+                debug("Creating the test dataset, '" + name + "'...");
+
+                rainhawk.datasets.create(name, "An example dataset from the JS class for testing.", function(dataset) {
+                    debug("--> " + JSON.stringify(dataset));
+                    done();
+                }, function(message) {
+                    failed("Could not create the dataset - " + message);
+                    done();
+                });
+            },
+
+            /**
+             * Test #2: List the datasets, delete the dataset if it already exists,
+             * create a dataset and then get information on the dataset.
+             */
+
+            function(done) {
+                name = username + "." + name;
+
+                debug("Fetching the information for the new dataset...");
+
+                rainhawk.datasets.info(name, function(dataset) {
+                    debug("--> " + JSON.stringify(dataset));
+                    done();
+                }, function(message) {
+                    failed("Could not fetch the dataset - " + message);
+                    done();
+                });
+            },
+
+            /**
+             * Test #3: Add one row of data, add another two rows of data and upload
+             * a file to the dataset.
+             */
+
+            function(done) {
+                debug("Adding one row of data to the dataset...");
+
+                var row = {
+                    name: "John",
+                    age: 20,
+                    weight: 320.2,
+                    role: "content"
+                };
+
+                rainhawk.data.insert(name, row, function(inserted) {
+                    debug("--> " + JSON.stringify(inserted));
+                    done();
+                }, function(message) {
+                    failed("Could not insert one row of data - " + message);
+                    done();
+                });
+            },
+
+            /**
+             * Test #3: Add one row of data, add another two rows of data and upload
+             * a file to the dataset.
+             */
+
+            function(done) {
+                debug("Adding two rows of data in batch to the dataset...");
+
+                var rows = [
+                    {
+                        name: "Jane",
+                        age: 24,
+                        weight: 220.4,
+                        role: "owner"
+                    },
+                    {
+                        name: "Bob",
+                        age: 36,
+                        weight: 320.6,
+                        role: "manager"
+                    }
+                ];
+
+                rainhawk.data.insertMulti(name, rows, function(inserted) {
+                    debug("--> " + JSON.stringify(inserted));
+                    done();
+                }, function(message) {
+                    failed("Could not insert two rows of data in batch - " + message);
+                    done();
+                });
+            },
+
+            /**
+             * Test #3: Add one row of data, add another two rows of data and upload
+             * a file to the dataset.
+             */
+
+            function(done) {
+                debug("Uploading some rows of data to the dataset from a .csv...");
+
+                var file = new Blob(["name,age,weight,role\n" +
+                    "Kate,18,180.0,trainee\n" +
+                    "Jackie,19,220.5,content\n"
+                ], {
+                    type: "text/csv"
+                });
+
+                rainhawk.data.upload(name, file, "csv", function(uploaded) {
+                    debug("--> " + JSON.stringify(uploaded));
+                    done();
+                }, function(message) {
+                    failed("Could not upload the data into the dataset - " + message);
+                    done();
+                });
+            },
+
+            /**
+             * Test #4: Detect the constraints that should be applied to the data, and
+             * then remove one of the constraints and list the constraints.
+             */
+
+            function(done) {
+                debug("Automatically detecting constraints and applying them...");
 
                 rainhawk.constraints.add(name, null, null, function(detected) {
-                    debug(JSON.stringify(detected));
+                    debug("--> " + JSON.stringify(detected));
                     done();
                 }, function(message) {
-                    debug("[!] Could not add constraints - " + message);
+                    failed("Could not detect the constraints - " + message);
+                    done();
                 });
             },
 
             /**
-             * List constraints on the dataset.
+             * Test #4: Detect the constraints that should be applied to the data, and
+             * then remove one of the constraints and list the constraints.
              */
 
             function(done) {
-                debug("[+] Listing the constraints being applied to the data...");
+                debug("Removing the constraint on 'role'...");
+
+                rainhawk.constraints.remove(name, "role", function(removed) {
+                    debug("--> Removed: " + JSON.stringify(removed));
+                    done();
+                }, function(message) {
+                    failed("Could not remove the constraint on 'role' - " + message);
+                    done();
+                });
+            },
+
+            /**
+             * Test #4: Detect the constraints that should be applied to the data, and
+             * then remove one of the constraints and list the constraints.
+             */
+
+            function(done) {
+                debug("Listing all constraints being applied to the dataset...");
 
                 rainhawk.constraints.list(name, function(constraints) {
-                    debug(JSON.stringify(constraints));
+                    debug("--> " + JSON.stringify(constraints));
                     done();
                 }, function(message) {
-                    debug("[!] Could not list constraints - " + message);
+                    failed("Could not list the constraints - " + message);
+                    done();
                 });
             },
 
             /**
-             * Remove the constraint on price.
+             * Test #5: Add an index to all of the fields on the dataset, remove one
+             * of the indexes and then list them.
              */
 
             function(done) {
-                debug("[+] Removing the constraint on 'price'...");
+                debug("Adding indexes to all of the relevant fields automatically...");
 
-                rainhawk.constraints.remove(name, "price", function(removed) {
-                    debug("[+] Removed: " + removed);
+                rainhawk.indexes.add(name, null, function(indexes) {
+                    debug("--> " + JSON.stringify(indexes));
                     done();
                 }, function(message) {
-                    debug("[!] Could not remove constraint - " + message);
+                    failed("Could not add the indexes - " + message);
+                    done();
                 });
             },
 
-    		/**
-    		 * Select some rows using a query.
-    		 */
-
-    		function(done) {
-    			debug("[+] Selecting all rows that are content creators...");
-
-    			var query = {
-    				roles: {
-        				'$in': ["content"]
-     				}
-				};
-
-				rainhawk.data.select(name, {
-					query: query
-				}, function(data) {
-					debug(JSON.stringify(data.results));
-					done();
-				}, function(message) {
-					debug("[!] Could not select data - " + message);
-					done();
-				});
-    		},
-
-    		/**
-    		 * Delete the test data.
-    		 */
-
-    		function(done) {
-    			debug("[+] Deleting our test data...");
-
-    			var query = {
-    				name: "John"
-    			};
-
-    			rainhawk.data.delete(name, query, function(deleted) {
-					debug("[+] Deleted: " + deleted + " row(s).");
-					done();
-				}, function(message) {
-					debug("[!] Could not delete data - " + message);
-					done();
-				});
-    		},
-
             /**
-             * Delete the test dataset.
+             * Test #5: Add an index to all of the fields on the dataset, remove one
+             * of the indexes and then list them.
              */
 
             function(done) {
-                debug("[+] Removing the test dataset '" + name + "'...");
+                debug("Removing the index on 'name'...");
+
+                rainhawk.indexes.remove(name, "name", function(removed) {
+                    debug("--> Removed: " + removed);
+                    done();
+                }, function(message) {
+                    failed("Could not remove the index on 'name' - " + message);
+                    done();
+                });
+            },
+
+            /**
+             * Test #5: Add an index to all of the fields on the dataset, remove one
+             * of the indexes and then list them.
+             */
+
+            function(done) {
+                debug("Listing all indexes currently on the dataset...");
+
+                rainhawk.indexes.list(name, function(indexes) {
+                    debug("--> " + JSON.stringify(indexes));
+                    done();
+                }, function(message) {
+                    failed("Could not list the indexes - " + message);
+                    done();
+                });
+            },
+
+            /**
+             * Test #6: Select data from the dataset and then delete all of the data.
+             */
+
+            function(done) {
+                debug("Selecting some of the data...");
+
+                var query = {
+                    role: "content"
+                };
+
+                rainhawk.data.select(name, {
+                    query: query
+                }, function(select) {
+                    debug("--> " + JSON.stringify(select));
+                    done();
+                }, function(message) {
+                    failed("Could not run the select query - " + message);
+                    done();
+                });
+            },
+
+            /**
+             * Test #6: Select data from the dataset and then delete all of the data.
+             */
+
+            function(done) {
+                debug("Removing all of the data...");
+
+                rainhawk.data.delete(name, {}, function(deleted) {
+                    debug("--> Deleted: " + deleted);
+                    done();
+                }, function(message) {
+                    failed("Could not delete the data - " + message);
+                    done();
+                });
+            },
+
+            /**
+             * Test #7: Delete the dataset and clean up.
+             */
+
+            function(done) {
+                debug("Removing our test dataset...");
 
                 rainhawk.datasets.delete(name, function(deleted) {
-                    debug("[+] Deleted: " + deleted);
+                    debug("--> Deleted: " + deleted);
                     done();
                 }, function(message) {
-                    debug("[!] Could not delete dataset - " + message);
+                    failed("Could not delete dataset - " + message);
                     done();
                 });
             },
 
-			/**
-			 * Output a finished message!
-			 */
+            /**
+             * Finish up, check for any failures and exit.
+             */
 
-			function(done) {
-				var taken = (new Date().getTime() - started) / 1000;
+            function(done) {
+                debug("Done! All tests completed in " + ((new Date().getTime() - started) / 1000) + " second(s).");
 
-				if(errors == 0) {
-					debug("[+] Done! All tests passed in " + taken + " second(s).");
-				} else {
-					debug("[!] Done! Some tests failed in " + taken + " second(s).");
-				}
+                if(errors > 0) {
+                    failed("--> " + errors + " operation(s) failed.");
+                }
 
-				done();
-			}
-		];
+                done();
+            }
+        ];
 
-		/**
-		 * Run all of the tests synchronously so that we don't break the order of
-		 * operations and invalidate the tests by law.
-		 */
+        /**
+         * Run all of the tests synchronously so that we don't break the order of
+         * operations and invalidate the tests by law.
+         */
 
-		var i = 0;
-		var done = false;
+        var i = 0;
+        var done = false;
 
-		setInterval(function() {
-			if(done && tests[i]) {
-				done = false;
-				tests[i](function() { done = true; i++; });
-			}
-		}, 10);
+        setInterval(function() {
+            if(done && tests[i]) {
+                done = false;
+                tests[i](function() { done = true; i++; });
+            }
+        }, 10);
 
-		tests[i](function() { done = true; i++; });
-	</script>
+        tests[i](function() { done = true; i++; });
+    </script>
 </body>
 
 </html>

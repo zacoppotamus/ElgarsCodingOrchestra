@@ -433,14 +433,14 @@ class Rainhawk {
      * send the type and the username in a POST request.
      *
      * @param string $name  The dataset to create an index on.
-     * @param string $type  The type of access to give, "read" and "write".
+     * @param string|array $type  The type of access to give, "read" and "write".
      * @param string $username  The username to give access to.
      * @return array|bool  Returns the data array on success, false on failure.
      */
 
     public function giveAccess($name, $type, $username) {
         $postData = array(
-            "type" => $type,
+            "type" => is_array($type) ? json_encode($type) : $type,
             "username" => $username
         );
 
@@ -452,7 +452,7 @@ class Rainhawk {
             return false;
         }
 
-        return $json['data'];
+        return $json['data']['added'];
     }
 
     /**
@@ -479,7 +479,7 @@ class Rainhawk {
             return false;
         }
 
-        return $json['data'];
+        return $json['data']['removed'];
     }
 
     /**

@@ -11,8 +11,8 @@ function debug($message) {
 
 // Create a failure logging function.
 function failed($message) {
-    global $failed;
-    $failed++;
+    global $errors;
+    $errors++;
 
     echo "[!] " . $message . "\n";
 }
@@ -22,7 +22,7 @@ $rainhawk = new Rainhawk("eSQpirMYxjXUs8xIjjaUo72gutwDJ4CP");
 $started = microtime(true);
 $username = null;
 $name = "phpwrapper";
-$failed = 0;
+$errors = 0;
 
 // Create an array of the tests.
 $tests = array(
@@ -280,8 +280,8 @@ foreach($tests as $callable) {
 debug("Done! All tests completed in " . number_format(microtime(true) - $started, 2) . " second(s).");
 
 // Check for any failures.
-if($failed > 0) {
-    failed("--> " . $failed . " operation(s) failed.");
+if($errors > 0) {
+    failed("--> " . $errors . " operation(s) failed.");
 }
 
 // Finish execution.
