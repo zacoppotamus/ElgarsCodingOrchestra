@@ -168,10 +168,12 @@ route::post("/datasets/(\w+|\-+)\.(\w+|\-+)/indexes", function($prefix, $name) u
 
 // Create an endpoint to remove an index from a dataset.
 route::delete("/datasets/(\w+|\-+)\.(\w+|\-+)/indexes", function($prefix, $name) use($data) {
+    parse_str(file_get_contents("php://input"), $_DELETE);
+
     $data->prefix = $prefix;
     $data->name = $name;
 
-    $data->field = isset($_POST['field']) ? trim($_POST['field']) : null;
+    $data->field = isset($_DELETE['field']) ? trim($_DELETE['field']) : null;
 
     include("datasets/indexes/remove.php");
 });
