@@ -306,9 +306,7 @@ var rainhawk = {
 
         insertMulti: function(name, rows, success, error) {
             var url = rainhawk.host + "/datasets/" + name + "/data";
-            var params = {
-                rows: JSON.stringify(rows)
-            };
+            var params = {rows: JSON.stringify(rows)};
 
             return rainhawk.http.send({
                 url: url,
@@ -333,10 +331,7 @@ var rainhawk = {
 
         update: function(name, query, changes, success, error) {
             var url = rainhawk.host + "/datasets/" + name + "/data";
-            var params = {
-                query: JSON.stringify(query),
-                changes: JSON.stringify(changes)
-            };
+            var params = {query: JSON.stringify(query), changes: JSON.stringify(changes)};
 
             return rainhawk.http.send({
                 url: url,
@@ -359,9 +354,7 @@ var rainhawk = {
 
         delete: function(name, query, success, error) {
             var url = rainhawk.host + "/datasets/" + name + "/data";
-            var params = {
-                query: JSON.stringify(query)
-            };
+            var params = {query: JSON.stringify(query)};
 
             return rainhawk.http.send({
                 url: url,
@@ -413,10 +406,9 @@ var rainhawk = {
 
             polyfit: function(name, fields, degree, success, error) {
                 var url = rainhawk.host + "/datasets/" + name + "/calc/polyfit";
-                var params = {
-                    fields: JSON.stringify(fields),
-                    degree: degree
-                };
+                var params = {fields: JSON.stringify(fields)};
+
+                if(degree) params.degree = degree;
 
                 return rainhawk.http.send({
                     url: url,
@@ -441,10 +433,7 @@ var rainhawk = {
 
             stats: function(name, field, query, success, error) {
                 var url = rainhawk.host + "/datasets/" + name + "/calc/stats";
-                var params = {
-                    field: field,
-                    query: JSON.stringify(query)
-                };
+                var params = {field: field, query: JSON.stringify(query)};
 
                 return rainhawk.http.send({
                     url: url,
@@ -494,9 +483,7 @@ var rainhawk = {
 
         create: function(name, fields, success, error) {
             var url = rainhawk.host + "/datasets/" + name + "/indexes";
-            var params = {
-                fields: JSON.stringify(fields)
-            };
+            var params = {fields: JSON.stringify(fields)};
 
             return rainhawk.http.send({
                 url: url,
@@ -588,10 +575,7 @@ var rainhawk = {
 
         remove: function(name, username, type, success, error) {
             var url = rainhawk.host + "/datasets/" + name + "/access";
-            var params = {
-                username: username,
-                type: type
-            };
+            var params = {username: username, type: type};
 
             return rainhawk.http.send({
                 url: url,
@@ -642,10 +626,10 @@ var rainhawk = {
 
         add: function(name, field, type, success, error) {
             var url = rainhawk.host + "/datasets/" + name + "/constraints";
-            var params = {
-                field: field,
-                type: type
-            };
+            var params = {};
+
+            if(field) params.field = field;
+            if(type) params.type = type;
 
             return rainhawk.http.send({
                 url: url,
@@ -672,16 +656,14 @@ var rainhawk = {
 
         remove: function(name, field, success, error) {
             var url = rainhawk.host + "/datasets/" + name + "/constraints";
-            var params = {
-                field: field
-            };
+            var params = {field: field};
 
             return rainhawk.http.send({
                 url: url,
                 method: rainhawk.http.methods.del,
                 params: params
             }, function(json) {
-                success(json.data.deleted);
+                success(json.data.removed);
             }, error);
         }
     },

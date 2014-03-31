@@ -189,6 +189,51 @@
     			});
     		},
 
+            /**
+             * Apply automatic constraints to fields.
+             */
+
+            function(done) {
+                debug("[+] Automatically detecting constraints and applying them...");
+
+                rainhawk.constraints.add(name, null, null, function(detected) {
+                    debug(JSON.stringify(detected));
+                    done();
+                }, function(message) {
+                    debug("[!] Could not add constraints - " + message);
+                });
+            },
+
+            /**
+             * List constraints on the dataset.
+             */
+
+            function(done) {
+                debug("[+] Listing the constraints being applied to the data...");
+
+                rainhawk.constraints.list(name, function(constraints) {
+                    debug(JSON.stringify(constraints));
+                    done();
+                }, function(message) {
+                    debug("[!] Could not list constraints - " + message);
+                });
+            },
+
+            /**
+             * Remove the constraint on price.
+             */
+
+            function(done) {
+                debug("[+] Removing the constraint on 'price'...");
+
+                rainhawk.constraints.remove(name, "price", function(removed) {
+                    debug("[+] Removed: " + removed);
+                    done();
+                }, function(message) {
+                    debug("[!] Could not remove constraint - " + message);
+                });
+            },
+
     		/**
     		 * Select some rows using a query.
     		 */
@@ -232,6 +277,22 @@
 					done();
 				});
     		},
+
+            /**
+             * Delete the test dataset.
+             */
+
+            function(done) {
+                debug("[+] Removing the test dataset '" + name + "'...");
+
+                rainhawk.datasets.delete(name, function(deleted) {
+                    debug("[+] Deleted: " + deleted);
+                    done();
+                }, function(message) {
+                    debug("[!] Could not delete dataset - " + message);
+                    done();
+                });
+            },
 
 			/**
 			 * Output a finished message!
