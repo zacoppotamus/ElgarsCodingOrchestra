@@ -75,7 +75,7 @@ if(!empty($data->field)) {
     $json['added'] = true;
 } else {
     // Find the fields to index and the indexes.
-    $fields = app::find_index_names($dataset->fields);
+    $fields = app::find_index_names(array_keys($dataset->fields));
     $indexes = $dataset->fetch_indexes();
 
     // Remove the fields that already have indexes.
