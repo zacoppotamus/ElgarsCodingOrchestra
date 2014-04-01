@@ -109,7 +109,7 @@ $accessList = array_unique(array_merge($readList, $writeList));
               <h4>Fields</h4>
             </div>
             <div class="panel-body">
-              <form id="fieldForm" action="permissions.php?dataset=<?php echo $dataset; ?>" method="post">
+              <form id="fieldForm" action="constraints.php?dataset=<?php echo $dataset; ?>" method="post">
                 <table class='table'>
                   <thead>
                     <tr>
@@ -138,7 +138,7 @@ $accessList = array_unique(array_merge($readList, $writeList));
                               <tr>
                                 <td>$fields[$i]</td>
                                 <td>
-                                  <select id='$fields[$i]' class='form-control'>
+                                  <select id='$fields[$i]' name='constraint[$fields[$i]]' class='form-control'>
                                     <option value="none" $selected[none]>None</option>
                                     <option value='string' $selected[string]>String</option>
                                     <option value='integer' $selected[integer]>Integer</option>

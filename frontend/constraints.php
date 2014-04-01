@@ -11,11 +11,6 @@ $mashape_key = isset($_SESSION['apiKey']) ? trim($_SESSION['apiKey']) : null;
 
 $rainhawk = new Rainhawk($mashape_key);
 
-$dataset = isset($_GET['dataset']) ? htmlspecialchars($_GET['dataset']) : null;
-
-$datasetInfo = $rainhawk->fetchDataset($dataset);
-$fields      = $datasetInfo["fields"];
-
 $user = isset($_SESSION['user']) ? $_SESSION['user'] : null;
 
 if (!$user)
@@ -24,61 +19,38 @@ if (!$user)
   exit();
 }
 
-?>
-<html lan="en-GB">
-  <head>
-    <title>Constraints</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+$dataset = isset($_GET['dataset']) ? htmlspecialchars($_GET['dataset']) : null;
 
-    <link rel="stylesheet" href="css/bootstrap.css">
-    <link rel="stylesheet" href="css/font-awesome/css/font-awesome.min.css"></link>
+$datasetInfo = $rainhawk->fetchDataset($dataset);
+$fields      = $datasetInfo["fields"];
+$constraints = $datasetInfo["constraints"];
 
-    <script src="js/jquery-1.10.2.js"></script>
-    <script src="js/bootstrap.js"></script>
-  </head>
-  <body>
-    <div class='container'>
-      <div class='row'>
-        <h1>Constraints</h1>
-        <h3>
-          Assign constraints to a dataset
-          <a href="account.php" type="button" class="btn btn-warning pull-right"><i class="fa fa-bars"></i>&nbsp Datasets</a>
-        </h3>
-      </div>
-      <div class='row'>
-        <form role='form' method="post">
-          <?php
-          for($i=0; $i<count($fields); $i++)
-          {
-            if($fields[$i] != "_id")
-            {
-              echo <<<EOD
-            <div class='form-group'>
-              <label class='control-label col-sm-3' for='field$fields[$i]'>$fields[$i]</label>
-              <div class='col-sm-9'>
-                <select id='$fields[$i]' class='form-control'>
-                  <option value=''></option>
-                  <option value='string'>String</option>
-                  <option value='integer'>Integer</option>
-                  <option value='float'>Float</option>
-                  <option value='timestamp'>Timestamp</option>
-                  <option value='latitude'>Latitude</option>
-                  <option value='longitude'>Longitude</option>
-                </select>
-              </div>
-            </div>
+$errors = array();
 
-EOD;
+foreach($_POST["constraint"] as $field => $constraint)
+{
+  if($constraints[$field] != $constraint)
+  {
+    if(isset($constraints[$field]))
+    {
+      $result = $rainhawk->removeConstraint($dataset, $field);
+      if(isset($result["message"]))
+      {
+        $errors[] = $result["message"];
+      }
+    }
+
+    if($constraint != "none")
+    {
+      $result = $rainhawk->addConstraint($dataset, $field, $constraint);
+      if(isset($result["message"]))
+      {
+        $errors[] = $result["message"];
+      }
+    }
   }
 }
 
-?>
-          <button type='button' class="btn btn-default">Submit</button>
-          <button type='button' class="btn btn-primary">Auto Apply</button>
-        </form>
-      </div>
-    </div>
-  </body>
-</html>
+header("Location: properties.php?dataset=$dataset");
 
+?>
