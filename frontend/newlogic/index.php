@@ -26,7 +26,7 @@ $mashape_key = isset($_SESSION['apiKey']) ? trim($_SESSION['apiKey']) : null;
         <!-- <div id="vegavis"></div> -->
 
         <script>
-          var apiKey = <?php echo $mashape_key; ?>;
+          var apiKey = "<?php echo $mashape_key; ?>";
         </script>
         <script src="vendor/jquery/dist/jquery.min.js"></script>
         <script src="vendor/angular/angular.min.js"></script>
