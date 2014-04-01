@@ -11,74 +11,18 @@ angular.module('eco.controllers', [])
 		TO DO: If one option is null or two or more are the same throw error.
 
 		When Visualize button is pressed, check that all parameters are != null.
-
-		Maybe put vizTypes in a different file altogether
 	*/
 
-	// different kind of visualizations and choices
-	// Try different alternatives for decoupling the DOM and controller
-	// this can also be a class-function instantiated on $scope.watch so that everything becomes null
-	$scope.getParamOptions = function () {
-		// choices must have the exact same values as options.
-		return [
-			{
-				'id' : 0, 
-				'name' : 'Pie Chart', 
-				'choices' : ['names', 'values'],
-				'options' : {
-					'names' : null,
-					'values' : null
-				}
-			},
-			{
-				'id': 1,
-				'name':'Bar Chart',
-				'choices':['xAxis', 'yAxis'],
-				'options' : {
-					'xAxis' : null,
-					'yAxis' : null
-				}
-			},
-			{
-				'id': 2,
-				'name':'Bubble Chart',
-				'choices':['x', 'y'],
-				'options' : {
-					'x' : null,
-					'y' : null
-				}
-			},
-			{
-				'id': 3,
-				'name': 'Treemap',
-				'choices': ['name', 'size'],
-				'options': {
-					'name' : null,
-					'size' : null
-				}
-			},
-			{
-				'id': 4,
-				'name':'Map',
-				'choices':['latitude', 'longitude'],
-				'options' : {
-					'latitude' : null,
-					'longitude' : null
-				}
-
-			}
-		];
-	}
-
-
 	// selected radio button
-	$scope.selectedVizType = {id:2};
+	$scope.selectedVizType = {id:1};
 
-	// currently selected dataset
-	$scope.selectedDataset = '';
-
-	// currently selected field
-	$scope.currentField = '';
+	// has the user requested to visualise a certain dataset?
+	if (window.location.search == '') {
+		$scope.selectedDataset = '';
+	} 
+	else {
+		$scope.selectedDataset = window.location.search.slice(1).split('=')[1].split('.')[1];
+	}
 
 	// the fields for the selected dataset
 	$scope.fields = [];
@@ -86,12 +30,6 @@ angular.module('eco.controllers', [])
 	// use ben's cookie and username for the time being
 	$scope.apiKey = "EU6h9H8BUXELDmfO1Mbh0jLasSQxrAZd";
 	$scope.username = 'benelgar';
-
-	// years for sample vis (nbapayrolls)
-	// $scope.years = [];
-	// for (var i = 1998; i <= 2017; i++) {
-	// 	$scope.years.push(i);
-	// }
 
 	// reinitialize $scope.vizTypes here
 	$scope.getFields = function() {
@@ -189,7 +127,7 @@ angular.module('eco.controllers', [])
 			console.log($scope.currentData);
 		}
 		// reinitialize parameter options
-		$scope.vizTypes = $scope.getParamOptions();
+		$scope.vizTypes = eco.charts();
 	});
 
 	$scope.$watch('selectedVizType.id', function() {
