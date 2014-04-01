@@ -30,8 +30,6 @@ $errors = array();
 if(isset($_GET[ "autoapply" ]))
 {
   $result = $rainhawk->addConstraint($dataset);
-  var_dump($result);
-  exit();
 }
 else
 {
