@@ -41,9 +41,21 @@ if (!$user)
         <h1>Upload</h1>
         <h3>
           Upload a data file
-          <a href="account.php" type="button" class="btn btn-warning pull-right">
-              <i class="fa fa-bars"></i>&nbsp Datasets
-          </a>
+          <?php
+            if(isset($_GET["dataset"]))
+            {
+              require_once("helpers/datasetButtons.php");
+              echo navButtons($_GET["dataset"], true);
+            }
+            else
+            {
+              echo <<<EOD
+                <a href="account.php" type="button" class="btn btn-warning pull-right">
+                    <i class="fa fa-bars"></i>&nbsp Datasets
+                </a>
+EOD;
+            }
+          ?>
         </h3>
       </div>
       <div class="row">
