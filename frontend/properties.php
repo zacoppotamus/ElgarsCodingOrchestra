@@ -58,7 +58,7 @@ $accessList = array_unique(array_merge($readList, $writeList));
           confirmButton: "Revoke",
           confirm: function revoke(btn) {
             var username = $(btn).data("user");
-            rainhawk.access.remove(dataset, username, "read",
+            rainhawk.access.remove(dataset, username, null,
               function (){
                 $("[data-row-user="+username+"]").fadeOut();
               },
