@@ -172,8 +172,8 @@ EOD;
               {
                 echo <<<EOD
                   <div class="panel-footer text-right">
-                    <button type='submit' form="accessForm" class='btn btn-success' formaction="constraints.php?autoapply" formnovalidate>Auto Apply</button>
-                    <button type='submit' form="accessForm" class="btn btn-default">Apply</button>
+                    <button type='submit' form="fieldForm" class='btn btn-success' formaction="constraints.php?autoapply" formnovalidate>Auto Apply</button>
+                    <button type='submit' form="fieldForm" class="btn btn-default">Apply</button>
                   </div>
 EOD;
               }
