@@ -101,10 +101,6 @@ $accessList = array_unique(array_merge($readList, $writeList));
         </h3>
       </div>
 
-      <div class="row alert alert-warning">
-        <strong>Warning!</strong> This page is still under construction and is not fully functional.
-      </div>
-
       <div class="row">
 
         <div class="col-md-6">
