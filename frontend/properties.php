@@ -44,7 +44,7 @@ $accessList = array_unique(array_merge($readList, $writeList));
     <script src="js/jquery-1.10.2.js"></script>
     <script src="js/bootstrap.js"></script>
     <script src="js/jquery.confirm.min.js"></script>
-    <script src="js/rainhawk.php"></script>
+    <script src="js/rainhawk.js"></script>
 
     <script>
       var dataset = "<?php echo $dataset; ?>";
@@ -172,6 +172,7 @@ EOD;
               {
                 echo <<<EOD
                   <div class="panel-footer text-right">
+                    <button type='submit' form="accessForm" class='btn btn-success' formaction="constraints.php?autoapply" formnovalidate>Auto Apply</button>
                     <button type='submit' form="accessForm" class="btn btn-default">Apply</button>
                   </div>
 EOD;
