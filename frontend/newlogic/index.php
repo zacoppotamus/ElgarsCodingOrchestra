@@ -26,7 +26,7 @@ $mashape_key = isset($_SESSION['apiKey']) ? trim($_SESSION['apiKey']) : null;
         <!-- <div id="vegavis"></div> -->
 
         <script>
-          var apiKey = <?php echo $mashape_key; ?>;
+          var apiKey = "<?php echo $mashape_key; ?>";
         </script>
         <script src="vendor/jquery/dist/jquery.min.js"></script>
         <script src="vendor/angular/angular.min.js"></script>
@@ -40,7 +40,6 @@ $mashape_key = isset($_SESSION['apiKey']) ? trim($_SESSION['apiKey']) : null;
         <!-- ECO -->
         <script src="js/eco.charts.js"></script>
         <script src="js/controllers.js"></script>
-        <script src="charts/barchart.js"></script>
         <script src="charts/d3barchart.js"></script>
         <script src="charts/d3piechart.js"></script>
         <script src="charts/d3map.js"></script>
