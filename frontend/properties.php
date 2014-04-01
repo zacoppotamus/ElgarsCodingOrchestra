@@ -243,7 +243,7 @@ EOD;
                         <?php
                           if(in_array($user, $writeList))
                           {
-                            echo "<button type='button' class='btn btn-sm btn-success' onclick='addUser()' disabled>Add User</a>";
+                            echo "<button type='button' class='btn btn-sm btn-success' onclick='addUser()'>Add User</a>";
                           }
                         ?>
                       </td>
