@@ -433,15 +433,15 @@ class Rainhawk {
      * send the type and the username in a POST request.
      *
      * @param string $name  The dataset to create an index on.
-     * @param string|array $type  The type of access to give, "read" and "write".
      * @param string $username  The username to give access to.
+     * @param string|array $type  The type of access to give, "read" and "write".
      * @return array|bool  Returns the data array on success, false on failure.
      */
 
-    public function giveAccess($name, $type, $username) {
+    public function giveAccess($name, $username, $type) {
         $postData = array(
-            "type" => is_array($type) ? json_encode($type) : $type,
-            "username" => $username
+            "username" => $username,
+            "type" => is_array($type) ? json_encode($type) : $type
         );
 
         $url = $this->host . "/datasets/" . $name . "/access";
@@ -460,15 +460,15 @@ class Rainhawk {
      * you to have write access to the set.
      *
      * @param string $name  The dataset to create an index on.
-     * @param string $type  The type of access to give, "read" and "write".
-     * @param string $username  The username to give access to.
+     * @param string $username  The username to remove access from.
+     * @param string|null $type  The type of access to give, "read" and "write", or null for both.
      * @return array|bool  Returns the data array on success, false on failure.
      */
 
-    public function removeAccess($name, $type, $username) {
+    public function removeAccess($name, $username, $type = null) {
         $postData = array(
-            "type" => $type,
-            "username" => $username
+            "username" => $username,
+            "type" => $type
         );
 
         $url = $this->host . "/datasets/" . $name . "/access";
