@@ -23,10 +23,6 @@ eco.charts.d3treemap = function() {
             
             var maxElement = d3.max(d3.values(data.children),function(i){ return +i[yValue] });
             var minElement = d3.min(d3.values(data.children),function(i){ return +i[yValue] });
-            
-            var textScale = d3.scale.linear()
-                .range([12,36])
-                .domain([minElement, maxElement]);
          
             var color = d3.scale.category20b();
             var viewToggle = false;
@@ -63,7 +59,6 @@ eco.charts.d3treemap = function() {
             //int values here used for alignment
             node.append("text")
                 .attr("class", "treemap-text")
-                .attr("font-size", function(d) {return textScale(d[yValue]) })
                 .attr("x", function(d) { return +d.x + 5 + margin.left })
                 .attr("y", function(d) { return +d.y + (d.dy/2 + 3) + margin.top + 20 })
                 .text(function(d) { return d.children ? null : d[xValue] });
