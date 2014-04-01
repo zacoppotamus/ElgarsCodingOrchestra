@@ -76,14 +76,18 @@ $accessList = array_unique(array_merge($readList, $writeList));
       {
         newUserCount++;
         $("#tblPermissions").append(
-        "<tr>"+
-          "<td><input type='text' name='newUser["+newUserCount+"][user]' class='form-control'></td>"+
-          "<td class='text-center'><input type='radio' name='newUser["+newUserCount+"][access]' value='read' checked></td>"+
-          "<td class='text-center'><input type='radio' name='newUser["+newUserCount+"][access]' value='write'></td>"+
-          "<td></td>"+
+          "<tr data-row-user-num="+newUserCount+">"+
+            "<td><input type='text' name='newUser["+newUserCount+"][user]' class='form-control'></td>"+
+            "<td class='text-center'><input type='radio' name='newUser["+newUserCount+"][access]' value='read' checked></td>"+
+            "<td class='text-center'><input type='radio' name='newUser["+newUserCount+"][access]' value='write'></td>"+
+            "<td><button type='button' data-user-num="+newUserCount+" onclick='cancelNewUser(this);' class='btn btn-warning btn-sm'>Cancel</button></td>"+
           "</tr>");
       }
 
+      function cancelNewUser(btn)
+      {
+        $("[data-row-user-num="+$(btn).data("user-num")+"]").fadeOut();
+      }
 
     </script>
   </head>
