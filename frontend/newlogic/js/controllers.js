@@ -178,8 +178,6 @@ angular.module('eco.controllers', [])
 	// get the datasets immediately
 	$scope.getDatasetNames();
 
-	console.log(apiKey);
-
 	// when a new dataset is selected from the dropdown get its fields
 	$scope.$watch('selectedDataset', function() {
 		if ($scope.selectedDataset != '')
