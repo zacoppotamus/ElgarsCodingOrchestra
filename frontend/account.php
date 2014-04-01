@@ -99,7 +99,7 @@ if (!$user)
                                 "<td>".(in_array($user, $dataset["write_access"]) ? "Write" : "Read")."</td>\n".
                                 "<td>".
                                     "<a href='edit.php?dataset=$dataset[name]' class='btn btn-warning btn-sm'>".
-                                    "<i class='fa fa-edit'></i>&nbsp; Edit</a>".
+                                    "<i class='fa fa-edit'></i>&nbsp; View</a>".
                                 "</td>".
                                 "<td>".
                                     "<a class='btn btn-success btn-sm' href='newlogic/?dataset=$dataset[name]' ".
@@ -112,7 +112,7 @@ if (!$user)
                                     "<i class='fa fa-cloud-upload'></i>&nbsp; Upload</a>".
                                 "</td>".
                                 "<td><a href='delete.php?dataset=$dataset[name]' id='del".explode(".", $dataset["name"])[1].
-                                    "' class='btn btn-danger btn-sm confirm'><i class='fa fa-ban'></i>&nbsp Delete</a></td>".
+                                    "' class='btn btn-danger btn-sm confirm'".(in_array($user, $dataset["write_access"]) ? "" : "disabled")."><i class='fa fa-ban'></i>&nbsp Delete</a></td>".
                                 "</tr>\n");
                         }
                         ?>
