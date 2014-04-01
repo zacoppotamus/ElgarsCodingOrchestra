@@ -68,12 +68,12 @@ $accessList = array_unique(array_merge($readList, $writeList));
           }
         });
 
-        $(document).on("change", "[value=write]", function(e) {
-          var $this = $(this);
-          var $read = $this.parent().prev().find("[value=read]");
+        $(document).on("change", ".writecheck", function(e) {
+          var $write = $(this);
+          var $read = $write.parents("tr").find(".readcheck");
 
-          if($this.is(":checked")) {
-            $read.attr("checked", true);
+          if($write.is(":checked")) {
+            $read.prop("checked", true);
           }
         });
       });
@@ -85,8 +85,8 @@ $accessList = array_unique(array_merge($readList, $writeList));
         $("#tblPermissions").append(
           "<tr data-row-user-num="+newUserCount+">"+
             "<td><input type='text' name='newUser["+newUserCount+"][user]' class='form-control'></td>"+
-            "<td class='text-center'><input type='checkbox' name='newUser["+newUserCount+"][access]' value='read' checked></td>"+
-            "<td class='text-center'><input type='checkbox' name='newUser["+newUserCount+"][access]' value='write'></td>"+
+            "<td class='text-center'><input type='checkbox' class='readcheck'  name='newUser["+newUserCount+"][read]' value='read' checked></td>"+
+            "<td class='text-center'><input type='checkbox' class='writecheck'  name='newUser["+newUserCount+"][write]' value='write'></td>"+
             "<td><button type='button' data-user-num="+newUserCount+" onclick='cancelNewUser(this);' class='btn btn-warning btn-sm'>Cancel</button></td>"+
           "</tr>");
       }
@@ -218,10 +218,10 @@ EOD;
                         <tr data-row-user="$username">
                           <td>$username</td>
                           <td class="text-center">
-                            <input type="checkbox" name="currentUser[$username]" value="read" $readChecked>
+                            <input type="checkbox" class="readcheck" name="currentUser[$username][read]" value="read" $readChecked>
                           </td>
                           <td class="text-center">
-                            <input type="checkbox" name="currentUser[$username]" value="write" $writeChecked>
+                            <input type="checkbox" class="writecheck" name="currentUser[$username][write]" value="write" $writeChecked>
                           </td>
                           <td><buttom type='button' data-user='$username' class='btn btn-sm btn-danger confirm'>Revoke</a></td>
                         </tr>
