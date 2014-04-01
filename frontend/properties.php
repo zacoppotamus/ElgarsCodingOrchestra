@@ -1,5 +1,6 @@
 <?php
 require_once("../wrappers/php/rainhawk.class.php");
+require_once("helpers/datasetButtons.php");
 
 session_start();
 
@@ -97,7 +98,8 @@ $accessList = array_unique(array_merge($readList, $writeList));
         <h1>Properties - <?php echo $dataset; ?></h1>
         <h3>
           Dataset properties
-          <a href="account.php" class="btn btn-warning pull-right"><i class="fa fa-bars"></i>&nbsp; Datasets</a>
+          <?php echo navButtons($dataset, in_array($user, $datasetInfo["write_access"])); ?>
+
         </h3>
       </div>
 
