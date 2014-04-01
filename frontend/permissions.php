@@ -42,15 +42,15 @@ foreach ($currentUsers as $username => $accessType)
   $result = "";
   if($accessType == "write" && !in_array($username, $writeList))
   {
-    $result = $rainhawk->giveAccess($dataset, $accessType, $username);
+    $result = $rainhawk->giveAccess($dataset, $username, $accessType);
   }
   elseif ($accessType == "read" && !in_array($username, $readList))
   {
-    $result = $rainhawk->giveAccess($dataset, $accessType, $username);
+    $result = $rainhawk->giveAccess($dataset, $username, $accessType);
   }
   elseif ($accessType == "read" && in_array($username, $writeList))
   {
-    $result = $rainhawk->removeAccess($dataset, "write", $username);
+    $result = $rainhawk->removeAccess($dataset, $username, "write");
   }
 
   if(isset($result["message"]))
@@ -68,7 +68,7 @@ foreach ($newUsers as $key=>$newUser)
   }
   else
   {
-    $result = $rainhawk->giveAccess($dataset, $newUser["access"], $newUser["user"]);
+    $result = $rainhawk->giveAccess($dataset, $newUser["user"], $newUser["access"]);
   }
 
   if(isset($result["message"]))
