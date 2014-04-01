@@ -167,9 +167,16 @@ EOD;
                 </table>
               </form>
             </div>
-            <div class="panel-footer text-right">
-              <button type='submit' form="fieldForm" class="btn btn-default">Apply</button>
-            </div>
+            <?php
+              if(in_array($user, $writeList))
+              {
+                echo <<<EOD
+                  <div class="panel-footer text-right">
+                    <button type='submit' form="accessForm" class="btn btn-default">Apply</button>
+                  </div>
+EOD;
+              }
+            ?>
           </div>
         </div>
 
@@ -196,34 +203,65 @@ EOD;
                       $isWrite      = in_array($username, $writeList);
                       $writeChecked = $isWrite ? "checked" : "";
                       $readChecked  = $isWrite ? "" : "checked";
-                      echo <<<EOD
-                      <tr data-row-user="$username">
-                        <td>$username</td>
-                        <td class="text-center">
-                          <input type="radio" name="currentUser[$username]" value="read" $readChecked>
-                        </td>
-                        <td class="text-center">
-                          <input type="radio" name="currentUser[$username]" value="write" $writeChecked>
-                        </td>
-                        <td><buttom type='button' data-user='$username' class='btn btn-sm btn-danger confirm'>Revoke</a></td>
-                      </tr>
+                      if(in_array($user, $writeList))
+                      {
+                        echo <<<EOD
+                        <tr data-row-user="$username">
+                          <td>$username</td>
+                          <td class="text-center">
+                            <input type="radio" name="currentUser[$username]" value="read" $readChecked>
+                          </td>
+                          <td class="text-center">
+                            <input type="radio" name="currentUser[$username]" value="write" $writeChecked>
+                          </td>
+                          <td><buttom type='button' data-user='$username' class='btn btn-sm btn-danger confirm'>Revoke</a></td>
+                        </tr>
 EOD;
+                      }
+                      else
+                      {
+                        echo <<<EOD
+                        <tr data-row-user="$username">
+                          <td>$username</td>
+                          <td class="text-center">
+                            <input type="radio" value="read" disabled $readChecked>
+                          </td>
+                          <td class="text-center">
+                            <input type="radio" name="currentUser[$username]" value="write" disabled $writeChecked>
+                          </td>
+                          <td></td>
+                        </tr>
+EOD;
+
+                      }
                     }
                   ?>
                   </tbody>
                   <tfoot>
                     <tr>
                       <td class="text-center" colspan="100%">
-                        <button type="button" class="btn btn-sm btn-success" onclick="addUser()">Add User</a>
+                        <?php
+                          if(in_array($user, $writeList))
+                          {
+                            echo "<button type='button' class='btn btn-sm btn-success' onclick='addUser()' disabled>Add User</a>";
+                          }
+                        ?>
                       </td>
                     </tr>
                   </tfoot>
                 </table>
               </form>
             </div>
-            <div class="panel-footer text-right">
-              <button type='submit' form="accessForm" class="btn btn-default">Apply</button>
-            </div>
+            <?php
+              if(in_array($user, $writeList))
+              {
+                echo <<<EOD
+                  <div class="panel-footer text-right">
+                    <button type='submit' form="accessForm" class="btn btn-default">Apply</button>
+                  </div>
+EOD;
+              }
+            ?>
           </div>
         </div>
 
