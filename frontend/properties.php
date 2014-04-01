@@ -67,9 +67,16 @@ $accessList = array_unique(array_merge($readList, $writeList));
             )
           }
         });
+
+        $(document).on("change", "[value=write]", function(e) {
+          var $this = $(this);
+          var $read = $this.parent().prev().find("[value=read]");
+
+          if($this.is(":checked")) {
+            $read.attr("checked", true);
+          }
+        });
       });
-
-
 
       var newUserCount = 0;
       function addUser()
@@ -78,8 +85,8 @@ $accessList = array_unique(array_merge($readList, $writeList));
         $("#tblPermissions").append(
           "<tr data-row-user-num="+newUserCount+">"+
             "<td><input type='text' name='newUser["+newUserCount+"][user]' class='form-control'></td>"+
-            "<td class='text-center'><input type='radio' name='newUser["+newUserCount+"][access]' value='read' checked></td>"+
-            "<td class='text-center'><input type='radio' name='newUser["+newUserCount+"][access]' value='write'></td>"+
+            "<td class='text-center'><input type='checkbox' name='newUser["+newUserCount+"][access]' value='read' checked></td>"+
+            "<td class='text-center'><input type='checkbox' name='newUser["+newUserCount+"][access]' value='write'></td>"+
             "<td><button type='button' data-user-num="+newUserCount+" onclick='cancelNewUser(this);' class='btn btn-warning btn-sm'>Cancel</button></td>"+
           "</tr>");
       }
@@ -202,18 +209,19 @@ EOD;
                     foreach ($accessList as $key=>$username)
                     {
                       $isWrite      = in_array($username, $writeList);
+                      $isRead       = in_array($username, $readList);
                       $writeChecked = $isWrite ? "checked" : "";
-                      $readChecked  = $isWrite ? "" : "checked";
+                      $readChecked  = $isRead ? "checked" : "";
                       if(in_array($user, $writeList))
                       {
                         echo <<<EOD
                         <tr data-row-user="$username">
                           <td>$username</td>
                           <td class="text-center">
-                            <input type="radio" name="currentUser[$username]" value="read" $readChecked>
+                            <input type="checkbox" name="currentUser[$username]" value="read" $readChecked>
                           </td>
                           <td class="text-center">
-                            <input type="radio" name="currentUser[$username]" value="write" $writeChecked>
+                            <input type="checkbox" name="currentUser[$username]" value="write" $writeChecked>
                           </td>
                           <td><buttom type='button' data-user='$username' class='btn btn-sm btn-danger confirm'>Revoke</a></td>
                         </tr>
@@ -225,10 +233,10 @@ EOD;
                         <tr data-row-user="$username">
                           <td>$username</td>
                           <td class="text-center">
-                            <input type="radio" value="read" disabled $readChecked>
+                            <input type="checkbox" value="read" disabled $readChecked>
                           </td>
                           <td class="text-center">
-                            <input type="radio" name="currentUser[$username]" value="write" disabled $writeChecked>
+                            <input type="checkbox" value="write" disabled $writeChecked>
                           </td>
                           <td></td>
                         </tr>
