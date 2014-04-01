@@ -52,6 +52,12 @@ if(empty($data->username)) {
     exit;
 }
 
+// Check if the user is trying to revoke the owner's permissions.
+if($data->username == $dataset->prefix) {
+    echo json_beautify(json_render_error(405, "You can't revoke the owner's access to the dataset."));
+    exit;
+}
+
 // Check if the type is set.
 if(empty($data->type)) {
     // Remove all access.
@@ -63,7 +69,7 @@ if(empty($data->type)) {
 } else {
     // Check if the user has that access or not.
     if(!in_array($data->username, $dataset->{$data->type . "_access"})) {
-        echo json_beautify(json_render_error(405, "The user you specified does not have " . $data->type . " access to this dataset."));
+        echo json_beautify(json_render_error(406, "The user you specified does not have " . $data->type . " access to this dataset."));
         exit;
     }
 
