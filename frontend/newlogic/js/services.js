@@ -17,12 +17,11 @@ angular.module('eco.services', [])
 			console.log('Hi, '+name);
 		};
 
-		dataService.getData = function(datasetName, username, apikey) {
-			// to do: pass apikey and username as parameters
+		dataService.getData = function(datasetName, apikey) {
 			// this happens asynchronously
 			var promise = $http({
 				method: 'GET',
-				url: 'https://sneeza-eco.p.mashape.com/datasets/' + username + '.' + datasetName+'/data',
+				url: 'https://sneeza-eco.p.mashape.com/datasets/'+datasetName+'/data',
 				headers: {
 					'X-Mashape-Authorization' : apikey
 				}
