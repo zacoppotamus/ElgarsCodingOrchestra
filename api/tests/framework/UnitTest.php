@@ -56,11 +56,19 @@ class UnitTest {
     }
 
     /**
+     * @return UnitTest
+     */
+
+    public function __before() {
+    }
+
+    /**
      * @return void
      */
 
     public function exec() {
         $this->started = microtime(true);
+        $this->__before();
 
         echo $this->class . "\n\n";
 
@@ -75,6 +83,7 @@ class UnitTest {
 
         echo "\n";
         echo ($this->failed == 0 ? "OK" : "FAILED") . " (" . ($this->passed + $this->failed) . " tests, " . $this->failed . " assertions)\n";
+        echo number_format(microtime(true) - $this->started, 2) . " seconds\n";
 
         return;
     }

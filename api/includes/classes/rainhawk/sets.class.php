@@ -78,6 +78,8 @@ class Sets {
                     "write_access" => $dataset->write_access
                 )
             ));
+
+            return true;
         } catch(Exception $e) {}
 
         return false;
@@ -99,6 +101,8 @@ class Sets {
                 "prefix" => $dataset->prefix,
                 "name" => $dataset->name
             ));
+
+            return true;
         } catch(Exception $e) {}
 
         return false;

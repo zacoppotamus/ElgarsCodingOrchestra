@@ -1,7 +1,7 @@
 <?php
 
-include "framework/UnitTest.php";
-include "../includes/classes/rainhawk/data.class.php";
+include_once "framework/UnitTest.php";
+include_once "../includes/kernel.php";
 
 use Rainhawk\Data;
 
