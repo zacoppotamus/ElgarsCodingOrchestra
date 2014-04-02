@@ -60,7 +60,7 @@ $accessList = array_unique(array_merge($readList, $writeList));
             var username = $(btn).data("user");
             rainhawk.access.remove(dataset, username, null,
               function (){
-                $("[data-row-user="+username+"]").fadeOut();
+                $("[data-row-user="+username+"]").remove();
               },
               function (msg){
                 $("#accessBody").prepend("<div class='alert alert-danger alert-dismissable'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><strong>Error revoking.</strong> "+msg+"</div>");
@@ -94,7 +94,7 @@ $accessList = array_unique(array_merge($readList, $writeList));
 
       function cancelNewUser(btn)
       {
-        $("[data-row-user-num="+$(btn).data("user-num")+"]").fadeOut();
+        $("[data-row-user-num="+$(btn).data("user-num")+"]").remove();
       }
 
     </script>
