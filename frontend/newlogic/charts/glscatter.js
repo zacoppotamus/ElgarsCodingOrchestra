@@ -36,6 +36,7 @@ eco.charts.glscatter = function() {
       canvas.addEventListener( 'mousewheel', onMouseWheel );
       canvas.addEventListener( 'DOMMouseScroll', onMouseWheel );
       target.appendChild( canvas );
+
       var centre = new THREE.Vector3( 0, 0, 0 );
       var size = 150;
       var camDist = 350,

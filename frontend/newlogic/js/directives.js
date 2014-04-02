@@ -52,6 +52,13 @@ angular.module('eco.directives', [])
 
 				eco.charts.d3map().render(data, latitude, longitude, target);
 			}
+			else if (chartType == 5) {
+				var xValue = vizOptions[chartType].options['x'];
+				var yValue = vizOptions[chartType].options['y'];
+				var zValue = vizOptions[chartType].options['z'];
+
+				eco.charts.glscatter().render(data, xValue, yValue, zValue, element[0]);
+			}
 		}
 	}
 });
