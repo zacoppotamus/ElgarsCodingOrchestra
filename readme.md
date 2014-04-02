@@ -55,10 +55,28 @@ In order to develop with Vagrant, you need to do the following:
 Unit Tests + Test Cases
 ---------------------
 
-There are two different types of test cases that can be run - unit tests and procedural tests. To run the unit tests for the API, navigate to `/api/tests` and execute:
+There are two different types of test cases that can be run - unit tests and procedural tests. To run all of the unit tests for the API, navigate to `/api/tests` and execute:
 
 ```bash
-$ php testRainhawkData.php
+$ php run.php suite
+Rainhawk
+
+.
+
+OK (1 tests, 0 assertions)
+0.00 seconds
+Rainhawk\Data
+
+...
+.....
+.......
+...
+```
+
+If you wish to run a single unit test, or more than one then execute:
+
+```bash
+$ php run.php Rainhawk\Data
 Rainhawk\Data
 
 ...
@@ -71,6 +89,7 @@ Rainhawk\Data
 .....
 
 OK (34 tests, 0 assertions)
+0.00 seconds
 ```
 
 If you wish to test the different wrappers then you can navigate to `/wrappers/{lang}/tests.x`. To run the PHP tests, execute `php tests.php` and to run the Javascript tests open the `tests.html` file in your web browser.

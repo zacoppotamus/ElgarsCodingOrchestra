@@ -1,8 +1,5 @@
 <?php
 
-include_once "framework/UnitTest.php";
-include_once "../includes/kernel.php";
-
 use Rainhawk\Sets;
 use Rainhawk\Dataset;
 
@@ -22,23 +19,23 @@ class RainhawkSetsTest extends UnitTest {
         $dataset->read_access[] = app::$username;
         $dataset->write_access[] = app::$username;
 
-        $this->assert(sets::create($dataset), true);
+        $this->assertEquals(sets::create($dataset), true);
     }
 
     public function testUpdate() {
         $dataset = new Dataset(app::$username, "testset");
-        $this->assert(sets::update($dataset), true);
+        $this->assertEquals(sets::update($dataset), true);
     }
 
     public function testExists() {
-        $this->assert(sets::exists(app::$username, "testset"), true);
+        $this->assertEquals(sets::exists(app::$username, "testset"), true);
     }
 
     public function testFetchMetadata() {
         $metadata = sets::fetch_metadata(app::$username, "testset");
         $description = $metadata['description'];
 
-        $this->assert($description, "Test dataset.");
+        $this->assertEquals($description, "Test dataset.");
     }
 
     public function testSetsForUser() {
@@ -49,16 +46,13 @@ class RainhawkSetsTest extends UnitTest {
             $datasets[] = $set;
         }
 
-        $this->assert($datasets[0]['description'], "Test dataset.");
+        $this->assertEquals($datasets[0]['description'], "Test dataset.");
     }
 
     public function testRemove() {
         $dataset = new Dataset(app::$username, "testset");
-        $this->assert(sets::remove($dataset), true);
+        $this->assertEquals(sets::remove($dataset), true);
     }
 }
-
-$test = new RainhawkSetsTest;
-$test->exec();
 
 ?>
