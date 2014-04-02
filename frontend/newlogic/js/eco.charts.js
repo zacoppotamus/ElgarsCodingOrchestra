@@ -64,6 +64,18 @@ eco.charts = function() {
             },
             'description' : 'Plot a number of coordinates on a Google Map overlay.',
             'image' : 'img/map.png'
+        },
+        {
+            'id': 5,
+            'name':'3D Scatter Plot',
+            'choices':['x', 'y', 'z'],
+            'options' : {
+                'x' : null,
+                'y' : null,
+                'z' : null
+            },
+            'description' : '3D Scatter plot. Visualise your data in 3 different axes, with each field representing numerical values.',
+            'image' : 'img/glscatter.png'
         }
     ];
 }

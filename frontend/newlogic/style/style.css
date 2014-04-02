@@ -27,11 +27,12 @@ html, body {
 #ecoChart>svg {
 	margin-left: 20px;
 	margin-top: 40px;
-}/*
-#eco-chart>svg {
+}
+
+#ecoChart>canvas {
 	margin-left: 20px;
-	margin-top: 50px;
-}*/
+	margin-top: 55px;
+}
 
 h1, h2, h3 {
 	font-weight: 300;
