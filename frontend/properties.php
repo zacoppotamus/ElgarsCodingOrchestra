@@ -1,5 +1,6 @@
 <?php
 require_once("../wrappers/php/rainhawk.class.php");
+require_once("helpers/datasetButtons.php");
 
 session_start();
 
@@ -57,7 +58,7 @@ $accessList = array_unique(array_merge($readList, $writeList));
           confirmButton: "Revoke",
           confirm: function revoke(btn) {
             var username = $(btn).data("user");
-            rainhawk.access.remove(dataset, username, "read",
+            rainhawk.access.remove(dataset, username, null,
               function (){
                 $("[data-row-user="+username+"]").fadeOut();
               },
@@ -67,9 +68,16 @@ $accessList = array_unique(array_merge($readList, $writeList));
             )
           }
         });
+
+        $(document).on("change", ".writecheck", function(e) {
+          var $write = $(this);
+          var $read = $write.parents("tr").find(".readcheck");
+
+          if($write.is(":checked")) {
+            $read.prop("checked", true);
+          }
+        });
       });
-
-
 
       var newUserCount = 0;
       function addUser()
@@ -78,8 +86,8 @@ $accessList = array_unique(array_merge($readList, $writeList));
         $("#tblPermissions").append(
           "<tr data-row-user-num="+newUserCount+">"+
             "<td><input type='text' name='newUser["+newUserCount+"][user]' class='form-control'></td>"+
-            "<td class='text-center'><input type='radio' name='newUser["+newUserCount+"][access]' value='read' checked></td>"+
-            "<td class='text-center'><input type='radio' name='newUser["+newUserCount+"][access]' value='write'></td>"+
+            "<td class='text-center'><input type='checkbox' class='readcheck'  name='newUser["+newUserCount+"][read]' value='read' checked></td>"+
+            "<td class='text-center'><input type='checkbox' class='writecheck'  name='newUser["+newUserCount+"][write]' value='write'></td>"+
             "<td><button type='button' data-user-num="+newUserCount+" onclick='cancelNewUser(this);' class='btn btn-warning btn-sm'>Cancel</button></td>"+
           "</tr>");
       }
@@ -97,7 +105,8 @@ $accessList = array_unique(array_merge($readList, $writeList));
         <h1>Properties - <?php echo $dataset; ?></h1>
         <h3>
           Dataset properties
-          <a href="account.php" class="btn btn-warning pull-right"><i class="fa fa-bars"></i>&nbsp; Datasets</a>
+          <?php echo navButtons($dataset, in_array($user, $datasetInfo["write_access"])); ?>
+
         </h3>
       </div>
 
@@ -172,7 +181,7 @@ EOD;
               {
                 echo <<<EOD
                   <div class="panel-footer text-right">
-                    <button type='submit' form="fieldForm" class='btn btn-success' formaction="constraints.php?autoapply" formnovalidate>Auto Apply</button>
+                    <button type='submit' form="fieldForm" class='btn btn-success' formaction="constraints.php?autoapply&dataset=$dataset" formnovalidate>Auto Apply</button>
                     <button type='submit' form="fieldForm" class="btn btn-default">Apply</button>
                   </div>
 EOD;
@@ -202,18 +211,19 @@ EOD;
                     foreach ($accessList as $key=>$username)
                     {
                       $isWrite      = in_array($username, $writeList);
+                      $isRead       = in_array($username, $readList);
                       $writeChecked = $isWrite ? "checked" : "";
-                      $readChecked  = $isWrite ? "" : "checked";
+                      $readChecked  = $isRead ? "checked" : "";
                       if(in_array($user, $writeList))
                       {
                         echo <<<EOD
                         <tr data-row-user="$username">
                           <td>$username</td>
                           <td class="text-center">
-                            <input type="radio" name="currentUser[$username]" value="read" $readChecked>
+                            <input type="checkbox" class="readcheck" name="currentUser[$username][read]" value="read" $readChecked>
                           </td>
                           <td class="text-center">
-                            <input type="radio" name="currentUser[$username]" value="write" $writeChecked>
+                            <input type="checkbox" class="writecheck" name="currentUser[$username][write]" value="write" $writeChecked>
                           </td>
                           <td><buttom type='button' data-user='$username' class='btn btn-sm btn-danger confirm'>Revoke</a></td>
                         </tr>
@@ -225,10 +235,10 @@ EOD;
                         <tr data-row-user="$username">
                           <td>$username</td>
                           <td class="text-center">
-                            <input type="radio" value="read" disabled $readChecked>
+                            <input type="checkbox" value="read" disabled $readChecked>
                           </td>
                           <td class="text-center">
-                            <input type="radio" name="currentUser[$username]" value="write" disabled $writeChecked>
+                            <input type="checkbox" value="write" disabled $writeChecked>
                           </td>
                           <td></td>
                         </tr>

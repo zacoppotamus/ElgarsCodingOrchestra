@@ -1,6 +1,5 @@
 <?php
 require_once("../wrappers/php/rainhawk.class.php");
-
 session_start();
 
 if(isset($_POST['apiKey'])) {
@@ -37,43 +36,80 @@ $newUsers     = $_POST["newUser"];
 
 $errors = array();
 
-foreach ($currentUsers as $username => $accessType)
+foreach ($currentUsers as $username => $access)
 {
   $result = "";
-  if($accessType == "write" && !in_array($username, $writeList))
-  {
-    $result = $rainhawk->giveAccess($dataset, $accessType, $username);
-  }
-  elseif ($accessType == "read" && !in_array($username, $readList))
-  {
-    $result = $rainhawk->giveAccess($dataset, $accessType, $username);
-  }
-  elseif ($accessType == "read" && in_array($username, $writeList))
-  {
-    $result = $rainhawk->removeAccess($dataset, "write", $username);
-  }
+  $types = array();
 
-  if(isset($result["message"]))
+  if(isset($access['read'])) $types[] = "read";
+  if(isset($access['write'])) $types[] = "write";
+
+  foreach($types as $type)
   {
-    $errors[] = $result["message"];
+    if($type == "read" && !in_array($username, $readList))
+    {
+      $result = $rainhawk->giveAccess($dataset, $username, "read");
+    }
+    elseif($type == "write" && !in_array($username, $writeList))
+    {
+      $result = $rainhawk->giveAccess($dataset, $username, "write");
+    }
+    else
+    {
+      $result = true;
+    }
+
+    if(!$result)
+    {
+      $errors[] = $rainhawk->error();
+    }
+  }
+}
+
+foreach ($readList as $username) {
+  if(!isset($currentUsers[$username]['read']))
+  {
+    $result = $rainhawk->removeAccess($dataset, $username, "read");
+
+    if(!$result)
+    {
+      $errors[] = $rainhawk->error();
+    }
+  }
+}
+
+foreach ($writeList as $username) {
+  if(!isset($currentUsers[$username]['write']))
+  {
+    $result = $rainhawk->removeAccess($dataset, $username, "write");
+
+    if(!$result)
+    {
+      $errors[] = $rainhawk->error();
+    }
   }
 }
 
 foreach ($newUsers as $key=>$newUser)
 {
   $result = "";
+  $types = array();
+
+  if(isset($newUser['read'])) $types[] = "read";
+  if(isset($newUser['write'])) $types[] = "write";
+
   if(in_array($newUser["user"], array_keys($currentUsers)))
   {
     $errors[] = "User $newUser[user] already has permissions assigned";
   }
   else
   {
-    $result = $rainhawk->giveAccess($dataset, $newUser["access"], $newUser["user"]);
+    $result = $rainhawk->giveAccess($dataset, $newUser["user"], $types);
   }
 
-  if(isset($result["message"]))
+  if(!$result)
   {
-    $errors[] = $result["message"];
+    $errors[] = $rainhawk->error();
   }
 }
 

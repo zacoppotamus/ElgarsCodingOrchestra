@@ -27,25 +27,32 @@ $constraints = $datasetInfo["constraints"];
 
 $errors = array();
 
-foreach($_POST["constraint"] as $field => $constraint)
+if(isset($_GET[ "autoapply" ]))
 {
-  if($constraints[$field] != $constraint)
+  $result = $rainhawk->addConstraint($dataset);
+}
+else
+{
+  foreach($_POST["constraint"] as $field => $constraint)
   {
-    if(isset($constraints[$field]))
+    if($constraints[$field] != $constraint)
     {
-      $result = $rainhawk->removeConstraint($dataset, $field);
-      if(isset($result["message"]))
+      if(isset($constraints[$field]))
       {
-        $errors[] = $result["message"];
+        $result = $rainhawk->removeConstraint($dataset, $field);
+        if(isset($result["message"]))
+        {
+          $errors[] = $result["message"];
+        }
       }
-    }
 
-    if($constraint != "none")
-    {
-      $result = $rainhawk->addConstraint($dataset, $field, $constraint);
-      if(isset($result["message"]))
+      if($constraint != "none")
       {
-        $errors[] = $result["message"];
+        $result = $rainhawk->addConstraint($dataset, $field, $constraint);
+        if(isset($result["message"]))
+        {
+          $errors[] = $result["message"];
+        }
       }
     }
   }

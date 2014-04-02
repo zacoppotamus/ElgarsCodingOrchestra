@@ -98,7 +98,7 @@ if (!$user)
                                 //"<td>".(in_array($user, $dataset["read_access" ]) ? "True" : "False")."</td>\n".
                                 "<td>".(in_array($user, $dataset["write_access"]) ? "Write" : "Read")."</td>\n".
                                 "<td>".
-                                    "<a href='edit.php?dataset=$dataset[name]' class='btn btn-warning btn-sm'>".
+                                    "<a href='edit.php?dataset=$dataset[name]' class='btn btn-info btn-sm'>".
                                     "<i class='fa fa-edit'></i>&nbsp; View</a>".
                                 "</td>".
                                 "<td>".

@@ -46,26 +46,36 @@ $json = array();
  * which will always work even if the access already exists.
  */
 
-// Check if the type is set.
-if(empty($data->type)) {
-    echo json_beautify(json_render_error(404, "You didn't specify the type of access to remove."));
-    exit;
-}
-
 // Check if the username is set.
 if(empty($data->username)) {
     echo json_beautify(json_render_error(404, "You didn't specify the user to remove access from."));
     exit;
 }
 
-// Check if the user already has that access or not.
-if(!in_array($data->username, $dataset->{$data->type . "_access"})) {
-    echo json_beautify(json_render_error(405, "The user you specified does not have " . $data->type . " access to this dataset."));
+// Check if the user is trying to revoke the owner's permissions.
+if($data->username == $dataset->prefix) {
+    echo json_beautify(json_render_error(405, "You can't revoke the owner's access to the dataset."));
     exit;
 }
 
-// Remove the user's access.
-$dataset->{$data->type . "_access"} = array_diff($dataset->{$data->type . "_access"}, array($data->username));
+// Check if the type is set.
+if(empty($data->type)) {
+    // Remove all access.
+    foreach(array("read", "write") as $type) {
+        if(in_array($data->username, $dataset->{$type . "_access"})) {
+            $dataset->{$type . "_access"} = array_diff($dataset->{$type . "_access"}, array($data->username));
+        }
+    }
+} else {
+    // Check if the user has that access or not.
+    if(!in_array($data->username, $dataset->{$data->type . "_access"})) {
+        echo json_beautify(json_render_error(406, "The user you specified does not have " . $data->type . " access to this dataset."));
+        exit;
+    }
+
+    // Remove the user's access.
+    $dataset->{$data->type . "_access"} = array_diff($dataset->{$data->type . "_access"}, array($data->username));
+}
 
 // Store the dataset information in the index table.
 \rainhawk\sets::update($dataset);
