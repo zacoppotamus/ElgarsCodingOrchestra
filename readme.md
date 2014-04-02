@@ -58,7 +58,7 @@ Unit Tests + Test Cases
 There are two different types of test cases that can be run - unit tests and procedural tests. To run the unit tests for the API, navigate to `/api/tests` and execute:
 
 ```bash
-php testRainhawkData.php
+$ php testRainhawkData.php
 Rainhawk\Data
 
 ...
