@@ -51,3 +51,26 @@ In order to develop with Vagrant, you need to do the following:
     ```bash
     vagrant ssh
     ```
+
+Unit Tests + Test Cases
+---------------------
+
+There are two different types of test cases that can be run - unit tests and procedural tests. To run the unit tests for the API, navigate to `/api/tests` and execute:
+
+```bash
+php testRainhawkData.php
+Rainhawk\Data
+
+...
+.....
+.......
+...
+....
+....
+...
+.....
+
+OK (34 tests, 0 assertions)
+```
+
+If you wish to test the different wrappers then you can navigate to `/wrappers/{lang}/tests.x`. To run the PHP tests, execute `php tests.php` and to run the Javascript tests open the `tests.html` file in your web browser.
