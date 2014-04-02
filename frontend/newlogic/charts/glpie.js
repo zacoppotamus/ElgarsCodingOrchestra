@@ -1,4 +1,4 @@
-eco.charts.threetest = function() {
+eco.charts.glpie = function() {
 
   return {
     
@@ -283,4 +283,5 @@ eco.charts.threetest = function() {
       
     }
   }
-}
+};
+

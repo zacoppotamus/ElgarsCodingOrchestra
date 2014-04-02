@@ -1,4 +1,4 @@
-eco.charts.scatter3d = function() {
+eco.charts.glscatter = function() {
 
   return {
     title: '3D Scatter Graph',
