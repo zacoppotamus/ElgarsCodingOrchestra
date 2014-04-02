@@ -190,7 +190,7 @@ function successmsg(name)
   $("form").prepend(
     "<div class='alert alert-success fade in'>"+
       "<strong>Done!</strong> Data successfully uploaded to dataset <a class='alert-link' href='properties.php?dataset="+name+"'>"+name+"</a>. "+
-      "Now try <a class='alert-link' href='newlogic/?dataset="+name+">visualising</a> the data."+
+      "Now try <a class='alert-link' href='newlogic/?dataset="+name+"'>visualising</a> the data."+
       "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"+
     "</div>");
 
