@@ -1,12 +1,49 @@
-eco.charts.threetest = function() {
+eco.charts.glpie = function() {
 
   return {
-    render : function() {
+    
+    title: '3D Pie Chart',
+    
+    options : {
+      width: 1024,
+      height: 768,
+      margin: {
+        top: 30,
+        right: 30,
+        bottom: 30,
+        left: 30
+      }
+    },
+
+    render : function(data, name, value, target) {
+
+      var options = this.options,
+        width = options.width,
+        height = options.height;
+
+      var margin = {
+        top: options.margin.top,
+        right: options.margin.right,
+        bottom: options.margin.bottom,
+        left: options.margin.left
+      };
+
       var renderer = null,
       scene = null,
       camera = null,
-      chart = null,
-      canvas = null;
+      chart = null;
+      var canvas = document.createElement("canvas");
+      canvas.id = 'webglcanvas';
+      canvas.height = height;
+      canvas.width = width;
+      canvas.addEventListener( 'mousedown', onMouseDown );
+      canvas.addEventListener( 'mousewheel', onMouseWheel );
+      canvas.addEventListener( 'DOMMouseScroll', onMouseWheel );
+      target.appendChild( canvas );
+      var overlay = document.createElement("div");
+      overlay.id = 'overlay';
+      target.appendChild( canvas );
+
       var hAngle = Math.PI/2;
       var vAngle = Math.PI/4;
       var hRotateSpeed = 1.0;
@@ -17,7 +54,6 @@ eco.charts.threetest = function() {
       var rotateEnd = new THREE.Vector2();
       var rotateDelta = new THREE.Vector2();
       var chartDivisions = [];
-      var data = [];
       var dataDivisions = [];
       var previousItem = 0;
       var currentItem = 0;
@@ -30,7 +66,6 @@ eco.charts.threetest = function() {
       var selectColour = 0xeffeff;
 
       function updateOverlay() {
-        var overlay = document.getElementById( "overlay" );
         overlay.innerHTML = "Current item: " + currentItem + "<br/>";
         var keys = Object.keys(data[currentItem]);
         var keyCount = keys.length;
@@ -46,24 +81,14 @@ eco.charts.threetest = function() {
       }
 
       window.onload = function() {
-        data = [
-          { name: "A", value: 5 },
-          { name: "B", value: 6 },
-          { name: "C", value: 1 },
-          { name: "D", value: 4 }
-        ]
-        canvas = document.getElementById( "webglcanvas" );
-        canvas.addEventListener( 'mousedown', onMouseDown );
-        canvas.addEventListener( 'mousewheel', onMouseWheel );
-        canvas.addEventListener( 'DOMMouseScroll', onMouseWheel );
         scene = new THREE.Scene();
         camera = new THREE.PerspectiveCamera( 45,
-          canvas.width/canvas.height, 1, 4000 );
+          width/height, 1, 4000 );
         
         renderer = new THREE.WebGLRenderer(
           { canvas: canvas, antialias: true, alpha:true } );
         renderer.setClearColor( 0xffffff, 1 );
-        renderer.setSize( canvas.width, canvas.height );
+        renderer.setSize( width, height );
         renderer.shadowMapEnabled = true;
 
         var spotLight = new THREE.SpotLight( 0xffffff );
@@ -133,7 +158,7 @@ eco.charts.threetest = function() {
       function createPiChart( segments )
       {
         var radius = 3;
-        var height = 1;
+        var tall = 1;
         var totalSize = 0;
         var segmentCount = segments.length;
         var thetaStart = 0;
@@ -149,8 +174,10 @@ eco.charts.threetest = function() {
           dataDivisions.push( thetaStart );
           var factor = segments[i].value/totalSize;
           thetaDelta = Math.PI * 2 * factor;
+          var colour = Math.floor(Math.random()*16777215);
+          colours.push( colour );
           segment = new THREE.Mesh(
-            createExtrudedSegment( radius, height+factor, thetaStart, thetaDelta ),
+            createExtrudedSegment( radius, tall+factor, thetaStart, thetaDelta ),
             new THREE.MeshPhongMaterial( { color: colours[i] } )
           );
           segment.castShadow = true;
@@ -168,12 +195,12 @@ eco.charts.threetest = function() {
       }
 
       //Notes: All parameters must be supplied, thetaLength must be less than 2*Pi
-      function createExtrudedSegment( radius, height, thetaStart, thetaLength ) {
+      function createExtrudedSegment( radius, tall, thetaStart, thetaLength ) {
         var segments = 16 + Math.floor( thetaLength * 16 / Math.PI );
         var base = createSegmentGeometry( radius, segments, thetaStart, thetaLength );
         var extrusionSettings = {
           bevelEnabled: false,
-          amount: height,
+          amount: tall,
           steps: 2 };
         var segment = new THREE.ExtrudeGeometry( base, extrusionSettings );
         return segment;
@@ -242,10 +269,8 @@ eco.charts.threetest = function() {
       function onMouseMove( event ) {
         rotateEnd.set( event.clientX, event.clientY );
         rotateDelta.subVectors( rotateEnd, rotateStart );
-        var width = canvas.width;
-        var height = canvas.height;
-        rotateHoriz( 2 * Math.PI * rotateDelta.x / canvas.width );
-        rotateVert( 2 * Math.PI * rotateDelta.y / canvas.height );
+        rotateHoriz( 2 * Math.PI * rotateDelta.x / width );
+        rotateVert( 2 * Math.PI * rotateDelta.y / height );
         rotateStart.copy( rotateEnd );
       }
 
@@ -258,4 +283,5 @@ eco.charts.threetest = function() {
       
     }
   }
-}
+};
+
