@@ -9,6 +9,10 @@ html, body {
 	margin-right: 10px;
 }
 
+.vis-btn {
+	margin-top: 110px;
+}
+
 .navbar {
 	-webkit-box-shadow: 0 6px 6px -6px black;
 	-moz-box-shadow: 0 6px 6px -6px black;
@@ -57,7 +61,7 @@ img {
 }
 
 .customize-part1 {
-	background-color: rgb(204, 223, 232);
+	/*background-color: rgb(204, 223, 232);*/
 	margin-top: 0px;
 	padding-top: 0px;
 	padding-bottom: 40px;
@@ -69,7 +73,6 @@ img {
 }
 
 .customize-part3 {
-	background-color: rgb(204, 223, 232);
 	padding-top: 20px;
 	padding-bottom: 20px;
 }

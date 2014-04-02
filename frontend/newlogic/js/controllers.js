@@ -21,23 +21,20 @@ angular.module('eco.controllers', [])
 		$scope.selectedDataset = '';
 	} 
 	else {
-		$scope.selectedDataset = window.location.search.slice(1).split('=')[1].split('.')[1];
+		$scope.selectedDataset = window.location.search.slice(1).split('=')[1];
 	}
 
 	// the fields for the selected dataset
 	$scope.fields = [];
 
-	// use ben's cookie and username for the time being
-	$scope.apiKey = "EU6h9H8BUXELDmfO1Mbh0jLasSQxrAZd";
-
-	console.log(apiKey);
-	$scope.username = 'benelgar';
+	// current user's api key
+	$scope.apiKey = apiKey;
 
 	// reinitialize $scope.vizTypes here
 	$scope.getFields = function() {
 		$http({
 			method: 'GET',
-			url: 'https://sneeza-eco.p.mashape.com/datasets/'+$scope.username+'.'+$scope.selectedDataset+'/data',
+			url: 'https://sneeza-eco.p.mashape.com/datasets/'+$scope.selectedDataset+'/data',
 			headers: {
 				'X-Mashape-Authorization' : $scope.apiKey
 			}
@@ -71,7 +68,8 @@ angular.module('eco.controllers', [])
 			// attach the data to the scope
 			$scope.datasets = [];
 			$.each(json.data.datasets, function(key,val) {
-				var datasetName = val.name.split('.')[1];
+				// var datasetName = val.name.split('.')[1];
+				var datasetName = val.name;
 				$scope.datasets.push(datasetName);
 			});
 
@@ -112,7 +110,6 @@ angular.module('eco.controllers', [])
 		dataService.vizOptions = $scope.vizTypes;
 	}
 
-	// dataService.sayhey('zac');
 	// $scope.validParams = true;
 
 	// get the datasets immediately
@@ -125,9 +122,9 @@ angular.module('eco.controllers', [])
 			$scope.getFields();
 			dataService.selectedDataset = $scope.selectedDataset;
 			dataService.getSelectedDataset();
-			$scope.currentData = dataService.getData($scope.selectedDataset, $scope.username, $scope.apiKey);
-			console.log($scope.currentData);
+			$scope.currentData = dataService.getData($scope.selectedDataset, $scope.apiKey);
 		}
+		
 		// reinitialize parameter options
 		$scope.vizTypes = eco.charts();
 	});

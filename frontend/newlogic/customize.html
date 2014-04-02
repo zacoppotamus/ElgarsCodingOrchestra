@@ -64,7 +64,6 @@
     <hr>
 
     <div class="row customize-part2">
-        <div class="col-sm-3"></div>
         <div class="col-sm-6 text-center">
             <h1>
                 Parameters
@@ -76,17 +75,14 @@
                 <select class="form-control" ng-model="vizTypes[selectedVizType.id].options[choice]" ng-options="field for field in fields"><option></option></select>
             </div>
         </div>
-        <div class="col-sm-3"></div>
-    </div>
-
-    <hr>
-
-    <div class="row customize-part3">
-        <div class="col-sm-12 text-center">
-            <input type="checkbox" ng-model="checked"></h4>
-            <a class="btn btn-primary" ng-disabled="checked" ng-click="sendVizOptionsToService()" href="#visualization">
-                <h1>Visualize</h1>
+        
+        <div class="col-sm-6 text-center">
+            <!-- <input type="checkbox" ng-model="checked"></h4> -->
+            <a class="btn btn-danger vis-btn" ng-disabled="checked" ng-click="sendVizOptionsToService()" href="#visualization">
+                <h2>Visualise</h2>
             </a>
         </div>
     </div>
+
+    <hr>
 </div>
