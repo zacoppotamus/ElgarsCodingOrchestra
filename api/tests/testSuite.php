@@ -1,8 +1,5 @@
 <?php
 
-include_once "framework/UnitTest.php";
-include_once "../includes/kernel.php";
-
 $files = glob("test*.php");
 
 foreach($files as $index => $file) {

@@ -60,6 +60,7 @@ class UnitTest {
      */
 
     public function __before() {
+        return $this;
     }
 
     /**
@@ -73,7 +74,7 @@ class UnitTest {
         echo $this->class . "\n\n";
 
         foreach(get_class_methods($this) as $method) {
-            if(stripos($method, "assert") !== false || $method == "outputTestResult" || $method == "exec") {
+            if(stripos($method, "assert") !== false || in_array($method, array("outputTestResult", "exec", "__before"))) {
                 continue;
             } else {
                 $this->$method();
