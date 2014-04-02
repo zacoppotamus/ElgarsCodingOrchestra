@@ -8,6 +8,7 @@ ini_set("display_errors", 1);
 include("includes/classes/route.class.php");
 header("content-type: application/json; charset=utf8");
 header("access-control-allow-origin: *");
+header("access-control-allow-headers: *");
 
 /*!
  * Add all of the possible routes to the class, including
@@ -138,10 +139,12 @@ route::post("/datasets/(\w+|\-+)\.(\w+|\-+)/constraints", function($prefix, $nam
 
 // Create an endpoint to remove a constraint on a dataset.
 route::delete("/datasets/(\w+|\-+)\.(\w+|\-+)/constraints", function($prefix, $name) use($data) {
+    parse_str(file_get_contents("php://input"), $_DELETE);
+
     $data->prefix = $prefix;
     $data->name = $name;
 
-    $data->field = isset($_POST['field']) ? trim($_POST['field']) : null;
+    $data->field = isset($_DELETE['field']) ? trim($_DELETE['field']) : null;
 
     include("datasets/constraints/remove.php");
 });
@@ -159,9 +162,21 @@ route::post("/datasets/(\w+|\-+)\.(\w+|\-+)/indexes", function($prefix, $name) u
     $data->prefix = $prefix;
     $data->name = $name;
 
-    $data->fields = isset($_POST['fields']) ? json_decode($_POST['fields'], true) : null;
+    $data->field = isset($_POST['field']) ? trim($_POST['field']) : null;
 
     include("datasets/indexes/add.php");
+});
+
+// Create an endpoint to remove an index from a dataset.
+route::delete("/datasets/(\w+|\-+)\.(\w+|\-+)/indexes", function($prefix, $name) use($data) {
+    parse_str(file_get_contents("php://input"), $_DELETE);
+
+    $data->prefix = $prefix;
+    $data->name = $name;
+
+    $data->field = isset($_DELETE['field']) ? trim($_DELETE['field']) : null;
+
+    include("datasets/indexes/remove.php");
 });
 
 // Create an endpoint to list the access to a dataset.
@@ -177,7 +192,7 @@ route::post("/datasets/(\w+|\-+)\.(\w+|\-+)/access", function($prefix, $name) us
     $data->prefix = $prefix;
     $data->name = $name;
 
-    $data->type = isset($_POST['type']) && in_array($_POST['type'], array("read", "write")) ? trim(strtolower($_POST['type'])) : null;
+    $data->type = isset($_POST['type']) ? $_POST['type'] : null;
     $data->username = isset($_POST['username']) ? trim(strtolower($_POST['username'])) : null;
 
     include("datasets/access/add.php");
@@ -185,11 +200,13 @@ route::post("/datasets/(\w+|\-+)\.(\w+|\-+)/access", function($prefix, $name) us
 
 // Create an endpoint to remove access to a dataset.
 route::delete("/datasets/(\w+|\-+)\.(\w+|\-+)/access", function($prefix, $name) use($data) {
+    parse_str(file_get_contents("php://input"), $_DELETE);
+
     $data->prefix = $prefix;
     $data->name = $name;
 
-    $data->type = isset($_POST['type']) && in_array($_POST['type'], array("read", "write")) ? trim(strtolower($_POST['type'])) : null;
-    $data->username = isset($_POST['username']) ? trim(strtolower($_POST['username'])) : null;
+    $data->type = isset($_DELETE['type']) && in_array($_DELETE['type'], array("read", "write")) ? trim(strtolower($_DELETE['type'])) : null;
+    $data->username = isset($_DELETE['username']) ? trim(strtolower($_DELETE['username'])) : null;
 
     include("datasets/access/remove.php");
 });
@@ -215,12 +232,6 @@ route::get("/datasets/(\w+|\-+)\.(\w+|\-+)/calc/stats", function($prefix, $name)
 
     include("datasets/calc/stats.php");
 });
-
-/*
-// Add endpoints for the tests.
-route::get("/tests/run", "tests/run.php");
-route::get("/tests/import", "tests/import.php");
-*/
 
 /*!
  * Perform the routing request.

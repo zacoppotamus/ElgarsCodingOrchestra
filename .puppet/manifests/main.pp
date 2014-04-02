@@ -37,6 +37,11 @@ exec { "hostname_change":
     command => "hostname rainhawk.dev"
 }
 
+exec { "hostname_resolver":
+    cwd => "/etc/",
+    command => "echo '\n127.0.0.1    rainhawk.dev' >> hosts"
+}
+
 #
 # Install some native commands we may need.
 #
@@ -85,22 +90,22 @@ php::module { ["curl", "gd", "mcrypt", "mongo", "imap", "dev", "xcache", "xdebug
     notify => Service["php5-fpm"],
 }
 
-php::module::ini { "xcache":
-    settings => {
-        "xcache.size" => "256M",
-        "xcache.var_size" => "512M",
-        "xcache.mmap_path" => "/tmp/xcache",
-    },
-    notify => Service["php5-fpm"],
-}
+#php::module::ini { "xcache":
+#    settings => {
+#        "xcache.size" => "256M",
+#        "xcache.var_size" => "512M",
+#        "xcache.mmap_path" => "/tmp/xcache",
+#    },
+#    notify => Service["php5-fpm"],
+#}
 
-php::module::ini { "xdebug":
-    settings => {
-        "xdebug.profiler_enable_trigger" => "1",
-    },
-    zend => "/usr/lib64/php5/20090626",
-    notify => Service["php5-fpm"],
-}
+#php::module::ini { "xdebug":
+#    settings => {
+#        "xdebug.profiler_enable_trigger" => "1",
+#    },
+#    zend => "/usr/lib64/php5/20090626",
+#    notify => Service["php5-fpm"],
+#}
 
 #
 # Install Nginx.

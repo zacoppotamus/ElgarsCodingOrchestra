@@ -1,5 +1,6 @@
 <?php
 require_once("../wrappers/php/rainhawk.class.php");
+require_once("helpers/datasetButtons.php");
 
 session_start();
 
@@ -14,8 +15,15 @@ $rainhawk = new Rainhawk($mashape_key);
 $dataset = isset($_GET['dataset']) ? htmlspecialchars($_GET['dataset']) : null;
 
 $datasetInfo = $rainhawk->fetchDataset($dataset);
-$user        = $rainhawk->ping()["mashape_user"];
 $fields      = $datasetInfo["fields"];
+
+$user = isset($_SESSION['user']) ? $_SESSION['user'] : null;
+
+if (!$user)
+{
+    header('Location: login.php?dest='.urlencode($_SERVER['REQUEST_URI']));
+    exit();
+}
 
 ?>
 <!doctype html>
@@ -39,20 +47,10 @@ $fields      = $datasetInfo["fields"];
                 <h1><?php echo $datasetInfo["name"];?></h>
             </div>
             <div class="row">
-                <h3><?php echo $datasetInfo["description"];?></h>
-                <a href="account.php" type="button" class="btn btn-warning pull-right"><i class="fa fa-bars"></i>&nbsp Datasets</a>
-                <a href='upload.php?dataset=<?php echo $dataset; ?>' class='btn btn-primary pull-right'><i class='fa fa-cloud-upload'></i>&nbsp Upload</a>
-                <div class='dropdown pull-right'>
-                    <a class='dropdown-toggle btn btn-success' role='button' data-toggle='dropdown' href='#'>
-                        <i class='fa fa-bar-chart-o'></i>&nbsp Visualise&nbsp <span class='caret'></span>
-                    </a>
-                    <ul class='dropdown-menu' role='menu'>
-                    <li><a href='barchart.php?dataset=<?php echo $dataset; ?>'>Bar Chart</a></li>
-                        <li><a href='piechart.php?dataset=<?php echo $dataset; ?>'>Pie Chart</a></li>
-                        <li><a href='scatterchart.php?dataset=<?php echo $dataset; ?>'>Scatter Chart</a></li>
-                        <li><a href='areachart.php?dataset=<?php echo $dataset; ?>'>Area Chart</a></li>
-                    </ul>
-                </div>
+                <h3>
+                    <?php echo $datasetInfo["description"];?>
+                    <?php echo navButtons($dataset, in_array($user, $datasetInfo["write_access"])); ?>
+                </h3>
             </div>
             <div class="row">
                 <?php
@@ -64,7 +62,7 @@ $fields      = $datasetInfo["fields"];
                 {
                     echo "<div class='alert alert-info'>".
                             "<strong>No data!</strong> There's no data here. Why don't you try ".
-                            "<a class='alert-link' href='upload.php?$dataset'>uploading</a> some?".
+                            "<a class='alert-link' href='upload.php?dataset='$dataset'>uploading</a> some?".
                         "</div>";
                 }
                 ?>

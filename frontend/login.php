@@ -1,5 +1,31 @@
 <?php
+
 session_start();
+
+if(isset($_POST['apiKey'])) {
+    require_once("../wrappers/php/rainhawk.class.php");
+
+    $mashape_key = $_POST['apiKey'];
+
+    $rainhawk = new Rainhawk($mashape_key);
+
+    $user = $rainhawk->ping()['mashape_user'];
+
+    if ($user == false)
+    {
+        header('Location: login.php?fail');
+    }
+    else
+    {
+        $_SESSION['apiKey'] = trim($_POST['apiKey']);
+        $_SESSION["user"] = $user;
+
+        $location = isset($_GET['dest']) ? urldecode($_GET['dest']) : 'account.php';
+
+        header('Location: '.$location);
+    }
+    exit();
+}
 
 if(isset($_SESSION["apiKey"]) && !isset($_GET["logout"]))
 {
@@ -14,17 +40,28 @@ if(isset($_SESSION["apiKey"]) && !isset($_GET["logout"]))
 
         <!-- Bootstrap -->
         <link href="css/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" type="text/css">
-        <link rel="stylesheet" href="../css/bootstrap.css">
+        <link rel="stylesheet" href="css/bootstrap.css">
+        <link rel="stylesheet" href="css/font-awesome/css/font-awesome.min.css"></link>
     </head>
     <body>
         <div class="container">
             <div class="row">
                 <h1>Login to Project Rainhawk</h>
-                <a href="/" class="btn btn-warning pull-right">Home</a>
+                <a href="/" class="btn btn-warning pull-right"><i class="fa fa-home"></i> &nbspHome</a>
             </div>
             <div class="row">
+                <?php
+                if(isset($_GET["dest"]))
+                {
+                echo <<<EOD
+                <div class='alert alert-warning'>
+                    <p>You need to be logged in to access this page</p>
+                </div>
+EOD;
+                }
+                ?>
                 <p>Please insert your API key</p>
-                <form action="account.php" role="form" method="post">
+                <form action="login.php<?php if(isset($_GET['dest'])) {echo "?dest=".$_GET["dest"];} ?>" role="form" method="post">
                     <div class="form-group<?php if(isset($_GET["fail"])){echo " has-warning";}?>">
                         <label for="apiKey">API Key</label>
                         <input type="text" placeholder="API Key" name="apiKey" class="form-control" autofocus>
@@ -42,6 +79,10 @@ if(isset($_SESSION["apiKey"]) && !isset($_GET["logout"]))
                     echo "<p class='text-success'>Successfully logged out.</p>";
                 }
                 ?>
+            </div>
+            <div class='row'>
+                <h3><i class='fa fa-key'></i> Don't have an API key?</h3>
+                <p>Register an API key for Project Rainhawk at <a href='https://www.mashape.com/sneeza/project-rainhawk'>Mashape.com</a></p>
             </div>
         </div>
     </body>

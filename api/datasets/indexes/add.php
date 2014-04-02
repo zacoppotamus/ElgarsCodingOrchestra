@@ -39,51 +39,79 @@ if(!$dataset->have_write_access(app::$username)) {
  * to send back.
  */
 
-$json = array(
-    "indexes" => array()
-);
+$json = array();
 
 /*!
  * Try and add the indexes to the dataset as the user has specified,
  * which will always work even if the index already exists.
  */
 
-// Create a local variable for the fields.
-$fields = array();
-
-// Check which fields to index.
-if(!empty($data->fields)) {
-    $fields = $data->fields;
-} else {
-    $fields = app::find_index_names($dataset->fields);
-}
-
-// Check if we need to add any indexes at all.
-if(empty($fields)) {
-    echo json_beautify(json_render_error(404, "We couldn't find any indexes to add."));
-    exit;
-}
-
-// Add each index.
-foreach($fields as $field) {
-    if(!$dataset->add_index($field)) {
-        echo json_beautify(json_render_error(405, "There was a problem while adding an index on '" . $field . "'."));
+// Check if the fields are set.
+if(!empty($data->field)) {
+    // Check if the field can be indexed.
+    if($data->field == "_id") {
+        echo json_beautify(json_render_error(404, "The _id field is always indexed by default."));
         exit;
     }
-}
 
-// Get a list of indexes.
-$indexes = $dataset->fetch_indexes();
+    // Get the current indexes.
+    $indx = $dataset->fetch_indexes();
+    $indexes = array();
 
-// Check if the listing failed.
-if(!$indexes) {
-    echo json_beautify(json_render_error(406, "There was a problem while fetching the indexes."));
-    exit;
-}
+    // Set the indexes properly.
+    foreach($indx as $index) {
+        $indexes[] = array_keys($index['key'])[0];
+    }
 
-// Return them into the JSON array.
-foreach($indexes as $index) {
-    $json['indexes'][$index['name']] = $index['key'];
+    // Check if the index has already been set.
+    if(in_array($data->field, $indexes)) {
+        echo json_beautify(json_render_error(405, "The field you specified already has an index."));
+        exit;
+    }
+
+    // Add the index.
+    if(!$dataset->add_index($data->field)) {
+        echo json_beautify(json_render_error(406, "There was an unknown problem adding the index you specified."));
+        exit;
+    }
+
+    // Set the JSON response.
+    $json['added'] = true;
+} else {
+    // Find the fields to index and the indexes.
+    $fields = app::find_index_names(array_keys($dataset->fields));
+    $indx = $dataset->fetch_indexes();
+    $indexes = array();
+
+    // Set the indexes properly.
+    foreach($indx as $index) {
+        $indexes[] = array_keys($index['key'])[0];
+    }
+
+    // Remove the fields that already have indexes.
+    foreach($fields as $index => $field) {
+        if(in_array($field, $indexes)) unset($fields[$index]);
+    }
+
+    // Check if the fields are empty.
+    if(empty($fields)) {
+        echo json_beautify(json_render_error(404, "We couldn't find any fields to add indexes to."));
+        exit;
+    }
+
+    // Start buffering the response.
+    $json['detected'] = array();
+
+    // Add indexes to each of the fields.
+    foreach($fields as $field) {
+        if(!$dataset->add_index($field)) {
+            echo json_beautify(json_render_error(405, "There was an unknown problem adding one of the indexes."));
+            exit;
+        }
+
+        // Set the response.
+        $json['detected'][] = $field;
+    }
 }
 
 /*!

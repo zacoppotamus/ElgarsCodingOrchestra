@@ -11,86 +11,30 @@ angular.module('eco.controllers', [])
 		TO DO: If one option is null or two or more are the same throw error.
 
 		When Visualize button is pressed, check that all parameters are != null.
-
-		Maybe put vizTypes in a different file altogether
 	*/
 
-	// different kind of visualizations and choices
-	// Try different alternatives for decoupling the DOM and controller
-	// this can also be a class-function instantiated on $scope.watch so that everything becomes null
-	$scope.getParamOptions = function () {
-		// choices must have the exact same values as options.
-		return [
-			{
-				'id' : 0, 
-				'name' : 'Pie Chart', 
-				'choices' : ['values', 'names'],
-				'options' : {
-					'values' : null,
-					'names' : null
-				}
-			},
-			{
-				'id': 1,
-				'name':'Bar Chart',
-				'choices':['xAxis', 'yAxis'],
-				'options' : {
-					'xAxis' : null,
-					'yAxis' : null
-				}
-			},
-			{
-				'id': 2,
-				'name':'Bubble Chart',
-				'choices':['x', 'y', 'maxRadius', 'label'],
-				'options' : {
-					'x' : null,
-					'y' : null,
-					'maxRadius' : null,
-					'label' : null
-				}
-			},
-			{
-				'id': 3,
-				'name':'Map',
-				'choices':['latitude', 'longitude'],
-				'options' : {
-					'latitude' : null,
-					'longitude' : null
-				}
-
-			}
-		];
-	}
-
-
 	// selected radio button
-	$scope.selectedVizType = {id:2};
+	$scope.selectedVizType = {id:1};
 
-	// currently selected dataset
-	$scope.selectedDataset = '';
-
-	// currently selected field
-	$scope.currentField = '';
+	// has the user requested to visualise a certain dataset?
+	if (window.location.search == '') {
+		$scope.selectedDataset = '';
+	} 
+	else {
+		$scope.selectedDataset = window.location.search.slice(1).split('=')[1];
+	}
 
 	// the fields for the selected dataset
 	$scope.fields = [];
 
-	// use ben's cookie and username for the time being
-	$scope.apiKey = "EU6h9H8BUXELDmfO1Mbh0jLasSQxrAZd";
-	$scope.username = 'benelgar';
-
-	// years for sample vis (nbapayrolls)
-	// $scope.years = [];
-	// for (var i = 1998; i <= 2017; i++) {
-	// 	$scope.years.push(i);
-	// }
+	// current user's api key
+	$scope.apiKey = apiKey;
 
 	// reinitialize $scope.vizTypes here
 	$scope.getFields = function() {
 		$http({
 			method: 'GET',
-			url: 'https://sneeza-eco.p.mashape.com/datasets/'+$scope.username+'.'+$scope.selectedDataset+'/data',
+			url: 'https://sneeza-eco.p.mashape.com/datasets/'+$scope.selectedDataset+'/data',
 			headers: {
 				'X-Mashape-Authorization' : $scope.apiKey
 			}
@@ -124,7 +68,8 @@ angular.module('eco.controllers', [])
 			// attach the data to the scope
 			$scope.datasets = [];
 			$.each(json.data.datasets, function(key,val) {
-				var datasetName = val.name.split('.')[1];
+				// var datasetName = val.name.split('.')[1];
+				var datasetName = val.name;
 				$scope.datasets.push(datasetName);
 			});
 
@@ -165,7 +110,6 @@ angular.module('eco.controllers', [])
 		dataService.vizOptions = $scope.vizTypes;
 	}
 
-	// dataService.sayhey('zac');
 	// $scope.validParams = true;
 
 	// get the datasets immediately
@@ -178,11 +122,11 @@ angular.module('eco.controllers', [])
 			$scope.getFields();
 			dataService.selectedDataset = $scope.selectedDataset;
 			dataService.getSelectedDataset();
-			$scope.currentData = dataService.getData($scope.selectedDataset, $scope.username, $scope.apiKey);
-			console.log($scope.currentData);
+			$scope.currentData = dataService.getData($scope.selectedDataset, $scope.apiKey);
 		}
+		
 		// reinitialize parameter options
-		$scope.vizTypes = $scope.getParamOptions();
+		$scope.vizTypes = eco.charts();
 	});
 
 	$scope.$watch('selectedVizType.id', function() {

@@ -30,7 +30,7 @@ class Rainhawk {
      * @var string
      */
 
-    private $host = "https://sneeza-eco.p.mashape.com/";
+    private $host = "https://sneeza-eco.p.mashape.com";
 
     /**
      * Store the Mashape API key to use for authentication to the
@@ -69,10 +69,6 @@ class Rainhawk {
 
     public function __construct($mashapeKey) {
         $this->mashapeKey = $mashapeKey;
-
-        if(substr($this->host, -1) == "/") {
-            $this->host = substr($this->host, 0, -1);
-        }
     }
 
     /**
@@ -102,7 +98,7 @@ class Rainhawk {
      * @return array|bool  Returns the datasets on success, false on failure.
      */
 
-    public function datasets() {
+    public function listDatasets() {
         $url = $this->host . "/datasets";
         $data = $this->sendRequest($url, self::GET);
         $json = $this->parseJson($data);
@@ -283,7 +279,7 @@ class Rainhawk {
             return false;
         }
 
-        return $json['data'];
+        return $json['data']['updated'];
     }
 
     /**
@@ -308,7 +304,7 @@ class Rainhawk {
             return false;
         }
 
-        return $json['data'];
+        return $json['data']['deleted'];
     }
 
     /**
@@ -348,7 +344,7 @@ class Rainhawk {
      * @return array|bool  Returns the indexes on success, false on failure.
      */
 
-    public function fetchIndexes($name) {
+    public function listIndexes($name) {
         $url = $this->host . "/datasets/" . $name . "/indexes";
         $data = $this->sendRequest($url, self::GET);
         $json = $this->parseJson($data);
@@ -361,17 +357,42 @@ class Rainhawk {
     }
 
     /**
+     * Remove an index from the specified dataset, which works on a single
+     * field and will return a bool.
+     *
+     * @param string $name  The dataset to remove an index on.
+     * @param string $field  The field to remove the index on.
+     * @return bool  Returns true or false.
+     */
+
+    public function removeIndex($name, $field) {
+        $postData = array(
+            "field" => $field
+        );
+
+        $url = $this->host . "/datasets/" . $name . "/indexes";
+        $data = $this->sendRequest($url, self::DELETE, $postData);
+        $json = $this->parseJson($data);
+
+        if(!$json) {
+            return false;
+        }
+
+        return $json['data']['removed'];
+    }
+
+    /**
      * Create an index on the specified dataset, which currently
      * only works on a single field.
      *
      * @param string $name  The dataset to create an index on.
-     * @param array $fields  The fields to index. An blank field will cause auto-indexing.
+     * @param string $field  The field to index. A blank field will cause auto-indexing.
      * @return array|bool  Returns the data array on success, false on failure.
      */
 
-    public function addIndex($name, $fields = array()) {
+    public function addIndex($name, $field = null) {
         $postData = array(
-            "fields" => json_encode($fields)
+            "field" => $field
         );
 
         $url = $this->host . "/datasets/" . $name . "/indexes";
@@ -382,7 +403,8 @@ class Rainhawk {
             return false;
         }
 
-        return $json['data'];
+        return !empty($field) ?
+            $json['data']['added'] : $json['data']['detected'];
     }
 
     /**
@@ -394,7 +416,7 @@ class Rainhawk {
      * @return array|bool  Returns the data array on success, false on failure.
      */
 
-    public function fetchAccessList($name) {
+    public function listAccess($name) {
         $url = $this->host . "/datasets/" . $name . "/access";
         $data = $this->sendRequest($url, self::GET);
         $json = $this->parseJson($data);
@@ -411,15 +433,15 @@ class Rainhawk {
      * send the type and the username in a POST request.
      *
      * @param string $name  The dataset to create an index on.
-     * @param string $type  The type of access to give, "read" and "write".
      * @param string $username  The username to give access to.
+     * @param string|array $type  The type of access to give, "read" and "write".
      * @return array|bool  Returns the data array on success, false on failure.
      */
 
-    public function giveAccess($name, $type, $username) {
+    public function giveAccess($name, $username, $type) {
         $postData = array(
-            "type" => $type,
-            "username" => $username
+            "username" => $username,
+            "type" => is_array($type) ? json_encode($type) : $type
         );
 
         $url = $this->host . "/datasets/" . $name . "/access";
@@ -430,7 +452,7 @@ class Rainhawk {
             return false;
         }
 
-        return $json['data'];
+        return $json['data']['added'];
     }
 
     /**
@@ -438,15 +460,15 @@ class Rainhawk {
      * you to have write access to the set.
      *
      * @param string $name  The dataset to create an index on.
-     * @param string $type  The type of access to give, "read" and "write".
-     * @param string $username  The username to give access to.
+     * @param string $username  The username to remove access from.
+     * @param string|null $type  The type of access to give, "read" and "write", or null for both.
      * @return array|bool  Returns the data array on success, false on failure.
      */
 
-    public function removeAccess($name, $type, $username) {
+    public function removeAccess($name, $username, $type = null) {
         $postData = array(
-            "type" => $type,
-            "username" => $username
+            "username" => $username,
+            "type" => $type
         );
 
         $url = $this->host . "/datasets/" . $name . "/access";
@@ -457,7 +479,82 @@ class Rainhawk {
             return false;
         }
 
-        return $json['data'];
+        return $json['data']['removed'];
+    }
+
+    /**
+     * List the constraints currently applied to a dataset. These constraints
+     * are run on the data being returned from any endpoint that shows dataset
+     * data.
+     *
+     * @param string $name  The dataset to list the constraints on.
+     * @return array|bool  Returns the constraints on success, false on failure.
+     */
+
+    public function listConstraints($name) {
+        $url = $this->host . "/datasets/" . $name . "/constraints";
+        $data = $this->sendRequest($url, self::GET);
+        $json = $this->parseJson($data);
+
+        if(!$json) {
+            return false;
+        }
+
+        return $json['data']['constraints'];
+    }
+
+    /**
+     * Add constraints to fields within a dataset. If the field name and type
+     * are both left blank then the system will automatically determine the
+     * type of each field and apply the constraints itself.
+     *
+     * @param string $name  The dataset to apply the constraints to.
+     * @param string $field  The field to constrain.
+     * @param string $type  The type to constrain to.
+     * @return mixed  Returns the constraints on success, false on failure.
+     */
+
+    public function addConstraint($name, $field = null, $type = null) {
+        $postData = array(
+            "field" => $field,
+            "type" => $type
+        );
+
+        $url = $this->host . "/datasets/" . $name . "/constraints";
+        $data = $this->sendRequest($url, self::POST, $postData);
+        $json = $this->parseJson($data);
+
+        if(!$json) {
+            return false;
+        }
+
+        return !empty($field) && !empty($type) ?
+            $json['data']['added'] : $json['data']['detected'];
+    }
+
+    /**
+     * Remove a constraint from a field, which requires that the above has
+     * already been run on a field (or multiple).
+     *
+     * @param string $name  The dataset to remove the constraints from.
+     * @param string $field  The field to unconstrain.
+     * @return bool  Returns true or false.
+     */
+
+    public function removeConstraint($name, $field) {
+        $postData = array(
+            "field" => $field
+        );
+
+        $url = $this->host . "/datasets/" . $name . "/constraints";
+        $data = $this->sendRequest($url, self::DELETE, $postData);
+        $json = $this->parseJson($data);
+
+        if(!$json) {
+            return false;
+        }
+
+        return $json['data']['removed'];
     }
 
     /**

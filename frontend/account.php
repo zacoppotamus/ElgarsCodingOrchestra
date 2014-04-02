@@ -11,12 +11,13 @@ $mashape_key = isset($_SESSION['apiKey']) ? trim($_SESSION['apiKey']) : null;
 
 $rainhawk = new Rainhawk($mashape_key);
 
-$datasetsInfo = $rainhawk->datasets();
-$user         = $rainhawk->ping()["mashape_user"];
+$datasetsInfo = $rainhawk->listDatasets();
 
-if ($user == false)
+$user = isset($_SESSION['user']) ? $_SESSION['user'] : null;
+
+if (!$user)
 {
-    header('Location: login.php?fail');
+    header('Location: login.php?dest='.urlencode($_SERVER['REQUEST_URI']));
     exit();
 }
 ?>
@@ -77,7 +78,8 @@ if ($user == false)
                             <th>Description</th>
                             <th>Records</th>
                             <th>Fields</th>
-                            <th>Write Access</th>
+                            <th>Access</th>
+                            <th></th>
                             <th></th>
                             <th></th>
                             <th></th>
@@ -89,32 +91,28 @@ if ($user == false)
                         {
                             $dataset = $datasetsInfo[$i];
                             echo("<tr>\n".
-                                "<td><a href='edit.php?dataset=$dataset[name]'>$dataset[name]</a></td>\n".
+                                "<td><a href='properties.php?dataset=$dataset[name]'>$dataset[name]</a></td>\n".
                                 "<td>$dataset[description]</td>\n".
                                 "<td>$dataset[rows]</td>\n".
                                 "<td>".count($dataset['fields'])."</td>\n".
                                 //"<td>".(in_array($user, $dataset["read_access" ]) ? "True" : "False")."</td>\n".
-                                "<td>".(in_array($user, $dataset["write_access"]) ? "True" : "False")."</td>\n".
+                                "<td>".(in_array($user, $dataset["write_access"]) ? "Write" : "Read")."</td>\n".
                                 "<td>".
-                                    "<div class='dropdown'>".
-                                    "<a class='dropdown-toggle btn btn-success btn-sm' role='button' data-toggle='dropdown' ".
-                                        "href='#' ". (($dataset["rows"] == 0) ? "disabled>" : ">") .
-                                            "<i class='fa fa-bar-chart-o'></i>&nbsp Visualise &nbsp<span class='caret'></span>".
-                                        "</a>".
-                                        "<ul class='dropdown-menu' role='menu'>".
-                                            "<li><a href='barchart.php?dataset=$dataset[name]'>Bar Chart</a></li>".
-                                            "<li><a href='piechart.php?dataset=$dataset[name]'>Pie Chart</a></li>".
-                                            "<li><a href='scatterchart.php?dataset=$dataset[name]'>Scatter Chart</a></li>".
-                                            "<li><a href='areachart.php?dataset=$dataset[name]'>Area Chart</a></li>".
-                                        "</ul>".
-                                    "</div>".
+                                    "<a href='edit.php?dataset=$dataset[name]' class='btn btn-info btn-sm'>".
+                                    "<i class='fa fa-edit'></i>&nbsp; View</a>".
+                                "</td>".
+                                "<td>".
+                                    "<a class='btn btn-success btn-sm' href='newlogic/?dataset=$dataset[name]' ".
+                                        (($dataset["rows"] == 0) ? "disabled>" : ">") .
+                                            "<i class='fa fa-bar-chart-o'></i>&nbsp; Visualise".
+                                    "</a>".
                                 "</td>".
                                 "<td>".
                                     "<a href='upload.php?dataset=$dataset[name]' class='btn btn-primary btn-sm'".(in_array($user, $dataset["write_access"]) ? "" : "disabled").">".
-                                    "<i class='fa fa-cloud-upload'></i>&nbsp Upload</a>".
+                                    "<i class='fa fa-cloud-upload'></i>&nbsp; Upload</a>".
                                 "</td>".
                                 "<td><a href='delete.php?dataset=$dataset[name]' id='del".explode(".", $dataset["name"])[1].
-                                    "' class='btn btn-danger btn-sm confirm'><i class='fa fa-ban'></i>&nbsp Delete</a></td>".
+                                    "' class='btn btn-danger btn-sm confirm'".(in_array($user, $dataset["write_access"]) ? "" : "disabled")."><i class='fa fa-ban'></i>&nbsp Delete</a></td>".
                                 "</tr>\n");
                         }
                         ?>

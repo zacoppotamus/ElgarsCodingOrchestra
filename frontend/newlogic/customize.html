@@ -1,57 +1,88 @@
 <div class="container">
-	<div class="row">
-		<div class="col-sm-6 text-center">
-			<h1>
-				Dataset
-			</h1>
-			<pre>{{selectedDataset}}</pre>
-			<select class="form-control" ng-model="selectedDataset" ng-options="f for f in datasets"><option></option></select>
-		</div>
-		<div class="col-sm-6 text-center">
-			<h1>
-				Type
-			</h1>
-			<div class="btn-group btn-vert-block">
-				<pre>{{selectedVizType}}</pre>
-				<button type="button" ng-repeat="type in vizTypes" class="btn btn-primary btn-block center-block" ng-repeat="type in vizTypes" ng-model="selectedVizType.id" btn-radio="type.id">{{type.name}}</button>
-			</div>
-		</div>
-	</div>
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a href="#" class="navbar-brand">Project Rainhawk</a>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+          <li>
+            <div>
+            <a class="btn btn-default navbar-btn" href="../login.php"><i class="fa fa-bars"></i>Datasets</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </nav>
 
-	<br>
-	<br>
+    <div class="row customize-title">
+        <div class="col-sm-12 text-center">
+            <h1>Visualisation Parameters</h1>
+        </div>
+    </div>
+    <hr>
+    <div class="row customize-part1">
+        <div class="col-sm-4 text-center">
+            <h1>
+                Datasets
+            </h1>
+            <select class="form-control" ng-model="selectedDataset" ng-options="f for f in datasets"><option></option></select>
+        </div>
+        <div class="col-sm-8 text-right">
+            <h1>
+                Fields
+            </h1>
+            <br>
+            <div class="fields">
+                <ul class="field col-sm-4 text-right" ng-repeat="field in fields">
+                    {{field}}
+                </ul>
+            </div>
+        </div>
+    </div>
+    <hr>
 
-	<div class="row">
-		<div class="col-sm-6 text-center">
-			<h1>
-				Fields
-			</h1>
-			<br>
-			<div class="fields">
-				<ul class="field col-sm-3 text-center" ng-repeat="field in fields">
-					<li>{{field}}</li>
-				</ul>
-			</div>
-		</div>
-		<div class="col-sm-6 text-center">
-			<h1>
-				Parameters
-			</h1>
-			<div class="col-sm-6 text-center" ng-repeat="choice in vizTypes[selectedVizType.id].choices">
-				<h2>{{choice}}</h2>
-				<!-- CHANGE THE MODEL HERE -->
-				<!-- Beware: This is pretty hacky -->
-				<select class="form-control" ng-model="vizTypes[selectedVizType.id].options[choice]" ng-options="field for field in fields"><option></option></select>
-			</div>
-		</div>
-	</div>
+    <div class="row customize-part2">
+        <div class="col-sm-4 text-center">
+            <h1>
+                Type
+            </h1>
+            <div class="btn-group btn-vert-block">
+                <button type="button" ng-repeat="type in vizTypes" class="btn btn-primary btn-block center-block" ng-repeat="type in vizTypes" ng-model="selectedVizType.id" btn-radio="type.id">{{type.name}}</button>
+            </div>
+        </div>
+        <div class="col-sm-4 chart-image-container">
+            <img class="chart-image" src="{{vizTypes[selectedVizType.id].image}}">
+        </div>
+        <div class="col-sm-4 text-right">
+            <h1>Information</h1>
+            <p class="text-justify">
+                {{vizTypes[selectedVizType.id].description}}
+            </p>
+        </div>
+    </div>
+    
+    <hr>
 
-	<div class="visualize-btn row">
-		<div class="col-sm-12 text-center">
-			<input type="checkbox" ng-model="checked"></h4>
-			<a class="btn btn-primary" ng-disabled="checked" ng-click="sendVizOptionsToService()" href="#visualization">
-				<h1>Visualize</h1>
-			</a>
-		</div>
-	</div>
+    <div class="row customize-part2">
+        <div class="col-sm-6 text-center">
+            <h1>
+                Parameters
+            </h1>
+            <div class="col-sm-6 text-center" ng-repeat="choice in vizTypes[selectedVizType.id].choices">
+                <h3>{{choice}}</h3>
+                <!-- CHANGE THE MODEL HERE -->
+                <!-- Beware: This is pretty hacky -->
+                <select class="form-control" ng-model="vizTypes[selectedVizType.id].options[choice]" ng-options="field for field in fields"><option></option></select>
+            </div>
+        </div>
+        
+        <div class="col-sm-6 text-center">
+            <!-- <input type="checkbox" ng-model="checked"></h4> -->
+            <a class="btn btn-danger vis-btn" ng-disabled="checked" ng-click="sendVizOptionsToService()" href="#visualization">
+                <h2>Visualise</h2>
+            </a>
+        </div>
+    </div>
+
+    <hr>
 </div>

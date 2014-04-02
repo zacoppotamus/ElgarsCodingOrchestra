@@ -11,16 +11,12 @@ $mashape_key = isset($_SESSION['apiKey']) ? trim($_SESSION['apiKey']) : null;
 
 $rainhawk = new Rainhawk($mashape_key);
 
-$user = $rainhawk->ping()["mashape_user"];
+$user = isset($_SESSION['user']) ? $_SESSION['user'] : null;
 
-if ($user == false)
+if (!$user)
 {
-  header('Location: login.php?fail');
-  exit();
-}
-else
-{
-  setcookie("apiKey", $mashape_key, 0, "/");
+    header('Location: login.php?dest='.urlencode($_SERVER['REQUEST_URI']));
+    exit();
 }
 
 ?>
@@ -123,7 +119,8 @@ function success(data)
 {
   $("form").prepend(
     "<div class='alert alert-success alert-dismissable fade in'>"+
-      "<strong>Created!</strong> Dataset <a class='alert-link' href='edit.php?dataset=" + data.data.name + "'>" + data.data.name + "</a> successfully created."+
+      "<strong>Created!</strong> Dataset <a class='alert-link' href='edit.php?dataset=" + data.data.name + "'>" + data.data.name + "</a> successfully created. "+
+      "Now try <a class='alert-link' href='upload.php?dataset="+data.data.name+"'>uploading</a> some data."+
       "<button type='button' class='close pull-right' data-dismiss='alert' aria-hidden='true'>&times;</button>"+
     "</div>");
 }

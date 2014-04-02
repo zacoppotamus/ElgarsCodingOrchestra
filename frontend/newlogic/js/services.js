@@ -17,12 +17,11 @@ angular.module('eco.services', [])
 			console.log('Hi, '+name);
 		};
 
-		dataService.getData = function(datasetName, username, apikey) {
-			// to do: pass apikey and username as parameters
+		dataService.getData = function(datasetName, apikey) {
 			// this happens asynchronously
 			var promise = $http({
 				method: 'GET',
-				url: 'https://sneeza-eco.p.mashape.com/datasets/' + username + '.' + datasetName+'/data',
+				url: 'https://sneeza-eco.p.mashape.com/datasets/'+datasetName+'/data',
 				headers: {
 					'X-Mashape-Authorization' : apikey
 				}
@@ -60,17 +59,17 @@ angular.module('eco.services', [])
 		};*/
 
 		dataService.getSelectedDataset = function() {
-			console.log(this.selectedDataset);
+			console.log('Selected Dataset: ' + this.selectedDataset);
 			return this.selectedDataset;
 		};
 
 		dataService.getCurrentData = function() {
-			console.log(this.currentData);
+			console.log('Current Data: ' + this.currentData);
 			return this.currentData;
 		};
 
 		dataService.getSelectedVizType = function() {
-			console.log(this.selectedVizType);
+			console.log('Selected Visualisation Type is: ' + this.selectedVizType);
 			return this.selectedVizType;
 		};
 
