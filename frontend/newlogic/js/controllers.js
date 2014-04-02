@@ -29,6 +29,8 @@ angular.module('eco.controllers', [])
 
 	// use ben's cookie and username for the time being
 	$scope.apiKey = "EU6h9H8BUXELDmfO1Mbh0jLasSQxrAZd";
+
+	console.log(apiKey);
 	$scope.username = 'benelgar';
 
 	// reinitialize $scope.vizTypes here
