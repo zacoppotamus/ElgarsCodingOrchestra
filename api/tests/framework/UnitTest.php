@@ -34,8 +34,17 @@ class UnitTest {
      * @return mixed
      */
 
-    public function assert($value, $expected) {
+    public function assertEquals($value, $expected) {
         return $this->outputTestResult($value == $expected);
+    }
+
+    /**
+     * @param mixed $value
+     * @return mixed
+     */
+
+    public function assert($value) {
+        return $this->outputTestResult($value);
     }
 
     /**
