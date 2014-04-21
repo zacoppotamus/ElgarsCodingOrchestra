@@ -20,7 +20,7 @@ eco.charts.d3bubblechart = function() {
                 height = options.height;
             
             var color = d3.scale.category20b();
-            
+    
             var maxElement = d3.max(d3.values(data),function(i){
                 return +i[yValue];
             });
@@ -29,7 +29,7 @@ eco.charts.d3bubblechart = function() {
             });
             
             var scale = d3.scale.linear()
-                    .range([10, height/10])
+                    .range([10, height/15])
                     .domain([minElement, maxElement]);
                     
             var scalingFactor = (height/10)/maxElement;
@@ -40,8 +40,8 @@ eco.charts.d3bubblechart = function() {
             var force = d3.layout.force()
                 .nodes(data)
                 .size([width, height])
-                .gravity(0.5)
-                .charge(-60000/data.length)
+                .gravity(0.01)
+                .charge(-1000/data.length)
                 .start();
 
             var nodes = svg.selectAll(".bubble-chart-node")
@@ -65,10 +65,16 @@ eco.charts.d3bubblechart = function() {
             
             force.on("tick", function()
             {
-                nodes.attr("transform", function(d)
-                {
-                    return "translate(" + d.x + "," + d.y + ")";
-                });
+                callCollisions();
+                
+                svg.selectAll("circle")
+                  .attr("cx", function(d) { return d.x; })
+                  .attr("cy", function(d) { return d.y; });
+            });
+            
+            svg.on("mousemove", function()
+            {
+                force.resume();
             });
             
             function mouseover(d)
@@ -85,12 +91,14 @@ eco.charts.d3bubblechart = function() {
                 d3.selectAll("[class=bubble-text]").remove();
                 
                 svg.append("g")
-					.append("text")
-					.attr("x", 25)
-					.attr("y", 50)
-					.attr("class", "bubble-text")
-					.attr("fill", "#483D8B")
+			        .append("text")
+			        .attr("x", 25)
+			        .attr("y", 50)
+			        .attr("class", "bubble-text")
+			        .attr("fill", "#483D8B")
                     .text(d[xValue] + ": " + d[yValue]);
+                
+                callCollisions(d);
             };
             
             function mouseout()
@@ -106,6 +114,62 @@ eco.charts.d3bubblechart = function() {
                         return scale(data[yValue]);
                     });
             };
+            
+            function collide(node,ex) 
+            {
+                var r = scale(node[yValue]) * ex + 20,
+                    nx1 = node["x"] - r,
+                    nx2 = node["x"] + r,
+                    ny1 = node["y"] - r,
+                    ny2 = node["y"] + r;
+                return function(quad, x1, y1, x2, y2) 
+                {
+                    if (quad.point && (quad.point !== node)) 
+                    {
+                        var x = node["x"] - quad.point.x,
+                            y = node["y"] - quad.point.y,
+                            l = Math.sqrt(x * x + y * y),
+                            r = (scale(node[yValue]) + scale(quad.point[yValue])) * ex;
+                        if (l < r) 
+                        {
+                            l = (l - r) / l * .5;
+                            node["x"] -= x *= l;
+                            node["y"] -= y *= l;
+                            quad.point.x += x;
+                            quad.point.y += y;
+                        }
+                    }
+                    return x1 > nx2 || x2 < nx1 || y1 > ny2 || y2 < ny1;
+                };
+            };
+            
+            function callCollisions(selected)
+            {
+                var nn = nodes[0];
+                var n = nn.length;
+                var i = -1, j = -1;
+                var cords = new Array();
+                
+                function f(d,j)
+                {
+                    cords[j] = d[j]["__data__"];
+                };
+                while (++j < n) f(nn,j);
+                
+                var q = d3.geom.quadtree(cords);
+                while (++i < n)
+                {
+                    if (selected != null)
+                    {
+                        if (cords[i].index == selected.index)
+                            q.visit(collide(cords[i],1.1))
+                        else
+                            q.visit(collide(cords[i],1));
+                    }
+                    else
+                        q.visit(collide(cords[i],1));
+                };
+            }
         }
     }
 }
