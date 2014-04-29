@@ -1,27 +1,11 @@
 <?php
-require_once("../wrappers/php/rainhawk.class.php");
 
-session_start();
-
-if(isset($_POST['apiKey'])) {
-    $_SESSION['apiKey'] = trim($_POST['apiKey']);
-}
-
-$mashape_key = isset($_SESSION['apiKey']) ? trim($_SESSION['apiKey']) : null;
-
-$rainhawk = new Rainhawk($mashape_key);
+require_once "includes/core.php";
+require_once "includes/check_login.php";
 
 $datasetsInfo = $rainhawk->listDatasets();
 
-$user = isset($_SESSION['user']) ? $_SESSION['user'] : null;
-
-if (!$user)
-{
-    header('Location: login.php?dest='.urlencode($_SERVER['REQUEST_URI']));
-    exit();
-}
 ?>
-
 <!DOCTYPE html>
 <html lan="en-GB">
     <head>
@@ -39,13 +23,12 @@ if (!$user)
         <script>
             $(document).ready(function(){
                 $(".confirm").confirm({
-                    text: "Are you sure you wish to delete this dataset? This action is irreversible",
-                    title: "Really delete?",
+                    text: "Are you sure you wish to delete this dataset? This action is irreversible!",
+                    title: "Really?",
                     confirmButton: "Delete"
                 });
             });
         </script>
-
     </head>
     <body>
         <div class="container">

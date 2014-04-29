@@ -1,36 +1,35 @@
 <?php
 
-session_start();
+require_once "includes/core.php";
 
 if(isset($_POST['apiKey'])) {
-    require_once("../wrappers/php/rainhawk.class.php");
-
-    $mashape_key = $_POST['apiKey'];
-
+    $mashape_key = trim($_POST['apiKey']);
     $rainhawk = new Rainhawk($mashape_key);
 
     $user = $rainhawk->ping()['mashape_user'];
-
-    if ($user == false)
+    if($user == false)
     {
         header('Location: login.php?fail');
+        exit();
     }
     else
     {
-        $_SESSION['apiKey'] = trim($_POST['apiKey']);
-        $_SESSION["user"] = $user;
+        $_SESSION['apiKey'] = $mashape_key;
+        $_SESSION['user'] = $user;
 
         $location = isset($_GET['dest']) ? urldecode($_GET['dest']) : 'account.php';
 
-        header('Location: '.$location);
+        header('Location: ' . $location);
+        exit();
     }
-    exit();
 }
 
 if(isset($_SESSION["apiKey"]) && !isset($_GET["logout"]))
 {
     header("Location: account.php");
+    exit();
 }
+
 ?>
 <html lan="en-GB">
     <head>

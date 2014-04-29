@@ -1,29 +1,11 @@
 <?php
-require_once("../wrappers/php/rainhawk.class.php");
-require_once("helpers/datasetButtons.php");
 
-session_start();
-
-if(isset($_POST['apiKey'])) {
-    $_SESSION['apiKey'] = trim($_POST['apiKey']);
-}
-
-$mashape_key = isset($_SESSION['apiKey']) ? trim($_SESSION['apiKey']) : null;
-
-$rainhawk = new Rainhawk($mashape_key);
+require_once "includes/core.php";
+require_once "includes/check_login.php";
 
 $dataset = isset($_GET['dataset']) ? htmlspecialchars($_GET['dataset']) : null;
-
 $datasetInfo = $rainhawk->fetchDataset($dataset);
-$fields      = $datasetInfo["fields"];
-
-$user = isset($_SESSION['user']) ? $_SESSION['user'] : null;
-
-if (!$user)
-{
-    header('Location: login.php?dest='.urlencode($_SERVER['REQUEST_URI']));
-    exit();
-}
+$fields = $datasetInfo["fields"];
 
 ?>
 <!doctype html>
