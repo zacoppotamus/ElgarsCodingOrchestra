@@ -1,18 +1,15 @@
 <?php
 
-include("../../wrappers/php/rainhawk.class.php");
+require_once "../includes/core.php";
+require_once "../includes/check_login.php";
+
 header("content-type: application/json; charset=utf8");
-
-session_start();
-
-$mashape_key = isset($_SESSION['apiKey']) ? trim($_SESSION['apiKey']) : null;
-
-$rainhawk = new Rainhawk($mashape_key);
 
 $dataset = isset($_GET['dataset']) ? $_GET['dataset'] : null;
 $document = array();
 
-foreach($_POST as $name => $value) {
+foreach($_POST as $name => $value)
+{
     if($name == "dataset") continue;
 
     $document[$name] = $value;
@@ -20,12 +17,13 @@ foreach($_POST as $name => $value) {
 
 $result = $rainhawk->insertData($dataset, $document);
 
-if(!$result) {
+if(!$result)
+{
     echo json_encode(array(
         "Result" => "ERROR",
         "Message" => $rainhawk->error()
     ));
-    exit;
+    exit();
 }
 
 echo json_encode(array(
