@@ -6,8 +6,8 @@ function steamgraph(xValue, yValue, data, target)
     //wrap the data
     data = [{"values":data}]; 
     
-    var width = 1500,
-        height = 700;
+    var width = 1300,
+        height = 600;
         
     var margin = 
     {

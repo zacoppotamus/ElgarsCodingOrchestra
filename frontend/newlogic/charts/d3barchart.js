@@ -125,10 +125,11 @@ eco.charts.d3barchart = function() {
 					.call(yAxis)
 				.append("text")
 					.attr("transform", "rotate(-90)")
-					.attr("y", 10)
+					.attr("y", -40)
+		            .attr("x", -height/2)
 					.attr("dy", ".21em")
 					.style("text-anchor", "end")
-					.style("font", "10px Helvetica")
+					.style("font", "12px Helvetica")
 					.text(yValue);
 
             function mouseover(d)
@@ -141,8 +142,8 @@ eco.charts.d3barchart = function() {
                 
                 svg.append("g")
 					.append("text")
-					.attr("x", 25 - margin.left)
-					.attr("y", 50 - margin.top)
+					.attr("x", 25)
+					.attr("y", 50)
 					.attr("class", "bar-header-text")
 					.attr("fill", "#483D8B")
                     .text(d[xValue] + ": " + d[yValue]);
