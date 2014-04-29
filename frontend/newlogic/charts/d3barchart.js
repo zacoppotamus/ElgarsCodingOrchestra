@@ -142,8 +142,8 @@ eco.charts.d3barchart = function() {
                 
                 svg.append("g")
 					.append("text")
-					.attr("x", 10)
-					.attr("y", 25)
+					.attr("x", 25 - margin.left)
+ -					.attr("y", 50 - margin.top)
 					.attr("class", "bar-header-text")
 					.attr("fill", "#483D8B")
                     .text(d[xValue] + ": " + d[yValue]);
