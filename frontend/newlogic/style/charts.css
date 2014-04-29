@@ -150,3 +150,10 @@
     font-size: 12px;
 }
 
+/* Steam Graph */
+.steam-text
+{
+    font-family: Helvetica, sans-serif;
+    font-size: 32px;
+    
+}
