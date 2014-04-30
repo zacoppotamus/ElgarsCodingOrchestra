@@ -45,23 +45,23 @@ require_once "includes/check_login.php";
 
                     return false;
                 });
-
-                function failed(message) {
-                    $(".container").prepend($('<div class="alert alert-danger fade in"></div>')
-                        .append($('<strong>Error!</strong>&nbsp;'))
-                        .append(message)
-                        .append($('<button type="button" class="close pull-right" data-dismiss="alert" aria-hidden="true">&times;</button>'))
-                    );
-                }
-
-                function added(data) {
-                    $(".container").prepend($('<div class="alert alert-success fade in"></div>')
-                        .append($('<span><strong>Success!</strong> Dataset <a class="alert-link" href="/edit.php?dataset=' + data.name + '">' + data.name + '</a> successfully created.&nbsp;</span>'))
-                        .append($('<span>Now try <a class="alert-link" href="/upload.php?dataset=' + data.name + '">uploading</a> some data.</span>'))
-                        .append($('<button type="button" class="close pull-right" data-dismiss="alert" aria-hidden="true">&times;</button>'))
-                    );
-                }
             });
+
+            function failed(message) {
+                $(".container").prepend($('<div class="alert alert-danger fade in"></div>')
+                    .append($('<strong>Error!</strong>&nbsp;'))
+                    .append(message)
+                    .append($('<button type="button" class="close pull-right" data-dismiss="alert" aria-hidden="true">&times;</button>'))
+                );
+            }
+
+            function added(data) {
+                $(".container").prepend($('<div class="alert alert-success fade in"></div>')
+                    .append($('<span><strong>Success!</strong> Dataset <a class="alert-link" href="/edit.php?dataset=' + data.name + '">' + data.name + '</a> successfully created.&nbsp;</span>'))
+                    .append($('<span>Now try <a class="alert-link" href="/upload.php?dataset=' + data.name + '">uploading</a> some data.</span>'))
+                    .append($('<button type="button" class="close pull-right" data-dismiss="alert" aria-hidden="true">&times;</button>'))
+                );
+            }
         </script>
     </head>
 
