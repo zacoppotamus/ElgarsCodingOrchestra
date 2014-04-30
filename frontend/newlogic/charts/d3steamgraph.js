@@ -43,7 +43,7 @@ function steamgraph(xValue, yValue, data, target)
         .offset("zero")
         .values(function(d) { return d.values; });
         
-    var colorScale = d3.scale.category20c();
+    var colorScale = d3.scale.category20b();
     
     var area = d3.svg.area()
         .x(function(d) { return xScale(d[xValue]); })
@@ -108,7 +108,8 @@ function steamgraph(xValue, yValue, data, target)
         .text(xValue);
         
     d3.select("path")
-        .on("mousemove", mousemove);
+        .on("mousemove", mousemove)
+        .on("click", mouseclick);
     
     function mousemove()
     {
@@ -133,6 +134,12 @@ function steamgraph(xValue, yValue, data, target)
             .text(xValue + ": " + Math.round(xmouseScale(posX))
                 + ", " 
                 + yValue + ": " + Math.round(ymouseScale(posY)));
+    };
+    
+    function mouseclick()
+    {
+        d3.select(this)
+            .style("fill", function() { return colorScale(Math.random())});
     };
     
 }
