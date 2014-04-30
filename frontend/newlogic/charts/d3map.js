@@ -8,16 +8,10 @@ eco.charts.d3map = function() {
 			console.log(target);
 			var map = new google.maps.Map(target.node(),
 			{
-				zoom: 12,
-				center: new google.maps.LatLng(40.7581769, -73.9469835),
+				zoom: 2,
+				center: new google.maps.LatLng(0, 0),
 				mapTypeId: google.maps.MapTypeId.TERRAIN
 			});
-
-			target
-				.style("width", "100%")
-				.style("height", "100%")
-				.style("margin", "0")
-				.style("padding", "0");
 
 			// Create overlay
 			var overlay = new google.maps.OverlayView();
