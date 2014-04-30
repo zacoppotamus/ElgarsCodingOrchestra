@@ -16,8 +16,8 @@ $colWidth = 100 / count($fields);
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <?php require_once "includes/meta.php"; ?>
-        <link rel="stylesheet" href="js/jtable.2.3.1/themes/metro/blue/jtable.min.css" type="text/css">
-        <script src="js/jtable.2.3.1/jquery.jtable.js" type="text/javascript"></script>
+        <link rel="stylesheet" href="/js/jtable.2.3.1/themes/metro/blue/jtable.min.css" type="text/css">
+        <script src="/js/jtable.2.3.1/jquery.jtable.js" type="text/javascript"></script>
         <style type="text/css">
             #dataTable {
                 margin-left: 15px;
