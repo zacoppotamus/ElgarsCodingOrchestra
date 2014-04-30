@@ -1,131 +1,108 @@
 <?php
-require_once("../wrappers/php/rainhawk.class.php");
 
-session_start();
-
-if(isset($_POST['apiKey'])) {
-    $_SESSION['apiKey'] = trim($_POST['apiKey']);
-}
-
-$mashape_key = isset($_SESSION['apiKey']) ? trim($_SESSION['apiKey']) : null;
-
-$rainhawk = new Rainhawk($mashape_key);
-
-$user = isset($_SESSION['user']) ? $_SESSION['user'] : null;
-
-if (!$user)
-{
-    header('Location: login.php?dest='.urlencode($_SERVER['REQUEST_URI']));
-    exit();
-}
+require_once "includes/core.php";
+require_once "includes/check_login.php";
 
 ?>
+<!DOCTYPE html>
+<html lang="en-GB">
+    <head>
+        <title>Project Rainhawk - Create Dataset</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <?php require_once "includes/meta.php"; ?>
+        <style type="text/css">
+            .row .form-controls {
+                margin-top: 40px;
+            }
+        </style>
+        <script type="text/javascript">
+            $(function() {
+                $("form").submit(function(e) {
+                    var postdata = new Object();
+                    postdata.name = $("#datasetName").val();
+                    postdata.description = $("#datasetDescription").val();
 
-<html>
-  <head>
-    <title>Create</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    $.ajax({
+                        url: 'https://sneeza-eco.p.mashape.com/datasets',
+                        type: 'POST',
+                        data: postdata,
+                        datatype: 'json',
+                        success: function(data) {
+                            if(data.meta.code === 200) {
+                                added(data.data);
+                            } else {
+                                failed(data.data.message);
+                            }
+                        },
+                        error: function(message) {
+                            failed(message);
+                        },
+                        beforeSend: function(xhr) {
+                            xhr.setRequestHeader("X-Mashape-Authorization", "<?php echo $mashape_key; ?>");
+                        }
+                    });
 
-    <!-- Bootstrap -->
-    <link rel="stylesheet" href="css/bootstrap.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link href="css/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="css/font-awesome/css/font-awesome.min.css"></link>
+                    return false;
+                });
+            });
 
-    <!-- jQuery -->
-    <script src="js/jquery-1.10.2.js"></script>
+            function failed(message) {
+                $(".container").prepend($('<div class="alert alert-danger fade in"></div>')
+                    .append($('<strong>Error!</strong>&nbsp;'))
+                    .append(message)
+                    .append($('<button type="button" class="close pull-right" data-dismiss="alert" aria-hidden="true">&times;</button>'))
+                );
+            }
 
-    <!-- Bootstrap Plugins -->
-    <script src="js/bootstrap.js"></script>
-  </head>
-  <body>
-    <div class="container">
-      <div class="row">
-        <h1>Create</h1>
-        <h3>
-          Create a new dataset
-          <a href="account.php" type="button"
-            class="btn btn-warning pull-right">
-                <i class="fa fa-bars"></i>&nbsp Datasets
-          </a>
-        </h3>
-      </div>
-      <div class="row">
-        <form role="form">
-          <div class="form-group">
-            <label for="datasetName">Dataset Name</label>
-            <div class="input-group">
-              <span class="input-group-addon"><?php echo $user; ?>.</span>
-              <input type="text" class="form-control" id="datasetName"
-                name="datasetName" placeholder="Dataset Name" required autofocus>
+            function added(data) {
+                $(".container").prepend($('<div class="alert alert-success fade in"></div>')
+                    .append($('<span><strong>Success!</strong> Dataset <a class="alert-link" href="/edit.php?dataset=' + data.name + '">' + data.name + '</a> successfully created.&nbsp;</span>'))
+                    .append($('<span>Now try <a class="alert-link" href="/upload.php?dataset=' + data.name + '">uploading</a> some data.</span>'))
+                    .append($('<button type="button" class="close pull-right" data-dismiss="alert" aria-hidden="true">&times;</button>'))
+                );
+            }
+        </script>
+    </head>
+
+    <body>
+        <?php require_once "includes/nav.php"; ?>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <h1>Create a new dataset...</h1>
+                            <p>Get started here by entering a unique name for your dataset along with a description for what this dataset will hold.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-          <div class="form-group">
-            <label for="datasetDescription">Dataset Description</label>
-            <input type="text" class="form-control" id="datasetDescription"
-              name="datasetDescription" placeholder="Dataset Description" required>
-          </div>
-          <button type="submit" class="btn btn-default">Submit</button>
-        </form>
-      </div>
-    </div>
-<script>
-$('form').submit(createDataset);
-
-function createDataset(event)
-{
-    event.stopPropagation();
-    event.preventDefault();
-
-    var postdata = new Object();
-    postdata.name = $('#datasetName').val();
-    postdata.description = $('#datasetDescription').val();
-
-    $.ajax({
-      url: 'https://sneeza-eco.p.mashape.com/datasets',
-      type: 'POST',
-      data: postdata,
-      datatype: 'json',
-      success: function(data) {
-        if(data.meta.code === 200)
-        {
-          success(data);
-        }
-        else
-        {
-          error(data);
-        }
-      },
-      error: function(err) { alert(err); },
-      beforeSend: function(xhr) {
-        xhr.setRequestHeader("X-Mashape-Authorization", "<?php echo $mashape_key; ?>");
-      }
-    });
-
-    return false;
-}
-
-function error(data)
-{
-  $("form").prepend(
-    "<div class='alert alert-danger fade in'>"+
-      "<strong>Error!</strong> " + data.data.message +
-      "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"+
-    "</div>");
-}
-
-function success(data)
-{
-  $("form").prepend(
-    "<div class='alert alert-success alert-dismissable fade in'>"+
-      "<strong>Created!</strong> Dataset <a class='alert-link' href='edit.php?dataset=" + data.data.name + "'>" + data.data.name + "</a> successfully created. "+
-      "Now try <a class='alert-link' href='upload.php?dataset="+data.data.name+"'>uploading</a> some data."+
-      "<button type='button' class='close pull-right' data-dismiss='alert' aria-hidden='true'>&times;</button>"+
-    "</div>");
-}
-
-</script>
-  </body>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <form role="form">
+                                <div class="form-group">
+                                    <label for="datasetName">Dataset Name:</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><?php echo $user; ?>.</span>
+                                        <input type="text" class="form-control" id="datasetName" name="datasetName" placeholder="Enter the name of the dataset..." required autofocus>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="datasetDescription">Dataset Description:</label>
+                                    <input type="text" class="form-control" id="datasetDescription" name="datasetDescription" placeholder="Enter a description for this dataset..." required>
+                                </div>
+                                <div class="form-controls">
+                                    <button type="submit" class="btn btn-default">Submit</button>
+                                    <a href="/datasets.php" type="button" class="btn btn-danger">Back</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
 </html>
-

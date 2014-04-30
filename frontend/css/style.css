@@ -88,6 +88,10 @@ i.service-icon {
 }
 
 /* Navigation Bar */
+.navbar-default .navbar-brand {
+  color: #333;
+}
+
 .navbar-right {
   margin-right: 20px;
   margin-left: 20px;
