@@ -19,7 +19,7 @@ $accessList = array_unique(array_merge($readList, $writeList));
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <?php require_once "includes/meta.php"; ?>
-        <script src="js/rainhawk.js" type="text/javascript"></script>
+        <script src="/js/rainhawk.js" type="text/javascript"></script>
         <script>
             var dataset = "<?php echo $dataset; ?>";
             var numUserCount = 0;

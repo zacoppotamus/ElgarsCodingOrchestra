@@ -8,7 +8,7 @@ if(isset($_POST['apiKey'])) {
 
     $user = $rainhawk->ping()['mashape_user'];
     if($user == false) {
-        header("Location: login.php?fail");
+        header("Location: /login.php?fail");
         exit;
     } else {
         $location = isset($_GET['dest']) ? urldecode($_GET['dest']) : "datasets.php";
@@ -22,7 +22,7 @@ if(isset($_POST['apiKey'])) {
 }
 
 if(isset($_SESSION['apiKey']) && !isset($_GET['logout'])) {
-    header("Location: datasets.php");
+    header("Location: /datasets.php");
     exit;
 }
 
