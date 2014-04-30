@@ -4,20 +4,8 @@ html, body {
 	overflow-x: hidden;
 }
 
-.navbar-btn {
-	margin-left: 10px;
-	margin-right: 10px;
-}
-
 .vis-btn {
 	margin-top: 110px;
-}
-
-.navbar {
-	-webkit-box-shadow: 0 6px 6px -6px black;
-	-moz-box-shadow: 0 6px 6px -6px black;
-	box-shadow: 0 6px 6px -6px black;
-	background-color: rgb(250, 250, 250);
 }
 
 .vis-navbar {

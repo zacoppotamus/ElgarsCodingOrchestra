@@ -7,23 +7,23 @@
             <?php if($user) { ?>
                 <li>
                     <div>
-                        <a class="btn btn-default navbar-btn" href="create.php"><i class="fa fa-file"></i>&nbsp; Create Dataset</a>
+                        <a class="btn btn-default navbar-btn" href="/create.php"><i class="fa fa-file"></i>&nbsp; Create Dataset</a>
                     </div>
                 </li>
                 <li>
                     <div>
-                        <a class="btn btn-default navbar-btn" href="datasets.php"><i class="fa fa-bars"></i>&nbsp; Browse Datasets</a>
+                        <a class="btn btn-default navbar-btn" href="/datasets.php"><i class="fa fa-bars"></i>&nbsp; Browse Datasets</a>
                     </div>
                 </li>
                 <li>
                     <div>
-                        <a class="btn btn-default navbar-btn" href="login.php?logout"><i class="fa fa-user"></i>&nbsp; Log Out</a>
+                        <a class="btn btn-default navbar-btn" href="/login.php?logout"><i class="fa fa-user"></i>&nbsp; Log Out</a>
                     </div>
                 </li>
             <?php } else { ?>
                 <li>
                     <div>
-                        <a class="btn btn-default navbar-btn" href="login.php"><i class="fa fa-user"></i>&nbsp; Login</a>
+                        <a class="btn btn-default navbar-btn" href="/login.php"><i class="fa fa-user"></i>&nbsp; Login</a>
                     </div>
                 </li>
             <?php } ?>

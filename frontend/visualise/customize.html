@@ -1,19 +1,4 @@
 <div class="container">
-    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <a href="#" class="navbar-brand">Project Rainhawk</a>
-        </div>
-        <ul class="nav navbar-nav navbar-right">
-          <li>
-            <div>
-            <a class="btn btn-default navbar-btn" href="../login.php"><i class="fa fa-bars"></i>Datasets</a>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </nav>
-
     <div class="row customize-title">
         <div class="col-sm-12 text-center">
             <h1>Visualisation Parameters</h1>
@@ -60,7 +45,7 @@
             </p>
         </div>
     </div>
-    
+
     <hr>
 
     <div class="row customize-part2">
@@ -75,7 +60,7 @@
                 <select class="form-control" ng-model="vizTypes[selectedVizType.id].options[choice]" ng-options="field for field in fields"><option></option></select>
             </div>
         </div>
-        
+
         <div class="col-sm-6 text-center">
             <!-- <input type="checkbox" ng-model="checked"></h4> -->
             <a class="btn btn-danger vis-btn" ng-disabled="checked" ng-click="sendVizOptionsToService()" href="#visualization">

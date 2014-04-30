@@ -71,7 +71,7 @@ $datasetsInfo = $rainhawk->listDatasets();
                                     </a>
                                 </td>
                                 <td>
-                                    <a class="btn btn-success btn-sm" href="/newlogic/?dataset=<?php echo $dataset['name']; ?>" <?php echo $dataset['rows'] == 0 ? "disabled" : null; ?>>
+                                    <a href="/visualise/?dataset=<?php echo $dataset['name']; ?>" class="btn btn-success btn-sm" <?php echo $dataset['rows'] == 0 ? "disabled" : null; ?>>
                                         <i class="fa fa-bar-chart-o"></i>&nbsp; Visualise
                                     </a>
                                 </td>

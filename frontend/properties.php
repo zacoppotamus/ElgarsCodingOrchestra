@@ -126,8 +126,8 @@ $accessList = array_unique(array_merge($readList, $writeList));
                         </div>
                         <?php if(in_array($user, $writeList)) { ?>
                             <div class="panel-footer text-right">
-                                <button type="submit" form="fieldForm" class="btn btn-success" formaction="/proxy/dataset_constraints.php?dataset=<?php echo $dataset; ?>&autoapply" formnovalidate>Auto Apply</button>
-                                <button type="submit" form="fieldForm" class="btn btn-default">Apply</button>
+                                <button type="submit" form="fieldForm" class="btn btn-success" formaction="/proxy/dataset_constraints.php?dataset=<?php echo $dataset; ?>&autoapply" formnovalidate>Auto-Detect</button>
+                                <button type="submit" form="fieldForm" class="btn btn-default">Apply Changes</button>
                             </div>
                         <?php } ?>
                     </div>

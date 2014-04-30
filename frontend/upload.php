@@ -155,6 +155,7 @@ $datasetInfo = $rainhawk->fetchDataset($dataset);
                                 </div>
                                 <div class="form-controls">
                                     <button id="btnSubmit" type="submit" data-loading-text="Uploading..." class="btn btn-default">Upload</button>
+                                    <a href="/datasets.php" type="button" class="btn btn-danger">Back</a>
                                 </div>
                             </form>
                         </div>
