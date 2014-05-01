@@ -1,7 +1,7 @@
 CXX = g++
-CPPFLAGS = -std=c++0x -g -Wall -Iunzip
+CPPFLAGS = -std=c++0x -O3 -g -Wall -Iunzip
 ZPATH = unzip
-PARSE_SRCS = sadTables.cpp sadReader.cpp sadUtils.cpp sadWriter.cpp sadParser.cpp
+PARSE_SRCS = sadParser.cpp processTables.cpp readFile.cpp JSONWriter.cpp
 PARSE_OBJS = $(PARSE_SRCS:%.cpp=%.o)
 ABS_UNZ_OBJS = miniunz.o unzip.o ioapi.o libz.a
 UNZ_OBJS = $(ABS_UNZ_OBJS:%=$(ZPATH)/%)
