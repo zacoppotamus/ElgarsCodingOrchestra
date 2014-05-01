@@ -2,9 +2,9 @@
 #include <vector>
 #include <cstdio>
 #include <cstring>
-#include "JSONWriter.h"
-#include "readFile.h"
-#include "processTables.h"
+#include "sadReader.hpp"
+#include "sadTables.hpp"
+#include "sadWriter.hpp"
 
 using namespace std;
 
@@ -41,46 +41,32 @@ int main( int argc, char * argv[] )
       }
     }
     cout << "Getting contents..." << '\n';
-    vector< page > fileContents( getFile( filename ) );
-    if( fileContents.size() > 0 )
+    unsigned error = 0;
+    vector<sheet> fileContents = readFile( filename, error );
+    if( fileContents.size() > 0 && error == 0 )
     {
       cout << "Processing contents..." << '\n';
-      vector< vector< vector<JSONObject> > > processedDataSheets;
+      vector< vector<table> > tablesOfSheets;
       for(
-        vector< page >::iterator it = fileContents.begin();
+        vector<sheet>::iterator it = fileContents.begin();
         it != fileContents.end();
         it++
       )
       {
-        vector< vector<JSONObject> > processedData(
-          processData( it->contents ) );
-        processedDataSheets.push_back( processedData );
+        vector<table> tableList = getSheetTables( *it );
+        tablesOfSheets.push_back( tableList );
       }
       cout << "Printing contents..." << '\n';
       unsigned count = 0;
-      unsigned pagecount = 0;
-      for(
-        vector< vector< vector<JSONObject> > >::iterator outIt =
-          processedDataSheets.begin();
-        outIt != processedDataSheets.end();
-        outIt++
-      )
+      for( size_t it = 0; it < fileContents.size(); it++ )
       {
-        string title = fileContents[pagecount].name;
-        for(
-          vector< vector<JSONObject> >::iterator inIt = outIt->begin();
-          inIt != outIt->end();
-          inIt++
-        )
-        {
-          char * newFilename = new char[title.size()+8];
-          sprintf( newFilename, "%s-%02d.json", title.c_str(), count+1 );
-          string filetitle( newFilename );
-          createJDocument( filetitle, *inIt );
-          cout << filetitle << " created." << '\n';
-          count++;
-        }
-        pagecount++;
+        string title = fileContents[it].name();
+        char * newFilename = new char[title.size()+10];
+        sprintf( newFilename, "%s-%02d.json", title.c_str(), count+1 );
+        string filetitle( newFilename );
+        jsonFile( filetitle, fileContents[it], tablesOfSheets[it] );
+        cout << filetitle << " created." << '\n';
+        count++;
       }
     }
     else
@@ -91,3 +77,4 @@ int main( int argc, char * argv[] )
   cout << "All done." << '\n';
   return 0;
 }
+

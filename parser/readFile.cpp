@@ -140,193 +140,179 @@ string pageString( page spreadsheet )
 /////////  End of utility functions
 /////////////////////////////////////////////////////////////////
 
-unsigned charsUntil( ifstream &input, char target, char delim )
+// Section ends with cc = " and ifs.peek() != " regardless of the
+// length/meaning of the quote.
+void skipQuotes( long unsigned &pos, ifstream &ifs, unsigned &error )
 {
-  int startPosition = input.tellg();
-  unsigned count = 0;
-  char next;
-  while( !input.eof() )
+  char cc;
+  cc = ifs.get(); pos++;
+  if( cc != '\"' )
   {
-    next = input.get();
-    if( next == delim )
+    while( ifs.good() && cc != '\"' )
     {
-      input.seekg( startPosition );
-      return count;
-    }
-    else if( next == '"' )
-    {
-      next = 0;
-      while ( next != '"' )
+      cc = ifs.get(); pos++;
+      if( cc == '\"' && ifs.peek() == '\"' )
       {
-        if( input.eof() )
-        {
-          input.seekg( startPosition );
-          return count;
-        }
-        next = input.get();
+        ifs.get(); pos++; cc = ifs.get(); pos++;
       }
     }
-    else if( next == target )
+    if( ifs.eof() )
     {
-      count++;
+      error = 2;
+      return;
+    }
+    if( ifs.fail() )
+    {
+      error = 1;
+      return;
     }
   }
-  input.clear();
-  input.seekg( startPosition );
-  return count;
 }
 
-unsigned charsUntil( ifstream &input, char target )
+void writeCell( sheet &target, size_t row, size_t col, string record )
 {
-  int startPosition = input.tellg();
-  unsigned count = 0;
-  char next;
-  while( !input.eof() )
+  if( record == "" ) return;
+  long double number;
+  if( convertData( record, number ) )
   {
-    next = input.get();
-    if( next == '"' )
-    {
-      next = 0;
-      while ( next != '"' )
-      {
-        if( input.eof() )
-        {
-          input.seekg( startPosition );
-          return count;
-        }
-        next = input.get();
-      }
-    }
-    else if( next == target )
-    {
-      count++;
-    }
+    target[row][col].setValue( number );
+    return;
   }
-  input.clear();
-  input.seekg( startPosition );
-  return count;
+  bool boolean;
+  if( convertBool( record, boolean ) )
+  {
+    target[row][col].setValue( boolean );
+    return;
+  }
+  target[row][col].setValue( record );
 }
 
-string getCSV( ifstream &input )
+void csvMarkers( vector<long unsigned> &commas, vector<long unsigned> &newls,
+    ifstream &ifs, unsigned &error )
 {
-  string result = "";
-  char next = 0;
-  bool quotes = false;
-  if( !input.good() )
+  long unsigned pos = 0;
+  char cc = ifs.get();
+  while( ifs.good() )
   {
-    return "";
+    if( cc == '\"' ) skipQuotes( pos, ifs, error );
+    if( error != 0 ) return;
+    if( cc == ',' ) commas.push_back( pos );
+    if( cc == '\n' ) newls.push_back( pos );
+    cc = ifs.get();
+    pos++;
   }
-  while( !input.eof() )
+  if( ifs.bad() ) error = 1;
+}
+
+void csvDimensions( size_t &rows, size_t &cols,
+    const vector<long unsigned> &commas, const vector<long unsigned> &newls )
+{
+  size_t max = newls.size();
+  size_t commaPos = 0;
+  size_t newlPos = 0;
+  long unsigned nextComma = ( commas.size() > 0 ) ? commas[0] : -1;
+  long unsigned nextNewl = ( newls.size() > 0 ) ? newls[0] : -1;
+  size_t dimensionPos = 0;
+  vector<size_t> dimensions(1,1);
+  while( newlPos < max )
   {
-    next = input.get();
-    if( next == '"' )
+    nextNewl = ( newls.size() > newlPos ) ? newls[newlPos] : -1;
+    while( nextComma < nextNewl )
     {
-      quotes = !quotes;
+      dimensions[dimensionPos]++;
+      commaPos++;
+      nextComma = ( commas.size() > commaPos ) ? commas[commaPos] : -1;
     }
-    else if( !quotes )
+    dimensions.push_back(1);
+    dimensionPos++;
+    newlPos++;
+  }
+  rows = dimensions.size();
+  cols = 0;
+  for( vector<size_t>::iterator it = dimensions.begin();
+      it != dimensions.end(); it++ )
+  {
+    if( *it > cols ) cols = *it;
+  }
+}
+
+void csvData( vector<long unsigned> &commas, vector<long unsigned> &newls,
+    sheet &result, size_t rows, size_t cols, ifstream &ifs, unsigned &error )
+{
+  long unsigned pos = 0;
+  size_t commaPos = 0;
+  size_t newlPos = 0;
+  long unsigned nextComma = ( commas.size() > 0 ) ? commas[0] : -1;
+  long unsigned nextNewl = ( newls.size() > 0 ) ? newls[0] : -1;
+  size_t row = 0;
+  size_t col = 0;
+  while( ifs.good() )
+  {
+    col = 0;
+    while( nextComma < nextNewl )
     {
-      if( next == ',' || next == '\n' )
+      string record;
+      while( pos < nextComma )
       {
-        return result;
+        char cc = ifs.get(); pos++;
+        if( cc == '\"' )
+        {
+          cc = ifs.get(); pos++;
+        }
+        record += cc;
       }
+      writeCell( result, row, col, record );
+      ifs.get(); pos++;
+      col++;
+      commaPos++;
+      nextComma = ( commas.size() > commaPos ) ? commas[commaPos] : -1;
     }
-    result = result + next;
+    string record;
+    while( pos < nextNewl && !ifs.eof() )
+    {
+      char cc = ifs.get(); pos++;
+      if( cc == '\"' )
+      {
+        cc = ifs.get(); pos++;
+      }
+      if( ifs.good() ) record += cc;
+    }
+    writeCell( result, row, col, record );
+    ifs.get(); pos++;
+    while( col+1 < cols )
+    {
+      col++;
+      writeCell( result, row, col, "" );
+    }
+    row++;
+    newlPos++;
+    nextNewl = ( newls.size() > newlPos ) ? newls[newlPos] : -1;
   }
+  if( ifs.bad() ) error = 1;
+}
+
+sheet readCSV( string filename, unsigned &error )
+{
+  error = 0;
+  ifstream ifs( filename );
+  sheet fail( 0, 0 );
+  vector<long unsigned> commas;
+  vector<long unsigned> newls;
+  cout << "marka" << '\n';
+  csvMarkers( commas, newls, ifs, error );
+  if( error != 0 ) return fail;
+  size_t rows;
+  size_t cols;
+  cout << "dim" << '\n';
+  csvDimensions2( rows, cols, commas, newls );
+  sheet result( rows, cols );
+  ifs.close();
+  ifs.open( filename );
+  cout << "dat" << '\n';
+  csvData2( commas, newls, result, rows, cols, ifs, error );
+  cout << "dun" << '\n';
+  if( error != 0 ) return fail;
   return result;
-}
-
-string purgeQuotes( string value )
-{
-  if( value.size() > 2 )
-  {
-    if( value[0] == '"' && value[value.size()-1] == '"' )
-    {
-      string newvalue = value.substr( 1, value.size()-2 );
-      return newvalue;
-    }
-  }
-  return value;
-}
-
-void insertValue( string csvalue, vector<sheetNode> &cell )
-{
-  if( csvalue.compare( "" ) == 0 )
-  {
-    sheetNode newsheet;
-    cell.push_back( newsheet );
-    return;
-  }
-  string upper = simpleToUpper( csvalue );
-  if( upper[upper.size()-1] == 13 )
-  {
-    upper.resize( upper.size()-1 );
-  }
-  if( upper.compare( "TRUE" ) == 0 )
-  {
-    sheetNode newsheet( true );
-    cell.push_back( newsheet );
-    return;
-  }
-  else if( upper.compare( "FALSE" ) == 0 )
-  {
-    sheetNode newsheet( false );
-    cell.push_back( newsheet );
-    return;
-  }
-  else
-  {
-    stringstream conversion( csvalue );
-    long double numval;
-    if( ( conversion >> numval ) )
-    {
-      sheetNode newsheet( numval );
-      cell.push_back( newsheet );
-      return;
-    }
-    else
-    {
-      string fixedValue = purgeQuotes( csvalue );
-      sheetNode newsheet( fixedValue );
-      cell.push_back( newsheet );
-      return;
-    }
-  }
-}
-
-page readCSV( string filename )
-{
-  ifstream input( filename );
-  string title = filename;
-  title.erase( title.find_last_of( '.' ) );
-  if( !input.good() )
-  {
-    page failure;
-    failure.name = title;
-    return failure;
-  }
-  unsigned width = 0;
-  unsigned height = 0;
-  width = charsUntil( input, ',', '\n' ) + 1;
-  height = charsUntil( input, '\n' );
-  vector<sheetNode> blankvector;
-  vector< vector<sheetNode> > blanksheet ( height, blankvector );
-  page spreadsheet;
-  spreadsheet.name = title;
-  spreadsheet.contents = blanksheet;
-  unsigned cHeight = 0;
-  string csvalue;
-  while( cHeight < height )
-  {
-    unsigned cWidth = 0;
-    while( cWidth < width )
-    {
-      csvalue = getCSV( input );
-      insertValue( csvalue, spreadsheet.contents[cHeight] );
-      cWidth++;
-    }
-    cHeight++;
-  }
-  return spreadsheet;
 }
 
 //Returns -1 if string is invalid
@@ -801,10 +787,11 @@ vector< page > readXLSX( string filename )
 
 vector< page > getFile( string fileName )
 {
+  unsigned error;
   FileType filetype = getType( fileName );
   if( filetype == CSV )
   {
-    vector< page > csvSheet( 1, readCSV( fileName ) ); 
+    vector< page > csvSheet( 1, readCSV( fileName, error ) ); 
     return csvSheet;
   }
   else if( filetype == XLSX )
