@@ -1,0 +1,159 @@
+/* Chart Styles
+=============================================== */
+
+/* Pie Chart */
+
+.pie-chart 
+{
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
+  font-size: 11px;
+}
+
+.pie-chart-arc path 
+{
+  stroke: #fff;
+}
+
+.pie-header-text
+{
+    font-family: Helvetica, sans-serif;
+    font-size: 32px;
+}
+
+
+/* Map */
+
+#ecoChart, html, body {
+  height: 100%;
+  width: 100%;
+}
+
+.map-dot, .map-dot svg {
+  position: absolute;
+}
+
+.map-dot svg {
+  width: 60px;
+  height: 20px;
+  padding-right: 100px;
+  font: 10px "Helvetica Neue", Helvetica, sans-serif;
+}
+
+.map-dot circle {
+  fill: brown;
+  stroke: black;
+  stroke-width: 1.5px;
+}
+
+/* Bar Chart */
+
+.bar {
+  fill: steelblue;
+}
+
+.bar:hover {
+  fill: brown;
+}
+
+.axis {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.x.axis path {
+  display: none;
+}
+
+.bar-text
+{
+    font-family: Helvetica, sans-serif;
+    font-size: 12px;
+}
+
+.bar-header-text
+{
+    font-family: Helvetica, sans-serif;
+    font-size: 32px;
+}
+
+#bar-chart-tooltip 
+{
+    position: absolute;
+    width: auto;
+    height: auto;
+    padding: 10px;
+    background-color: white;
+    -webkit-border-radius: 10px;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
+    pointer-events: none;
+}
+
+#bar-chart-tooltip.hidden 
+{
+    display: none;
+}
+
+#bar-chart-tooltip p 
+{
+    margin: 0;
+    font-family: sans-serif;
+    font-size: 16px;
+    line-height: 20px;
+}
+
+/* Bubble Chart */
+.bubble-text
+{
+    font-family: Helvetica, sans-serif;
+    font-size: 32px;
+    
+}
+
+.bubble-chart 
+{
+    height:800px;
+    /*border: 1px solid red;*/
+    width: 1400px;
+}
+
+.bubble-chart-node circle
+{
+    stroke-width: 1.5px;
+}
+
+/* Treemap */
+.treemap-node 
+{
+  border: solid 1px black;
+  font: 10px sans-serif;
+  line-height: 12px;
+  overflow: hidden;
+  position: absolute;
+  text-indent: 2px;
+}
+
+.treemap-header-text
+{
+    font-family: Helvetica, sans-serif;
+    font-size: 32px;
+}
+
+.treemap-text
+{
+    font-family: Helvetica, sans-serif;
+    font-size: 12px;
+}
+
+/* Steam Graph */
+.steam-text
+{
+    font-family: Helvetica, sans-serif;
+    font-size: 32px;
+    
+}

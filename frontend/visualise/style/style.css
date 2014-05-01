@@ -1,0 +1,81 @@
+html, body {
+	height: 100%;
+	width: 100%;
+	overflow-x: hidden;
+}
+
+.vis-btn {
+	margin-top: 110px;
+}
+
+.vis-navbar {
+	margin-bottom: 100px;
+}
+
+#ecoChart>svg {
+	margin-left: 20px;
+	margin-top: 40px;
+}
+
+#ecoChart>canvas {
+	margin-left: 20px;
+	margin-top: 55px;
+}
+
+h1, h2, h3 {
+	font-weight: 300;
+	margin-bottom: 20px;
+}
+
+img {
+	max-width: 100%;
+}
+
+.chart-image-container {
+	padding-top: 80px;
+	padding-left: 80px;
+}
+
+.chart-image {
+	width: 300px;
+	height: 200px;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #aaa;
+}
+
+.customize-title {
+	margin-top: 50px;
+	margin-bottom: -10px;
+}
+
+.customize-part1 {
+	/*background-color: rgb(204, 223, 232);*/
+	margin-top: 0px;
+	padding-top: 0px;
+	padding-bottom: 40px;
+}
+
+.customize-part2 {
+	padding-bottom: 80px;
+	padding-top: -40px;
+}
+
+.customize-part3 {
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+
+
+
+
+@media (max-width: 767px) {
+	.btn-vert-block + .btn-vert-block {
+		margin-top: 10px;
+	}
+}
+
+
+.form-control {
+	margin-left: 20px;
+}

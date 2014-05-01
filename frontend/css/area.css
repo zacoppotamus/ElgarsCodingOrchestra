@@ -1,0 +1,32 @@
+.navbar-default .navbar-brand {
+  color: #333;
+}
+
+.navbar-right > li {
+    margin-left: 5px;
+}
+
+.container {
+    margin-top: 80px;
+}
+
+.navbar .container {
+    margin-top: 0;
+}
+
+.row {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.row:first-child {
+    margin-top: 0;
+}
+
+.panel .panel-body h1:first-child, .panel .panel-body h2:first-child, .panel .panel-body h3:first-child, .panel .panel-body h4:first-child, .panel .panel-body h5:first-child {
+    margin-top: 10px;
+}
+
+.row .alert {
+    margin-bottom: 40px;
+}
