@@ -26,7 +26,7 @@ if(isset($_POST['apiKey'])) {
     }
 }
 
-if(isset($_SESSION['apiKey']) && !isset($_GET['logout'])) {
+if(isset($_SESSION['apiKey']) && isset($_SESSION['user']) && !isset($_GET['logout'])) {
     header("Location: /datasets.php");
     exit;
 }
