@@ -5,13 +5,18 @@ require_once "includes/core.php";
 if(isset($_POST['apiKey'])) {
     $mashape_key = trim($_POST['apiKey']);
     $rainhawk = new Rainhawk($mashape_key);
+    $ping = $rainhawk->ping();
+    $user = null;
 
-    $user = $rainhawk->ping()['mashape_user'];
-    if($user == false) {
+    if($ping) {
+        $user = $ping['mashape_user'];
+    }
+
+    if(empty($user)) {
         header("Location: /login.php?fail");
         exit;
     } else {
-        $location = isset($_GET['dest']) ? urldecode($_GET['dest']) : "datasets.php";
+        $location = isset($_GET['dest']) ? urldecode($_GET['dest']) : "/datasets.php";
 
         $_SESSION['apiKey'] = $mashape_key;
         $_SESSION['user'] = $user;
