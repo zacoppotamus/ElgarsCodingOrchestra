@@ -1,6 +1,6 @@
 'use strict';
 
-eco.charts.d3steamgraph = function() {
+eco.charts.d3linegraph = function() {
     return {
         title: 'Steam Graph',
         options : {

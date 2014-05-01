@@ -63,7 +63,7 @@ angular.module('eco.directives', [])
 				var xValue = vizOptions[chartType].options['xValue'];
 				var yValue = vizOptions[chartType].options['yValue'];
 
-				eco.charts.d3steamgraph().render(data, xValue, yValue, target);
+				eco.charts.d3linegraph().render(data, xValue, yValue, target);
 			}			
 		}
 	}

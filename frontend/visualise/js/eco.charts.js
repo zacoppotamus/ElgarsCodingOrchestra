@@ -79,14 +79,14 @@ eco.charts = function() {
         },
         {
             'id': 6,
-            'name':'Steam Graph',
+            'name':'Line Graph',
             'choices':['xValue', 'yValue'],
             'options' : {
                 'xValue' : null,
                 'yValue' : null
             },
             'description' : 'Steam Graph',
-            'image' : 'img/glscatter.png'
+            'image' : 'img/linegraph.png'
         }
     ];
 }
