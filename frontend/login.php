@@ -78,7 +78,7 @@ if(isset($_GET['logout'])) {
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <form action="login.php<?php echo isset($_GET['dest']) ? "?dest=" . $_GET['dest'] : null; ?>" role="form" method="post">
-                                <div class="form-group <?php echo isset($_GET['fail']) ? "has-warning" : null; ?>">
+                                <div class="form-group <?php echo isset($_GET['fail']) ? "has-error" : null; ?>">
                                     <label for="apiKey">API Key:</label>
                                     <input type="text" placeholder="Enter your API key here..." name="apiKey" class="form-control" autofocus>
                                 </div>
