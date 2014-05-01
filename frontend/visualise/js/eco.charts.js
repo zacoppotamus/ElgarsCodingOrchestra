@@ -76,6 +76,17 @@ eco.charts = function() {
             },
             'description' : '3D Scatter plot. Visualise your data in 3 different axes, with each field representing numerical values.',
             'image' : 'img/glscatter.png'
+        },
+        {
+            'id': 6,
+            'name':'Steam Graph',
+            'choices':['xValue', 'yValue'],
+            'options' : {
+                'xValue' : null,
+                'yValue' : null
+            },
+            'description' : 'Steam Graph',
+            'image' : 'img/glscatter.png'
         }
     ];
 }
