@@ -21,8 +21,11 @@ require_once "includes/check_login.php";
 
             $(function() {
                 $("form").submit(function(e) {
+                    var $submit = $(this).find("input[type=submit]");
                     var dataset = $("#datasetName").val();
                     var description = $("#datasetDescription").val();
+
+                    $submit.attr("disabled", true);
 
                     rainhawk.datasets.create(dataset, description, function(data) {
                         $(".container:last").prepend($('<div class="alert alert-success fade in"></div>')
@@ -36,6 +39,8 @@ require_once "includes/check_login.php";
                             .append(message)
                             .append($('<button type="button" class="close pull-right" data-dismiss="alert" aria-hidden="true">&times;</button>'))
                         );
+
+                        $submit.removeAttr("disabled");
                     });
 
                     return false;
