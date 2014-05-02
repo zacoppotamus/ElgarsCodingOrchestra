@@ -81,9 +81,9 @@ require_once "includes/core.php";
                         <h2>What are you waiting for? Let's get started.</h2>
                         <p class="lead">You have two options to get started &mdash; you can either use our web-based data management interface to upload data and create visualizations instantly or, if you're a developer, read our API documentation so that you can build awesome applications using our highly scalable cloud-based API.</p>
                         <p class="buttons">
-                            <a href="/login.php?dest=/create.php" class="btn btn-lg btn-default" role="button">Upload &amp; Visualize Online</a>
+                            <a href="/login.php?dest=/create.php" class="btn btn-lg btn-primary" role="button">Upload &amp; Visualize Online</a>
                             <em>or</em>
-                            <a href="https://www.mashape.com/sneeza/project-rainhawk" class="btn btn-lg btn-default" role="button">API Documentation</a>
+                            <a href="https://www.mashape.com/sneeza/project-rainhawk" class="btn btn-lg btn-primary btn-outline" role="button">API Documentation</a>
                         </p>
                         <p class="dev-note">
                             Note: If you're a developer then you may find <a href="https://github.com/zacoppotamus/ElgarsCodingOrchestra" target="_blank">the source code</a> for the entire project useful &mdash; we've created some wrapper libraries to make communicating with the API as simple as possible to get you started.
