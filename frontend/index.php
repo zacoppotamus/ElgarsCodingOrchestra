@@ -77,7 +77,7 @@ require_once "includes/core.php";
         <div id="get-started" class="get-started">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-12 text-center">
+                    <div class="col-md-10 col-md-offset-1 text-center">
                         <h2>What are you waiting for? Let's get started.</h2>
                         <p class="lead">You have two options to get started &mdash; you can either use our web-based data management interface to upload data and create visualizations instantly or, if you're a developer, read our API documentation so that you can build awesome applications using our highly scalable cloud-based API.</p>
                         <p class="buttons">
