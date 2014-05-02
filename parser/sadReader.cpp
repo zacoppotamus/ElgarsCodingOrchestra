@@ -836,18 +836,19 @@ sheet loadWorksheet( string title, xmlNode* ws, const vector<string> &ss )
     xmlNode* rowHead = bottom->getChild(row);
     for( size_t col = 0; col < rowHead->childCount(); col++ )
     {
-      xmlNode* colHead = bottom->getChild(col);
+      xmlNode* colHead = rowHead->getChild(col);
       unsigned cellX; unsigned cellY;
       decodeDimension( colHead->getAttribute(0)[1], cellX, cellY );
-      string typeString = colHead->getAttribute(3)[1];
+      cellX--; cellY--;
+      string typeString = colHead->getAttribute(2)[1];
       string value = colHead->getChild(0)->getContent(0);
       if( typeString == "s" )
       {
           size_t index;
           convertData( value, index );
-          writeCell( result, cellX, cellY, ss[index] );
+          writeCell( result, cellY, cellX, ss[index] );
       }
-      else writeCell( result, cellX, cellY, value );
+      else writeCell( result, cellY, cellX, value );
     }
   }
   return result;
@@ -865,32 +866,28 @@ vector<sheet> readXLSX( string filename, unsigned &error )
     if( error != 0 ) return result;
     xmlNode* sharedStringsXML = new xmlNode( "sharedstrings" );
     xmlDocument( sharedStringsXML, sharedStringsContent, error );
-    printXMLTree( sharedStringsXML, cout );
     if( error != 0 ) return result;
     vector<string> sharedStringList = loadSharedStrings( sharedStringsXML );
     if( error != 0 ) return result;
     string worksheetPath = "xl/worksheets/";
-    int fileAccessStatus = unzGoToFirstFile( uzf );
-    while( fileAccessStatus == UNZ_OK )
+    vector<string> archiveFiles = getArchiveFiles( uzf, error );
+    if( error != 0 ) return result;
+    for( vector<string>::iterator it = archiveFiles.begin();
+        it != archiveFiles.end(); it++ )
     {
-      string nextWorksheet = worksheetPath;
-      bool match = fileMatch( uzf, nextWorksheet, error );
-      if( error != 0 ) return result;
-      if( match )
+      string filepath = it->substr( 0, it->find_last_of('/')+1 );
+      if( filepath == worksheetPath )
       {
-        string contents = loadArchiveFile( uzf, nextWorksheet, error );
+        string contents = loadArchiveFile( uzf, *it, error );
         if( error != 0 ) return result;
         xmlNode* worksheetXML = new xmlNode( "worksheet" );
         xmlDocument( worksheetXML, contents, error );
-        printXMLTree( worksheetXML, cout );
         if( error != 0 ) return result;
-        string title = nextWorksheet.substr(
-            nextWorksheet.find_last_of('/')+1 );
+        string title = filename.substr( filename.find_last_of('/')+1 );
         title = title.substr( 0, title.find_last_of('.') );
         sheet worksheet = loadWorksheet( title, worksheetXML, sharedStringList );
         result.push_back( worksheet );
       }
-      fileAccessStatus = unzGoToNextFile( uzf );
     }
     return result;
   }
