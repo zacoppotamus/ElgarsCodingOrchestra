@@ -23,7 +23,7 @@
 
 /* Map */
 
-#ecoChart, html, body {
+#ecoChart{
   height: 1500px;
   width: 800px;
 }
