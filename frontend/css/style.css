@@ -58,6 +58,7 @@ hr {
  */
 
 .header {
+    position: relative;
     display: table;
     width: 100%;
     padding: 200px 0 160px;
@@ -97,6 +98,21 @@ hr {
 .header .vertical h3 em {
     font-weight: 400;
     font-style: normal;
+}
+
+.header .graph {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.header .graph path {
+    stroke: rgba(255, 255, 255, 0.1);
+    stroke-width: 2;
+    fill: none;
 }
 
 /**

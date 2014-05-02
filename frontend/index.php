@@ -10,7 +10,35 @@ require_once "includes/core.php";
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <?php require_once "includes/meta.php"; ?>
-        <link rel="stylesheet" href="/css/style.css" type="text/css">
+        <!--<link rel="stylesheet" href="/css/style.css" type="text/css">-->
+        <style><?php echo file_get_contents("css/style.css"); ?></style>
+        <script>
+            $(function() {
+                var $graph = $(".header .graph");
+                var width = $graph.width();
+                var height = $graph.height();
+                var data = [0, 0, 3, 6, 2, 7, 5, 2, 1, 3, 8, 9, 2, 5, 9, 3, 6, 3, 6, 2, 7, 5, 2, 1, 3, 8, 9, 2, 5, 9, 2, 7, 4, 0];
+
+                var x = d3.scale.linear().domain([0, data.length]).range([0, width]);
+                var y = d3.scale.linear().domain([0, 18]).range([height, 0]);
+
+                var line = d3.svg.line().x(function(d, i) {
+                    return x(i);
+                }).y(function(d) {
+                    return y(d);
+                });
+
+                var graph = d3.select(".graph").append("svg:svg")
+                    .attr("width", width)
+                    .attr("height", height)
+                    .append("svg:g")
+                    .append("svg:path")
+                    .attr("d", line(data))
+                    .transition()
+                    .duration(2000)
+                    .ease("linear");
+            });
+        </script>
     </head>
 
     <body>
@@ -21,6 +49,7 @@ require_once "includes/core.php";
                 <h1>Project<strong>Rainhawk</strong></h1>
                 <h3>An elegant <em>Visualisation Framework</em> with <em>Cloud Collaboration</em>.</h3>
             </div>
+            <div class="graph"></div>
         </div>
 
         <div id="about" class="intro">
@@ -159,5 +188,6 @@ require_once "includes/core.php";
 
         <script src="/js/jquery-1.10.2.js"></script>
         <script src="/js/bootstrap.js"></script>
+        <script src="/visualise/vendor/d3/d3.min.js"></script>
     </body>
 </html>
