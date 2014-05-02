@@ -123,7 +123,7 @@ eco.charts.d3linegraph = function() {
             function mousemove()
             {
                 var posX = (d3.mouse(this)[0] - margin.left - 1);
-                var posY = (height+margin.top - 131) - d3.mouse(this)[1];
+                var posY = (height+margin.top - 141) - d3.mouse(this)[1];
                 
                 var xmouseScale = d3.scale.linear()
                 .range([0, d3.max(dd, function(d) { return +d[xValue]; })])
