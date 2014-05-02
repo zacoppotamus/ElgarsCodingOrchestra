@@ -81,7 +81,7 @@ $datasetsInfo = $rainhawk->listDatasets();
                                     </a>
                                 </td>
                                 <td>
-                                    <a href="/proxy/delete.php?dataset=<?php echo $dataset['name']; ?>" id="del<?php echo explode(".", $dataset['name'])[1]; ?>" class="btn btn-danger btn-sm confirm" <?php echo !in_array($user, $dataset['write_access']) ? "disabled" : null; ?>>
+                                    <a href="/proxy/delete_dataset.php?dataset=<?php echo $dataset['name']; ?>" id="del<?php echo explode(".", $dataset['name'])[1]; ?>" class="btn btn-danger btn-sm confirm" <?php echo !in_array($user, $dataset['write_access']) ? "disabled" : null; ?>>
                                         <i class="fa fa-ban"></i>&nbsp; Delete
                                     </a>
                                 </td>
