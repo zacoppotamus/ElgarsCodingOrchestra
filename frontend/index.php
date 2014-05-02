@@ -16,137 +16,147 @@ require_once "includes/core.php";
     <body>
         <?php require_once "includes/nav.php"; ?>
 
-        <!-- Full Page Image Header Area -->
         <div id="top" class="header">
-            <div class="vert-text">
+            <div class="vertical">
                 <h1>Project<strong>Rainhawk</strong></h1>
-                <h3>Helping <em>you</em> visualize <em>your</em> data.</h3>
+                <h3>An elegant <em>Visualisation Framework</em> with <em>Cloud Collaboration</em>.</h3>
             </div>
         </div>
-        <!-- /Full Page Image Header Area -->
 
-        <!-- Intro -->
         <div id="about" class="intro">
             <div class="container">
                 <div class="row">
                     <div class="col-md-6 col-md-offset-3 text-center">
-                        <h2>Big Data is the Future.</h2>
-                        <p class="lead">Unfortunately meaning and correlations can be lost under the vast amounts of spreadsheets and files.</p>
+                        <h2>Big data is all around us.</h2>
+                        <p class="lead">Unfortunately, meaning and correlations can be lost when data is stored in different formats in different places.</p>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- /Intro -->
 
-        <!-- Services -->
         <div id="services" class="services">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-4 col-md-offset-4 text-center">
-                        <h2>What We Do</h2>
-                        <hr>
+                    <div class="col-md-12 text-center">
+                        <h2>What's the solution?</h2>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-2 col-md-offset-2 text-center">
                         <div class="service-item">
                             <i class="service-icon fa fa-cloud"></i>
-                            <h4>Retrieve</h4>
-                            <p>We mine open data from large and small publicly accessible repositories.</p>
+                            <h4>1. Retrieve</h4>
+                            <p>You provide any number of files containing raw data to be uploaded.</p>
                         </div>
                     </div>
                     <div class="col-md-2 text-center">
                         <div class="service-item">
                             <i class="service-icon fa fa-code"></i>
-                            <h4>Parse</h4>
-                            <p>We parse data from .xls and .csv files and store it in our database.</p>
+                            <h4>2. Parse</h4>
+                            <p>We parse the data using our custom parser and store it in the cloud.</p>
                         </div>
                     </div>
                     <div class="col-md-2 text-center">
                         <div class="service-item">
                             <i class="service-icon fa fa-hdd-o"></i>
-                            <h4>API</h4>
-                            <p>Our database API serves the data in JSON format.</p>
+                            <h4>3. Manage</h4>
+                            <p>You use our management interface (or directly use the API) to manipulate your data.</p>
                         </div>
                     </div>
                     <div class="col-md-2 text-center">
                         <div class="service-item">
                             <i class="service-icon fa fa-tasks"></i>
-                            <h4>Visualize</h4>
-                            <p>Correlations from data served from the database can be understood through our interactive visualizations.</p>
+                            <h4>4. Visualize</h4>
+                            <p>Correlations from your data can be graphically understood through our interactive visualizations.</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- /Services -->
 
-        <!-- Team -->
-        <div id="portfolio" class="portfolio">
+        <div id="get-started" class="get-started">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <h2>What are you waiting for? Let's get started.</h2>
+                        <p class="lead">You have two options to get started &mdash; you can either use our web-based data management interface to upload data and create visualizations instantly or, if you're a developer, read our API documentation so that you can build awesome applications using our highly scalable cloud-based API.</p>
+                        <p class="buttons">
+                            <a href="/login.php?dest=/create.php" class="btn btn-lg btn-default" role="button">Upload &amp; Visualize Online</a>
+                            <em>or</em>
+                            <a href="https://www.mashape.com/sneeza/project-rainhawk" class="btn btn-lg btn-default" role="button">API Documentation</a>
+                        </p>
+                        <p class="dev-note">
+                            Note: If you're a developer then you may find <a href="https://github.com/zacoppotamus/ElgarsCodingOrchestra" target="_blank">the source code</a> for the entire project useful &mdash; we've created some wrapper libraries to make communicating with the API as simple as possible to get you started.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <div id="team" class="team">
             <div class="container">
                 <div class="row">
                     <div class="col-md-4 col-md-offset-4 text-center">
-                        <h2>Our Team</h2>
-                        <hr>
+                        <h2>Meet the dream team!</h2>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-4 text-center">
-                        <div class="portfolio-item">
-                            <a href="http://izac.us/"><img class="img-portfolio img-responsive" src="img/team-zac.jpg"></a>
+                        <div class="team-item fade">
+                            <a href="http://izac.us/"><img class="img-responsive" src="img/team-zac.jpg"></a>
                             <h4>Zac Ioannidis</h4>
                         </div>
                     </div>
                     <div class="col-md-4 text-center">
-                        <div class="portfolio-item">
-                            <a href="http://benelgar.com/"><img class="img-portfolio img-responsive" src="img/team-ben.jpg"></a>
+                        <div class="team-item fade">
+                            <a href="http://benelgar.com/"><img class="img-responsive" src="img/team-ben.jpg"></a>
                             <h4>Ben Elgar</h4>
                         </div>
                     </div>
                     <div class="col-md-4 text-center">
-                        <div class="portfolio-item">
-                            <a href="#"><img class="img-portfolio img-responsive" src="img/team-oscar.jpg"></a>
+                        <div class="team-item fade">
+                            <a><img class="img-responsive" src="img/team-oscar.jpg"></a>
                             <h4>Oscar Scull</h4>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-4 text-center">
-                        <div class="portfolio-item">
-                            <a href="#"><img class="img-portfolio img-responsive" src="img/team-sam.jpg"></a>
+                        <div class="team-item fade">
+                            <a><img class="img-responsive" src="img/team-sam.jpg"></a>
                             <h4>Sam Toussaint</h4>
                         </div>
                     </div>
                     <div class="col-md-4 text-center">
-                        <div class="portfolio-item">
-                            <a href="#"><img class="img-portfolio img-responsive" src="img/team-luke.jpeg"></a>
+                        <div class="team-item fade">
+                            <a href="http://sneeza.me/"><img class="img-responsive" src="img/team-luke.jpeg"></a>
                             <h4>Luke Zbihlyj</h4>
                         </div>
                     </div>
                     <div class="col-md-4 text-center">
-                        <div class="portfolio-item">
-                            <a href="#"><img class="img-portfolio img-responsive" src="img/team-steve.jpg"></a>
+                        <div class="team-item fade">
+                            <a><img class="img-responsive" src="img/team-steve.jpg"></a>
                             <h4>Stephen Livermore-Tozer</h4>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- /Team -->
 
-        <!-- Footer -->
+        <hr>
+
         <footer>
             <div class="container">
                 <div class="row">
                     <div class="col-md-6 col-md-offset-3 text-center">
-                        <p>ECO | Made in Bristol with ♥ | <?php echo date("Y"); ?></p>
+                        <p>Made in <strong>Bristol</strong> with ♥ <em>&mdash;</em> <strong>Elgar's Coding Orchestra</strong> <em>&mdash;</em> <?php echo date("Y"); ?></p>
                     </div>
                 </div>
             </div>
         </footer>
-        <!-- /Footer -->
 
-        <!-- JavaScript -->
         <script src="/js/jquery-1.10.2.js"></script>
         <script src="/js/bootstrap.js"></script>
     </body>
