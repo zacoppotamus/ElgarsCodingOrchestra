@@ -99,7 +99,7 @@ $datasetInfo = $rainhawk->fetchDataset($dataset);
                         "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"+
                     "</div>");
 
-                    $('#btnSubmit').button('reset');
+                $('#btnSubmit').button('reset');
             }
 
             function successmsg(name) {

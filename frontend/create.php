@@ -16,52 +16,31 @@ require_once "includes/check_login.php";
                 margin-top: 40px;
             }
         </style>
-        <script type="text/javascript">
+        <script>
+            rainhawk.apiKey = "<?php echo $mashape_key; ?>";
+
             $(function() {
                 $("form").submit(function(e) {
-                    var postdata = new Object();
-                    postdata.name = $("#datasetName").val();
-                    postdata.description = $("#datasetDescription").val();
+                    var dataset = $("#datasetName").val();
+                    var description = $("#datasetDescription").val();
 
-                    $.ajax({
-                        url: 'https://sneeza-eco.p.mashape.com/datasets',
-                        type: 'POST',
-                        data: postdata,
-                        datatype: 'json',
-                        success: function(data) {
-                            if(data.meta.code === 200) {
-                                added(data.data);
-                            } else {
-                                failed(data.data.message);
-                            }
-                        },
-                        error: function(message) {
-                            failed(message);
-                        },
-                        beforeSend: function(xhr) {
-                            xhr.setRequestHeader("X-Mashape-Authorization", "<?php echo $mashape_key; ?>");
-                        }
+                    rainhawk.datasets.create(dataset, description, function(data) {
+                        $(".container:last").prepend($('<div class="alert alert-success fade in"></div>')
+                            .append($('<span><strong>Success!</strong> Dataset <a class="alert-link" href="/edit.php?dataset=' + data.name + '">' + data.name + '</a> successfully created.&nbsp;</span>'))
+                            .append($('<span>Now try <a class="alert-link" href="/upload.php?dataset=' + data.name + '">uploading</a> some data.</span>'))
+                            .append($('<button type="button" class="close pull-right" data-dismiss="alert" aria-hidden="true">&times;</button>'))
+                        );
+                    }, function(message) {
+                        $(".container:last").prepend($('<div class="alert alert-danger fade in"></div>')
+                            .append($('<strong>Error!</strong>&nbsp;'))
+                            .append(message)
+                            .append($('<button type="button" class="close pull-right" data-dismiss="alert" aria-hidden="true">&times;</button>'))
+                        );
                     });
 
                     return false;
                 });
             });
-
-            function failed(message) {
-                $(".container").prepend($('<div class="alert alert-danger fade in"></div>')
-                    .append($('<strong>Error!</strong>&nbsp;'))
-                    .append(message)
-                    .append($('<button type="button" class="close pull-right" data-dismiss="alert" aria-hidden="true">&times;</button>'))
-                );
-            }
-
-            function added(data) {
-                $(".container").prepend($('<div class="alert alert-success fade in"></div>')
-                    .append($('<span><strong>Success!</strong> Dataset <a class="alert-link" href="/edit.php?dataset=' + data.name + '">' + data.name + '</a> successfully created.&nbsp;</span>'))
-                    .append($('<span>Now try <a class="alert-link" href="/upload.php?dataset=' + data.name + '">uploading</a> some data.</span>'))
-                    .append($('<button type="button" class="close pull-right" data-dismiss="alert" aria-hidden="true">&times;</button>'))
-                );
-            }
         </script>
     </head>
 
