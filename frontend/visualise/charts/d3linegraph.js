@@ -137,7 +137,7 @@ eco.charts.d3linegraph = function() {
                 svg.append("g")
                     .append("text")
                     .attr("x", 25)
-                    .attr("y", 50 + margin.top)
+                    .attr("y", 50)
                     .attr("class", "steam-text")
                     .attr("fill", "#483D8B")
                     .text(xValue + ": " + Math.round(xmouseScale(posX))
