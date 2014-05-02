@@ -22,21 +22,30 @@ require_once "includes/core.php";
                 var x = d3.scale.linear().domain([0, data.length]).range([0, width]);
                 var y = d3.scale.linear().domain([0, 18]).range([height, 0]);
 
-                var line = d3.svg.line().x(function(d, i) {
-                    return x(i);
-                }).y(function(d) {
-                    return y(d);
-                });
+                var line = d3.svg.line()
+                    .interpolate("basis")
+                    .x(function(d, i) {
+                        return x(i);
+                    }).y(function(d) {
+                        return y(d);
+                    });
 
                 var graph = d3.select(".graph").append("svg:svg")
                     .attr("width", width)
                     .attr("height", height)
-                    .append("svg:g")
-                    .append("svg:path")
-                    .attr("d", line(data))
+                    .append("svg:g");
+
+                var path = graph.append("svg:path")
+                    .attr("d", line(data));
+
+                var pathLength = path.node().getTotalLength();
+
+                path.attr("stroke-dashoffset", pathLength)
+                    .attr("stroke-dasharray", pathLength + " " + pathLength)
                     .transition()
                     .duration(2000)
-                    .ease("linear");
+                    .ease("linear")
+                    .attr("stroke-dashoffset", 0);
             });
         </script>
     </head>
