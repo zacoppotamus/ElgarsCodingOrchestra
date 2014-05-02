@@ -13,7 +13,7 @@ $datasetsInfo = $rainhawk->listDatasets();
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <?php require_once "includes/meta.php"; ?>
-        <script type="text/javascript">
+        <script>
             $(function() {
                 $(".confirm").confirm({
                     text: "Are you sure you wish to delete this dataset? This action is irreversible!",

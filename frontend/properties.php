@@ -20,10 +20,10 @@ $accessList = array_unique(array_merge($readList, $writeList));
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <?php require_once "includes/meta.php"; ?>
         <script>
+            rainhawk.apiKey = "<?php echo $mashape_key; ?>";
+
             var dataset = "<?php echo $dataset; ?>";
             var numUserCount = 0;
-
-            rainhawk.apiKey = "<?php echo $mashape_key; ?>";
 
             $(function() {
                 $(".confirm").confirm({
@@ -33,10 +33,10 @@ $accessList = array_unique(array_merge($readList, $writeList));
                     confirm: function(btn) {
                         var username = $(btn).data("user");
 
-                        rainhawk.access.remove(dataset, username, null, function() {
+                        rainhawk.access.remove(dataset, username, null, function(data) {
                             $("[data-row-user='" + username + "']").remove();
-                        }, function(msg) {
-                            $("#accessBody").prepend("<div class='alert alert-danger alert-dismissable'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><strong>Error revoking.</strong> "+msg+"</div>");
+                        }, function(message) {
+                            $("#accessBody").prepend("<div class='alert alert-danger alert-dismissable'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><strong>Error revoking.</strong> " + message + "</div>");
                         });
                     }
                 });
@@ -55,16 +55,17 @@ $accessList = array_unique(array_merge($readList, $writeList));
                 window.newUserCount++;
 
                 $("#tblPermissions").append(
-                  "<tr data-row-user-num=" + window.newUserCount + ">" +
-                    "<td><input type='text' name='newUser[" + window.newUserCount + "][user]' class='form-control'></td>" +
-                    "<td class='text-center'><input type='checkbox' class='readcheck'  name='newUser[" + window.newUserCount + "][read]' value='read' checked></td>" +
-                    "<td class='text-center'><input type='checkbox' class='writecheck'  name='newUser[" + window.newUserCount + "][write]' value='write'></td>" +
-                    "<td><button type='button' data-user-num=" + window.newUserCount + " onclick='cancelNewUser(this);' class='btn btn-warning btn-sm'>Cancel</button></td>" +
-                  "</tr>");
+                    "<tr data-row-user-num=" + window.newUserCount + ">" +
+                        "<td><input type='text' name='newUser[" + window.newUserCount + "][user]' class='form-control'></td>" +
+                        "<td class='text-center'><input type='checkbox' class='readcheck'  name='newUser[" + window.newUserCount + "][read]' value='read' checked></td>" +
+                        "<td class='text-center'><input type='checkbox' class='writecheck'  name='newUser[" + window.newUserCount + "][write]' value='write'></td>" +
+                        "<td><button type='button' data-user-num=" + window.newUserCount + " onclick='cancelNewUser(this);' class='btn btn-warning btn-sm'>Cancel</button></td>" +
+                    "</tr>"
+                );
             }
 
             function cancelNewUser(btn) {
-                $("[data-row-user-num=" + $(btn).data("user-num") + "]").remove();
+                $("[data-row-user-num='" + $(btn).data("user-num") + "']").remove();
             }
         </script>
     </head>

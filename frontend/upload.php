@@ -19,7 +19,9 @@ $datasetInfo = $rainhawk->fetchDataset($dataset);
                 margin-top: 40px;
             }
         </style>
-        <script type="text/javascript">
+        <script>
+            rainhawk.apiKey = "<?php echo $mashape_key; ?>";
+
             var file;
 
             $(function() {
