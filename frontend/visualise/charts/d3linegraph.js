@@ -4,7 +4,7 @@ eco.charts.d3linegraph = function() {
     return {
         title: 'Steam Graph',
         options : {
-            width : 1700,
+            width : 1600,
             height : 700,
             margin : {
                 top: 100,
