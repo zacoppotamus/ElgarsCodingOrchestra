@@ -2,6 +2,7 @@
 #include <fstream>
 #include <sstream>
 #include <string>
+#include "sadUtils.hpp"
 #include "sadWriter.hpp"
 #include "sadReader.hpp"
 #include "sadTables.hpp"
@@ -12,17 +13,20 @@ string jsonDocument( sheet &sh, table tbl )
 {
   vector<string> fieldNames;
   string output;
-  output += "[\n";
+  unsigned ind = 0;
+  output += tab(ind) + "[\n";
+  ind++;
   for( size_t col = tbl.x1; col <= tbl.x2; col++ )
   {
     fieldNames.push_back( sh[tbl.y1][col].getString() );
   }
   for( size_t row = tbl.y1+1; row <= tbl.y2; row++ )
   {
-    output += "{\n";
+    output += tab(ind) + "{\n";
+    ind++;
     for( size_t col = tbl.x1; col <= tbl.x2; col++ )
     {
-      output += "\t\"";
+      output += tab(ind) + "\"";
       output += fieldNames[col-tbl.x1];
       output += "\" : ";
       JType type = sh[row][col].getType();
@@ -48,11 +52,16 @@ string jsonDocument( sheet &sh, table tbl )
         default:
           break;
       }
+      if( col != tbl.x2 ) output += ',';
       output += '\n';
     }
-    output += "}\n";
+    ind--;
+    output += tab(ind) + "}";
+    if( row != tbl.y2 ) output += ',';
+    output += "\n";
   }
-  output += "]\n";
+  ind--;
+  output += tab(ind) + "]\n";
   return output;
 }
 
