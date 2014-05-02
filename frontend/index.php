@@ -10,8 +10,7 @@ require_once "includes/core.php";
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <?php require_once "includes/meta.php"; ?>
-        <!--<link rel="stylesheet" href="/css/style.css" type="text/css">-->
-        <style><?php echo file_get_contents("css/style.css"); ?></style>
+        <link rel="stylesheet" href="/css/style.css" type="text/css">
         <script>
             $(function() {
                 var $graph = $(".header .graph");
