@@ -10,7 +10,6 @@ using namespace std;
 
 int main( int argc, char * argv[] )
 {
-  string filename;
   if( argc == 1 )
   {
     cout << "Usage: sadparser [filenames]" << '\n';
@@ -26,7 +25,7 @@ int main( int argc, char * argv[] )
   }
   for( int cfile = 1; cfile < argc; cfile++ )
   {
-    filename = argv[cfile];
+    string filename = argv[cfile];
     if( filename[0] == '-' )
     {
       if( filename.compare("-n") == 0 )
@@ -40,6 +39,7 @@ int main( int argc, char * argv[] )
         continue;
       }
     }
+    cout << "Now reading file " << argv[cfile] << "..." << '\n';
     cout << "Getting contents..." << '\n';
     unsigned error = 0;
     vector<sheet> fileContents = readFile( filename, error );
@@ -60,12 +60,16 @@ int main( int argc, char * argv[] )
       unsigned count = 0;
       for( size_t it = 0; it < fileContents.size(); it++ )
       {
-        string title = fileContents[it].name();
-        char * newFilename = new char[title.size()+10];
-        sprintf( newFilename, "%s-%02d.json", title.c_str(), count+1 );
+        string title = filename.substr( 0, filename.find_last_of('.') );
+        char * newFilename = new char[title.size()+5];
+        sprintf( newFilename, "%s-%02d", title.c_str(), count+1 );
         string filetitle( newFilename );
-        jsonFile( filetitle, fileContents[it], tablesOfSheets[it] );
-        cout << filetitle << " created." << '\n';
+        vector<string> fileList = jsonFile( filetitle, fileContents[it],
+            tablesOfSheets[it] );
+        for( size_t ot = 0; ot < fileList.size(); ot++ )
+        {
+          cout << fileList[ot] << " created." << '\n';
+        }
         count++;
       }
     }

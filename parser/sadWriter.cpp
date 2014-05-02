@@ -14,7 +14,9 @@ string jsonDocument( sheet &sh, table tbl )
   vector<string> fieldNames;
   string output;
   unsigned ind = 0;
-  output += tab(ind) + "[\n";
+  output += tab(ind) + "{\n";
+  ind++;
+  output += tab(ind) + "\"data\" : [\n";
   ind++;
   for( size_t col = tbl.x1; col <= tbl.x2; col++ )
   {
@@ -62,15 +64,22 @@ string jsonDocument( sheet &sh, table tbl )
   }
   ind--;
   output += tab(ind) + "]\n";
+  ind--;
+  output += tab(ind) + "}";
   return output;
 }
 
-void jsonFile( string filename, sheet &sh, vector<table> tbls )
+vector<string> jsonFile( string filename, sheet &sh, vector<table> tbls )
 {
-  ofstream ofs( filename );
-  for( vector<table>::iterator it = tbls.begin(); it != tbls.end(); it++ )
+  vector<string> outputs;
+  for( size_t it = 0; it < tbls.size(); it++ )
   {
-    ofs << jsonDocument( sh, *it );
+    string output = filename + "-" + to_string(it) + ".json";
+    ofstream ofs( output.c_str() );
+    ofs << jsonDocument( sh, tbls[it] );
+    ofs.close();
+    outputs.push_back( output );
   }
+  return outputs;
 }
 
