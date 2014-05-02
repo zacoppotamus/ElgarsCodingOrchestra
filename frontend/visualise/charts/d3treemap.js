@@ -1,19 +1,19 @@
 eco.charts.d3treemap = function() {
-	return {
-		title: 'Treemap',
-		
-		options : {
-			width : 1500,
-			height : 700,
-			margin : {
-				top: 50,
-				right: 50,
-				bottom: 50,
-				left: 50
-			}
-		},
+    return {
+        title: 'Treemap',
+        
+        options : {
+            width : 1500,
+            height : 700,
+            margin : {
+                top: 50,
+                right: 50,
+                bottom: 50,
+                left: 50
+            }
+        },
 
-		render: function (data, xValue, yValue, target) {
+        render: function (data, xValue, yValue, target) {
             var data = {name: xValue,
                 "children": data};
             var options = this.options;
@@ -72,7 +72,6 @@ eco.charts.d3treemap = function() {
                     
                 d3.selectAll("[class=treemap-header-text").remove();
                 
-                console.log(d);
                 svg.append("g")
                     .append("text")
                     .attr("x", margin.left)

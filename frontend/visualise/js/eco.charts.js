@@ -85,7 +85,7 @@ eco.charts = function() {
                 'xValue' : null,
                 'yValue' : null
             },
-            'description' : 'Steam Graph',
+            'description' : 'Stream Graph: For continuous data such as time series, a streamgraph can be used in place of stacked bars.',
             'image' : 'img/linegraph.png'
         }
     ];

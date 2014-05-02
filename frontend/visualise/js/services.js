@@ -5,75 +5,44 @@
 
 angular.module('eco.services', [])
 .factory('dataService', function($http, $q) {
-		var dataService = {};
-		dataService.currentData = '';
-		dataService.selectedDataset = '';
-		dataService.selectedVizType;
-		dataService.vizOptions = '';
+        var dataService = {};
+        dataService.currentData = '';
+        dataService.selectedDataset = '';
+        dataService.selectedVizType;
+        dataService.vizOptions = '';
 
-		// get data for the selected dataset
-		// TODO check for empty datasets 
-		dataService.sayhey = function(name) {
-			console.log('Hi, '+name);
-		};
+        // get data for the selected dataset
+        // TODO check for empty datasets 
 
-		dataService.getData = function(datasetName, apikey) {
-			// this happens asynchronously
-			var promise = $http({
-				method: 'GET',
-				url: 'https://sneeza-eco.p.mashape.com/datasets/'+datasetName+'/data',
-				headers: {
-					'X-Mashape-Authorization' : apikey
-				}
-			}).
-			success(function(json) {
-				console.log('Done getting data from ' + datasetName + ' and injecting to controller');
-				dataService.currentData = json.data.results;
-			});
+        dataService.getData = function(datasetName, apikey) {
+            // this happens asynchronously
+            var promise = $http({
+                method: 'GET',
+                url: 'https://sneeza-eco.p.mashape.com/datasets/'+datasetName+'/data',
+                headers: {
+                    'X-Mashape-Authorization' : apikey
+                }
+            }).
+            success(function(json) {
+                dataService.currentData = json.data.results;
+            });
 
-			return promise;
-		}
+            return promise;
+        }
 
-/*		dataService.getDatasetNames = function(apiKey) {
-			// todo: get user's API key from cookie
-			var datasets;
-			var promise = $http({
-				method: 'GET',
-				url: 'https://sneeza-eco.p.mashape.com/datasets',
-				headers: {
-					'X-Mashape-Authorization' : apiKey
-				}
-			}).
-			success(function(json) {
-				// attach the data to the scope
-				var datasets = [];
-				console.log(json);
-				$.each(json.data.datasets, function(key,val) {
-					var datasetName = val.name.split('.')[1];
-					dataService.datasets.push(datasetName);
-				});
-			});
+        dataService.getSelectedDataset = function() {
+            return this.selectedDataset;
+        };
 
-			console.log(datasets);
-			return datasets;
-		};*/
+        dataService.getCurrentData = function() {
+            return this.currentData;
+        };
 
-		dataService.getSelectedDataset = function() {
-			console.log('Selected Dataset: ' + this.selectedDataset);
-			return this.selectedDataset;
-		};
+        dataService.getSelectedVizType = function() {
+            return this.selectedVizType;
+        };
 
-		dataService.getCurrentData = function() {
-			console.log('Current Data: ' + this.currentData);
-			return this.currentData;
-		};
+        
 
-		dataService.getSelectedVizType = function() {
-			console.log('Selected Visualisation Type is: ' + this.selectedVizType);
-			return this.selectedVizType;
-		};
-
-		
-
-		return dataService;
+        return dataService;
 });

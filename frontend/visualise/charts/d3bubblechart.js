@@ -6,11 +6,11 @@ eco.charts.d3bubblechart = function() {
             width : 1500,
             height : 800,
             margin : {
-				top: 100,
-				right: 20,
-				bottom: 30,
-				left: 80
-			}
+                top: 100,
+                right: 20,
+                bottom: 30,
+                left: 80
+            }
         },
 
         render : function(data, xValue, yValue, maxRadius, target) {
@@ -91,11 +91,11 @@ eco.charts.d3bubblechart = function() {
                 d3.selectAll("[class=bubble-text]").remove();
                 
                 svg.append("g")
-			        .append("text")
-			        .attr("x", 25)
-			        .attr("y", 50)
-			        .attr("class", "bubble-text")
-			        .attr("fill", "#483D8B")
+                    .append("text")
+                    .attr("x", 25)
+                    .attr("y", 50)
+                    .attr("class", "bubble-text")
+                    .attr("fill", "#483D8B")
                     .text(d[xValue] + ": " + d[yValue]);
                 
                 callCollisions(d);
