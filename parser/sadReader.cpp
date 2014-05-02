@@ -241,7 +241,11 @@ void csvMarkers( vector<long unsigned> &commas, vector<long unsigned> &newls,
     if( cc == '\"' ) skipQuotes( pos, ifs, error );
     if( error != 0 ) return;
     if( cc == ',' ) commas.push_back( pos );
-    if( cc == '\n' || cc == '\r' ) newls.push_back( pos );
+    if( cc == '\n' || cc == '\r' )
+    {
+      newls.push_back( pos );
+      if( cc == '\r' && ifs.peek() == '\n' ) ifs.get();
+    }
     cc = ifs.get();
     pos++;
   }
@@ -295,6 +299,7 @@ void csvData( vector<long unsigned> &commas, vector<long unsigned> &newls,
     col = 0;
     while( nextComma < nextNewl )
     {
+      if( ifs.peek() == '\n' ) ifs.get();
       string record;
       while( pos < nextComma )
       {
