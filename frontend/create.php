@@ -21,7 +21,7 @@ require_once "includes/check_login.php";
 
             $(function() {
                 $("form").submit(function(e) {
-                    var $submit = $(this).find("input[type=submit]");
+                    var $submit = $(this).find("button[type=submit]");
                     var dataset = $("#datasetName").val();
                     var description = $("#datasetDescription").val();
 
