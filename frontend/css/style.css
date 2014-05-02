@@ -9,13 +9,23 @@ html, body {
     margin-top: 0;
 }
 
+.btn-primary {
+    background-color: #0460c1;
+    border-color: #0240a9;
+}
+
+.btn-primary:hover {
+    background-color: #0248ac;
+    border-color: #003590;
+}
+
 .btn-outline {
     background-color: transparent;
     color: inherit;
 }
 
 .btn-primary.btn-outline {
-    color: #428bca;
+    color: #0240a9;
 }
 
 .btn-success.btn-outline {
@@ -200,8 +210,9 @@ hr {
 footer {
     padding: 40px 0;
     background: #eee;
+    color: #888;
 }
 
 footer em {
-    color: #888;
+    color: #aaa;
 }
