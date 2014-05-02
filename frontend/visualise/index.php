@@ -55,6 +55,7 @@ require_once "../includes/check_login.php";
         <script src="charts/d3map.js"></script>
         <script src="charts/d3bubblechart.js"></script>
         <script src="charts/d3treemap.js"></script>
+        <script src="charts/d3linegraph.js"></script>
         <script src="charts/glscatter.js"></script>
         <script src="js/directives.js"></script>
         <script src="js/services.js"></script>

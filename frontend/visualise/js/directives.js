@@ -21,17 +21,17 @@ angular.module('eco.directives', [])
 			var chartType = dataService.getSelectedVizType();
 			var vizOptions = dataService.vizOptions;
 
-			if (chartType == 1) {
-				var xValue = vizOptions[chartType].options['xAxis'];
-				var yValue = vizOptions[chartType].options['yAxis'];
-
-				eco.charts.d3barchart().render(data, xValue, yValue, target);
-			}
-			else if (chartType == 0) {
+			if (chartType == 0) {
 				var values = vizOptions[chartType].options['values'];
 				var names = vizOptions[chartType].options['names'];
 
 				eco.charts.d3piechart().render(data, names, values, target);
+			}
+			else if (chartType == 1) {
+				var xValue = vizOptions[chartType].options['xAxis'];
+				var yValue = vizOptions[chartType].options['yAxis'];
+
+				eco.charts.d3barchart().render(data, xValue, yValue, target);
 			}
 			else if (chartType == 2) {
 				var xValue = vizOptions[chartType].options['x'];
@@ -59,6 +59,12 @@ angular.module('eco.directives', [])
 
 				eco.charts.glscatter().render(data, xValue, yValue, zValue, element[0]);
 			}
+			else if (chartType == 6) {
+				var xValue = vizOptions[chartType].options['xValue'];
+				var yValue = vizOptions[chartType].options['yValue'];
+
+				eco.charts.d3linegraph().render(data, xValue, yValue, target);
+			}			
 		}
 	}
 });
