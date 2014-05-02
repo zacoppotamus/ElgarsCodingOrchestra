@@ -241,7 +241,7 @@ void csvMarkers( vector<long unsigned> &commas, vector<long unsigned> &newls,
     if( cc == '\"' ) skipQuotes( pos, ifs, error );
     if( error != 0 ) return;
     if( cc == ',' ) commas.push_back( pos );
-    if( cc == '\n' ) newls.push_back( pos );
+    if( cc == '\n' || cc == '\r' ) newls.push_back( pos );
     cc = ifs.get();
     pos++;
   }
@@ -668,30 +668,30 @@ void printXMLTree( xmlNode* root, ostream &out, unsigned ind = 0 )
 // Returns true if the current file of "zipFile" begins with "title". This is
 // used both for identifying files in a directory as well as exact files.
 // Sets title to the full file name and path
-bool fileMatch( unzFile zipFile, string &title, unsigned &error )
+bool fileMatch( unzFile uzf, string &title, unsigned &error )
 {
-  if( unzOpenCurrentFile( zipFile ) == UNZ_OK )
+  if( unzOpenCurrentFile( uzf ) == UNZ_OK )
   {
-    unz_file_info zipFileInfo;
-    memset( &zipFileInfo, 0, sizeof( unz_file_info ) );
-    if( unzGetCurrentFileInfo( zipFile,
-      &zipFileInfo,
+    unz_file_info uzfInfo;
+    memset( &uzfInfo, 0, sizeof( unz_file_info ) );
+    if( unzGetCurrentFileInfo( uzf,
+      &uzfInfo,
       NULL, 0,
       NULL, 0,
       NULL, 0 ) == UNZ_OK )
     {
-      string zipFileName;
-      zipFileName.resize( zipFileInfo.size_filename );
-      unzGetCurrentFileInfo( zipFile,
-        &zipFileInfo,
-        &zipFileName[0], zipFileInfo.size_filename,
+      string uzfName;
+      uzfName.resize( uzfInfo.size_filename );
+      unzGetCurrentFileInfo( uzf,
+        &uzfInfo,
+        &uzfName[0], uzfInfo.size_filename,
         NULL, 0,
         NULL, 0 );
-      unzCloseCurrentFile( zipFile );
-      string zipFileNameCut = zipFileName.substr( 0, title.size() );
-      if( zipFileNameCut == title )
+      unzCloseCurrentFile( uzf );
+      string uzfNameCut = uzfName.substr( 0, title.size() );
+      if( uzfNameCut == title )
       {
-        title = zipFileName;
+        title = uzfName;
         return true;
       }
       return false;
@@ -699,6 +699,44 @@ bool fileMatch( unzFile zipFile, string &title, unsigned &error )
   }
   error = 1;
   return false;
+}
+
+//Returns a list of the filenames of every file in the archive
+vector<string> getArchiveFiles( unzFile uzf, unsigned &error )
+{
+  vector<string> result;
+  int fileAccessStatus = unzGoToFirstFile( uzf );
+  while( fileAccessStatus == UNZ_OK )
+  {
+    if( unzOpenCurrentFile( uzf ) == UNZ_OK )
+    {
+      unz_file_info uzfInfo;
+      memset( &uzfInfo, 0, sizeof( unz_file_info ) );
+      if( unzGetCurrentFileInfo( uzf,
+        &uzfInfo,
+        NULL, 0,
+        NULL, 0,
+        NULL, 0 ) == UNZ_OK )
+      {
+        string uzfName;
+        uzfName.resize( uzfInfo.size_filename );
+        unzGetCurrentFileInfo( uzf,
+          &uzfInfo,
+          &uzfName[0], uzfInfo.size_filename,
+          NULL, 0,
+          NULL, 0 );
+        unzCloseCurrentFile( uzf );
+        result.push_back( uzfName );
+      }
+    }
+    else
+    {
+      error = 1;
+      return result;
+    }
+    fileAccessStatus = unzGoToNextFile( uzf );
+  }
+  return result;
 }
 
 string loadArchiveFile( unzFile uzf, string filename, unsigned &error )
