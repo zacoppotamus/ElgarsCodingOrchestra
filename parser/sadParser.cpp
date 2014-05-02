@@ -43,7 +43,7 @@ int main( int argc, char * argv[] )
     cout << "Getting contents..." << '\n';
     unsigned error = 0;
     vector<sheet> fileContents = readFile( filename, error );
-    if( fileContents.size() > 0 && error == 0 )
+    if( error == 0 )
     {
       cout << "Processing contents..." << '\n';
       vector< vector<table> > tablesOfSheets;
@@ -71,7 +71,19 @@ int main( int argc, char * argv[] )
     }
     else
     {
-      cout << '"' << filename << """ is an invalid file." << '\n';
+      switch( error )
+      {
+        case 1:
+          cout << "ERROR: Failure in file access operations." << '\n';
+          break;
+        case 2:
+        case 3:
+          cout << "ERROR: Invalid file contents." << '\n';
+          break;
+        default:
+          cout << "ERROR: Unknown error code, something is wrong." << '\n';
+          break;
+      }
     }
   }
   cout << "All done." << '\n';
