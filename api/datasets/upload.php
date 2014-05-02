@@ -88,7 +88,10 @@ if(!empty($result)) {
 		} else if(stripos($line, "could not") !== false) {
 			echo json_beautify(json_render_error(408, "There was a problem while processing your data - we seem to be having technical difficulties with our parser. Please try again later."));
 		    exit;
-		}
+		} else if(stripos($line, "error") !== false) {
+            echo json_beautify(json_render_error(409, "There was a problem while processing your data - make sure that your file contains valid data."));
+            exit;
+        }
 	}
 }
 
