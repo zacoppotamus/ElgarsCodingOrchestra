@@ -17,6 +17,10 @@ body {
   padding: 0;
   margin: 0;
   font-size: 4.5em;
+  font-weight: 400;
+}
+
+.vert-text h1 strong {
   font-weight: 700;
 }
 
@@ -86,21 +90,6 @@ i.service-icon {
   margin-top: 50px;
   margin-bottom: 100px;
 }
-
-/* Navigation Bar */
-.navbar-default .navbar-brand {
-  color: #333;
-}
-
-.navbar-right {
-  margin-right: 20px;
-  margin-left: 20px;
-}
-
-.navbar-right > li {
-  margin-right: 5px;
-}
-
 
 /* Team */
 
