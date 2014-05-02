@@ -107,6 +107,7 @@ foreach($files as $tmp_file) {
 	if(stripos($tmp_file, $file) !== false && pathinfo($tmp_file, PATHINFO_EXTENSION) == "json") {
 		$tmp_file = "/tmp/" . $tmp_file;
 		$rows = json_decode(file_get_contents($tmp_file), true);
+        $rows = $rows['data'] ?: [];
 
 		// Insert the rows of data into the dataset.
 		$rows = $dataset->insert_multi($rows);
