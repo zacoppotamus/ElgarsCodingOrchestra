@@ -7,7 +7,7 @@ eco.charts.d3piechart = function() {
 
 		options : {
 			width : 1400,
-			height : 800,
+			height : 700,
 			margin : {
 				top: 30,
 				left: 80

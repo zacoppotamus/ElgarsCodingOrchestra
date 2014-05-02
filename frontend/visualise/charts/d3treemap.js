@@ -3,7 +3,7 @@ eco.charts.d3treemap = function() {
 		title: 'Treemap',
 		
 		options : {
-			width : 1400,
+			width : 1500,
 			height : 700,
 			margin : {
 				top: 50,

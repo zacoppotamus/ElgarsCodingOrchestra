@@ -3,7 +3,7 @@ eco.charts.d3bubblechart = function() {
         title : 'Bubble Chart',
 
         options : {
-            width : 1300,
+            width : 1500,
             height : 800,
             margin : {
 				top: 100,
