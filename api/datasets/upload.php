@@ -109,6 +109,12 @@ foreach($files as $tmp_file) {
 		$rows = json_decode(file_get_contents($tmp_file), true);
         $rows = $rows['data'] ?: [];
 
+        // Check if the rows were empty.
+        if(empty($rows)) {
+            echo json_beautify(json_render_error(409, "One or more of the specified documents contained no data."));
+            exit;
+        }
+
 		// Insert the rows of data into the dataset.
 		$rows = $dataset->insert_multi($rows);
 
