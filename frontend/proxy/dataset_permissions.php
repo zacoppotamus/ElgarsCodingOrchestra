@@ -78,12 +78,7 @@ foreach($newUsers as $key => $newUser) {
     }
 }
 
-if(empty($errors)) {
-    header("Location: /properties.php?dataset=" . $dataset);
-    exit;
-}
-
-var_dump($errors);
+header("Location: /properties.php?dataset=" . $dataset);
 exit;
 
 ?>
