@@ -1,7 +1,7 @@
 <?php
 
-require_once "includes/core.php";
-require_once "includes/check_login.php";
+require_once "../includes/core.php";
+require_once "../includes/check_login.php";
 
 $dataset = isset($_GET['dataset']) ? htmlspecialchars($_GET['dataset']) : null;
 $access = $rainhawk->listAccess($dataset);
