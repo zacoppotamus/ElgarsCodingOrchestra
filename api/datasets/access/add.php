@@ -58,6 +58,9 @@ if(empty($data->username)) {
     exit;
 }
 
+// If the type is JSON, decode it into an array.
+$data->type = json_decode($data->type, true) ?: $data->type;
+
 // Iterate through the type or types set and apply them.
 if(is_string($data->type)) {
     // Make sure the type is valid.

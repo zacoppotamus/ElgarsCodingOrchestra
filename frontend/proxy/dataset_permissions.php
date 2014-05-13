@@ -70,7 +70,11 @@ foreach($newUsers as $key => $newUser) {
     if(in_array($newUser["user"], array_keys($currentUsers))) {
         $errors[] = "User " . $newUser['user'] . " already has permissions assigned";
     } else {
-        $result = $rainhawk->giveAccess($dataset, $newUser["user"], $types);
+        var_dump($dataset);
+        var_dump($newUser['user']);
+        var_dump($types);
+
+        $result = $rainhawk->giveAccess($dataset, $newUser['user'], $types);
     }
 
     if(!$result) {
