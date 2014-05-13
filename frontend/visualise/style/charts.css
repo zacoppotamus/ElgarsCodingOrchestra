@@ -3,13 +3,13 @@
 
 /* Pie Chart */
 
-.pie-chart 
+.pie-chart
 {
   font-family: "Helvetica Neue", Helvetica, sans-serif;
   font-size: 11px;
 }
 
-.pie-chart-arc path 
+.pie-chart-arc path
 {
   stroke: #fff;
 }
@@ -24,8 +24,8 @@
 /* Map */
 
 #ecoChart{
-  height: 1500px;
-  width: 800px;
+  width: 1500px;
+  height: 800px;
 }
 
 .map-dot, .map-dot svg {
@@ -82,7 +82,7 @@
     font-size: 32px;
 }
 
-#bar-chart-tooltip 
+#bar-chart-tooltip
 {
     position: absolute;
     width: auto;
@@ -94,12 +94,12 @@
     pointer-events: none;
 }
 
-#bar-chart-tooltip.hidden 
+#bar-chart-tooltip.hidden
 {
     display: none;
 }
 
-#bar-chart-tooltip p 
+#bar-chart-tooltip p
 {
     margin: 0;
     font-family: sans-serif;
@@ -112,10 +112,10 @@
 {
     font-family: Helvetica, sans-serif;
     font-size: 32px;
-    
+
 }
 
-.bubble-chart 
+.bubble-chart
 {
     height:800px;
     /*border: 1px solid red;*/
@@ -128,7 +128,7 @@
 }
 
 /* Treemap */
-.treemap-node 
+.treemap-node
 {
   border: solid 1px black;
   font: 10px sans-serif;
@@ -155,5 +155,5 @@
 {
     font-family: Helvetica, sans-serif;
     font-size: 32px;
-    
+
 }
