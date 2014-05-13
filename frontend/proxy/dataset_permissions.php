@@ -87,6 +87,4 @@ if(empty($errors)) {
     exit;
 }
 
-var_dump($errors);
-
 ?>

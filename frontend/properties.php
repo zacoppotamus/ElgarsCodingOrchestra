@@ -23,7 +23,7 @@ $accessList = array_unique(array_merge($readList, $writeList));
             rainhawk.apiKey = "<?php echo $mashape_key; ?>";
 
             var dataset = "<?php echo $dataset; ?>";
-            var numUserCount = 0;
+            var newUserCount = 0;
 
             $(function() {
                 $(".confirm").confirm({
